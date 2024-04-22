@@ -228,6 +228,7 @@ struct SettingsView: View {
                 meets = decoded
             }
         }
+        print("Loaded meets")
     }
     
     // Save the user's event PRs
@@ -242,12 +243,13 @@ struct SettingsView: View {
     
     // Load the user's event PRs
     func loadPR() {
-        print("Loading Prs")
+        print("Loading PRs")
         for event in events {
             if let prValue = UserDefaults.standard.string(forKey: event.rawValue) {
                 prs[event] = prValue
             }
         }
+        print("Loaded PRs")
     }
 }
 

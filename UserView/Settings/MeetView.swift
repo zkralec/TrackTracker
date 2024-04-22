@@ -33,10 +33,12 @@ struct MeetView: View {
                                 Spacer()
                                 
                                 Button("Add Meet") {
-                                    meets.append(date)
-                                    scheduleNotification(for: date)
-                                    saveMeets()
-                                    print("Added meet \(date)")
+                                    withAnimation {
+                                        meets.append(date)
+                                        scheduleNotification(for: date)
+                                        saveMeets()
+                                        print("Added meet \(date)")
+                                    }
                                 }
                                 .buttonStyle(CustomButtonStyle())
                                 .padding()
@@ -63,6 +65,7 @@ struct MeetView: View {
                                         .foregroundStyle(.secondary)
                                         .padding()
                                         .roundedBackground()
+                                        .padding(.bottom)
                                 } else {
                                     ForEach(meets, id: \.self) { date in
                                         Text(date.formatted())
@@ -72,8 +75,10 @@ struct MeetView: View {
                                     
                                     // Remove the last meet day
                                     Button("Remove Last") {
-                                        removeMeet(at: meets.count - 1)
-                                        print("Removed last meet")
+                                        withAnimation {
+                                            removeMeet(at: meets.count - 1)
+                                            print("Removed last meet")
+                                        }
                                     }
                                     .buttonStyle(CustomButtonStyle())
                                     .padding()
@@ -107,12 +112,12 @@ struct MeetView: View {
     // Makes a notification that will go off at the correct date
     func scheduleNotification(for date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "Good luck with your meet!"
-        content.body = "You have a meet scheduled for \(date.formatted())"
+        content.title = "You have a meet today!"
+        content.body = "Make sure to run fast, jump high, and throw far. Push yourself!"
         content.sound = UNNotificationSound.default
 
         var triggerDate = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        triggerDate.hour = 6
+        triggerDate.hour = 1
         triggerDate.minute = 0
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
