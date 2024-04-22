@@ -9,11 +9,11 @@ import SwiftUI
 
 // Welcomes users when opening app
 struct WelcomeView: View {
-    @State private var showWelcomeScreen = true // Shows welcome view or not
+    @State private var welcomeScreen = true // Shows welcome view or not
 
     var body: some View {
         VStack {
-            if showWelcomeScreen {
+            if welcomeScreen {
                 // Welcome message
                 Text("Track Tracker")
                     .font(.largeTitle)
@@ -30,7 +30,7 @@ struct WelcomeView: View {
                         // Removes welcome screen after 3 seconds
                         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                             withAnimation {
-                                showWelcomeScreen = false // Hide the welcome screen
+                                welcomeScreen = false // Hide the welcome screen
                             }
                         }
                     }

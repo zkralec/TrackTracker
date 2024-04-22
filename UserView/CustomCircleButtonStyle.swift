@@ -7,12 +7,21 @@
 
 import SwiftUI
 
-struct CustomCircleButtonStyle: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+struct CustomCircleButtonStyle: ButtonStyle {
+    var buttonColor: Color = .blue
+    var buttonSize: CGFloat = 50
 
-#Preview {
-    CustomCircleButtonStyle()
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.white)
+            .font(.title)
+            .padding()
+            .background(
+                Circle()
+                    .fill(buttonColor)
+                    .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
+            )
+            .frame(width: buttonSize, height: buttonSize)
+            .shadow(radius: configuration.isPressed ? 3 : 5)
+    }
 }

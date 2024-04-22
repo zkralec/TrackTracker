@@ -9,15 +9,16 @@ import SwiftUI
 
 // Other main page for the user, mainly lots of UI and fields
 struct WorkoutView: View {
-    @State private var currentDate = Date()
-    @State private var currentPage: Int = 0
+    @State private var currDate = Date()
+    @State private var currPage: Int = 0
     @State private var meters: [String] = [""]
-    @State private var numberOfReps = ""
-    @State private var isBlocksUsed = false
-    @State private var isRecoveryDay = false
+    @State private var numReps = ""
+    @State private var isBlocks = false
+    @State private var isRecovery = false
     @State private var isGrass = false
     @State private var isHills = false
     @State private var isFieldModified = false
+    @State private var isFocused = false
     @State private var workoutData: WorkoutData?
     
     @AppStorage("isDayComplete") private var isDayComplete = false
@@ -25,7 +26,7 @@ struct WorkoutView: View {
     var onDisappearAction: ((Bool) -> Void)?
     
     var body: some View {
-        if currentPage == 0 {
+        if currPage == 0 {
             VStack {
                 VStack {
                     // Display title
@@ -33,7 +34,7 @@ struct WorkoutView: View {
                     
                     HStack {
                         // Display current date
-                        Text(currentDate, formatter: dateFormatter)
+                        Text(currDate, formatter: dateFormatter)
                             .font(.title2)
                             .fontWeight(.medium)
                             .padding(.leading, 150)
@@ -42,17 +43,19 @@ struct WorkoutView: View {
                         
                         // Complete Day button
                         Button(action: {
-                            isDayComplete.toggle()
-                            if isDayComplete {
-                                if workoutData == nil {
-                                    workoutData = WorkoutData(date: Date(), meters: [], numberOfReps: 0, blocks: false, recovery: false, grass: false, hills: false)
+                            withAnimation {
+                                isDayComplete.toggle()
+                                isFocused = false
+                                if isDayComplete {
+                                    workoutData?.meters = meters.compactMap { Int($0) }
+                                    workoutData?.reps = Int(numReps) ?? 0
+                                    workoutData?.blocks = isBlocks
+                                    workoutData?.recovery = isRecovery
+                                    workoutData?.hills = isHills
+                                    workoutData?.grass = isGrass
+                                    workoutData?.saveData()
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 }
-                                workoutData?.meters = meters.compactMap { Int($0) }
-                                workoutData?.numberOfReps = Int(numberOfReps) ?? 0
-                                workoutData?.blocks = isBlocksUsed
-                                workoutData?.recovery = isRecoveryDay
-                                workoutData?.saveData()
-                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                             }
                         }) {
                             if !isDayComplete {
@@ -69,16 +72,16 @@ struct WorkoutView: View {
                     }
                     
                     List {
-                        VStack {
-                            Text("Reps Ran")
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .padding(10)
-                            
-                            // Halves meters fields in half for space saving after 4 fields
-                            if meters.count <= 4 {
+                        Section {
+                            VStack {
+                                Text("Reps Ran")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding(10)
+                                
+                                // Creates meter fields for user input
                                 VStack() {
-                                    ForEach(meters.indices, id: \.self) { index in
+                                    ForEach(0..<meters.count, id: \.self) { index in
                                         TextField("Meters", text: Binding(
                                             get: { meters[index] },
                                             set: { newValue in
@@ -88,116 +91,119 @@ struct WorkoutView: View {
                                         .keyboardType(.numberPad)
                                         .padding(10)
                                         .disabled(isDayComplete)
+                                        .onTapGesture {
+                                            self.isFocused = true
+                                        }
                                         .roundedBackground()
                                     }
                                 }
-                            } else {
-                                HStack(alignment: .top) {
-                                    VStack {
-                                        ForEach(0..<4, id: \.self) { index in
-                                            TextField("Meters", text: Binding(
-                                                get: { meters[index] },
-                                                set: { newValue in
-                                                    meters[index] = newValue
+                                
+                                // Buttons to add or remove reps
+                                if !isDayComplete {
+                                    HStack {
+                                        VStack {
+                                            Button(action: {
+                                                if meters.count < 5 {
+                                                    meters.append("")
                                                 }
-                                            ))
-                                            .keyboardType(.numberPad)
-                                            .padding(10)
-                                            .disabled(isDayComplete)
-                                            .roundedBackground()
+                                            }) {
+                                                Image(systemName: "plus")
+                                                    .foregroundStyle(.white)
+                                                    .frame(width: 30, height: 10)
+                                            }
+                                            .padding(.top, 8)
+                                            .buttonStyle(CustomButtonStyle())
+                                            
+                                            Text("Add")
+                                                .font(.caption)
+                                                .foregroundStyle(.blue)
+                                                .padding(4)
+                                        }
+                                        
+                                        VStack {
+                                            Button(action: {
+                                                if meters.count > 1 {
+                                                    meters.removeLast()
+                                                }
+                                            }) {
+                                                Image(systemName: "minus")
+                                                    .foregroundStyle(.white)
+                                                    .frame(width: 30, height: 10)
+                                            }
+                                            .padding(.top, 8)
+                                            .buttonStyle(CustomButtonStyle())
+                                            
+                                            Text("Remove")
+                                                .font(.caption)
+                                                .foregroundStyle(.blue)
+                                                .padding(4)
                                         }
                                     }
-                                    
-                                    // For values in meters
-                                    VStack {
-                                        ForEach(4..<meters.count, id: \.self) { index in
-                                            TextField("Meters", text: Binding(
-                                                get: { meters[index] },
-                                                set: { newValue in
-                                                    meters[index] = newValue
-                                                }
-                                            ))
-                                            .keyboardType(.numberPad)
-                                            .padding(10)
-                                            .disabled(isDayComplete)
-                                            .roundedBackground()
-                                        }
-                                    }
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, -10)
                                 }
                             }
+                        }
+                        .padding(.bottom, 5)
+                        .listSectionSpacing(15)
                             
-                            // Buttons to add or remove reps
-                            if !isDayComplete {
-                                HStack {
-                                    VStack {
-                                        Button(action: {
-                                            if meters.count < 8 {
-                                                meters.append("")
-                                            }
-                                        }) {
-                                            Image(systemName: "plus")
-                                                .foregroundStyle(.white)
-                                                .frame(width: 30, height: 10)
-                                        }
-                                        .buttonStyle(CustomButtonStyle())
-                                        
-                                        Text("Add")
-                                            .font(.caption)
-                                            .foregroundStyle(.blue)
-                                            .padding(4)
-                                    }
-                                    
-                                    VStack {
-                                        Button(action: {
-                                            if meters.count > 1 {
-                                                meters.removeLast()
-                                            }
-                                        }) {
-                                            Image(systemName: "minus")
-                                                .foregroundStyle(.white)
-                                                .frame(width: 30, height: 10)
-                                        }
-                                        .buttonStyle(CustomButtonStyle())
-                                        
-                                        Text("Remove")
-                                            .font(.caption)
-                                            .foregroundStyle(.blue)
-                                            .padding(4)
-                                    }
-                                }
-                                .padding(10)
-                                .padding(.top, 5)
-                            }
-                            
-                            // Sets field
-                            Text("Sets")
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .padding(10)
-                            
-                            TextField("Number of Sets", text: Binding(
-                                get: { numberOfReps },
-                                set: { newValue in
-                                    if validateNumberOfRepsInput(newValue) {
-                                        numberOfReps = newValue
-                                    }
-                                }
-                            ))
-                            .keyboardType(.numberPad)
-                            .padding(10)
-                            .disabled(isDayComplete)
-                            .roundedBackground()
-                            
+                        // Sets field
+                        Section {
                             VStack {
                                 HStack {
+                                    Spacer()
+                                    
+                                    Text("Sets")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding(10)
+                                    
+                                    Spacer()
+                                }
+                                
+                                TextField("Number of Sets", text: Binding(
+                                    get: { numReps },
+                                    set: { newValue in
+                                        if validateNumberOfRepsInput(newValue) {
+                                            numReps = newValue
+                                        }
+                                    }
+                                ))
+                                .keyboardType(.numberPad)
+                                .padding(10)
+                                .disabled(isDayComplete)
+                                .onTapGesture {
+                                    self.isFocused = true
+                                }
+                                .roundedBackground()
+                            }
+                        }
+                        .padding(.bottom, 5)
+                        .listSectionSpacing(15)
+                        
+                        // Toggles
+                        Section {
+                            VStack {
+                                HStack {
+                                    Spacer()
+                                    
+                                    Text("Extras")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding(10)
+                                    
+                                    Spacer()
+                                }
+                                
+                                HStack {
                                     //Toggle for Blocks
-                                    Toggle("Blocks", isOn: $isBlocksUsed)
+                                    Toggle("Blocks", isOn: $isBlocks)
                                         .font(.subheadline)
                                         .disabled(isDayComplete)
                                         .roundedBackground()
                                     
                                     // Toggle for Recovery day
-                                    Toggle("Recovery", isOn: $isRecoveryDay)
+                                    Toggle("Recovery", isOn: $isRecovery)
                                         .font(.subheadline)
                                         .disabled(isDayComplete)
                                         .roundedBackground()
@@ -222,87 +228,39 @@ struct WorkoutView: View {
                                 .padding(.horizontal, 8)
                             }
                         }
+                        .padding(.bottom, 5)
+                        .listSectionSpacing(15)
                     }
-                    .listStyle(PlainListStyle())
+                    .modifier(ToolbarModifier(isFocused: $isFocused))
                     .background(Color.gray.opacity(0.05))
                 }
                 
-                // Navigation buttons
-                HStack {
+                // Navigation bar buttons
+                if !isFocused {
                     VStack {
-                        // Exercise button
-                        Button(action: {
-                            currentPage = 1
-                        }) {
-                            Image(systemName: "dumbbell.fill")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .frame(width: 120, height: 40)
-                        
-                        Text("Exercises")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
-                            .padding(4)
-                    }
-                    
-                    VStack {
-                        // Home button
-                        Button(action: {
-                            currentPage = 3
-                        }) {
-                            Image(systemName: "house.fill")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .frame(width: 120, height: 40)
-                        
-                        Text("Home")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
-                            .padding(4)
-                    }
-                    
-                    VStack {
-                        // Meals button
-                        Button(action: {
-                            currentPage = 2
-                        }) {
-                            Image(systemName: "fork.knife")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .frame(width: 120, height: 40)
-                        
-                        Text("Meals")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
-                            .padding(4)
+                        NavigationBar(currPage: $currPage)
                     }
                 }
-                .padding()
             }
             .onAppear {
                 // Update the empty storage before loading data
-                WorkoutData.updateDataAtStartOfDay(currentDate: currentDate)
+                WorkoutData.updateDataAtStartOfDay(currentDate: currDate)
                 
                 // Load workout data
                 if workoutData == nil {
-                    workoutData = WorkoutData(date: Date(), meters: [], numberOfReps: 0, blocks: isBlocksUsed, recovery: isRecoveryDay, grass: isGrass, hills: isHills)
+                    workoutData = WorkoutData(date: Date(), meters: [], reps: 0, blocks: isBlocks, recovery: isRecovery, grass: isGrass, hills: isHills, isDayComplete: isDayComplete)
                 }
                 if let loadedData = workoutData?.loadData() {
                     workoutData = loadedData
                     
                     if let workoutData = workoutData {
                         meters = workoutData.meters.isEmpty ? [""] : workoutData.meters.map { String($0) }
-                        numberOfReps = workoutData.numberOfReps > 0 ? String(workoutData.numberOfReps) : ""
-                        isBlocksUsed = workoutData.blocks
-                        isRecoveryDay = workoutData.recovery
+                        numReps = workoutData.reps > 0 ? String(workoutData.reps) : ""
+                        isBlocks = workoutData.blocks
+                        isRecovery = workoutData.recovery
                         isGrass = workoutData.grass
                         isHills = workoutData.hills
+                        isDayComplete = workoutData.isDayComplete
                     }
                 }
                 
@@ -311,18 +269,19 @@ struct WorkoutView: View {
             }
             .onDisappear {
                 if workoutData == nil {
-                    workoutData = WorkoutData(date: Date(), meters: [], numberOfReps: 0, blocks: false, recovery: false, grass: false, hills: false)
+                    workoutData = WorkoutData(date: Date(), meters: [], reps: 0, blocks: false, recovery: false, grass: false, hills: false, isDayComplete: false)
                 } else {
                     isFieldModified = true
                     StreakData.updateStreakIfNeeded(fieldModified: isFieldModified)
 
                 }
                 workoutData?.meters = meters.compactMap { Int($0) }
-                workoutData?.numberOfReps = Int(numberOfReps) ?? 0
-                workoutData?.blocks = isBlocksUsed
-                workoutData?.recovery = isRecoveryDay
+                workoutData?.reps = Int(numReps) ?? 0
+                workoutData?.blocks = isBlocks
+                workoutData?.recovery = isRecovery
                 workoutData?.grass = isGrass
                 workoutData?.hills = isHills
+                workoutData?.isDayComplete = isDayComplete
                 workoutData?.saveData()
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 
@@ -331,11 +290,13 @@ struct WorkoutView: View {
                 
                 onDisappearAction?(isFieldModified)
             }
-        } else if currentPage == 1 {
+        } else if currPage == 4 {
+            SettingsView()
+        } else if currPage == 1 {
             ExerciseView()
-        } else if currentPage == 2 {
+        } else if currPage == 2 {
             MealsView()
-        } else if currentPage == 3 {
+        } else if currPage == 3 {
             HomeView()
         }
     }

@@ -11,11 +11,12 @@ import Foundation
 struct WorkoutData: Codable {
     var date: Date
     var meters: [Int]
-    var numberOfReps: Int
+    var reps: Int
     var blocks: Bool
     var recovery: Bool
     var grass: Bool
     var hills: Bool
+    var isDayComplete: Bool
 }
 
 extension WorkoutData {
@@ -53,7 +54,7 @@ extension WorkoutData {
         if !calendar.isDate(currentDate, inSameDayAs: storedDate) {
             //Reset workout data at new day
             UserDefaults.standard.set(currentDate, forKey: "currentDate")
-            let defaultWorkoutData = WorkoutData(date: currentDate, meters: [], numberOfReps: 0, blocks: false, recovery: false, grass: false, hills: false)
+            let defaultWorkoutData = WorkoutData(date: currentDate, meters: [], reps: 0, blocks: false, recovery: false, grass: false, hills: false, isDayComplete: false)
             defaultWorkoutData.saveData()
             print("New day. Resetting workout data.")
         }

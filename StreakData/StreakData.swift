@@ -7,41 +7,47 @@
 
 import Foundation
 
-// Increases streak by 1 for each consecuative day logging workout, ff a day is missed streak is reest
 struct StreakData {
     static func updateStreakIfNeeded(fieldModified: Bool) {
+        // Get the current date
         let today = Calendar.current.startOfDay(for: Date())
+        let userDefaults = UserDefaults.standard
         
-        // Get last date the streak was updated
-        if let lastStreakUpdateDate = UserDefaults.standard.object(forKey: "lastStreakUpdateDate") as? Date {
+        // Check if theres a last streak update
+        if let lastStreakUpdateDate = userDefaults.object(forKey: "lastStreakUpdateDate") as? Date {
+            // Get the last update
             let lastUpdateDay = Calendar.current.startOfDay(for: lastStreakUpdateDate)
             
-            // Calculate the difference in days between today and the last streak update
+            // Calculate days betwen last streak update
             let dayDifference = Calendar.current.dateComponents([.day], from: lastUpdateDay, to: today).day ?? 0
             
+            // More than 2 days reset streak
             if dayDifference >= 2 {
                 print("Day difference > 2, resetting streak")
-                // If it has been at least two days since the last streak update, reset the streak count
-                UserDefaults.standard.set(0, forKey: "streakCount")
+                userDefaults.set(0, forKey: "streakCount")
             } else if today != lastUpdateDay && fieldModified {
+                // Modified today and no update increase streak
                 print("Fields are modified, increasing streak")
-                // If the last streak update was not today and a field was modified, increase the streak count by 1
-                var streakCount = streakCount()
+                var streakCount = userDefaults.integer(forKey: "streakCount")
                 streakCount += 1
-                UserDefaults.standard.set(streakCount, forKey: "streakCount")
+                userDefaults.set(streakCount, forKey: "streakCount")
             } else {
+                // No streak modification
                 print("No streak increase or reset needed")
             }
         } else {
+            // Set initial streak count
             print("Setting initial value of streak")
-            // If there's no last streak update date, set initial values
-            UserDefaults.standard.set(0, forKey: "streakCount")
+            userDefaults.set(0, forKey: "streakCount")
         }
         
-        // Update the last streak update date to today
-        UserDefaults.standard.set(today, forKey: "lastStreakUpdateDate")
+        // Update the last streak update today
+        userDefaults.set(today, forKey: "lastStreakUpdateDate")
+        
+        // Sync
+        userDefaults.synchronize()
     }
-
+    
     static func streakCount() -> Int {
         return UserDefaults.standard.integer(forKey: "streakCount")
     }

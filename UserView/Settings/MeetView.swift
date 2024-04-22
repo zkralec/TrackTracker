@@ -10,88 +10,96 @@ import UserNotifications
 
 // Allows user to choose meet dates and display them
 struct MeetView: View {
-    @State private var selectedDate = Date()
+    @State private var date = Date()
     @State private var meets: [Date] = []
-    @State private var currentPage: Int = 6
+    @State private var currPage: Int = 6
 
     var body: some View {
-        if currentPage == 6 {
+        if currPage == 6 {
             VStack {
                 // Title
                 TitleBackground(title: "Select Meet Days")
                 
                 List {
-                    // Calendar
-                    DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .padding()
-                    
-                    // Add meet date button
-                    HStack {
-                        Spacer()
-                        
-                        Button("Add Meet") {
-                            meets.append(selectedDate)
-                            scheduleNotification(for: selectedDate)
-                            saveMeets()
-                            print("Added meet \(selectedDate)")
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .padding()
-                        
-                        Spacer()
-                    }
-                    
-                    // Remove and display meet dates
-                    HStack {
-                        Spacer()
-                        
+                    Section {
                         VStack {
-                            Text("Meet Days")
-                                .font(.headline)
-                                .fontWeight(.medium)
+                            // Calendar
+                            DatePicker("", selection: $date, displayedComponents: .date)
+                                .datePickerStyle(GraphicalDatePickerStyle())
                                 .padding()
                             
-                            if meets.isEmpty {
-                                Text("No meet days selected")
-                                    .foregroundColor(.secondary)
-                                    .padding()
-                                    .roundedBackground()
-                            } else {
-                                ForEach(meets, id: \.self) { date in
-                                    Text(date.formatted())
-                                        .padding(5)
-                                        .roundedBackground()
-                                }
+                            // Add meet date button
+                            HStack {
+                                Spacer()
                                 
-                                // Remove the last meet day
-                                Button("Remove Last") {
-                                    removeMeet(at: meets.count - 1)
-                                    print("Removed last meet")
+                                Button("Add Meet") {
+                                    meets.append(date)
+                                    scheduleNotification(for: date)
+                                    saveMeets()
+                                    print("Added meet \(date)")
                                 }
                                 .buttonStyle(CustomButtonStyle())
                                 .padding()
+                                
+                                Spacer()
                             }
                         }
-                        
-                        Spacer()
                     }
+                    .listSectionSpacing(15)
+                    
+                    // Remove and display meet dates
+                    Section {
+                        HStack {
+                            Spacer()
+                            
+                            VStack {
+                                Text("Meet Days")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding()
+                                
+                                if meets.isEmpty {
+                                    Text("No meet days selected")
+                                        .foregroundStyle(.secondary)
+                                        .padding()
+                                        .roundedBackground()
+                                } else {
+                                    ForEach(meets, id: \.self) { date in
+                                        Text(date.formatted())
+                                            .padding(5)
+                                            .roundedBackground()
+                                    }
+                                    
+                                    // Remove the last meet day
+                                    Button("Remove Last") {
+                                        removeMeet(at: meets.count - 1)
+                                        print("Removed last meet")
+                                    }
+                                    .buttonStyle(CustomButtonStyle())
+                                    .padding()
+                                }
+                            }
+                            
+                            Spacer()
+                        }
+                    }
+                    .listSectionSpacing(15)
                 }
-                .listStyle(PlainListStyle())
                 .background(Color.gray.opacity(0.05))
-                .padding()
                 
                 Button("Save") {
-                    currentPage = 4
+                    withAnimation {
+                        currPage = 4
+                    }
                 }
                 .buttonStyle(CustomButtonStyle())
                 .frame(width: 120, height: 40)
-                .padding(.bottom)
+                .padding()
             }
             .onAppear {
                 loadMeets()
             }
-        } else if currentPage == 4 {
+        } else if currPage == 4 {
             SettingsView()
         }
     }

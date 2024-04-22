@@ -9,13 +9,13 @@ import SwiftUI
 
 // Page for meal info and user calories
 struct MealsView: View {
-    @State private var currentPage: Int = 2
+    @State private var currPage: Int = 2
     @StateObject var userDataManager = UserDataManager()
     @State private var mealPlan: MealPlan?
     @State private var shouldFetchMealPlan = true
     
     var body: some View {
-        if currentPage == 2 {
+        if currPage == 2 {
             VStack {
                 // Title
                 TitleBackground(title: "Meals")
@@ -31,7 +31,7 @@ struct MealsView: View {
                     if let mealPlan = mealPlan {
                         MealsListView(mealPlan: mealPlan)
                             .toolbar {
-                                ToolbarItem(placement: .topBarLeading) {
+                                ToolbarItem(placement: .topBarTrailing) {
                                     Button(action: {
                                         fetchRefreshedMeals()
                                     }) {
@@ -52,63 +52,10 @@ struct MealsView: View {
                 
                 Spacer()
                 
-                // Navigation buttons
-                HStack {
-                    VStack {
-                        // Exercise button
-                        Button(action: {
-                            currentPage = 1
-                        }) {
-                            Image(systemName: "dumbbell.fill")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .frame(width: 120, height: 40)
-                        
-                        Text("Exercises")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
-                            .padding(4)
-                    }
-                    
-                    VStack {
-                        // Home button
-                        Button(action: {
-                            currentPage = 3
-                        }) {
-                            Image(systemName: "house.fill")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .frame(width: 120, height: 40)
-                        
-                        Text("Home")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
-                            .padding(4)
-                    }
-                    
-                    VStack {
-                        // Workout button
-                        Button(action: {
-                            currentPage = 0
-                        }) {
-                            Image(systemName: "figure.run")
-                                .foregroundStyle(.white)
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .frame(width: 120, height: 40)
-                        
-                        Text("Workouts")
-                            .font(.caption)
-                            .foregroundStyle(.blue)
-                            .padding(4)
-                    }
+                // Navigation bar buttons
+                VStack {
+                    NavigationBar(currPage: $currPage)
                 }
-                .padding()
             }
             .onAppear {
                 // Calculate maintenance calories
@@ -116,11 +63,13 @@ struct MealsView: View {
                 // Fetch a meal plan if needed
                 fetchMeals()
             }
-        } else if currentPage == 1 {
-            ExerciseView()
-        } else if currentPage == 0 {
+        } else if currPage == 4 {
+            SettingsView()
+        } else if currPage == 0 {
             WorkoutView()
-        } else if currentPage == 3 {
+        } else if currPage == 1 {
+            ExerciseView()
+        } else if currPage == 3 {
             HomeView()
         }
     }

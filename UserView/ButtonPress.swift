@@ -7,12 +7,9 @@
 
 import SwiftUI
 
-struct ButtonPress: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct ButtonPress: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
     }
-}
-
-#Preview {
-    ButtonPress()
 }

@@ -13,7 +13,7 @@ struct RoundedBackground: ViewModifier {
         content
             .padding(5)
             .background(Color.gray.opacity(0.1))
-            .cornerRadius(10)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 

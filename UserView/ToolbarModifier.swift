@@ -7,12 +7,25 @@
 
 import SwiftUI
 
-struct ToolbarModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+struct ToolbarModifier: ViewModifier {
+    @Binding var isFocused: Bool
 
-#Preview {
-    ToolbarModifier()
+    func body(content: Content) -> some View {
+        content
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    if isFocused {
+                        HStack {
+                            Spacer()
+                            Button("Done") {
+                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                isFocused = false
+                            }
+                            .padding(.horizontal)
+                        }
+                    }
+                    Spacer() // This spacer pushes the button to the rightmost side of the toolbar
+                }
+            }
+    }
 }

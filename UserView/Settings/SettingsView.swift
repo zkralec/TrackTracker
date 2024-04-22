@@ -9,195 +9,205 @@ import SwiftUI
 
 // Holds all the settings the user can modify
 struct SettingsView: View {
-    @State private var currentPage: Int = 4
-    @State private var selectedEvents: [EventData] = {
+    @State private var currPage: Int = 4
+    @State private var events: [EventData] = {
     if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
         return savedEvents.compactMap { EventData(rawValue: $0) }
     } else {
         return []
     }
     }()
-    @State private var personalRecords = [EventData: String]()
+    @State private var prs = [EventData: String]()
     @State private var meets: [Date] = []
+    @State private var isFocused = false
     @StateObject var userDataManager = UserDataManager()
     
     var body: some View {
-        if currentPage == 4 {
+        if currPage == 4 {
             VStack {
                 // Display title
                 TitleBackground(title: "Settings")
-                
-                HStack {
-                    // Back button
-                    Button(action: {
-                        currentPage = 3
-                    }) {
-                        Image(systemName: "arrowshape.backward.fill")
-                            .foregroundStyle(.white)
-                            .frame(width: 20, height: 5)
-                    }
-                    .buttonStyle(CustomButtonStyle())
-                    .padding(.vertical)
-                    .padding(.leading, 22)
-                    
-                    Text("Select a setting to modify")
-                        .font(.title3)
-                        .fontWeight(.medium)
-                        .padding(.leading, 20)
-                    
-                    Spacer()
-                }
             }
             
             List {
-                VStack {
-                    // Display user information
-                    if let userData = userDataManager.userData {
-                        Text("User Information")
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .padding()
-                        Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
-                            .font(.subheadline)
-                            .padding(5)
-                            .roundedBackground()
-                        Text("Weight: \(formatWeight(userData.weight))")
-                            .font(.subheadline)
-                            .padding(5)
-                            .roundedBackground()
-                        Text("Age: \(userData.age + 18)")
-                            .font(.subheadline)
-                            .padding(5)
-                            .roundedBackground()
-                        Text("Gender: \(userData.gender.rawValue)")
-                            .font(.subheadline)
-                            .padding(5)
-                            .roundedBackground()
-                    }
-                    
-                    // Settings for user info
-                    HStack {
-                        Spacer()
-                        
-                        Button(action: {
-                            GlobalVariables.hasCompletedInput = false
-                            currentPage = -1
-                        }) {
-                            Text("Modify")
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .padding()
-                        
-                        Spacer()
-                    }
-                }
-                
-                // Shows users their events and allows for PR input
-                VStack {
-                    if selectedEvents.isEmpty {
-                        Text("No selected events")
-                            .foregroundColor(.secondary)
-                            .padding()
-                    } else {
-                        Text("Selected Events")
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .padding()
-                        ForEach(selectedEvents, id: \.self) { event in
-                            HStack {
-                                Text(event.rawValue)
-                                    .padding(5)
-                                    .roundedBackground()
-                                Spacer()
-                                TextField("Enter PR", text: Binding(
-                                    get: {
-                                        personalRecords[event] ?? ""
-                                    },
-                                    set: { newValue in
-                                        personalRecords[event] = newValue
-                                        savePR(for: event, prValue: newValue)
-                                    }
-                                ))
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                            }
-                        }
-                    }
-                    
-                    // Settings for events and PRs
-                    HStack {
-                        Spacer()
-                        
-                        Button(action: {
-                            currentPage = 5
-                        }) {
-                            Text("Select Events")
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .padding()
-                        
-                        Spacer()
-                    }
-                }
-                
-                // Display meet dates
-                VStack {
-                    HStack {
-                        Spacer()
-                        
-                        VStack {
-                            Text("Meet Days")
+                Section {
+                    VStack {
+                        // Display user information
+                        if let userData = userDataManager.userData {
+                            Text("User Information")
                                 .font(.headline)
                                 .fontWeight(.medium)
                                 .padding()
+                            Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
+                                .font(.subheadline)
+                                .padding(5)
+                                .roundedBackground()
+                            Text("Weight: \(formatWeight(userData.weight))")
+                                .font(.subheadline)
+                                .padding(5)
+                                .roundedBackground()
+                            Text("Age: \(userData.age + 18)")
+                                .font(.subheadline)
+                                .padding(5)
+                                .roundedBackground()
+                            Text("Gender: \(userData.gender.rawValue)")
+                                .font(.subheadline)
+                                .padding(5)
+                                .roundedBackground()
+                        }
+                        
+                        // Settings for user info
+                        HStack {
+                            Spacer()
                             
-                            if meets.isEmpty {
-                                Text("No meet days selected")
-                                    .foregroundColor(.secondary)
-                                    .padding()
-                                    .roundedBackground()
-                            } else {
-                                ForEach(meets, id: \.self) { date in
-                                    Text(date.formatted())
+                            Button(action: {
+                                withAnimation {
+                                    GlobalVariables.userInput = false
+                                    currPage = -1
+                                }
+                            }) {
+                                Text("Modify")
+                            }
+                            .buttonStyle(CustomButtonStyle())
+                            .padding()
+                            
+                            Spacer()
+                        }
+                    }
+                }
+                .listSectionSpacing(15)
+                
+                // Shows users their events and allows for PR input
+                Section {
+                    VStack {
+                        if events.isEmpty {
+                            Text("No selected events")
+                                .foregroundStyle(.secondary)
+                                .padding()
+                        } else {
+                            Text("Selected Events")
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .padding()
+                            ForEach(events, id: \.self) { event in
+                                HStack {
+                                    Text(event.rawValue)
                                         .padding(5)
                                         .roundedBackground()
+                                    
+                                    Spacer()
+                                    
+                                    TextField("Enter PR", text: Binding(
+                                        get: {
+                                            prs[event] ?? ""
+                                        },
+                                        set: { newValue in
+                                            prs[event] = newValue
+                                            savePR(for: event, prValue: newValue)
+                                        }
+                                    ))
+                                    .onTapGesture {
+                                        self.isFocused = true
+                                    }
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
                                 }
                             }
                         }
-                        Spacer()
-                    }
-                    
-                    // Settings for meet dates
-                    HStack {
-                        Spacer()
                         
-                        Button(action: {
-                            currentPage = 6
-                        }) {
-                            Text("Select Meets")
+                        // Settings for events and PRs
+                        HStack {
+                            Spacer()
+                            
+                            Button(action: {
+                                withAnimation {
+                                    currPage = 5
+                                }
+                            }) {
+                                Text("Select Events")
+                            }
+                            .buttonStyle(CustomButtonStyle())
+                            .padding()
+                            
+                            Spacer()
                         }
-                        .buttonStyle(CustomButtonStyle())
-                        .padding()
-                        
-                        Spacer()
                     }
                 }
-                .onAppear {
-                    loadPR()
-                    loadMeets()
+                .listSectionSpacing(15)
+                
+                // Display meet dates
+                Section {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            
+                            VStack {
+                                Text("Meet Days")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding()
+                                
+                                if meets.isEmpty {
+                                    Text("No meet days selected")
+                                        .foregroundStyle(.secondary)
+                                        .padding()
+                                        .roundedBackground()
+                                } else {
+                                    ForEach(meets, id: \.self) { date in
+                                        Text(date.formatted())
+                                            .padding(5)
+                                            .roundedBackground()
+                                    }
+                                }
+                            }
+                            Spacer()
+                        }
+                        
+                        // Settings for meet dates
+                        HStack {
+                            Spacer()
+                            
+                            Button(action: {
+                                withAnimation {
+                                    currPage = 6
+                                }
+                            }) {
+                                Text("Select Meets")
+                            }
+                            .buttonStyle(CustomButtonStyle())
+                            .padding()
+                            
+                            Spacer()
+                        }
+                    }
                 }
+                .listSectionSpacing(15)
             }
-            .listStyle(PlainListStyle())
+            .modifier(ToolbarModifier(isFocused: $isFocused))
             .background(Color.gray.opacity(0.05))
             .onAppear {
+                loadPR()
                 loadMeets()
             }
-        } else if currentPage == -1 {
+            
+            // Navigation bar buttons
+            if !isFocused {
+                VStack {
+                    NavigationBar(currPage: $currPage)
+                }
+            }
+        } else if currPage == -1 {
             UserInputView()
-        } else if currentPage == 3 {
+        } else if currPage == 0 {
+            WorkoutView()
+        } else if currPage == 1 {
+            ExerciseView()
+        } else if currPage == 2 {
+            MealsView()
+        } else if currPage == 3 {
             HomeView()
-        } else if currentPage == 5 {
-            EventView(selectedEvents: $selectedEvents)
-        } else if currentPage == 6 {
+        } else if currPage == 5 {
+            EventView(events: $events)
+        } else if currPage == 6 {
             MeetView()
         }
     }
@@ -211,6 +221,7 @@ struct SettingsView: View {
 
     // Load in the current meet dates
     func loadMeets() {
+        print("Loading meets")
         if let data = UserDefaults.standard.data(forKey: "meetDates") {
             let decoder = JSONDecoder()
             if let decoded = try? decoder.decode([Date].self, from: data) {
@@ -224,16 +235,17 @@ struct SettingsView: View {
         print("Saving PRs")
         print("PR: \(prValue)")
         print("Event: \(event.rawValue)")
-        for (event, prValue) in personalRecords {
+        for (event, prValue) in prs {
             UserDefaults.standard.set(prValue, forKey: event.rawValue)
         }
     }
     
     // Load the user's event PRs
     func loadPR() {
-        for event in selectedEvents {
+        print("Loading Prs")
+        for event in events {
             if let prValue = UserDefaults.standard.string(forKey: event.rawValue) {
-                personalRecords[event] = prValue
+                prs[event] = prValue
             }
         }
     }
