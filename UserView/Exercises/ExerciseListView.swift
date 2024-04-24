@@ -10,6 +10,7 @@ import SwiftUI
 // Formatts the fetched exercise data
 struct ExerciseListView: View {
     @State private var currPage: Int = 1
+    @State private var muscleTitle = "Abdominals"
     @Binding var muscleTarget: String
     @Binding var showButtons: Bool
     
@@ -29,96 +30,26 @@ struct ExerciseListView: View {
                         .fontWeight(.medium)
                         .padding(10)
                     
-                    // Different exercise muscle target buttons
-                    ScrollView(.horizontal) {
-                        HStack {
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Abdominals"
-                                    fetchExercise(muscle: "abdominals")
-                                }
-                            }) {
-                                Text("Abs")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.leading, 17)
-                            .padding(.horizontal, 6)
-                            
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Abductors"
-                                    fetchExercise(muscle: "abductors")
-                                }
-                            }) {
-                                Text("Abds")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.horizontal, 6)
-                            
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Adductors"
-                                    fetchExercise(muscle: "adductors")
-                                }
-                            }) {
-                                Text("Adds")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.horizontal, 6)
-                            
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Calves"
-                                    fetchExercise(muscle: "calves")
-                                }
-                            }) {
-                                Text("Calves")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.horizontal, 6)
-                            
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Glutes"
-                                    fetchExercise(muscle: "glutes")
-                                }
-                            }) {
-                                Text("Glutes")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.horizontal, 6)
-                            
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Hamstrings"
-                                    fetchExercise(muscle: "hamstrings")
-                                }
-                            }) {
-                                Text("Hams")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.horizontal, 6)
-                            
-                            Button(action: {
-                                withAnimation {
-                                    muscleTarget = "Quadriceps"
-                                    fetchExercise(muscle: "quadriceps")
-                                }
-                            }) {
-                                Text("Quads")
-                                    .foregroundStyle(.white)
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding(.trailing, 17)
-                            .padding(.horizontal, 6)
+                    HStack {
+                        // Different exercise muscle target buttons
+                        Picker("", selection: $muscleTarget) {
+                            Text("Abdominals").tag("abdominals")
+                            Text("Abductors").tag("abductors")
+                            Text("Adductors").tag("adductors")
+                            Text("Calves").tag("calves")
+                            Text("Glutes").tag("glutes")
+                            Text("Hamstrings").tag("hamstrings")
+                            Text("Quadriceps").tag("quadriceps")
                         }
-                        .padding(.bottom)
+                        .tint(.black)
+                        .roundedBackground()
+                        // Automatically changes and fetches exercises
+                        .onChange(of: muscleTarget) {
+                            withAnimation {
+                                fetchExercise(muscle: muscleTarget)
+                            }
+                        }
+                        .padding()
                     }
                 }
             }
@@ -147,7 +78,7 @@ struct ExerciseListView: View {
                                 // Instructions
                                 if exercise.instructions.count > 100 {
                                     withAnimation {
-                                        NavigationLink(destination: ExerciseDetailsView(showButtons: $showButtons, muscleTarget: $muscleTarget, exercise: exercise)) {
+                                        NavigationLink(destination: ExerciseDetailsView(showButtons: $showButtons, muscleTarget: $muscleTarget, muscleTitle: $muscleTitle, exercise: exercise)) {
                                             Text("View Details")
                                                 .foregroundStyle(.blue)
                                                 .font(.subheadline)
@@ -202,6 +133,7 @@ struct ExerciseDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var showButtons: Bool
     @Binding var muscleTarget: String
+    @Binding var muscleTitle : String
     
     var exercise: Exercise
     private let buttonStyle = CustomButtonStyle()
@@ -225,7 +157,7 @@ struct ExerciseDetailsView: View {
                 
                 Spacer()
                 
-                Text("Muscle Target: \(muscleTarget)")
+                Text("Muscle Target: \(muscleTitle)")
                     .font(.headline)
                     .fontWeight(.medium)
                     .padding(.vertical, 10)
@@ -269,7 +201,7 @@ struct ExerciseDetailsView: View {
             .onAppear {
                 showButtons = false
                 if muscleTarget == "" {
-                    muscleTarget = "Abdominals"
+                    muscleTarget = "abdominals"
                 }
             }
             .navigationBarBackButtonHidden(true)
