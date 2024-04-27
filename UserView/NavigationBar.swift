@@ -95,17 +95,17 @@ struct NavigationBar: View {
                     // Settings button
                     Button(action: {
                         withAnimation {
-                            currPage = 4
+                            currPage = 7
                         }
                     }) {
-                        Image(systemName: "gear")
+                        Image(systemName: "person.fill")
                             .foregroundStyle(.blue)
                             .frame(width: 30, height: 30)
                     }
                     .frame(width: 70, height: 30)
                     .buttonStyle(ButtonPress())
                     
-                    Text("Settings")
+                    Text("Profile")
                         .font(.caption)
                         .foregroundStyle(.blue)
                         .padding(4)

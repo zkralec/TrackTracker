@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct MenuBar: View {
+    @Binding var isSideMenuOpen: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Button(action: {
+                withAnimation {
+                    isSideMenuOpen.toggle()
+                }
+            }) {
+                Image(systemName: "line.3.horizontal")
+                    .font(.system(size: 20))
+                    .foregroundStyle(.blue)
+            }
+            .frame(width: 70, height: 30)
+            .buttonStyle(ButtonPress())
+            
+            Spacer()
+        }
     }
-}
-
-#Preview {
-    MenuBar()
 }

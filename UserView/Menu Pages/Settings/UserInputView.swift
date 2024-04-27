@@ -44,8 +44,14 @@ struct UserInputView: View {
                     TitleBackground(title: "User Information")
                     
                     List {
+                        // Name section
                         Section {
                             VStack {
+                                Text("Name")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding(10)
+                                
                                 TextField("First Name", text: $fName)
                                     .textFieldStyle(DefaultTextFieldStyle())
                                     .padding(10)
@@ -60,13 +66,12 @@ struct UserInputView: View {
                             }
                         }
                         
+                        // Height section
                         Section {
                             VStack {
-                                // Height section
                                 Text("Height")
                                     .font(.headline)
                                     .fontWeight(.medium)
-                                    .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(10)
                                 
                                 HStack {
@@ -97,7 +102,6 @@ struct UserInputView: View {
                                 Text("Weight (lbs)")
                                     .font(.headline)
                                     .fontWeight(.medium)
-                                    .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(10)
                                 
                                 TextField("Enter weight (lbs)", value: $weight, formatter: NumberFormatter(), onEditingChanged: { editing in
@@ -127,7 +131,6 @@ struct UserInputView: View {
                                 Text("Age")
                                     .font(.headline)
                                     .fontWeight(.medium)
-                                    .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(10)
                                 
                                 Picker("Age", selection: $age) {
@@ -150,7 +153,6 @@ struct UserInputView: View {
                                     Text("Gender")
                                         .font(.headline)
                                         .fontWeight(.medium)
-                                        .frame(maxWidth: .infinity, alignment: .center)
                                         .padding(10)
                                     
                                     Picker("", selection: $gender) {

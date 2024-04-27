@@ -18,6 +18,8 @@ struct UserData: Codable, Equatable {
     
     // User gender, height, weight, and age
     var gender: Gender
+    var fName: String
+    var lName: String
     var heightFeet: Int
     var heightInches: Int
     var weight: Double
