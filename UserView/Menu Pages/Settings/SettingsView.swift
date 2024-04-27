@@ -10,16 +10,18 @@ import SwiftUI
 // Holds all the settings the user can modify
 struct SettingsView: View {
     @State private var currPage: Int = 4
-    @State private var events: [EventData] = {
-    if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
-        return savedEvents.compactMap { EventData(rawValue: $0) }
-    } else {
-        return []
-    }
-    }()
     @State private var prs = [EventData: String]()
     @State private var meets: [Date] = []
     @State private var isFocused = false
+    
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
+    
     @StateObject var userDataManager = UserDataManager()
     
     var body: some View {
@@ -30,50 +32,36 @@ struct SettingsView: View {
             }
             
             List {
+                // Display meet dates
                 Section {
                     VStack {
-                        // Display user information
-                        if let userData = userDataManager.userData {
-                            Text("User Information")
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .padding()
-                            Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
-                                .font(.subheadline)
-                                .padding(5)
-                                .roundedBackground()
-                            Text("Weight: \(formatWeight(userData.weight))")
-                                .font(.subheadline)
-                                .padding(5)
-                                .roundedBackground()
-                            Text("Age: \(userData.age + 18)")
-                                .font(.subheadline)
-                                .padding(5)
-                                .roundedBackground()
-                            Text("Gender: \(userData.gender.rawValue)")
-                                .font(.subheadline)
-                                .padding(5)
-                                .roundedBackground()
-                        }
-                        
-                        // Settings for user info
                         HStack {
                             Spacer()
                             
-                            Button(action: {
-                                withAnimation {
-                                    GlobalVariables.userInput = false
-                                    currPage = -1
+                            VStack {
+                                Text("Meet Days")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding()
+                                
+                                if meets.isEmpty {
+                                    Text("No meet days selected")
+                                        .foregroundStyle(.secondary)
+                                        .padding()
+                                        .roundedBackground()
+                                } else {
+                                    ForEach(meets, id: \.self) { date in
+                                        Text(date.formatted())
+                                            .padding(5)
+                                            .roundedBackground()
+                                    }
                                 }
-                            }) {
-                                Text("Modify")
                             }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding()
                             
                             Spacer()
                         }
                     }
+                    .padding(.bottom)
                 }
                 .listSectionSpacing(15)
                 
@@ -113,70 +101,79 @@ struct SettingsView: View {
                                 }
                             }
                         }
-                        
-                        // Settings for events and PRs
-                        HStack {
-                            Spacer()
-                            
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 5
-                                }
-                            }) {
-                                Text("Select Events")
+                    }
+                    .padding(.bottom)
+                }
+                .listSectionSpacing(15)
+                
+                // Allows user to navigate to MeetView to change their meet days
+                Section {
+                    VStack {
+                        Button(action: {
+                            withAnimation {
+                                currPage = 6
                             }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding()
-                            
-                            Spacer()
+                        }) {
+                            HStack {
+                                Text("Modify Meet Days")
+                                    .padding(.vertical)
+                                Image(systemName: "chevron.right")
+                                    .frame(width: 70)
+                                
+                                Spacer()
+                            }
+                            .foregroundStyle(.black)
+                            .fontWeight(.medium)
+                            .font(.system(size: 20))
                         }
                     }
                 }
                 .listSectionSpacing(15)
                 
-                // Display meet dates
+                // Allows user to navigate to EventView to change their selected events
                 Section {
                     VStack {
-                        HStack {
-                            Spacer()
-                            
-                            VStack {
-                                Text("Meet Days")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding()
+                        Button(action: {
+                            withAnimation {
+                                currPage = 5
+                            }
+                        }) {
+                            HStack {
+                                Text("Modify Selected Events")
+                                    .padding(.vertical)
+                                Image(systemName: "chevron.right")
+                                    .frame(width: 70)
                                 
-                                if meets.isEmpty {
-                                    Text("No meet days selected")
-                                        .foregroundStyle(.secondary)
-                                        .padding()
-                                        .roundedBackground()
-                                } else {
-                                    ForEach(meets, id: \.self) { date in
-                                        Text(date.formatted())
-                                            .padding(5)
-                                            .roundedBackground()
-                                    }
-                                }
+                                Spacer()
                             }
-                            Spacer()
+                            .foregroundStyle(.black)
+                            .fontWeight(.medium)
+                            .font(.system(size: 20))
                         }
-                        
-                        // Settings for meet dates
-                        HStack {
-                            Spacer()
-                            
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 6
-                                }
-                            }) {
-                                Text("Select Meets")
+                    }
+                }
+                .listSectionSpacing(15)
+                
+                // Allows user to navigate to UserInputView to change their information
+                Section {
+                    VStack {
+                        Button(action: {
+                            withAnimation {
+                                GlobalVariables.userInput = false
+                                currPage = -1
                             }
-                            .buttonStyle(CustomButtonStyle())
-                            .padding()
-                            
-                            Spacer()
+                        }) {
+                            HStack {
+                                Text("Modify User Info")
+                                    .padding(.vertical)
+                                Image(systemName: "chevron.right")
+                                    .frame(width: 70)
+                                
+                                Spacer()
+                            }
+                            .foregroundStyle(.black)
+                            .fontWeight(.medium)
+                            .font(.system(size: 20))
                         }
                     }
                 }
@@ -195,6 +192,7 @@ struct SettingsView: View {
                     NavigationBar(currPage: $currPage)
                 }
             }
+            
         } else if currPage == -1 {
             UserInputView()
         } else if currPage == 0 {
@@ -209,16 +207,11 @@ struct SettingsView: View {
             EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
+        } else if currPage == 7 {
+            ProfileView()
         }
     }
     
-    // Format weight to display with correct units
-    private func formatWeight(_ weight: Double) -> String {
-        let weightFormatter = NumberFormatter()
-        weightFormatter.maximumFractionDigits = weight.truncatingRemainder(dividingBy: 1) == 0 ? 0 : 1
-        return "\(weightFormatter.string(from: NSNumber(value: weight)) ?? "") lbs"
-    }
-
     // Load in the current meet dates
     func loadMeets() {
         print("Loading meets")

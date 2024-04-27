@@ -14,11 +14,13 @@ struct GlobalVariables {
 
 // Page to gather user data
 struct UserInputView: View {
+    @State private var fName = ""
+    @State private var lName = ""
     @State private var heightFeet: Int = 0
     @State private var heightInches: Int = 0
     @State private var weight: Double = 0.0
     @State private var age: Int = 0
-    @State private var isEditing = false
+    @State private var isFocused = false
     @State private var gender = Gender.male
     @State private var userData: UserData?
     @State private var currPage: Int = -1
@@ -29,7 +31,7 @@ struct UserInputView: View {
         case male = "Male"
         case female = "Female"
         case other = "Other"
-            
+        
         var id: String { self.rawValue }
     }
     
@@ -38,20 +40,26 @@ struct UserInputView: View {
         if currPage == -1 {
             if !GlobalVariables.userInput {
                 VStack {
-                    // Instructions
-                    Text("Please enter your height, weight, age, and gender")
-                        .foregroundStyle(.white)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(Color.blue)
-                                .frame(width: 380, height: 80)
-                                .padding(.horizontal, 20)
-                        )
-                        .padding(.bottom)
+                    // Display title
+                    TitleBackground(title: "User Information")
                     
                     List {
+                        Section {
+                            VStack {
+                                TextField("First Name", text: $fName)
+                                    .textFieldStyle(DefaultTextFieldStyle())
+                                    .padding(10)
+                                    .roundedBackground()
+                                    .padding(10)
+                                
+                                TextField("Last Name", text: $lName)
+                                    .textFieldStyle(DefaultTextFieldStyle())
+                                    .padding(10)
+                                    .roundedBackground()
+                                    .padding(10)
+                            }
+                        }
+                        
                         Section {
                             VStack {
                                 // Height section
@@ -93,7 +101,7 @@ struct UserInputView: View {
                                     .padding(10)
                                 
                                 TextField("Enter weight (lbs)", value: $weight, formatter: NumberFormatter(), onEditingChanged: { editing in
-                                    self.isEditing = editing
+                                    self.isFocused = editing
                                 })
                                 .keyboardType(.numberPad)
                                 .padding()
@@ -101,7 +109,7 @@ struct UserInputView: View {
                                 .roundedBackground()
                                 
                                 // Done button for weight input
-                                if isEditing {
+                                if isFocused {
                                     Button("Done") {
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     }
@@ -164,31 +172,14 @@ struct UserInputView: View {
                         }
                         .listSectionSpacing(15)
                     }
-                    .padding(.horizontal, -15)
                     .background(Color.gray.opacity(0.05))
-                        
-                    // Save data button
-                    if !isEditing {
-                            Button("Save") {
-                                withAnimation {
-                                    let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
-                                    currPage = 4
-                                    userData.saveUserData()
-                                    userDataManager.userData = userData
-                                    userDataManager.calculateMaintenanceCalories()
-                                    GlobalVariables.userInput = true
-                                }
-                            }
-                            .buttonStyle(CustomButtonStyle())
-                            .frame(width: 120, height: 40)
-                            .disabled(heightFeet == 3 || weight == 0.0 || weight == 1)
-                            .padding()
-                    }
                 }
                 .onAppear {
                     // Load user data
                     if let userData = UserData.loadUserData() {
                         self.userDataManager.userData = userData
+                        self.fName = userData.fName
+                        self.lName = userData.lName
                         self.heightFeet = userData.heightFeet
                         self.heightInches = userData.heightInches
                         self.weight = userData.weight
@@ -198,21 +189,30 @@ struct UserInputView: View {
                 }
                 .onDisappear {
                     // Save user data
-                    let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
+                    let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, fName: fName, lName: lName,heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
                     userData.saveUserData()
+                    
+                    GlobalVariables.userInput = true
                 }
-                .onChange(of: userData) { newValue, _ in
-                    // Save user data on change
-                    guard let newValue = newValue else { return }
-                    newValue.saveUserData()
-                }
-                .padding()
                 
+                // Navigation bar buttons
+                if !isFocused {
+                    VStack {
+                        NavigationBar(currPage: $currPage)
+                            .disabled(fName == "" || lName == "" || heightFeet <= 3 || weight <= 70)
+                    }
+                }
             } else {
                 HomeView()
             }
-        } else if currPage == 4 {
-            SettingsView()
+        } else if currPage == 0 {
+            WorkoutView()
+        } else if currPage == 1 {
+            ExerciseView()
+        } else if currPage == 2 {
+            MealsView()
+        } else if currPage == 3 {
+            HomeView()
         }
     }
 }

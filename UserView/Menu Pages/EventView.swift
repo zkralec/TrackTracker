@@ -10,12 +10,16 @@ import SwiftUI
 // Allows user to choose the events they do
 struct EventView: View {
     @State private var currPage: Int = 5
+    @State private var isSideMenuOpen = false
     @Binding var events: [EventData]
-
+    
     var body: some View {
         if currPage == 5 {
             VStack {
-                TitleBackground(title: "Select Your Events")
+                // Menu bar icon
+                MenuBar(isSideMenuOpen: $isSideMenuOpen)
+                
+                TitleBackground(title: "Events")
                 
                 // List of events with navigation links
                 List {
@@ -23,6 +27,9 @@ struct EventView: View {
                         Section {
                             Button(action: {
                                 self.toggleSelection(for: event)
+                                // Saves the events
+                                UserDefaults.standard.set(events.map { $0.rawValue }, forKey: "selectedEvents")
+                                print("Saved Events")
                             }) {
                                 HStack {
                                     Text(event.rawValue)
@@ -42,22 +49,33 @@ struct EventView: View {
                 }
                 .background(Color.gray.opacity(0.05))
                 
-                // Saves the events and returns to SettingsView
-                Button("Save") {
-                    withAnimation {
-                        UserDefaults.standard.set(events.map { $0.rawValue }, forKey: "selectedEvents")
-                        currPage = 4
-                    }
+                // Show side menu if needed
+                if isSideMenuOpen {
+                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
                 }
-                .buttonStyle(CustomButtonStyle())
-                .frame(width: 120, height: 40)
-                .padding()
+                
+                // Navigation bar buttons
+                VStack {
+                    NavigationBar(currPage: $currPage)
+                }
             }
+        } else if currPage == 0 {
+            WorkoutView()
+        } else if currPage == 1 {
+            ExerciseView()
+        } else if currPage == 2 {
+            MealsView()
+        } else if currPage == 3 {
+            HomeView()
         } else if currPage == 4 {
             SettingsView()
+        } else if currPage == 6 {
+            MeetView()
+        } else if currPage == 7 {
+            ProfileView()
         }
     }
-
+    
     // ALlows the user to toggle selection
     private func toggleSelection(for event: EventData) {
         if let index = events.firstIndex(of: event) {

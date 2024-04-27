@@ -13,42 +13,26 @@ struct MeetView: View {
     @State private var date = Date()
     @State private var meets: [Date] = []
     @State private var currPage: Int = 6
+    @State private var isSideMenuOpen = false
+    
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
 
     var body: some View {
         if currPage == 6 {
             VStack {
+                // Menu bar icon
+                MenuBar(isSideMenuOpen: $isSideMenuOpen)
+                
                 // Title
-                TitleBackground(title: "Select Meet Days")
+                TitleBackground(title: "Meets")
                 
                 List {
-                    Section {
-                        VStack {
-                            // Calendar
-                            DatePicker("", selection: $date, displayedComponents: .date)
-                                .datePickerStyle(GraphicalDatePickerStyle())
-                                .padding()
-                            
-                            // Add meet date button
-                            HStack {
-                                Spacer()
-                                
-                                Button("Add Meet") {
-                                    withAnimation {
-                                        meets.append(date)
-                                        scheduleNotification(for: date)
-                                        saveMeets()
-                                        print("Added meet \(date)")
-                                    }
-                                }
-                                .buttonStyle(CustomButtonStyle())
-                                .padding()
-                                
-                                Spacer()
-                            }
-                        }
-                    }
-                    .listSectionSpacing(15)
-                    
                     // Remove and display meet dates
                     Section {
                         HStack {
@@ -89,23 +73,70 @@ struct MeetView: View {
                         }
                     }
                     .listSectionSpacing(15)
+                    
+                    // Allows user to set their meet days
+                    Section {
+                        VStack {
+                            Text("Add Meet Days")
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .padding(.top)
+                            
+                            // Calendar
+                            DatePicker("", selection: $date, displayedComponents: .date)
+                                .datePickerStyle(GraphicalDatePickerStyle())
+                                .padding()
+                            
+                            // Add meet date button
+                            HStack {
+                                Spacer()
+                                
+                                Button("Add Meet") {
+                                    withAnimation {
+                                        meets.append(date)
+                                        scheduleNotification(for: date)
+                                        saveMeets()
+                                        print("Added meet \(date)")
+                                    }
+                                }
+                                .buttonStyle(CustomButtonStyle())
+                                .padding()
+                                
+                                Spacer()
+                            }
+                        }
+                    }
+                    .listSectionSpacing(15)
                 }
                 .background(Color.gray.opacity(0.05))
                 
-                Button("Save") {
-                    withAnimation {
-                        currPage = 4
-                    }
+                // Show side menu if needed
+                if isSideMenuOpen {
+                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
                 }
-                .buttonStyle(CustomButtonStyle())
-                .frame(width: 120, height: 40)
-                .padding()
+                
+                // Navigation bar buttons
+                VStack {
+                    NavigationBar(currPage: $currPage)
+                }
             }
             .onAppear {
                 loadMeets()
             }
+        } else if currPage == 0 {
+            WorkoutView()
+        } else if currPage == 1 {
+            ExerciseView()
+        } else if currPage == 2 {
+            MealsView()
+        } else if currPage == 3 {
+            HomeView()
         } else if currPage == 4 {
             SettingsView()
+        } else if currPage == 5 {
+            EventView(events: $events)
+        } else if currPage == 7 {
+            ProfileView()
         }
     }
 

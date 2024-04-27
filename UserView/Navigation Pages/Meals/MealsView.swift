@@ -10,19 +10,33 @@ import SwiftUI
 // Page for meal info and user calories
 struct MealsView: View {
     @State private var currPage: Int = 2
-    @StateObject var userDataManager = UserDataManager()
     @State private var mealPlan: MealPlan?
     @State private var shouldFetchMealPlan = true
+    @State private var isSideMenuOpen = false
+    
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
+    
+    @StateObject var userDataManager = UserDataManager()
     
     var body: some View {
         if currPage == 2 {
             VStack {
+                // Menu bar icon
+                MenuBar(isSideMenuOpen: $isSideMenuOpen)
+                
                 // Title
                 TitleBackground(title: "Meals")
                 
                 // Display user information
                 Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
                     .font(.subheadline)
+                    .padding(5)
                     .roundedBackground()
                     .padding(.bottom, 20.0)
                 
@@ -52,25 +66,36 @@ struct MealsView: View {
                 
                 Spacer()
                 
+                // Show side menu if needed
+                if isSideMenuOpen {
+                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                }
+                
                 // Navigation bar buttons
                 VStack {
                     NavigationBar(currPage: $currPage)
                 }
+                .onAppear {
+                    // Calculate maintenance calories
+                    userDataManager.calculateMaintenanceCalories()
+                    // Fetch a meal plan if needed
+                    fetchMeals()
+                }
             }
-            .onAppear {
-                // Calculate maintenance calories
-                userDataManager.calculateMaintenanceCalories()
-                // Fetch a meal plan if needed
-                fetchMeals()
-            }
-        } else if currPage == 4 {
-            SettingsView()
+        } else if currPage == 7 {
+            ProfileView()
         } else if currPage == 0 {
             WorkoutView()
         } else if currPage == 1 {
             ExerciseView()
         } else if currPage == 3 {
             HomeView()
+        } else if currPage == 4 {
+            SettingsView()
+        } else if currPage == 5 {
+            EventView(events: $events)
+        } else if currPage == 6 {
+            MeetView()
         }
     }
     

@@ -28,7 +28,7 @@ struct WelcomeView: View {
                     .frame(width: 250, height: 250)
                     .onAppear {
                         // Removes welcome screen after 3 seconds
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             withAnimation {
                                 welcomeScreen = false // Hide the welcome screen
                             }
