@@ -194,7 +194,9 @@ struct UserInputView: View {
                     let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, fName: fName, lName: lName,heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
                     userData.saveUserData()
                     
-                    GlobalVariables.userInput = true
+                    if currPage != -1 {
+                        GlobalVariables.userInput = true
+                    }
                 }
                 
                 // Navigation bar buttons
