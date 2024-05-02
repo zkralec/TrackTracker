@@ -26,104 +26,105 @@ struct ExerciseListView: View {
     
     var exerciseData: ExerciseData
     var onExerciseDataFetched: ((ExerciseData) -> Void)?
-
+    
     var body: some View {
         if currPage == 1 {
-            VStack {
-                // Menu bar icon
-                MenuBar(isSideMenuOpen: $isSideMenuOpen)
-                // Title
-                TitleBackground(title: "Exercises")
-                
-                if showButtons {
-                    VStack {
-                        // Subtitle
-                        Text("Muscle Targets")
-                            .font(.headline)
-                            .fontWeight(.medium)
-                            .padding(10)
-                        
-                        HStack {
-                            // Different exercise muscle target buttons
-                            Picker("", selection: $muscleTarget) {
-                                Text("Abdominals").tag("abdominals")
-                                Text("Abductors").tag("abductors")
-                                Text("Adductors").tag("adductors")
-                                Text("Calves").tag("calves")
-                                Text("Glutes").tag("glutes")
-                                Text("Hamstrings").tag("hamstrings")
-                                Text("Quadriceps").tag("quadriceps")
-                            }
-                            .tint(.black)
-                            .roundedBackground()
-                            // Automatically changes and fetches exercises
-                            .onChange(of: muscleTarget) {
-                                withAnimation {
-                                    fetchExercise(muscle: muscleTarget)
+            ZStack {
+                VStack {
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                    // Title
+                    TitleBackground(title: "Exercises")
+                    
+                    if showButtons {
+                        VStack {
+                            HStack {
+                                // Subtitle
+                                Text("Muscle Group:")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding(10)
+                                    .padding(.trailing,-11)
+                                
+                                // Different exercise muscle target buttons
+                                Picker("", selection: $muscleTarget) {
+                                    Text("Abdominals").tag("abdominals")
+                                    Text("Abductors").tag("abductors")
+                                    Text("Adductors").tag("adductors")
+                                    Text("Calves").tag("calves")
+                                    Text("Glutes").tag("glutes")
+                                    Text("Hamstrings").tag("hamstrings")
+                                    Text("Quadriceps").tag("quadriceps")
+                                }
+                                .tint(.blue)
+                                .padding(.leading,-11)
+                                // Automatically changes and fetches exercises
+                                .onChange(of: muscleTarget) {
+                                    withAnimation {
+                                        fetchExercise(muscle: muscleTarget)
+                                    }
                                 }
                             }
+                            .roundedBackground()
                             .padding()
                         }
                     }
-                }
-                
-                // Scrollable section for all fetched exercises
-                NavigationStack {
-                    List {
-                        ForEach(exerciseData.exercises, id: \.self) { exercise in
-                            Section {
-                                VStack(alignment: .leading) {
-                                    // Exercise name
-                                    Text(exercise.name)
-                                        .font(.headline)
-                                        .padding(.bottom, 4)
-                                    
-                                    // Equipment
-                                    Text("Equipment: \(exercise.equipment)")
-                                        .font(.subheadline)
-                                        .foregroundStyle(.gray)
-                                    
-                                    // Difficulty
-                                    Text("Difficulty: \(exercise.difficulty)")
-                                        .font(.subheadline)
-                                        .foregroundStyle(.gray)
-                                    
-                                    // Instructions
-                                    if exercise.instructions.count > 100 {
-                                        withAnimation {
-                                            NavigationLink(destination: ExerciseDetailsView(showButtons: $showButtons, muscleTarget: $muscleTarget, muscleTitle: $muscleTitle, exercise: exercise)) {
-                                                Text("View Details")
-                                                    .foregroundStyle(.blue)
-                                                    .font(.subheadline)
-                                                    .padding(.top, 4)
-                                            }
-                                        }
-                                    } else {
-                                        Text("Instructions: \(exercise.instructions)")
+                    
+                    // Scrollable section for all fetched exercises
+                    NavigationStack {
+                        List {
+                            ForEach(exerciseData.exercises, id: \.self) { exercise in
+                                Section {
+                                    VStack(alignment: .leading) {
+                                        // Exercise name
+                                        Text(exercise.name)
+                                            .font(.headline)
+                                            .padding(.bottom, 4)
+                                        
+                                        // Equipment
+                                        Text("Equipment: \(exercise.equipment)")
                                             .font(.subheadline)
                                             .foregroundStyle(.gray)
+                                        
+                                        // Difficulty
+                                        Text("Difficulty: \(exercise.difficulty)")
+                                            .font(.subheadline)
+                                            .foregroundStyle(.gray)
+                                        
+                                        // Instructions
+                                        if exercise.instructions.count > 100 {
+                                            withAnimation {
+                                                NavigationLink(destination: ExerciseDetailsView(showButtons: $showButtons, muscleTarget: $muscleTarget, exercise: exercise)) {
+                                                    Text("View Details")
+                                                        .foregroundStyle(.blue)
+                                                        .font(.subheadline)
+                                                        .padding(.top, 4)
+                                                }
+                                            }
+                                        } else {
+                                            Text("Instructions: \(exercise.instructions)")
+                                                .font(.subheadline)
+                                                .foregroundStyle(.gray)
+                                        }
                                     }
+                                    .padding()
                                 }
-                                .padding()
+                                .listSectionSpacing(15)
                             }
-                            .listSectionSpacing(15)
+                        }
+                        .padding(.top, -15)
+                        .background(Color.gray.opacity(0.05))
+                    }
+                    
+                    if showButtons {
+                        // Navigation bar buttons
+                        VStack {
+                            NavigationBar(currPage: $currPage)
                         }
                     }
-                    .padding(.top, -15)
-                    .background(Color.gray.opacity(0.05))
                 }
-                
                 // Show side menu if needed
-                if isSideMenuOpen {
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                }
-                
-                if showButtons {
-                    // Navigation bar buttons
-                    VStack {
-                        NavigationBar(currPage: $currPage)
-                    }
-                }
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
         } else if currPage == 7 {
             ProfileView()
@@ -139,6 +140,8 @@ struct ExerciseListView: View {
             EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
     
@@ -158,10 +161,8 @@ struct ExerciseDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var showButtons: Bool
     @Binding var muscleTarget: String
-    @Binding var muscleTitle : String
     
     var exercise: Exercise
-    private let buttonStyle = CustomButtonStyle()
     
     var body: some View {
         VStack {
@@ -172,17 +173,18 @@ struct ExerciseDetailsView: View {
                         showButtons = true
                     }
                 }) {
-                    Image(systemName: "arrowshape.backward.fill")
-                        .foregroundStyle(.white)
-                        .frame(width: 20, height: 5)
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.blue)
+                        .font(.system(size: 25))
+                        .frame(width: 30, height: 30)
                 }
-                .buttonStyle(buttonStyle)
+                .buttonStyle(ButtonPress())
                 .padding(.vertical)
                 .padding(.leading, 20)
                 
                 Spacer()
                 
-                Text("Muscle Target: \(muscleTitle)")
+                Text("Muscle Target: \(muscleTarget)")
                     .font(.headline)
                     .fontWeight(.medium)
                     .padding(.vertical, 10)
@@ -199,29 +201,25 @@ struct ExerciseDetailsView: View {
                         .font(.title2)
                         .fontWeight(.medium)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .listSectionSpacing(15)
-                
-                Section {
+                    
+                    
+                    
                     Text("Equipment: \(exercise.equipment)")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .listSectionSpacing(15)
-                
-                Section {
+                    
+                   
+                    
                     Text("Difficulty: \(exercise.difficulty)")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .listSectionSpacing(15)
-                
-                Section {
+                    
+                    
+                    
                     Text("Instructions: \(exercise.instructions)")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .listSectionSpacing(15)
             }
             .onAppear {
                 showButtons = false

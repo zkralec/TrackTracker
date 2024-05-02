@@ -8,12 +8,14 @@
 import Foundation
 
 // Workout data vars
-struct WorkoutData: Codable {
+struct WorkoutData: Codable, Hashable {
     var date: Date
     var meters: [Int]
-    var reps: Int
+    var sets: Int
     var blocks: Bool
     var recovery: Bool
+    var off: Bool
+    var meet: Bool
     var grass: Bool
     var hills: Bool
     var isDayComplete: Bool
@@ -35,14 +37,29 @@ extension WorkoutData {
         return nil
     }
     
-    // Saves the user workout data to storage
+    // Saves the user workout data to storage and updates past workout data
     func saveData() {
-        do {
-            let data = try JSONEncoder().encode(self)
-            UserDefaults.standard.set(data, forKey: "workoutData")
-            print("Saved workout data: \(self)")
-        } catch {
-            print("Error encoding workout data: \(error.localizedDescription)")
+        // Check if the saved data is different from the current data or if it's a new day
+        if let savedData = loadData(), (savedData != self || !Calendar.current.isDate(savedData.date, inSameDayAs: self.date)) {
+            do {
+                // Remove the old workout data from the same day
+                var pastData = PastWorkoutData.loadPast()
+                pastData.removeWorkout(from: self.date)
+                
+                // Encode the current workout data
+                let data = try JSONEncoder().encode(self)
+                UserDefaults.standard.set(data, forKey: "workoutData")
+                print("Saved workout data: \(self)")
+                
+                // Update the list of past workout data
+                pastData.update(with: self)
+                pastData.savePast()
+                print("Updated past workout data!")
+            } catch {
+                print("Error encoding or saving workout data: \(error.localizedDescription)")
+            }
+        } else {
+            print("No changes in workout data. Not saving.")
         }
     }
     
@@ -52,9 +69,9 @@ extension WorkoutData {
         let storedDate = UserDefaults.standard.object(forKey: "currentDate") as? Date ?? Date.distantPast
         
         if !calendar.isDate(currentDate, inSameDayAs: storedDate) {
-            //Reset workout data at new day
+            // Reset workout data at new day
             UserDefaults.standard.set(currentDate, forKey: "currentDate")
-            let defaultWorkoutData = WorkoutData(date: currentDate, meters: [], reps: 0, blocks: false, recovery: false, grass: false, hills: false, isDayComplete: false)
+            let defaultWorkoutData = WorkoutData(date: currentDate, meters: [], sets: 0, blocks: false, recovery: false, off: false, meet: false, grass: false, hills: false, isDayComplete: false)
             defaultWorkoutData.saveData()
             print("New day. Resetting workout data.")
         }

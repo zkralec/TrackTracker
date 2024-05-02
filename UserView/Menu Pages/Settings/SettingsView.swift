@@ -32,39 +32,6 @@ struct SettingsView: View {
             }
             
             List {
-                // Display meet dates
-                Section {
-                    VStack {
-                        HStack {
-                            Spacer()
-                            
-                            VStack {
-                                Text("Meet Days")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding()
-                                
-                                if meets.isEmpty {
-                                    Text("No meet days selected")
-                                        .foregroundStyle(.secondary)
-                                        .padding()
-                                        .roundedBackground()
-                                } else {
-                                    ForEach(meets, id: \.self) { date in
-                                        Text(date.formatted())
-                                            .padding(5)
-                                            .roundedBackground()
-                                    }
-                                }
-                            }
-                            
-                            Spacer()
-                        }
-                    }
-                    .padding(.bottom)
-                }
-                .listSectionSpacing(15)
-                
                 // Shows users their events and allows for PR input
                 Section {
                     VStack {
@@ -73,7 +40,7 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                                 .padding()
                         } else {
-                            Text("Selected Events")
+                            Text("Event PRs")
                                 .font(.headline)
                                 .fontWeight(.medium)
                                 .padding()
@@ -106,27 +73,8 @@ struct SettingsView: View {
                 }
                 .listSectionSpacing(15)
                 
-                // Allows user to navigate to MeetView to change their meet days
                 Section {
-                    VStack {
-                        Button(action: {
-                            withAnimation {
-                                currPage = 6
-                            }
-                        }) {
-                            HStack {
-                                Text("Modify Meet Days")
-                                    .padding(.vertical)
-                                Image(systemName: "chevron.right")
-                                    .frame(width: 70)
-                                
-                                Spacer()
-                            }
-                            .foregroundStyle(.black)
-                            .fontWeight(.medium)
-                            .font(.system(size: 20))
-                        }
-                    }
+                    // Future toggle for notifications
                 }
                 .listSectionSpacing(15)
                 
@@ -141,15 +89,43 @@ struct SettingsView: View {
                             HStack {
                                 Text("Modify Selected Events")
                                     .padding(.vertical)
+                                    .foregroundStyle(.blue)
                                 Image(systemName: "chevron.right")
+                                    .foregroundStyle(.blue)
                                     .frame(width: 70)
                                 
                                 Spacer()
                             }
-                            .foregroundStyle(.black)
                             .fontWeight(.medium)
                             .font(.system(size: 20))
                         }
+                        .buttonStyle(ButtonPress())
+                    }
+                }
+                .listSectionSpacing(15)
+                
+                // Allows user to navigate to MeetView to change their meet days
+                Section {
+                    VStack {
+                        Button(action: {
+                            withAnimation {
+                                currPage = 6
+                            }
+                        }) {
+                            HStack {
+                                Text("Modify Meet Days")
+                                    .padding(.vertical)
+                                    .foregroundStyle(.blue)
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(.blue)
+                                    .frame(width: 70)
+                                
+                                Spacer()
+                            }
+                            .fontWeight(.medium)
+                            .font(.system(size: 20))
+                        }
+                        .buttonStyle(ButtonPress())
                     }
                 }
                 .listSectionSpacing(15)
@@ -166,15 +142,17 @@ struct SettingsView: View {
                             HStack {
                                 Text("Modify User Info")
                                     .padding(.vertical)
+                                    .foregroundStyle(.blue)
                                 Image(systemName: "chevron.right")
+                                    .foregroundStyle(.blue)
                                     .frame(width: 70)
                                 
                                 Spacer()
                             }
-                            .foregroundStyle(.black)
                             .fontWeight(.medium)
                             .font(.system(size: 20))
                         }
+                        .buttonStyle(ButtonPress())
                     }
                 }
                 .listSectionSpacing(15)
@@ -183,7 +161,10 @@ struct SettingsView: View {
             .background(Color.gray.opacity(0.05))
             .onAppear {
                 loadPR()
-                loadMeets()
+                
+                // Not sure why but need to toggle for loaded PRs to appear
+                isFocused.toggle()
+                isFocused.toggle()
             }
             
             // Navigation bar buttons
@@ -210,18 +191,6 @@ struct SettingsView: View {
         } else if currPage == 7 {
             ProfileView()
         }
-    }
-    
-    // Load in the current meet dates
-    func loadMeets() {
-        print("Loading meets")
-        if let data = UserDefaults.standard.data(forKey: "meetDates") {
-            let decoder = JSONDecoder()
-            if let decoded = try? decoder.decode([Date].self, from: data) {
-                meets = decoded
-            }
-        }
-        print("Loaded meets")
     }
     
     // Save the user's event PRs

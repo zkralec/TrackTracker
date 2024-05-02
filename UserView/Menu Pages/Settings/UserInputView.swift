@@ -57,12 +57,18 @@ struct UserInputView: View {
                                     .padding(10)
                                     .roundedBackground()
                                     .padding(10)
+                                    .onTapGesture {
+                                        isFocused = true
+                                    }
                                 
                                 TextField("Last Name", text: $lName)
                                     .textFieldStyle(DefaultTextFieldStyle())
                                     .padding(10)
                                     .roundedBackground()
                                     .padding(10)
+                                    .onTapGesture {
+                                        isFocused = true
+                                    }
                             }
                         }
                         
@@ -104,22 +110,13 @@ struct UserInputView: View {
                                     .fontWeight(.medium)
                                     .padding(10)
                                 
-                                TextField("Enter weight (lbs)", value: $weight, formatter: NumberFormatter(), onEditingChanged: { editing in
-                                    self.isFocused = editing
-                                })
+                                TextField("Enter weight (lbs)", value: $weight, formatter: NumberFormatter())
                                 .keyboardType(.numberPad)
                                 .padding()
                                 .textFieldStyle(DefaultTextFieldStyle())
                                 .roundedBackground()
-                                
-                                // Done button for weight input
-                                if isFocused {
-                                    Button("Done") {
-                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    }
-                                    .buttonStyle(CustomButtonStyle())
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .padding()
+                                .onTapGesture {
+                                    isFocused = true
                                 }
                             }
                         }
@@ -175,6 +172,7 @@ struct UserInputView: View {
                         .listSectionSpacing(15)
                     }
                     .background(Color.gray.opacity(0.05))
+                    .modifier(ToolbarModifier(isFocused: $isFocused))
                 }
                 .onAppear {
                     // Load user data
@@ -190,6 +188,7 @@ struct UserInputView: View {
                     }
                 }
                 .onDisappear {
+//                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     // Save user data
                     let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, fName: fName, lName: lName,heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
                     userData.saveUserData()

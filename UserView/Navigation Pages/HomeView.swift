@@ -24,118 +24,117 @@ struct HomeView: View {
     
     var body: some View {
         if currPage == 3 {
-            VStack {
-                // Menu bar icon
-                MenuBar(isSideMenuOpen: $isSideMenuOpen)
-                
-                // Display title
-                TitleBackground(title: "Home")
-                
-                List {
-                    // Current streak of tracking workouts
-                    Section {
-                        HStack {
-                            Spacer()
-                            
-                            VStack {
-                                Text("Current Streak")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .foregroundStyle(.black)
-                                    .padding(.top, 20)
-                                
-                                Text("\(StreakData.streakCount())")
-                                    .font(.system(size: 60, weight: .bold))
-                                    .foregroundStyle(.black)
-                                    .padding(.bottom, 20)
-                                    .padding(.top, 5)
-                            }
-                            .background(Color.white)
-                            
-                            Spacer()
-                        }
-                    }
-                    .listSectionSpacing(15)
+            ZStack {
+                VStack {
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
                     
-                    // User can see main events and their PR
-                    Section {
-                        VStack {
-                            if events.isEmpty {
-                                Text("No selected events")
-                                    .foregroundStyle(.secondary)
-                                    .padding()
-                            } else {
-                                Text("Personal Records")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding(.bottom, 8)
+                    // Display title
+                    TitleBackground(title: "Home")
+                    
+                    List {
+                        // Current streak of tracking workouts
+                        Section {
+                            HStack {
+                                Spacer()
                                 
-                                ForEach(events, id: \.self) { event in
-                                    if let record = prs[event], !record.isEmpty {
-                                        HStack {
-                                            Text(event.rawValue)
-                                            Spacer()
-                                            Text(record)
-                                        }
-                                        .padding(.vertical, 4)
-                                    } else {
-                                        Text("No personal record set for \(event.rawValue)")
-                                            .foregroundStyle(.secondary)
-                                            .padding(.vertical, 4)
-                                    }
+                                VStack {
+                                    Text("Current Streak")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .foregroundStyle(.black)
+                                        .padding(.top, 20)
+                                    
+                                    Text("\(StreakData.streakCount())")
+                                        .font(.system(size: 60, weight: .bold))
+                                        .foregroundStyle(.black)
+                                        .padding(.bottom, 20)
+                                        .padding(.top, 5)
                                 }
+                                .background(Color.white)
+                                
+                                Spacer()
                             }
                         }
-                        .padding()
-                    }
-                    .listSectionSpacing(15)
-                    
-                    // Display meet dates
-                    Section {
-                        HStack {
-                            Spacer()
-                            
+                        .listSectionSpacing(15)
+                        
+                        // User can see main events and their PR
+                        Section {
                             VStack {
-                                Text("Meet Days")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding()
-                                
-                                if meets.isEmpty {
-                                    Text("No meet days selected")
+                                if events.isEmpty {
+                                    Text("No selected events")
                                         .foregroundStyle(.secondary)
                                         .padding()
-                                        .roundedBackground()
                                 } else {
-                                    ForEach(meets, id: \.self) { date in
-                                        Text(date.formatted())
-                                            .padding(5)
-                                            .roundedBackground()
+                                    Text("Personal Records")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding(.bottom, 8)
+                                    
+                                    ForEach(events, id: \.self) { event in
+                                        if let record = prs[event], !record.isEmpty {
+                                            HStack {
+                                                Text(event.rawValue)
+                                                Spacer()
+                                                Text(record)
+                                            }
+                                            .padding(.vertical, 4)
+                                        } else {
+                                            Text("No personal record set for \(event.rawValue)")
+                                                .foregroundStyle(.secondary)
+                                                .padding(.vertical, 4)
+                                        }
                                     }
                                 }
                             }
-                            .onAppear {
-                                loadPR()
-                                loadMeets()
-                            }
                             .padding()
-                            
-                            Spacer()
                         }
+                        .listSectionSpacing(15)
+                        
+                        // Display meet dates
+                        Section {
+                            HStack {
+                                Spacer()
+                                
+                                VStack {
+                                    Text("Meet Days")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding()
+                                    
+                                    if meets.isEmpty {
+                                        Text("No meet days selected")
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                            .roundedBackground()
+                                    } else {
+                                        ForEach(meets, id: \.self) { date in
+                                            Text(date.formatted())
+                                                .padding(5)
+                                                .roundedBackground()
+                                        }
+                                    }
+                                }
+                                .onAppear {
+                                    loadPR()
+                                    loadMeets()
+                                }
+                                .padding()
+                                
+                                Spacer()
+                            }
+                        }
+                        .listSectionSpacing(15)
                     }
-                    .listSectionSpacing(15)
+                    .background(Color.gray.opacity(0.05))
+                    
+                    // Navigation bar buttons
+                    VStack {
+                        NavigationBar(currPage: $currPage)
+                    }
                 }
-                .background(Color.gray.opacity(0.05))
-                
                 // Show side menu if needed
-                if isSideMenuOpen {
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                }
-                
-                // Navigation bar buttons
-                VStack {
-                    NavigationBar(currPage: $currPage)
-                }
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
         } else if currPage == 7 {
             ProfileView()
@@ -151,6 +150,8 @@ struct HomeView: View {
             EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
     

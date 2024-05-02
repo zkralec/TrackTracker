@@ -24,7 +24,7 @@ struct ToolbarModifier: ViewModifier {
                             .padding(.horizontal)
                         }
                     }
-                    Spacer() // This spacer pushes the button to the rightmost side of the toolbar
+                    Spacer()
                 }
             }
     }

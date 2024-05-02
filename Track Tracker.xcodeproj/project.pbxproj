@@ -19,14 +19,16 @@
 		14535DFB2BACCB730080531D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFA2BACCB730080531D /* SettingsView.swift */; };
 		14535DFD2BACE1C20080531D /* MeetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFC2BACE1C20080531D /* MeetView.swift */; };
 		14535E002BAD2A1D0080531D /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFF2BAD2A1D0080531D /* EventData.swift */; };
-		14535E092BADC58B0080531D /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E082BADC58B0080531D /* EventView.swift */; };
 		14535E0C2BB268030080531D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E0B2BB268030080531D /* AppDelegate.swift */; };
 		14535E0E2BC45A000080531D /* CustomCircleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E0D2BC45A000080531D /* CustomCircleButtonStyle.swift */; };
 		14535E102BC45B720080531D /* ButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E0F2BC45B720080531D /* ButtonPress.swift */; };
 		14535E122BC45EB50080531D /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E112BC45EB50080531D /* NavigationBar.swift */; };
+		146154012BDDC5570068504B /* TrainingLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154002BDDC5560068504B /* TrainingLogView.swift */; };
+		146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154022BE3D8510068504B /* PastWorkoutData.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
-		149222092BDB1ADE00F633BE /* MenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuBar.swift */; };
+		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
+		1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220E2BDC8F0B00F633BE /* EventView.swift */; };
 		14BF430F2BA0FA34004B3321 /* MealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF430E2BA0FA34004B3321 /* MealPlan.swift */; };
 		14BF43112BA0FBCC004B3321 /* MealsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF43102BA0FBCC004B3321 /* MealsManager.swift */; };
 		14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF43122BA106FD004B3321 /* MealsListView.swift */; };
@@ -80,14 +82,16 @@
 		14535DFA2BACCB730080531D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		14535DFC2BACE1C20080531D /* MeetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetView.swift; sourceTree = "<group>"; };
 		14535DFF2BAD2A1D0080531D /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
-		14535E082BADC58B0080531D /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		14535E0B2BB268030080531D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14535E0D2BC45A000080531D /* CustomCircleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircleButtonStyle.swift; sourceTree = "<group>"; };
 		14535E0F2BC45B720080531D /* ButtonPress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonPress.swift; sourceTree = "<group>"; };
 		14535E112BC45EB50080531D /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		146154002BDDC5560068504B /* TrainingLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLogView.swift; sourceTree = "<group>"; };
+		146154022BE3D8510068504B /* PastWorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastWorkoutData.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		149222082BDB1ADE00F633BE /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
+		1492220E2BDC8F0B00F633BE /* EventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		14BF430E2BA0FA34004B3321 /* MealPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlan.swift; sourceTree = "<group>"; };
 		14BF43102BA0FBCC004B3321 /* MealsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsManager.swift; sourceTree = "<group>"; };
 		14BF43122BA106FD004B3321 /* MealsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsListView.swift; sourceTree = "<group>"; };
@@ -251,8 +255,9 @@
 		1492220C2BDC753E00F633BE /* Menu Pages */ = {
 			isa = PBXGroup;
 			children = (
-				14535E082BADC58B0080531D /* EventView.swift */,
+				1492220E2BDC8F0B00F633BE /* EventView.swift */,
 				14535DFC2BACE1C20080531D /* MeetView.swift */,
+				146154002BDDC5560068504B /* TrainingLogView.swift */,
 				14535E072BADC4FB0080531D /* Settings */,
 			);
 			path = "Menu Pages";
@@ -302,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				14DAEF6B2B7FD39D00AF4667 /* WorkoutData.swift */,
+				146154022BE3D8510068504B /* PastWorkoutData.swift */,
 			);
 			path = WorkoutData;
 			sourceTree = "<group>";
@@ -326,7 +332,7 @@
 				14535E0F2BC45B720080531D /* ButtonPress.swift */,
 				144BEBFC2BC4CB990002AEB9 /* ToolbarModifier.swift */,
 				14535E112BC45EB50080531D /* NavigationBar.swift */,
-				149222082BDB1ADE00F633BE /* MenuBar.swift */,
+				149222082BDB1ADE00F633BE /* MenuButton.swift */,
 				1492220A2BDBDB8E00F633BE /* SideBar.swift */,
 			);
 			name = CustomAssets;
@@ -471,7 +477,7 @@
 				14BF43112BA0FBCC004B3321 /* MealsManager.swift in Sources */,
 				14535DF92BACC2F10080531D /* StreakData.swift in Sources */,
 				14BF430F2BA0FA34004B3321 /* MealPlan.swift in Sources */,
-				14535E092BADC58B0080531D /* EventView.swift in Sources */,
+				1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */,
 				14535E002BAD2A1D0080531D /* EventData.swift in Sources */,
 				149222072BDB141300F633BE /* ProfileView.swift in Sources */,
 				14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */,
@@ -481,6 +487,7 @@
 				14DAEF7A2B80034600AF4667 /* UserDataManager.swift in Sources */,
 				14535E102BC45B720080531D /* ButtonPress.swift in Sources */,
 				14BF43182BA14F3D004B3321 /* ExerciseManager.swift in Sources */,
+				146154012BDDC5570068504B /* TrainingLogView.swift in Sources */,
 				14535E0C2BB268030080531D /* AppDelegate.swift in Sources */,
 				14DAEF5C2B7FB4A200AF4667 /* WelcomeView.swift in Sources */,
 				14DAEF672B7FCDBC00AF4667 /* UserData.swift in Sources */,
@@ -490,7 +497,8 @@
 				14BF43152BA112F1004B3321 /* RoundedBackground.swift in Sources */,
 				141CA4BD2B7D3B4600A3D82E /* TrackTrackerApp.swift in Sources */,
 				14DAEF6A2B7FD00000AF4667 /* WorkoutView.swift in Sources */,
-				149222092BDB1ADE00F633BE /* MenuBar.swift in Sources */,
+				149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */,
+				146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */,
 				14DAEF6C2B7FD39D00AF4667 /* WorkoutData.swift in Sources */,
 				14DAEF6E2B7FDBFA00AF4667 /* ExerciseView.swift in Sources */,
 				14DAEF702B7FDC0200AF4667 /* MealsView.swift in Sources */,
@@ -662,6 +670,7 @@
 				DEVELOPMENT_TEAM = FVSSHM4YF8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Track Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -675,9 +684,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Kralec.Track-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -692,6 +704,7 @@
 				DEVELOPMENT_TEAM = FVSSHM4YF8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Track Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -705,9 +718,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Kralec.Track-Tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

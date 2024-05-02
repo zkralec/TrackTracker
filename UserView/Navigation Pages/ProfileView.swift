@@ -24,113 +24,114 @@ struct ProfileView: View {
     
     var body: some View {
         if currPage == 7 {
-            VStack {
-                // Menu bar icon
-                MenuBar(isSideMenuOpen: $isSideMenuOpen)
-                
-                //Display title
-                TitleBackground(title: "Profile")
-                
-                List {
-                    Section {
-                        HStack {
-                            Spacer()
-                            
-                            VStack {
-                                // Display user information
-                                if let userData = userDataManager.userData {
-                                    Text("User Information")
-                                        .font(.title2)
-                                        .fontWeight(.medium)
-                                        .padding()
-                                    HStack {
-                                        Text("\(userData.fName)")
-                                            .font(.title3)
-                                            .padding(5)
-                                            .padding(.trailing,-6)
-                                        Text("\(userData.lName)")
-                                            .font(.title3)
-                                            .padding(5)
-                                            .padding(.leading,-6)
-                                    }
-                                    .padding(.bottom,10)
-                                    Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
-                                        .font(.subheadline)
-                                        .padding(5)
-                                        .roundedBackground()
-                                    Text("Weight: \(formatWeight(userData.weight))")
-                                        .font(.subheadline)
-                                        .padding(5)
-                                        .roundedBackground()
-                                    Text("Age: \(userData.age + 18)")
-                                        .font(.subheadline)
-                                        .padding(5)
-                                        .roundedBackground()
-                                    Text("Gender: \(userData.gender.rawValue)")
-                                        .font(.subheadline)
-                                        .padding(5)
-                                        .roundedBackground()
-                                }
-                            }
-                            
-                            Spacer()
-                        }
-                        .padding(.bottom)
-                    }
-                    .listSectionSpacing(15)
-                    
-                    // User can see main events and their PR
-                    Section {
-                        VStack {
-                            if events.isEmpty {
-                                Text("No selected events")
-                                    .foregroundStyle(.secondary)
-                                    .padding()
-                            } else {
-                                Text("Personal Records")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding(.bottom, 8)
-                                
-                                ForEach(events, id: \.self) { event in
-                                    if let record = prs[event], !record.isEmpty {
-                                        HStack {
-                                            Text(event.rawValue)
-                                            Spacer()
-                                            Text(record)
-                                        }
-                                        .padding(.vertical, 4)
-                                    } else {
-                                        Text("No personal record set for \(event.rawValue)")
-                                            .foregroundStyle(.secondary)
-                                            .padding(.vertical, 4)
-                                    }
-                                }
-                            }
-                        }
-                        .onAppear {
-                            loadPR()
-                        }
-                        .padding()
-                    }
-                    .listSectionSpacing(15)
-                    
-                    // Shows the user the longest streak they have maintained
-                    Section {
-                        
-                    }
-                    .listSectionSpacing(15)
-                }
-                
-                // Show side menu if needed
-                if isSideMenuOpen {
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                }
-                
-                // Navigation bar buttons
+            ZStack {
                 VStack {
-                    NavigationBar(currPage: $currPage)
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                    
+                    //Display title
+                    TitleBackground(title: "Profile")
+                    
+                    List {
+                        // User information display section
+                        Section {
+                            HStack {
+                                Spacer()
+                                
+                                VStack {
+                                    // Display user information
+                                    if let userData = userDataManager.userData {
+                                        Text("User Information")
+                                            .font(.title2)
+                                            .fontWeight(.medium)
+                                            .padding()
+                                        HStack {
+                                            Text("\(userData.fName)")
+                                                .font(.title3)
+                                                .padding(5)
+                                                .padding(.trailing,-6)
+                                            Text("\(userData.lName)")
+                                                .font(.title3)
+                                                .padding(5)
+                                                .padding(.leading,-6)
+                                        }
+                                        .padding(.bottom,10)
+                                        Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
+                                            .font(.subheadline)
+                                            .padding(5)
+                                            .roundedBackground()
+                                        Text("Weight: \(formatWeight(userData.weight))")
+                                            .font(.subheadline)
+                                            .padding(5)
+                                            .roundedBackground()
+                                        Text("Age: \(userData.age + 18)")
+                                            .font(.subheadline)
+                                            .padding(5)
+                                            .roundedBackground()
+                                        Text("Gender: \(userData.gender.rawValue)")
+                                            .font(.subheadline)
+                                            .padding(5)
+                                            .roundedBackground()
+                                    }
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(.bottom)
+                        }
+                        .listSectionSpacing(15)
+                        
+                        // User can see main events and their PR
+                        Section {
+                            VStack {
+                                if events.isEmpty {
+                                    Text("No selected events")
+                                        .foregroundStyle(.secondary)
+                                        .padding()
+                                } else {
+                                    Text("Personal Records")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding(.bottom, 8)
+                                    
+                                    ForEach(events, id: \.self) { event in
+                                        if let record = prs[event], !record.isEmpty {
+                                            HStack {
+                                                Text(event.rawValue)
+                                                Spacer()
+                                                Text(record)
+                                            }
+                                            .padding(.vertical, 4)
+                                        } else {
+                                            Text("No personal record set for \(event.rawValue)")
+                                                .foregroundStyle(.secondary)
+                                                .padding(.vertical, 4)
+                                        }
+                                    }
+                                }
+                            }
+                            .onAppear {
+                                loadPR()
+                            }
+                            .padding()
+                        }
+                        .listSectionSpacing(15)
+                        
+                        // Shows the user the longest streak they have maintained
+                        Section {
+                            
+                        }
+                        .listSectionSpacing(15)
+                    }
+                   
+                    // Navigation bar buttons
+                    VStack {
+                        NavigationBar(currPage: $currPage)
+                    }
                 }
+                // Show side menu if needed
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                
             }
         } else if currPage == -1 {
             UserInputView()
@@ -148,6 +149,8 @@ struct ProfileView: View {
             EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
     

@@ -26,61 +26,60 @@ struct MealsView: View {
     
     var body: some View {
         if currPage == 2 {
-            VStack {
-                // Menu bar icon
-                MenuBar(isSideMenuOpen: $isSideMenuOpen)
-                
-                // Title
-                TitleBackground(title: "Meals")
-                
-                // Display user information
-                Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
-                    .font(.subheadline)
-                    .padding(5)
-                    .roundedBackground()
-                    .padding(.bottom, 20.0)
-                
-                NavigationStack {
-                    // Check if meal plan is fetched
-                    if let mealPlan = mealPlan {
-                        MealsListView(mealPlan: mealPlan)
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button(action: {
-                                        fetchRefreshedMeals()
-                                    }) {
-                                        Image(systemName: "arrow.circlepath")
-                                            .frame(width: 10, height: 10)
-                                        Text("  Refresh Meals")
-                                            .foregroundStyle(Color.blue)
-                                            .font(.caption)
+            ZStack {
+                VStack {
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                    
+                    // Title
+                    TitleBackground(title: "Meals")
+                    
+                    // Display user information
+                    Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
+                        .font(.subheadline)
+                        .padding(5)
+                        .roundedBackground()
+                        .padding(.bottom, 20.0)
+                    
+                    NavigationStack {
+                        // Check if meal plan is fetched
+                        if let mealPlan = mealPlan {
+                            MealsListView(mealPlan: mealPlan)
+                                .toolbar {
+                                    ToolbarItem(placement: .topBarTrailing) {
+                                        Button(action: {
+                                            fetchRefreshedMeals()
+                                        }) {
+                                            Image(systemName: "arrow.circlepath")
+                                                .frame(width: 10, height: 10)
+                                            Text("  Refresh Meals")
+                                                .foregroundStyle(Color.blue)
+                                                .font(.caption)
+                                        }
+                                        
                                     }
-                                    
                                 }
-                            }
-                    } else {
-                        // Loading indicator
-                        ProgressView()
+                        } else {
+                            // Loading indicator
+                            ProgressView()
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    // Navigation bar buttons
+                    VStack {
+                        NavigationBar(currPage: $currPage)
+                    }
+                    .onAppear {
+                        // Calculate maintenance calories
+                        userDataManager.calculateMaintenanceCalories()
+                        // Fetch a meal plan if needed
+                        fetchMeals()
                     }
                 }
-                
-                Spacer()
-                
                 // Show side menu if needed
-                if isSideMenuOpen {
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                }
-                
-                // Navigation bar buttons
-                VStack {
-                    NavigationBar(currPage: $currPage)
-                }
-                .onAppear {
-                    // Calculate maintenance calories
-                    userDataManager.calculateMaintenanceCalories()
-                    // Fetch a meal plan if needed
-                    fetchMeals()
-                }
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
         } else if currPage == 7 {
             ProfileView()
@@ -96,6 +95,8 @@ struct MealsView: View {
             EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
     

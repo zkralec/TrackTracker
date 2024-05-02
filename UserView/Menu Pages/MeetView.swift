@@ -22,113 +22,117 @@ struct MeetView: View {
             return []
         }
     }()
-
+    
     var body: some View {
         if currPage == 6 {
-            VStack {
-                // Menu bar icon
-                MenuBar(isSideMenuOpen: $isSideMenuOpen)
-                
-                // Title
-                TitleBackground(title: "Meets")
-                
-                List {
-                    // Remove and display meet dates
-                    Section {
-                        HStack {
-                            Spacer()
-                            
-                            VStack {
-                                Text("Meet Days")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding()
-                                
-                                if meets.isEmpty {
-                                    Text("No meet days selected")
-                                        .foregroundStyle(.secondary)
-                                        .padding()
-                                        .roundedBackground()
-                                        .padding(.bottom)
-                                } else {
-                                    ForEach(meets, id: \.self) { date in
-                                        Text(date.formatted())
-                                            .padding(5)
-                                            .roundedBackground()
-                                    }
-                                    
-                                    // Remove the last meet day
-                                    Button("Remove Last") {
-                                        withAnimation {
-                                            removeMeet(at: meets.count - 1)
-                                            print("Removed last meet")
-                                        }
-                                    }
-                                    .buttonStyle(CustomButtonStyle())
-                                    .padding()
-                                }
-                            }
-                            
-                            Spacer()
-                        }
-                    }
-                    .listSectionSpacing(15)
+            ZStack {
+                VStack {
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
                     
-                    // Allows user to set their meet days
-                    Section {
-                        VStack {
-                            Text("Add Meet Days")
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .padding(.top)
-                            
-                            // Calendar
-                            DatePicker("", selection: $date, displayedComponents: .date)
-                                .datePickerStyle(GraphicalDatePickerStyle())
-                                .padding()
-                            
-                            // Add meet date button
+                    // Title
+                    TitleBackground(title: "Meets")
+                    
+                    List {
+                        // Remove and display meet dates
+                        Section {
                             HStack {
                                 Spacer()
                                 
-                                Button("Add Meet") {
+                                VStack {
+                                    Text("Meet Days")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding()
+                                    
+                                    if meets.isEmpty {
+                                        Text("No meet days selected")
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                            .roundedBackground()
+                                            .padding(.bottom)
+                                    } else {
+                                        ForEach(meets, id: \.self) { date in
+                                            Text(date.formatted())
+                                                .padding(5)
+                                                .roundedBackground()
+                                        }
+                                        
+                                        // Remove the last meet day
+                                        Button(action: {
+                                            withAnimation {
+                                                removeMeet(at: meets.count - 1)
+                                                print("Removed last meet")
+                                            }
+                                        }) {
+                                            HStack {
+                                                Image(systemName: "minus")
+                                                    .foregroundStyle(.white)
+                                                    .frame(width: 30, height: 30)
+                                                Text("Remove Last")
+                                                    .font(.subheadline)
+                                                    .foregroundStyle(.white)
+                                                    .padding(4)
+                                            }
+                                            .padding(-8)
+                                        }
+                                        .buttonStyle(CustomButtonStyle())
+                                        .padding()
+                                    }
+                                }
+                                
+                                Spacer()
+                            }
+                        }
+                        .listSectionSpacing(15)
+                        
+                        // Allows user to set their meet days
+                        Section {
+                            VStack {
+                                Text("Add Meet Days")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .padding(.top)
+                                
+                                // Calendar
+                                DatePicker("", selection: $date, displayedComponents: .date)
+                                    .datePickerStyle(GraphicalDatePickerStyle())
+                                    .padding()
+                                
+                                // Add meet date button
+                                Button(action: {
                                     withAnimation {
                                         meets.append(date)
                                         scheduleNotification(for: date)
                                         saveMeets()
                                         print("Added meet \(date)")
                                     }
+                                }) {
+                                    HStack {
+                                        Image(systemName: "plus")
+                                            .foregroundStyle(.white)
+                                            .frame(width: 30, height: 30)
+                                        Text("Add Meet")
+                                            .font(.subheadline)
+                                            .foregroundStyle(.white)
+                                            .padding(4)
+                                    }
+                                    .padding(-8)
                                 }
                                 .buttonStyle(CustomButtonStyle())
-                                .padding()
-                                
-                                Spacer()
+                                .padding(.bottom)
                             }
                         }
+                        .listSectionSpacing(15)
                     }
-                    .listSectionSpacing(15)
+                    .background(Color.gray.opacity(0.05))
                 }
-                .background(Color.gray.opacity(0.05))
-                
+                .onAppear {
+                    loadMeets()
+                }
                 // Show side menu if needed
-                if isSideMenuOpen {
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                }
-                
-                // Navigation bar buttons
-                VStack {
-                    NavigationBar(currPage: $currPage)
-                }
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
-            .onAppear {
-                loadMeets()
-            }
-        } else if currPage == 0 {
-            WorkoutView()
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 2 {
-            MealsView()
         } else if currPage == 3 {
             HomeView()
         } else if currPage == 4 {
@@ -137,24 +141,28 @@ struct MeetView: View {
             EventView(events: $events)
         } else if currPage == 7 {
             ProfileView()
+        } else if currPage == 8 {
+            TrainingLogView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
-
+    
     // Makes a notification that will go off at the correct date
     func scheduleNotification(for date: Date) {
         let content = UNMutableNotificationContent()
         content.title = "You have a meet today!"
         content.body = "Make sure to run fast, jump high, and throw far. Push yourself!"
         content.sound = UNNotificationSound.default
-
+        
         var triggerDate = Calendar.current.dateComponents([.year, .month, .day], from: date)
         triggerDate.hour = 1
         triggerDate.minute = 0
-
+        
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-
+        
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
+        
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("Error scheduling notification: \(error.localizedDescription)")
@@ -163,7 +171,7 @@ struct MeetView: View {
             }
         }
     }
-
+    
     // Save the current meet dates
     func saveMeets() {
         let encoder = JSONEncoder()
@@ -171,7 +179,7 @@ struct MeetView: View {
             UserDefaults.standard.set(encoded, forKey: "meetDates")
         }
     }
-
+    
     // Load in the current meet dates
     func loadMeets() {
         if let data = UserDefaults.standard.data(forKey: "meetDates") {
@@ -181,7 +189,7 @@ struct MeetView: View {
             }
         }
     }
-
+    
     // Removes the last meet
     func removeMeet(at index: Int) {
         if index >= 0 && index < meets.count {
@@ -190,7 +198,7 @@ struct MeetView: View {
             saveMeets()
         }
     }
-
+    
     // Removes the notification generates by the last meet date
     func removeNotification(for date: Date) {
         let identifier = "\(date)"

@@ -15,56 +15,44 @@ struct EventView: View {
     
     var body: some View {
         if currPage == 5 {
-            VStack {
-                // Menu bar icon
-                MenuBar(isSideMenuOpen: $isSideMenuOpen)
-                
-                TitleBackground(title: "Events")
-                
-                // List of events with navigation links
-                List {
-                    ForEach(EventData.allCases, id: \.self) { event in
-                        Section {
-                            Button(action: {
-                                self.toggleSelection(for: event)
-                                // Saves the events
-                                UserDefaults.standard.set(events.map { $0.rawValue }, forKey: "selectedEvents")
-                                print("Saved Events")
-                            }) {
-                                HStack {
-                                    Text(event.rawValue)
-                                        .foregroundStyle(Color.black)
-                                    
-                                    Spacer()
-                                    
-                                    if self.events.contains(event) {
-                                        Image(systemName: "checkmark")
-                                            .foregroundStyle(.blue)
+            ZStack {
+                VStack {
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                    
+                    TitleBackground(title: "Events")
+                    
+                    // List of events with navigation links
+                    List {
+                        ForEach(EventData.allCases, id: \.self) { event in
+                            Section {
+                                Button(action: {
+                                    self.toggleSelection(for: event)
+                                    // Saves the events
+                                    UserDefaults.standard.set(events.map { $0.rawValue }, forKey: "selectedEvents")
+                                    print("Saved Events")
+                                }) {
+                                    HStack {
+                                        Text(event.rawValue)
+                                            .foregroundStyle(Color.black)
+                                        
+                                        Spacer()
+                                        
+                                        if self.events.contains(event) {
+                                            Image(systemName: "checkmark")
+                                                .foregroundStyle(.blue)
+                                        }
                                     }
                                 }
                             }
+                            .listSectionSpacing(5)
                         }
-                        .listSectionSpacing(5)
                     }
+                    .background(Color.gray.opacity(0.05))
                 }
-                .background(Color.gray.opacity(0.05))
-                
                 // Show side menu if needed
-                if isSideMenuOpen {
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                }
-                
-                // Navigation bar buttons
-                VStack {
-                    NavigationBar(currPage: $currPage)
-                }
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 0 {
-            WorkoutView()
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 2 {
-            MealsView()
         } else if currPage == 3 {
             HomeView()
         } else if currPage == 4 {
@@ -73,6 +61,10 @@ struct EventView: View {
             MeetView()
         } else if currPage == 7 {
             ProfileView()
+        } else if currPage == 8 {
+            TrainingLogView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
     
