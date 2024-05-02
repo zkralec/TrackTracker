@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MenuBar: View {
+struct MenuButton: View {
     @Binding var isSideMenuOpen: Bool
     
     var body: some View {
@@ -18,11 +18,12 @@ struct MenuBar: View {
                 }
             }) {
                 Image(systemName: "line.3.horizontal")
-                    .font(.system(size: 20))
+                    .font(.system(size: 25))
                     .foregroundStyle(.blue)
             }
             .frame(width: 70, height: 30)
             .buttonStyle(ButtonPress())
+            .padding(.bottom,-10)
             
             Spacer()
         }
