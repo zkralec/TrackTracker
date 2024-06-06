@@ -14,7 +14,7 @@ struct TrackTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             WelcomeView()
-                .preferredColorScheme(.light) // Keeping this for now since dark mode compatibality would cause many UI errors
+                //.preferredColorScheme(.light) // Keeping this for now since dark mode compatibality would cause many UI errors
         }
     }
 }

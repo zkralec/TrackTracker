@@ -20,6 +20,10 @@ struct TrainingLogView: View {
         }
     }()
     
+    var sortedPastWorkouts: [WorkoutData] {
+        pastWorkoutData.pastWorkouts.sorted(by: { $0.date > $1.date })
+    }
+    
     var body: some View {
         if currPage == 8 {
             ZStack {
@@ -32,7 +36,7 @@ struct TrainingLogView: View {
                     
                     // Display past 10 day history of workouts
                     List {
-                        ForEach(pastWorkoutData.pastWorkouts, id: \.self) { workout in
+                        ForEach(sortedPastWorkouts, id: \.self) { workout in
                             Section {
                                 if workout.meet {
                                     Text("Date: \(workout.formattedDate)")

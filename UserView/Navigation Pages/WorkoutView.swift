@@ -17,7 +17,7 @@ struct WorkoutView: View {
     @State private var isBlocks = false
     @State private var isRecovery = false
     @State private var isOff = false
-    @State private var isMeet = false // Set true if a meet is scheduled for today
+    @State private var isMeet = false
     @State private var isGrass = false
     @State private var isHills = false
     @State private var isFieldModified = false

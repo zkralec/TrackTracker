@@ -34,7 +34,7 @@ struct EventView: View {
                                 }) {
                                     HStack {
                                         Text(event.rawValue)
-                                            .foregroundStyle(Color.black)
+                                            .foregroundStyle(Color.primary)
                                         
                                         Spacer()
                                         

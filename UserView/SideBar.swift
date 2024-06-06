@@ -1,21 +1,15 @@
-//
-//  SideBar.swift
-//  Track Tracker
-//
-//  Created by Zachary Kralec on 4/26/24.
-//
-
 import SwiftUI
 
 struct SideBar: View {
     @Binding var currPage: Int
     @Binding var isSideMenuOpen: Bool
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack {
             // Gray out the rest of the screen
             if isSideMenuOpen {
-                Color.black.opacity(0.5)
+                Color.secondary.opacity(0.5)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         withAnimation {
@@ -29,8 +23,8 @@ struct SideBar: View {
                     Text("Menu")
                         .font(.title)
                         .fontWeight(.bold)
-                        .padding(.top,50)
-                        .padding(.leading,25)
+                        .padding(.top, 50)
+                        .padding(.leading, 25)
                     
                     Spacer()
                     
@@ -134,15 +128,15 @@ struct SideBar: View {
                     
                     Spacer()
                     
-                    Text("App Version: 0.1.0 - alpha ")
+                    Text("App Version: 0.1.0 - alpha")
                         .font(.footnote)
-                        .foregroundStyle(.black)
-                        .padding(.leading,25)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                        .padding(.leading, 25)
                 }
-                .frame(width: UIScreen.main.bounds.width * 0.75)
+                .frame(width: UIScreen.main.bounds.width * 0.60)
                 .transition(.move(edge: .leading))
-                .padding(.top,-8)
-                .background(.white)
+                .padding(.top, -8)
+                .background(colorScheme == .dark ? Color.black : Color.white)
                 .offset(x: isSideMenuOpen ? 0 : -UIScreen.main.bounds.width)
                 
                 Spacer()
