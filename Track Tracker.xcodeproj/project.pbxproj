@@ -25,6 +25,7 @@
 		14535E122BC45EB50080531D /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E112BC45EB50080531D /* NavigationBar.swift */; };
 		146154012BDDC5570068504B /* TrainingLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154002BDDC5560068504B /* TrainingLogView.swift */; };
 		146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154022BE3D8510068504B /* PastWorkoutData.swift */; };
+		1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
@@ -88,6 +89,7 @@
 		14535E112BC45EB50080531D /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		146154002BDDC5560068504B /* TrainingLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLogView.swift; sourceTree = "<group>"; };
 		146154022BE3D8510068504B /* PastWorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastWorkoutData.swift; sourceTree = "<group>"; };
+		1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPrompt.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		141CA4B02B7D3B4600A3D82E = {
 			isa = PBXGroup;
 			children = (
+				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14DAEF712B7FDDE000AF4667 /* CustomAssets */,
 				14535E0A2BB267F10080531D /* Notifications */,
 				14BF43162BA145F5004B3321 /* ExerciseData */,
@@ -250,6 +253,14 @@
 				14535E0B2BB268030080531D /* AppDelegate.swift */,
 			);
 			path = Notifications;
+			sourceTree = "<group>";
+		};
+		1464AFBA2C1733FD00D00FBB /* RecoveryInfo */ = {
+			isa = PBXGroup;
+			children = (
+				1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */,
+			);
+			path = RecoveryInfo;
 			sourceTree = "<group>";
 		};
 		1492220C2BDC753E00F633BE /* Menu Pages */ = {
@@ -482,6 +493,7 @@
 				149222072BDB141300F633BE /* ProfileView.swift in Sources */,
 				14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */,
 				14BF431C2BA157E7004B3321 /* ExerciseListView.swift in Sources */,
+				1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */,
 				14BF431F2BA7CEC9004B3321 /* TitleBackground.swift in Sources */,
 				14535E122BC45EB50080531D /* NavigationBar.swift in Sources */,
 				14DAEF7A2B80034600AF4667 /* UserDataManager.swift in Sources */,

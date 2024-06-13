@@ -37,6 +37,9 @@ struct TrainingLogView: View {
                     // Display past 10 day history of workouts
                     List {
                         ForEach(sortedPastWorkouts, id: \.self) { workout in
+                            var shouldApplyPadding: Bool {
+                                return workout.blocks || workout.recovery || workout.grass || workout.hills
+                            }
                             Section {
                                 if workout.meet {
                                     Text("Date: \(workout.formattedDate)")
@@ -48,15 +51,35 @@ struct TrainingLogView: View {
                                         .font(.title3)
                                 } else {
                                     Text("Date: \(workout.formattedDate)")
+                                    if workout.technique {
+                                        Text("Practice Type: Technique Day")
+                                    } else if workout.workout {
+                                        Text("Practice Type: Workout Day")
+                                    } else if workout.tempo {
+                                        Text("Practice Type: Tempo Day")
+                                    }
                                     VStack(alignment: .leading) {
-                                        Text("Meters: \(workout.metersString)")
+                                        if workout.metersString != "" {
+                                            Text("Distance/Reps: (\(workout.metersString)) meters")
+                                        } else {
+                                            Text("Distance/Reps: None")
+                                        }
                                         Text("Sets: \(workout.sets)")
-                                        Text("Blocks: \(workout.blocks ? "Yes" : "No")")
-                                        Text("Recovery: \(workout.recovery ? "Yes" : "No")")
-                                        Text("Off Day: \(workout.off ? "Yes" : "No")")
-                                        Text("Meet Day: \(workout.meet ? "Yes" : "No")")
-                                        Text("Grass: \(workout.grass ? "Yes" : "No")")
-                                        Text("Hills: \(workout.hills ? "Yes" : "No")")
+                                        VStack (alignment: .leading){
+                                            if workout.blocks {
+                                                Text("Blocks")
+                                            }
+                                            if workout.recovery {
+                                                Text("Recovery")
+                                            }
+                                            if workout.grass {
+                                                Text("Grass")
+                                            }
+                                            if workout.hills {
+                                                Text("Hills")
+                                            }
+                                        }
+                                        .padding(.top, shouldApplyPadding ? 5 : 0)
                                     }
                                 }
                             }

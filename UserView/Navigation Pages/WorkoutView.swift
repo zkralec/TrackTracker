@@ -8,6 +8,8 @@
 import SwiftUI
 
 // Other main page for the user, mainly lots of UI and fields
+import SwiftUI
+
 struct WorkoutView: View {
     @State private var currDate = Date()
     @State private var currPage: Int = 0
@@ -20,8 +22,13 @@ struct WorkoutView: View {
     @State private var isMeet = false
     @State private var isGrass = false
     @State private var isHills = false
+    @State private var isTechnique = false
+    @State private var isWorkout = false
+    @State private var isTempo = false
     @State private var isFieldModified = false
     @State private var isFocused = false
+    @State private var showExperiencePrompt = false
+    @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
     @State private var workoutData: WorkoutData?
     
     @State private var events: [EventData] = {
@@ -36,6 +43,9 @@ struct WorkoutView: View {
     
     var onDisappearAction: ((Bool) -> Void)?
     private var previousDaysData: [WorkoutData] = []
+    var anyToggleOn: Bool {
+        isOff || isTechnique || isWorkout || isTempo || isRecovery || isMeet
+    }
     
     var body: some View {
         if currPage == 0 {
@@ -48,11 +58,27 @@ struct WorkoutView: View {
                     TitleBackground(title: "Workouts")
                     
                     HStack {
+                        // Button to show user's input and recovery suggestions
+                        Button(action: {
+                            if !isMeet && !isOff && !isRecovery && isDayComplete {
+                                withAnimation {
+                                    showExperiencePrompt = true
+                                }
+                            }
+                        }) {
+                            Image(systemName: "info.circle")
+                                .foregroundStyle(.blue)
+                                .frame(width: 50, height: 50)
+                        }
+                        .padding(.leading, 20)
+                        
+                        Spacer()
+                        
                         // Display current date
                         Text(currDate, formatter: dateFormatter)
-                            .font(.title2)
+                            .font(.title3)
                             .fontWeight(.medium)
-                            .padding(.leading, 150)
+                            .padding(.horizontal, 10)
                         
                         Spacer()
                         
@@ -62,16 +88,26 @@ struct WorkoutView: View {
                                 isDayComplete.toggle()
                                 isFocused = false
                                 if isDayComplete {
-                                    workoutData?.meters = meters.compactMap { Int($0) }
-                                    workoutData?.sets = Int(numSets) ?? 0
-                                    workoutData?.blocks = isBlocks
-                                    workoutData?.recovery = isRecovery
-                                    workoutData?.off = isOff
-                                    workoutData?.meet = isMeet
-                                    workoutData?.hills = isHills
-                                    workoutData?.grass = isGrass
-                                    workoutData?.saveData()
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    withAnimation {
+                                        if !isMeet && !isOff && !isRecovery {
+                                            showExperiencePrompt = true
+                                        }
+                                        workoutData?.meters = meters.compactMap { Int($0) }
+                                        workoutData?.sets = Int(numSets) ?? 0
+                                        workoutData?.blocks = isBlocks
+                                        workoutData?.recovery = isRecovery
+                                        workoutData?.off = isOff
+                                        workoutData?.meet = isMeet
+                                        workoutData?.hills = isHills
+                                        workoutData?.grass = isGrass
+                                        workoutData?.technique = isTechnique
+                                        workoutData?.workout = isWorkout
+                                        workoutData?.tempo = isTempo
+                                        workoutData?.saveData()
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    }
+                                } else {
+                                    selectedExperience = nil
                                 }
                             }
                         }) {
@@ -87,11 +123,16 @@ struct WorkoutView: View {
                         }
                         .padding(.trailing, 20)
                     }
+                    .sheet(isPresented: $showExperiencePrompt) {
+                        if !isMeet && !isOff {
+                            RecoveryPrompt(isPresented: $showExperiencePrompt, selectedExperience: $selectedExperience)
+                        }
+                    }
                     
                     List {
                         Section {
                             VStack {
-                                Text("Reps Ran")
+                                Text("Distance and Reps")
                                     .font(.headline)
                                     .fontWeight(.medium)
                                     .padding(10)
@@ -117,47 +158,49 @@ struct WorkoutView: View {
                                 
                                 // Buttons to add or remove reps
                                 if !isDayComplete {
-                                    HStack {
-                                        VStack {
-                                            Button(action: {
-                                                if meters.count < 5 {
-                                                    meters.append("")
+                                    withAnimation {
+                                        HStack {
+                                            VStack {
+                                                Button(action: {
+                                                    if meters.count < 5 {
+                                                        meters.append("")
+                                                    }
+                                                }) {
+                                                    Image(systemName: "plus")
+                                                        .foregroundStyle(.white)
+                                                        .frame(width: 30, height: 10)
                                                 }
-                                            }) {
-                                                Image(systemName: "plus")
-                                                    .foregroundStyle(.white)
-                                                    .frame(width: 30, height: 10)
+                                                .padding(.top, 8)
+                                                .buttonStyle(CustomButtonStyle())
+                                                
+                                                Text("Add")
+                                                    .font(.caption)
+                                                    .foregroundStyle(.blue)
+                                                    .padding(4)
                                             }
-                                            .padding(.top, 8)
-                                            .buttonStyle(CustomButtonStyle())
                                             
-                                            Text("Add")
-                                                .font(.caption)
-                                                .foregroundStyle(.blue)
-                                                .padding(4)
-                                        }
-                                        
-                                        VStack {
-                                            Button(action: {
-                                                if meters.count > 1 {
-                                                    meters.removeLast()
+                                            VStack {
+                                                Button(action: {
+                                                    if meters.count > 1 {
+                                                        meters.removeLast()
+                                                    }
+                                                }) {
+                                                    Image(systemName: "minus")
+                                                        .foregroundStyle(.white)
+                                                        .frame(width: 30, height: 10)
                                                 }
-                                            }) {
-                                                Image(systemName: "minus")
-                                                    .foregroundStyle(.white)
-                                                    .frame(width: 30, height: 10)
+                                                .padding(.top, 8)
+                                                .buttonStyle(CustomButtonStyle())
+                                                
+                                                Text("Remove")
+                                                    .font(.caption)
+                                                    .foregroundStyle(.blue)
+                                                    .padding(4)
                                             }
-                                            .padding(.top, 8)
-                                            .buttonStyle(CustomButtonStyle())
-                                            
-                                            Text("Remove")
-                                                .font(.caption)
-                                                .foregroundStyle(.blue)
-                                                .padding(4)
                                         }
+                                        .padding(.horizontal, 10)
+                                        .padding(.bottom, -10)
                                     }
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, -10)
                                 }
                             }
                         }
@@ -198,74 +241,71 @@ struct WorkoutView: View {
                         .padding(.bottom, 5)
                         .listSectionSpacing(15)
                         
-                        // Toggles
                         Section {
-                            VStack {
+                            VStack(spacing: 15) {
+                                HStack {
+                                    Spacer()
+                                    Text("Day Type")
+                                        .font(.headline)
+                                        .fontWeight(.medium)
+                                        .padding(.vertical, 10)
+                                    Spacer()
+                                }
+                                
+                                ForEach([
+                                    ("Off Day", $isOff),
+                                    ("Technique Day", $isTechnique),
+                                    ("Workout Day", $isWorkout),
+                                    ("Tempo Day", $isTempo),
+                                    ("Recovery Day", $isRecovery),
+                                    ("Meet Day", $isMeet)
+                                ], id: \.0) { label, binding in
+                                    Toggle(label, isOn: binding)
+                                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                        .font(.subheadline)
+                                        .disabled(isDayComplete || (!binding.wrappedValue && anyToggleOn))
+                                        .padding(3)
+                                        .roundedBackground()
+                                        .padding(.horizontal, 8)
+                                }
+                            }
+                        }
+                        .padding(.vertical, 5)
+                        .listSectionSpacing(15)
+                        .modifier(ToolbarModifier(isFocused: $isFocused))
+                        
+                        Section {
+                            VStack(spacing: 15) {
                                 HStack {
                                     Spacer()
                                     
                                     Text("Extras")
                                         .font(.headline)
                                         .fontWeight(.medium)
-                                        .padding(10)
+                                        .padding(.vertical, 10)
                                     
                                     Spacer()
                                 }
                                 
-                                HStack {
-                                    //Toggle for Blocks
-                                    Toggle("Blocks", isOn: $isBlocks)
+                                ForEach([
+                                    ("Blocks", $isBlocks),
+                                    ("Grass", $isGrass),
+                                    ("Hills", $isHills)
+                                ], id: \.0) { label, binding in
+                                    Toggle(label, isOn: binding)
+                                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                         .font(.subheadline)
                                         .disabled(isDayComplete)
+                                        .padding(3)
                                         .roundedBackground()
-                                    
-                                    // Toggle for Recovery day
-                                    Toggle("Recovery", isOn: $isRecovery)
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete)
-                                        .roundedBackground()
+                                        .padding(.horizontal, 8)
                                 }
-                                .padding(.top, 15)
-                                .padding(.horizontal, 8)
-                                
-                                HStack {
-                                    //Toggle for off day
-                                    Toggle("Off", isOn: $isOff)
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete)
-                                        .roundedBackground()
-                                    
-                                    // Toggle for meet day
-                                    Toggle("Meet", isOn: $isMeet)
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete)
-                                        .roundedBackground()
-                                }
-                                .padding(.top, 8)
-                                .padding(.horizontal, 8)
-                                
-                                HStack {
-                                    //Toggle for grass
-                                    Toggle("Grass", isOn: $isGrass)
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete)
-                                        .roundedBackground()
-                                    
-                                    // Toggle for hills
-                                    Toggle("Hills", isOn: $isHills)
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete)
-                                        .roundedBackground()
-                                }
-                                .padding(.top, 8)
-                                .padding(.horizontal, 8)
                             }
                         }
-                        .padding(.bottom, 5)
+                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
+                        .modifier(ToolbarModifier(isFocused: $isFocused))
                     }
-                    .modifier(ToolbarModifier(isFocused: $isFocused))
-                    .background(Color.gray.opacity(0.05))
                     
                     // Navigation bar buttons
                     if !isFocused {
@@ -280,7 +320,7 @@ struct WorkoutView: View {
                     
                     // Load workout data
                     if workoutData == nil {
-                        workoutData = WorkoutData(date: Date(), meters: [], sets: 0, blocks: isBlocks, recovery: isRecovery, off: isOff, meet: isMeet, grass: isGrass, hills: isHills, isDayComplete: isDayComplete)
+                        workoutData = WorkoutData(date: Date(), meters: [], sets: 0, blocks: isBlocks, recovery: isRecovery, off: isOff, meet: isMeet, grass: isGrass, hills: isHills, technique: isTechnique, workout: isWorkout, tempo: isTempo, isDayComplete: isDayComplete)
                     }
                     if let loadedData = workoutData?.loadData() {
                         workoutData = loadedData
@@ -294,20 +334,33 @@ struct WorkoutView: View {
                             isMeet = workoutData.meet
                             isGrass = workoutData.grass
                             isHills = workoutData.hills
+                            isTechnique = workoutData.technique
+                            isWorkout = workoutData.workout
+                            isTempo = workoutData.tempo
                             isDayComplete = workoutData.isDayComplete
                         }
                     }
                     
                     // Retrieve the state of complete day mode from UserDefaults
                     isDayComplete = UserDefaults.standard.bool(forKey: "isDayComplete")
+                    
+                    // Reset selectedExperience if it's a new day
+                    if let lastExperienceDate = UserDefaults.standard.object(forKey: "lastExperienceDate") as? Date {
+                        if !Calendar.current.isDateInToday(lastExperienceDate) {
+                            selectedExperience = nil
+                            UserDefaults.standard.set(nil, forKey: "SelectedExperience")
+                        }
+                    } else {
+                        selectedExperience = nil
+                        UserDefaults.standard.set(nil, forKey: "SelectedExperience")
+                    }
                 }
                 .onDisappear {
                     if workoutData == nil {
-                        workoutData = WorkoutData(date: Date(), meters: [], sets: 0, blocks: false, recovery: false, off: false, meet: false, grass: false, hills: false, isDayComplete: false)
+                        workoutData = WorkoutData(date: Date(), meters: [], sets: 0, blocks: false, recovery: false, off: false, meet: false, grass: false, hills: false, technique: false, workout: false, tempo: false, isDayComplete: false)
                     } else {
                         isFieldModified = true
                         StreakData.updateStreakIfNeeded(fieldModified: isFieldModified)
-                        
                     }
                     workoutData?.meters = meters.compactMap { Int($0) }
                     workoutData?.sets = Int(numSets) ?? 0
@@ -317,6 +370,9 @@ struct WorkoutView: View {
                     workoutData?.meet = isMeet
                     workoutData?.grass = isGrass
                     workoutData?.hills = isHills
+                    workoutData?.technique = isTechnique
+                    workoutData?.workout = isWorkout
+                    workoutData?.tempo = isTempo
                     workoutData?.isDayComplete = isDayComplete
                     workoutData?.saveData()
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
