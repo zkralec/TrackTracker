@@ -20,16 +20,22 @@ struct ExerciseManager {
         print("Calling shouldFetchExercises. \(muscleType)")
         // Check if a day has passed since last fetch
         print("Fetching exercises.")
+        // Get API key
+        guard let apiKey = APIKeys.shared.apiKey else {
+            let error = NSError(domain: "com.yourapp.MealsManager", code: 0, userInfo: [NSLocalizedDescriptionKey: "API key not found"])
+            completion(.failure(error))
+            return
+        }
         // Headers for request
         let headers = [
-            "X-RapidAPI-Key": "a50594d3d7mshb43be11145eead9p10e6a2jsndadd722e10f8",
+            "X-RapidAPI-Key": apiKey,
             "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com"
         ]
         
         // Create request
         let request = NSMutableURLRequest(url: NSURL(string: "https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?muscle=\(muscleType)")! as URL,
-                                                cachePolicy: .useProtocolCachePolicy,
-                                            timeoutInterval: 10.0)
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = headers
         

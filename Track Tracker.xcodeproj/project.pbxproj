@@ -48,6 +48,8 @@
 		14DAEF732B7FDDFB00AF4667 /* CustomButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEF722B7FDDFB00AF4667 /* CustomButtonStyle.swift */; };
 		14DAEF782B7FFCD100AF4667 /* TrackTrackerLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 14DAEF772B7FFCD100AF4667 /* TrackTrackerLogo.png */; };
 		14DAEF7A2B80034600AF4667 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEF792B80034600AF4667 /* UserDataManager.swift */; };
+		14E1E7A42C1C7A2700E2C178 /* apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 14E1E7A32C1C7A2700E2C178 /* apikeys.plist */; };
+		14E1E7A62C1C7ACC00E2C178 /* GetAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E1E7A52C1C7ACC00E2C178 /* GetAPIKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +114,8 @@
 		14DAEF722B7FDDFB00AF4667 /* CustomButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonStyle.swift; sourceTree = "<group>"; };
 		14DAEF772B7FFCD100AF4667 /* TrackTrackerLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackTrackerLogo.png; path = ../../../TrackTrackerLogo.png; sourceTree = "<group>"; };
 		14DAEF792B80034600AF4667 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		14E1E7A32C1C7A2700E2C178 /* apikeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = apikeys.plist; sourceTree = "<group>"; };
+		14E1E7A52C1C7ACC00E2C178 /* GetAPIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAPIKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 		141CA4B02B7D3B4600A3D82E = {
 			isa = PBXGroup;
 			children = (
+				14E1E7A02C1C755100E2C178 /* Misc. */,
 				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14DAEF712B7FDDE000AF4667 /* CustomAssets */,
 				14535E0A2BB267F10080531D /* Notifications */,
@@ -350,6 +355,15 @@
 			path = UserView;
 			sourceTree = "<group>";
 		};
+		14E1E7A02C1C755100E2C178 /* Misc. */ = {
+			isa = PBXGroup;
+			children = (
+				14E1E7A32C1C7A2700E2C178 /* apikeys.plist */,
+				14E1E7A52C1C7ACC00E2C178 /* GetAPIKeys.swift */,
+			);
+			path = Misc.;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -455,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DAEF782B7FFCD100AF4667 /* TrackTrackerLogo.png in Resources */,
+				14E1E7A42C1C7A2700E2C178 /* apikeys.plist in Resources */,
 				141CA4C42B7D3B4800A3D82E /* Preview Assets.xcassets in Resources */,
 				141CA4C12B7D3B4800A3D82E /* Assets.xcassets in Resources */,
 			);
@@ -510,6 +525,7 @@
 				141CA4BD2B7D3B4600A3D82E /* TrackTrackerApp.swift in Sources */,
 				14DAEF6A2B7FD00000AF4667 /* WorkoutView.swift in Sources */,
 				149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */,
+				14E1E7A62C1C7ACC00E2C178 /* GetAPIKeys.swift in Sources */,
 				146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */,
 				14DAEF6C2B7FD39D00AF4667 /* WorkoutData.swift in Sources */,
 				14DAEF6E2B7FDBFA00AF4667 /* ExerciseView.swift in Sources */,

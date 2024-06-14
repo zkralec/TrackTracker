@@ -1,8 +1,7 @@
-//
-//  apikeys.plist
-//  Track Tracker
-//
-//  Created by Zachary Kralec on 6/14/24.
-//
 
-import Foundation
+<plist version="1.0">
+<dict>
+    <key>API_KEY</key>
+    <string>a50594d3d7mshb43be11145eead9p10e6a2jsndadd722e10f8</string>
+</dict>
+</plist>
