@@ -24,7 +24,7 @@ struct MealsManager {
             print("Fetching meal plan.")
             // Headers for request
             let headers = [
-                "X-RapidAPI-Key": "insertAPIKeyHere",
+                "X-RapidAPI-Key": "a50594d3d7mshb43be11145eead9p10e6a2jsndadd722e10f8",
                 "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
             ]
             // Create request
@@ -85,7 +85,7 @@ struct MealsManager {
         print("Fetching refreshed meal plan.")
         // Headers for request
         let headers = [
-            "X-RapidAPI-Key": "insertAPIKeyHere",
+            "X-RapidAPI-Key": "a50594d3d7mshb43be11145eead9p10e6a2jsndadd722e10f8",
             "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
         ]
         // Create request

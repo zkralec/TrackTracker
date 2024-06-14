@@ -22,7 +22,7 @@ struct ExerciseManager {
         print("Fetching exercises.")
         // Headers for request
         let headers = [
-            "X-RapidAPI-Key": "insertAPIKeyHere",
+            "X-RapidAPI-Key": "a50594d3d7mshb43be11145eead9p10e6a2jsndadd722e10f8",
             "X-RapidAPI-Host": "exercises-by-api-ninjas.p.rapidapi.com"
         ]
         
