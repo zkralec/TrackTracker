@@ -11,7 +11,6 @@ import Foundation
 // Manages and handles exercise data
 struct ExerciseManager {
     
-    // Keys
     private static let lastFetchKey = "lastExerciseFetchTimestamp"
     private static let exerciseDataKey = "exerciseData"
     
