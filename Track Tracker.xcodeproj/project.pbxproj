@@ -148,6 +148,7 @@
 		141CA4B02B7D3B4600A3D82E = {
 			isa = PBXGroup;
 			children = (
+				14E1E7A92C1CD1EB00E2C178 /* README.md */,
 				14E1E7A02C1C755100E2C178 /* Misc. */,
 				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14DAEF712B7FDDE000AF4667 /* CustomAssets */,
@@ -362,7 +363,6 @@
 			children = (
 				14E1E7A32C1C7A2700E2C178 /* apikeys.plist */,
 				14E1E7A52C1C7ACC00E2C178 /* GetAPIKeys.swift */,
-				14E1E7A92C1CD1EB00E2C178 /* README.md */,
 			);
 			path = Misc.;
 			sourceTree = "<group>";
