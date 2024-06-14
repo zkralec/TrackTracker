@@ -7,12 +7,14 @@
 
 import SwiftUI
 
+// Appears after the user has completed a workout, will give recovery suggestions
 struct RecoveryPrompt: View {
     @Binding var isPresented: Bool
     @Binding var selectedExperience: String?
     
     @Environment(\.colorScheme) var colorScheme
     
+    // Whole list of recovery ideas depending on workout difficulty
     let recoveryIdeas: [String: [(title: String, description: String)]] = [
         "Easy": [
             ("Stretching", "Do some light stretching."),
@@ -58,12 +60,14 @@ struct RecoveryPrompt: View {
     
     var body: some View {
         VStack {
+            // Lets the user choose their workout experience
             if selectedExperience == nil {
                 Text("How did your workout feel?")
                     .font(.headline)
                     .padding()
                     .padding(.top, 30)
                 
+                // Experience options
                 ForEach(["Easy", "Moderate", "Medium", "Difficult", "Challenging"], id: \.self) { experience in
                     Button(action: {
                         withAnimation {
@@ -80,11 +84,13 @@ struct RecoveryPrompt: View {
                     }
                     .padding(.vertical, 5)
                 }
+            // Suggestions based on experience will appear in a list
             } else if let experience = selectedExperience, let ideas = recoveryIdeas[experience] {
                 Text("Recovery Suggestions")
                     .font(.headline)
                     .padding()
                 
+                // Formatting for list and suggestions
                 GeometryReader { geometry in
                     let maxHeight = geometry.size.height * 1.5
                     List(ideas, id: \.title) { idea in
@@ -108,6 +114,7 @@ struct RecoveryPrompt: View {
             
             Spacer()
             
+            // Done button, can also swipe down
             Button(action: {
                 isPresented = false
             }) {
@@ -127,6 +134,7 @@ struct RecoveryPrompt: View {
         .ignoresSafeArea()
     }
     
+    // Saves the experience so it is not reset every time
     private func saveSelectedExperience(_ experience: String) {
         UserDefaults.standard.set(experience, forKey: "SelectedExperience")
         UserDefaults.standard.set(Date(), forKey: "lastExperienceDate")
