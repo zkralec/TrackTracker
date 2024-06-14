@@ -1,6 +1,6 @@
 
-Track Tracker
-    Description: Track Tracker is a comprehensive app designed for athletes and coaches to effectively manage and track workout data. It allows users to log various types of training sessions, monitor progress, and analyze past workout data to optimize training strategies.
+Track Tracker 
+Description: Track Tracker is a comprehensive app designed for athletes and coaches to effectively manage and track workout data. It allows users to log various types of training sessions, monitor progress, and analyze past workout data to optimize training strategies.
 
 Features 
 Daily Workout Logging: Record different types of workouts including off days, technique days, workout days, tempo days, recovery days, and meet days. Workout
