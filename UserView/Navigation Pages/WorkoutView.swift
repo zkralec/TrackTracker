@@ -241,6 +241,7 @@ struct WorkoutView: View {
                         .padding(.bottom, 5)
                         .listSectionSpacing(15)
                         
+                        // Section for the training or day type
                         Section {
                             VStack(spacing: 15) {
                                 HStack {
