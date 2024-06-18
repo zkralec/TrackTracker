@@ -214,6 +214,8 @@ struct SettingsView: View {
             MeetView()
         } else if viewModel.currPage == 7 {
             ProfileView()
+        } else if viewModel.currPage == 8 {
+            TrainingLogView()
         }
     }
 }

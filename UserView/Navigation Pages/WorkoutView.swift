@@ -8,28 +8,68 @@
 import SwiftUI
 
 // Other main page for the user, mainly lots of UI and fields
-import SwiftUI
-
 struct WorkoutView: View {
     @State private var currDate = Date()
     @State private var currPage: Int = 0
     @State private var isSideMenuOpen = false
     @State private var meters: [String] = [""]
     @State private var numSets = ""
-    @State private var isBlocks = false
-    @State private var isRecovery = false
-    @State private var isOff = false
-    @State private var isMeet = false
-    @State private var isGrass = false
-    @State private var isHills = false
-    @State private var isTechnique = false
-    @State private var isWorkout = false
-    @State private var isTempo = false
     @State private var isFieldModified = false
     @State private var isFocused = false
     @State private var showExperiencePrompt = false
     @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
     @State private var workoutData: WorkoutData?
+    
+    @State private var isRecovery = false
+    @State private var isOff = false
+    @State private var isMeet = false
+    @State private var isHills = false
+    @State private var isTechnique = false
+    @State private var isWorkout = false
+    @State private var isTempo = false
+    
+    @State private var isTrack = false
+    @State private var isIndoorTrack = false
+    @State private var isDirt = false
+    @State private var isGrassHills = false
+    @State private var isAsphalt = false
+    
+    @State private var isRain = false
+    @State private var isSnow = false
+    @State private var isWindy = false
+    @State private var isNormal = false
+    @State private var isHot = false
+    @State private var isCold = false
+    
+    @State private var isBlocks = false
+    @State private var isResistanceBand = false
+    @State private var isWeights = false
+    @State private var isSled = false
+    @State private var isHurdles = false
+    @State private var isWeightedVest = false
+    @State private var isPlyoBox = false
+    @State private var isMedicineBall = false
+    @State private var isStationaryBike = false
+    @State private var isTreadmill = false
+    
+    @State private var isInjury = false
+    @State private var isSoreness = false
+    @State private var isFatigued = false
+    @State private var isPeakForm = false
+    
+    @State private var isLow = false
+    @State private var isModerate = false
+    @State private var isHigh = false
+    @State private var isMaximum = false
+    
+    @State private var isHighJump = false
+    @State private var isPoleVault = false
+    @State private var isHammerThrow = false
+    @State private var isDiscus = false
+    @State private var isShotPut = false
+    @State private var isJavelin = false
+    @State private var isLongJump = false
+    @State private var isTripleJump = false
     
     @State private var events: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
@@ -43,8 +83,17 @@ struct WorkoutView: View {
     
     var onDisappearAction: ((Bool) -> Void)?
     private var previousDaysData: [WorkoutData] = []
-    var anyToggleOn: Bool {
+    var anyDayToggleOn: Bool {
         isOff || isTechnique || isWorkout || isTempo || isRecovery || isMeet
+    }
+    var anySurfaceToggleOn: Bool {
+        isTrack || isIndoorTrack || isDirt || isGrassHills || isAsphalt
+    }
+    var anyConditionToggleOn: Bool {
+        isInjury || isSoreness || isFatigued || isPeakForm
+    }
+    var anyIntensityToggleOn: Bool {
+        isLow || isModerate || isHigh || isMaximum
     }
     
     var body: some View {
@@ -94,15 +143,59 @@ struct WorkoutView: View {
                                         }
                                         workoutData?.meters = meters.compactMap { Int($0) }
                                         workoutData?.sets = Int(numSets) ?? 0
-                                        workoutData?.blocks = isBlocks
+                                        
                                         workoutData?.recovery = isRecovery
                                         workoutData?.off = isOff
                                         workoutData?.meet = isMeet
-                                        workoutData?.hills = isHills
-                                        workoutData?.grass = isGrass
                                         workoutData?.technique = isTechnique
                                         workoutData?.workout = isWorkout
                                         workoutData?.tempo = isTempo
+                                        
+                                        workoutData?.dayComplete = isDayComplete
+                                        
+                                        workoutData?.track = isTrack
+                                        workoutData?.indoorTrack = isIndoorTrack
+                                        workoutData?.dirt = isDirt
+                                        workoutData?.grasshills = isGrassHills
+                                        workoutData?.asphalt = isAsphalt
+                                        
+                                        workoutData?.rain = isRain
+                                        workoutData?.snow = isSnow
+                                        workoutData?.windy = isWindy
+                                        workoutData?.normal = isNormal
+                                        workoutData?.hot = isHot
+                                        workoutData?.cold = isCold
+                                        
+                                        workoutData?.blocks = isBlocks
+                                        workoutData?.resistanceBand = isResistanceBand
+                                        workoutData?.weights = isWeights
+                                        workoutData?.sled = isSled
+                                        workoutData?.hurdles = isHurdles
+                                        workoutData?.weightedVest = isWeightedVest
+                                        workoutData?.plyoBox = isPlyoBox
+                                        workoutData?.medicineBall = isMedicineBall
+                                        workoutData?.stationaryBike = isStationaryBike
+                                        workoutData?.treadmill = isTreadmill
+                                        
+                                        workoutData?.injury = isInjury
+                                        workoutData?.soreness = isSoreness
+                                        workoutData?.fatigued = isFatigued
+                                        workoutData?.peakForm = isPeakForm
+                                        
+                                        workoutData?.low = isLow
+                                        workoutData?.moderate = isModerate
+                                        workoutData?.high = isHigh
+                                        workoutData?.maximum = isMaximum
+                                        
+                                        workoutData?.highJump = isHighJump
+                                        workoutData?.poleVault = isPoleVault
+                                        workoutData?.hammerThrow = isHammerThrow
+                                        workoutData?.discus = isDiscus
+                                        workoutData?.shotPut = isShotPut
+                                        workoutData?.javelin = isJavelin
+                                        workoutData?.longJump = isLongJump
+                                        workoutData?.tripleJump = isTripleJump
+                                        
                                         workoutData?.saveData()
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     }
@@ -138,19 +231,23 @@ struct WorkoutView: View {
                                     .padding(10)
                                 
                                 // Creates meter fields for user input
-                                VStack() {
+                                VStack {
                                     ForEach(0..<meters.count, id: \.self) { index in
                                         TextField("Meters", text: Binding(
                                             get: { meters[index] },
                                             set: { newValue in
-                                                meters[index] = newValue
+                                                if validateMetersInput(newValue) {
+                                                    meters[index] = newValue
+                                                }
                                             }
                                         ))
                                         .keyboardType(.numberPad)
                                         .padding(10)
                                         .disabled(isDayComplete)
                                         .onTapGesture {
-                                            self.isFocused = true
+                                            withAnimation {
+                                                self.isFocused = true
+                                            }
                                         }
                                         .roundedBackground()
                                     }
@@ -233,7 +330,9 @@ struct WorkoutView: View {
                                 .padding(10)
                                 .disabled(isDayComplete)
                                 .onTapGesture {
-                                    self.isFocused = true
+                                    withAnimation {
+                                        self.isFocused = true
+                                    }
                                 }
                                 .roundedBackground()
                             }
@@ -243,70 +342,196 @@ struct WorkoutView: View {
                         
                         // Section for the training or day type
                         Section {
-                            VStack(spacing: 15) {
-                                HStack {
-                                    Spacer()
-                                    Text("Day Type")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(.vertical, 10)
-                                    Spacer()
-                                }
-                                
-                                ForEach([
-                                    ("Off Day", $isOff),
-                                    ("Technique Day", $isTechnique),
-                                    ("Workout Day", $isWorkout),
-                                    ("Tempo Day", $isTempo),
-                                    ("Recovery Day", $isRecovery),
-                                    ("Meet Day", $isMeet)
-                                ], id: \.0) { label, binding in
-                                    Toggle(label, isOn: binding)
-                                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete || (!binding.wrappedValue && anyToggleOn))
-                                        .padding(3)
-                                        .roundedBackground()
-                                        .padding(.horizontal, 8)
+                            DisclosureGroup("Day Type") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("Off Day", $isOff),
+                                        ("Technique Day", $isTechnique),
+                                        ("Workout Day", $isWorkout),
+                                        ("Tempo Day", $isTempo),
+                                        ("Recovery Day", $isRecovery),
+                                        ("Meet Day", $isMeet)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete || (!binding.wrappedValue && anyDayToggleOn))
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
                                 }
                             }
+                            .fontWeight(.medium)
                         }
                         .padding(.vertical, 5)
                         .listSectionSpacing(15)
-                        .modifier(ToolbarModifier(isFocused: $isFocused))
                         
+                        
+                        // Surface Section
                         Section {
-                            VStack(spacing: 15) {
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text("Extras")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(.vertical, 10)
-                                    
-                                    Spacer()
-                                }
-                                
-                                ForEach([
-                                    ("Blocks", $isBlocks),
-                                    ("Grass", $isGrass),
-                                    ("Hills", $isHills)
-                                ], id: \.0) { label, binding in
-                                    Toggle(label, isOn: binding)
-                                        .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                        .font(.subheadline)
-                                        .disabled(isDayComplete)
-                                        .padding(3)
-                                        .roundedBackground()
-                                        .padding(.horizontal, 8)
+                            DisclosureGroup("Surface") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("Track", $isTrack),
+                                        ("Indoor Track", $isIndoorTrack),
+                                        ("Dirt", $isDirt),
+                                        ("Grass/Hills", $isGrassHills),
+                                        ("Asphalt", $isAsphalt)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete || (!binding.wrappedValue && anySurfaceToggleOn))
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
                                 }
                             }
+                            .fontWeight(.medium)
                         }
                         .padding(.vertical, 5)
                         .listSectionSpacing(15)
-                        .modifier(ToolbarModifier(isFocused: $isFocused))
+                        
+                        // Weather Section
+                        Section {
+                            DisclosureGroup("Weather") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("Rain", $isRain),
+                                        ("Snow", $isSnow),
+                                        ("Windy", $isWindy),
+                                        ("Normal", $isNormal),
+                                        ("Hot", $isHot),
+                                        ("Cold", $isCold)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete)
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            .fontWeight(.medium)
+                        }
+                        .padding(.vertical, 5)
+                        .listSectionSpacing(15)
+                        
+                        // Equipment Section
+                        Section {
+                            DisclosureGroup("Equipment") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("Blocks", $isBlocks),
+                                        ("Resistance Band", $isResistanceBand),
+                                        ("Weights", $isWeights),
+                                        ("Sled", $isSled),
+                                        ("Hurdles", $isHurdles),
+                                        ("Weighted Vest", $isWeightedVest),
+                                        ("Plyo Box", $isPlyoBox),
+                                        ("Medicine Ball", $isMedicineBall),
+                                        ("Stationary Bike", $isStationaryBike),
+                                        ("Treadmill", $isTreadmill)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete)
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            .fontWeight(.medium)
+                        }
+                        .padding(.vertical, 5)
+                        .listSectionSpacing(15)
+                        
+                        // Condition Section
+                        Section {
+                            DisclosureGroup("Condition") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("Injury", $isInjury),
+                                        ("Soreness", $isSoreness),
+                                        ("Fatigued", $isFatigued),
+                                        ("Peak Form", $isPeakForm)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete || (!binding.wrappedValue && anyConditionToggleOn))
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            .fontWeight(.medium)
+                        }
+                        .padding(.vertical, 5)
+                        .listSectionSpacing(15)
+                        
+                        // Intensity Section
+                        Section {
+                            DisclosureGroup("Intensity") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("Low", $isLow),
+                                        ("Moderate", $isModerate),
+                                        ("High", $isHigh),
+                                        ("Maximum", $isMaximum)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete || (!binding.wrappedValue && anyIntensityToggleOn))
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            .fontWeight(.medium)
+                        }
+                        .padding(.vertical, 5)
+                        .listSectionSpacing(15)
+                        
+                        // Field Events Section
+                        Section {
+                            DisclosureGroup("Field Events") {
+                                VStack(spacing: 15) {
+                                    ForEach([
+                                        ("High Jump", $isHighJump),
+                                        ("Pole Vault", $isPoleVault),
+                                        ("Hammer Throw", $isHammerThrow),
+                                        ("Discus", $isDiscus),
+                                        ("Shot Put", $isShotPut),
+                                        ("Javelin", $isJavelin),
+                                        ("Long Jump", $isLongJump),
+                                        ("Triple Jump", $isTripleJump)
+                                    ], id: \.0) { label, binding in
+                                        Toggle(label, isOn: binding)
+                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                                            .font(.subheadline)
+                                            .disabled(isDayComplete)
+                                            .padding(3)
+                                            .roundedBackground()
+                                            .padding(.horizontal, 8)
+                                    }
+                                }
+                            }
+                            .fontWeight(.medium)
+                        }
+                        .padding(.vertical, 5)
+                        .listSectionSpacing(15)
                     }
+                    .modifier(ToolbarModifier(isFocused: $isFocused))
                     
                     // Navigation bar buttons
                     if !isFocused {
@@ -316,12 +541,68 @@ struct WorkoutView: View {
                     }
                 }
                 .onAppear {
+                    resetDayCompletionIfNeeded()
+                    
                     // Update the empty storage before loading data
                     WorkoutData.updateDataAtStartOfDay(currentDate: currDate)
                     
                     // Load workout data
                     if workoutData == nil {
-                        workoutData = WorkoutData(date: Date(), meters: [], sets: 0, blocks: isBlocks, recovery: isRecovery, off: isOff, meet: isMeet, grass: isGrass, hills: isHills, technique: isTechnique, workout: isWorkout, tempo: isTempo, isDayComplete: isDayComplete)
+                        workoutData = WorkoutData(date: Date(),
+                                                  meters: [],
+                                                  sets: 0,
+                                                  
+                                                  recovery: false,
+                                                  off: false,
+                                                  meet: false,
+                                                  technique: false,
+                                                  workout: false,
+                                                  tempo: false,
+                                                  
+                                                  dayComplete: false,
+                                                  
+                                                  track: false,
+                                                  indoorTrack: false,
+                                                  dirt: false,
+                                                  grasshills: false,
+                                                  asphalt: false,
+                                                  
+                                                  rain: false,
+                                                  snow: false,
+                                                  windy: false,
+                                                  normal: false,
+                                                  hot: false,
+                                                  cold: false,
+                                                  
+                                                  blocks: false,
+                                                  resistanceBand: false,
+                                                  weights: false,
+                                                  sled: false,
+                                                  hurdles: false,
+                                                  weightedVest: false,
+                                                  plyoBox: false,
+                                                  medicineBall: false,
+                                                  stationaryBike: false,
+                                                  treadmill: false,
+                                                  
+                                                  injury: false,
+                                                  soreness: false,
+                                                  fatigued: false,
+                                                  peakForm: false,
+                                                  
+                                                  low: false,
+                                                  moderate: false,
+                                                  high: false,
+                                                  maximum: false,
+                                                  
+                                                  highJump: false,
+                                                  poleVault: false,
+                                                  hammerThrow: false,
+                                                  discus: false,
+                                                  shotPut: false,
+                                                  javelin: false,
+                                                  longJump: false,
+                                                  tripleJump: false)
                     }
                     if let loadedData = workoutData?.loadData() {
                         workoutData = loadedData
@@ -329,16 +610,58 @@ struct WorkoutView: View {
                         if let workoutData = workoutData {
                             meters = workoutData.meters.isEmpty ? [""] : workoutData.meters.map { String($0) }
                             numSets = workoutData.sets > 0 ? String(workoutData.sets) : ""
-                            isBlocks = workoutData.blocks
+                            
                             isRecovery = workoutData.recovery
                             isOff = workoutData.off
                             isMeet = workoutData.meet
-                            isGrass = workoutData.grass
-                            isHills = workoutData.hills
                             isTechnique = workoutData.technique
                             isWorkout = workoutData.workout
                             isTempo = workoutData.tempo
-                            isDayComplete = workoutData.isDayComplete
+                            
+                            isDayComplete = workoutData.dayComplete
+                            
+                            isTrack = workoutData.track
+                            isIndoorTrack = workoutData.indoorTrack
+                            isDirt = workoutData.dirt
+                            isGrassHills = workoutData.grasshills
+                            isAsphalt = workoutData.asphalt
+                            
+                            isRain = workoutData.rain
+                            isSnow = workoutData.snow
+                            isWindy = workoutData.windy
+                            isNormal = workoutData.normal
+                            isHot = workoutData.hot
+                            isCold = workoutData.cold
+                            
+                            isBlocks = workoutData.blocks
+                            isResistanceBand = workoutData.resistanceBand
+                            isWeights = workoutData.weights
+                            isSled = workoutData.sled
+                            isHurdles = workoutData.hurdles
+                            isWeightedVest = workoutData.weightedVest
+                            isPlyoBox = workoutData.plyoBox
+                            isMedicineBall = workoutData.medicineBall
+                            isStationaryBike = workoutData.stationaryBike
+                            isTreadmill = workoutData.treadmill
+                            
+                            isInjury = workoutData.injury
+                            isSoreness = workoutData.soreness
+                            isFatigued = workoutData.fatigued
+                            isPeakForm = workoutData.peakForm
+                            
+                            isLow = workoutData.low
+                            isModerate = workoutData.moderate
+                            isHigh = workoutData.high
+                            isMaximum = workoutData.maximum
+                            
+                            isHighJump = workoutData.highJump
+                            isPoleVault = workoutData.poleVault
+                            isHammerThrow = workoutData.hammerThrow
+                            isDiscus = workoutData.discus
+                            isShotPut = workoutData.shotPut
+                            isJavelin = workoutData.javelin
+                            isLongJump = workoutData.longJump
+                            isTripleJump = workoutData.tripleJump
                         }
                     }
                     
@@ -358,23 +681,120 @@ struct WorkoutView: View {
                 }
                 .onDisappear {
                     if workoutData == nil {
-                        workoutData = WorkoutData(date: Date(), meters: [], sets: 0, blocks: false, recovery: false, off: false, meet: false, grass: false, hills: false, technique: false, workout: false, tempo: false, isDayComplete: false)
+                        workoutData = WorkoutData(date: Date(),
+                                                  meters: [],
+                                                  sets: 0,
+                                                  
+                                                  recovery: false,
+                                                  off: false,
+                                                  meet: false,
+                                                  technique: false,
+                                                  workout: false,
+                                                  tempo: false,
+                                                  
+                                                  dayComplete: false,
+                                                  
+                                                  track: false,
+                                                  indoorTrack: false,
+                                                  dirt: false,
+                                                  grasshills: false,
+                                                  asphalt: false,
+                                                  
+                                                  rain: false,
+                                                  snow: false,
+                                                  windy: false,
+                                                  normal: false,
+                                                  hot: false,
+                                                  cold: false,
+                                                  
+                                                  blocks: false,
+                                                  resistanceBand: false,
+                                                  weights: false,
+                                                  sled: false,
+                                                  hurdles: false,
+                                                  weightedVest: false,
+                                                  plyoBox: false,
+                                                  medicineBall: false,
+                                                  stationaryBike: false,
+                                                  treadmill: false,
+                                                  
+                                                  injury: false,
+                                                  soreness: false,
+                                                  fatigued: false,
+                                                  peakForm: false,
+                                                  
+                                                  low: false,
+                                                  moderate: false,
+                                                  high: false,
+                                                  maximum: false,
+                                                  
+                                                  highJump: false,
+                                                  poleVault: false,
+                                                  hammerThrow: false,
+                                                  discus: false,
+                                                  shotPut: false,
+                                                  javelin: false,
+                                                  longJump: false,
+                                                  tripleJump: false)
                     } else {
                         isFieldModified = true
                         StreakData.updateStreakIfNeeded(fieldModified: isFieldModified)
                     }
                     workoutData?.meters = meters.compactMap { Int($0) }
                     workoutData?.sets = Int(numSets) ?? 0
-                    workoutData?.blocks = isBlocks
+                    
                     workoutData?.recovery = isRecovery
                     workoutData?.off = isOff
                     workoutData?.meet = isMeet
-                    workoutData?.grass = isGrass
-                    workoutData?.hills = isHills
                     workoutData?.technique = isTechnique
                     workoutData?.workout = isWorkout
                     workoutData?.tempo = isTempo
-                    workoutData?.isDayComplete = isDayComplete
+                    
+                    workoutData?.dayComplete = isDayComplete
+                    
+                    workoutData?.track = isTrack
+                    workoutData?.indoorTrack = isIndoorTrack
+                    workoutData?.dirt = isDirt
+                    workoutData?.grasshills = isGrassHills
+                    workoutData?.asphalt = isAsphalt
+                    
+                    workoutData?.rain = isRain
+                    workoutData?.snow = isSnow
+                    workoutData?.windy = isWindy
+                    workoutData?.normal = isNormal
+                    workoutData?.hot = isHot
+                    workoutData?.cold = isCold
+                    
+                    workoutData?.blocks = isBlocks
+                    workoutData?.resistanceBand = isResistanceBand
+                    workoutData?.weights = isWeights
+                    workoutData?.sled = isSled
+                    workoutData?.hurdles = isHurdles
+                    workoutData?.weightedVest = isWeightedVest
+                    workoutData?.plyoBox = isPlyoBox
+                    workoutData?.medicineBall = isMedicineBall
+                    workoutData?.stationaryBike = isStationaryBike
+                    workoutData?.treadmill = isTreadmill
+                    
+                    workoutData?.injury = isInjury
+                    workoutData?.soreness = isSoreness
+                    workoutData?.fatigued = isFatigued
+                    workoutData?.peakForm = isPeakForm
+                    
+                    workoutData?.low = isLow
+                    workoutData?.moderate = isModerate
+                    workoutData?.high = isHigh
+                    workoutData?.maximum = isMaximum
+                    
+                    workoutData?.highJump = isHighJump
+                    workoutData?.poleVault = isPoleVault
+                    workoutData?.hammerThrow = isHammerThrow
+                    workoutData?.discus = isDiscus
+                    workoutData?.shotPut = isShotPut
+                    workoutData?.javelin = isJavelin
+                    workoutData?.longJump = isLongJump
+                    workoutData?.tripleJump = isTripleJump
+                    
                     workoutData?.saveData()
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     
@@ -415,6 +835,28 @@ struct WorkoutView: View {
     private func validateNumberOfRepsInput(_ value: String) -> Bool {
         guard let intValue = Int(value) else { return false }
         return intValue <= 100
+    }
+    
+    // Function to reset isDayComplete if it's a new day
+    private func resetDayCompletionIfNeeded() {
+        // Retrieve last complete date from UserDefaults
+        if let lastCompleteDate = UserDefaults.standard.object(forKey: "lastCompleteDate") as? Date {
+            // Check if last complete date is not today
+            if !Calendar.current.isDateInToday(lastCompleteDate) {
+                isDayComplete = false
+                UserDefaults.standard.set(false, forKey: "isDayComplete")
+                
+                // Optionally reset selectedExperience
+                selectedExperience = nil
+                UserDefaults.standard.set(nil, forKey: "SelectedExperience")
+                
+                // Update last complete date to today
+                UserDefaults.standard.set(Date(), forKey: "lastCompleteDate")
+            }
+        } else {
+            // No last complete date found, likely first launch, set it to today
+            UserDefaults.standard.set(Date(), forKey: "lastCompleteDate")
+        }
     }
 }
 

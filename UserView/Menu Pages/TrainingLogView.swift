@@ -37,9 +37,6 @@ struct TrainingLogView: View {
                     // Display past 10 day history of workouts
                     List {
                         ForEach(sortedPastWorkouts, id: \.self) { workout in
-                            var shouldApplyPadding: Bool {
-                                return workout.blocks || workout.recovery || workout.grass || workout.hills
-                            }
                             Section {
                                 if workout.meet {
                                     Text("Date: \(workout.formattedDate)")
@@ -57,6 +54,8 @@ struct TrainingLogView: View {
                                         Text("Practice Type: Workout Day")
                                     } else if workout.tempo {
                                         Text("Practice Type: Tempo Day")
+                                    } else if workout.recovery {
+                                        Text("Practice Type: Recovery Day")
                                     }
                                     VStack(alignment: .leading) {
                                         if workout.metersString != "" {
@@ -65,21 +64,76 @@ struct TrainingLogView: View {
                                             Text("Distance/Reps: None")
                                         }
                                         Text("Sets: \(workout.sets)")
-                                        VStack (alignment: .leading){
-                                            if workout.blocks {
-                                                Text("Blocks")
-                                            }
-                                            if workout.recovery {
-                                                Text("Recovery")
-                                            }
-                                            if workout.grass {
-                                                Text("Grass")
-                                            }
-                                            if workout.hills {
-                                                Text("Hills")
+                                            .padding(.top,3)
+                                    }
+                                    DisclosureGroup("Extra Info.") {
+                                        ForEach([
+                                            (key: "Track", value: workout.track),
+                                            (key: "Indoor Track", value: workout.indoorTrack),
+                                            (key: "Dirt", value: workout.dirt),
+                                            (key: "Grass Hills", value: workout.grasshills),
+                                            (key: "Asphalt", value: workout.asphalt)
+                                        ], id: \.key) { surface in
+                                            if surface.value {
+                                                Text("Surface: \(surface.key)")
                                             }
                                         }
-                                        .padding(.top, shouldApplyPadding ? 5 : 0)
+                                        let weatherOptions = [
+                                            (key: "Rain", value: workout.rain),
+                                            (key: "Snow", value: workout.snow),
+                                            (key: "Windy", value: workout.windy),
+                                            (key: "Normal", value: workout.normal),
+                                            (key: "Hot", value: workout.hot),
+                                            (key: "Cold", value: workout.cold)
+                                        ]
+                                        let selectedWeather = weatherOptions.filter { $0.value }.map { $0.key }.joined(separator: ", ")
+                                        Text("Weather: \(selectedWeather)")
+                                        let equipmentOptions = [
+                                            (key: "Blocks", value: workout.blocks),
+                                            (key: "Resistance Band", value: workout.resistanceBand),
+                                            (key: "Weights", value: workout.weights),
+                                            (key: "Sled", value: workout.sled),
+                                            (key: "Hurdles", value: workout.hurdles),
+                                            (key: "Weighted Vest", value: workout.weightedVest),
+                                            (key: "Plyo Box", value: workout.plyoBox),
+                                            (key: "Medicine Ball", value: workout.medicineBall),
+                                            (key: "Stationary Bike", value: workout.stationaryBike),
+                                            (key: "Treadmill", value: workout.treadmill)
+                                        ]
+                                        let selectedEquipment = equipmentOptions.filter { $0.value }.map { $0.key }.joined(separator: ", ")
+                                        Text("Equipment: \(selectedEquipment)")
+                                        ForEach([
+                                            (key: "Injury", value: workout.injury),
+                                            (key: "Soreness", value: workout.soreness),
+                                            (key: "Fatigued", value: workout.fatigued),
+                                            (key: "Peak Form", value: workout.peakForm)
+                                        ], id: \.key) { condition in
+                                            if condition.value {
+                                                Text("Condition: \(condition.key)")
+                                            }
+                                        }
+                                        ForEach([
+                                            (key: "Low", value: workout.low),
+                                            (key: "Moderate", value: workout.moderate),
+                                            (key: "High", value: workout.high),
+                                            (key: "Maximum", value: workout.maximum)
+                                        ], id: \.key) { intensity in
+                                            if intensity.value {
+                                                Text("Intensity: \(intensity.key)")
+                                            }
+                                        }
+                                        let eventOptions = [
+                                            (key: "High Jump", value: workout.highJump),
+                                            (key: "Pole Vault", value: workout.poleVault),
+                                            (key: "Hammer Throw", value: workout.hammerThrow),
+                                            (key: "Discus", value: workout.discus),
+                                            (key: "Shot Put", value: workout.shotPut),
+                                            (key: "Javelin", value: workout.javelin),
+                                            (key: "Long Jump", value: workout.longJump),
+                                            (key: "Triple Jump", value: workout.tripleJump)
+                                        ]
+                                        let selectedEvent = eventOptions.filter { $0.value }.map { $0.key }.joined(separator: ", ")
+                                        Text("Event(s) Practiced: \(selectedEvent)")
                                     }
                                 }
                             }
@@ -116,6 +170,3 @@ extension WorkoutData {
     }
 }
 
-#Preview {
-    TrainingLogView()
-}

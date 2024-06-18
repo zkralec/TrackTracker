@@ -63,8 +63,6 @@ struct EventView: View {
             ProfileView()
         } else if currPage == 8 {
             TrainingLogView()
-        } else if currPage == 8 {
-            TrainingLogView()
         }
     }
     

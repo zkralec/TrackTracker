@@ -212,6 +212,8 @@ struct UserInputView: View {
             MealsView()
         } else if currPage == 3 {
             HomeView()
+        } else if currPage == 8 {
+            TrainingLogView()
         }
     }
 }

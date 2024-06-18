@@ -12,16 +12,58 @@ struct WorkoutData: Codable, Hashable {
     var date: Date
     var meters: [Int]
     var sets: Int
-    var blocks: Bool
+    
     var recovery: Bool
     var off: Bool
     var meet: Bool
-    var grass: Bool
-    var hills: Bool
     var technique: Bool
     var workout: Bool
     var tempo: Bool
-    var isDayComplete: Bool
+    
+    var dayComplete: Bool
+    
+    var track: Bool
+    var indoorTrack: Bool
+    var dirt: Bool
+    var grasshills: Bool
+    var asphalt: Bool
+    
+    var rain: Bool
+    var snow: Bool
+    var windy: Bool
+    var normal: Bool
+    var hot: Bool
+    var cold: Bool
+    
+    var blocks: Bool
+    var resistanceBand: Bool
+    var weights: Bool
+    var sled: Bool
+    var hurdles: Bool
+    var weightedVest: Bool
+    var plyoBox: Bool
+    var medicineBall: Bool
+    var stationaryBike: Bool
+    var treadmill: Bool
+    
+    var injury: Bool
+    var soreness: Bool
+    var fatigued: Bool
+    var peakForm: Bool
+    
+    var low: Bool
+    var moderate: Bool
+    var high: Bool
+    var maximum: Bool
+    
+    var highJump: Bool
+    var poleVault: Bool
+    var hammerThrow: Bool
+    var discus: Bool
+    var shotPut: Bool
+    var javelin: Bool
+    var longJump: Bool
+    var tripleJump: Bool
 }
 
 extension WorkoutData {
@@ -95,7 +137,61 @@ extension WorkoutData {
         if !calendar.isDate(currentDate, inSameDayAs: storedDate) {
             // Reset workout data at new day
             UserDefaults.standard.set(currentDate, forKey: "currentDate")
-            let defaultWorkoutData = WorkoutData(date: currentDate, meters: [], sets: 0, blocks: false, recovery: false, off: false, meet: false, grass: false, hills: false, technique: false, workout: false, tempo: false, isDayComplete: false)
+            let defaultWorkoutData = WorkoutData(date: currentDate,
+                                                 meters: [],
+                                                 sets: 0,
+                                                 
+                                                 recovery: false,
+                                                 off: false,
+                                                 meet: false,
+                                                 technique: false,
+                                                 workout: false,
+                                                 tempo: false,
+                                                 
+                                                 dayComplete: false,
+                                                 
+                                                 track: false,
+                                                 indoorTrack: false,
+                                                 dirt: false,
+                                                 grasshills: false,
+                                                 asphalt: false,
+                                                 
+                                                 rain: false,
+                                                 snow: false,
+                                                 windy: false,
+                                                 normal: false,
+                                                 hot: false,
+                                                 cold: false,
+                                                 
+                                                 blocks: false,
+                                                 resistanceBand: false,
+                                                 weights: false,
+                                                 sled: false,
+                                                 hurdles: false,
+                                                 weightedVest: false,
+                                                 plyoBox: false,
+                                                 medicineBall: false,
+                                                 stationaryBike: false,
+                                                 treadmill: false,
+                                                 
+                                                 injury: false,
+                                                 soreness: false,
+                                                 fatigued: false,
+                                                 peakForm: false,
+                                                 
+                                                 low: false,
+                                                 moderate: false,
+                                                 high: false,
+                                                 maximum: false,
+                                                 
+                                                 highJump: false,
+                                                 poleVault: false,
+                                                 hammerThrow: false,
+                                                 discus: false,
+                                                 shotPut: false,
+                                                 javelin: false,
+                                                 longJump: false,
+                                                 tripleJump: false)
             defaultWorkoutData.saveData()
             print("New day. Resetting workout data.")
         }
