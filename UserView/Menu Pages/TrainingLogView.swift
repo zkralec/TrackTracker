@@ -87,7 +87,9 @@ struct TrainingLogView: View {
                                             (key: "Cold", value: workout.cold)
                                         ]
                                         let selectedWeather = weatherOptions.filter { $0.value }.map { $0.key }.joined(separator: ", ")
-                                        Text("Weather: \(selectedWeather)")
+                                        if selectedWeather != "" {
+                                            Text("Weather: \(selectedWeather)")
+                                        }
                                         let equipmentOptions = [
                                             (key: "Blocks", value: workout.blocks),
                                             (key: "Resistance Band", value: workout.resistanceBand),
@@ -101,7 +103,9 @@ struct TrainingLogView: View {
                                             (key: "Treadmill", value: workout.treadmill)
                                         ]
                                         let selectedEquipment = equipmentOptions.filter { $0.value }.map { $0.key }.joined(separator: ", ")
-                                        Text("Equipment: \(selectedEquipment)")
+                                        if selectedEquipment != "" {
+                                            Text("Equipment: \(selectedEquipment)")
+                                        }
                                         ForEach([
                                             (key: "Injury", value: workout.injury),
                                             (key: "Soreness", value: workout.soreness),
@@ -133,7 +137,9 @@ struct TrainingLogView: View {
                                             (key: "Triple Jump", value: workout.tripleJump)
                                         ]
                                         let selectedEvent = eventOptions.filter { $0.value }.map { $0.key }.joined(separator: ", ")
-                                        Text("Event(s) Practiced: \(selectedEvent)")
+                                        if selectedEvent != "" {
+                                            Text("Event(s) Practiced: \(selectedEvent)")
+                                        }
                                     }
                                 }
                             }
