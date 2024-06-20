@@ -38,6 +38,7 @@ struct TrainingLogView: View {
                     List {
                         ForEach(sortedPastWorkouts, id: \.self) { workout in
                             Section {
+                                // If meet or off, use simplified formatting
                                 if workout.meet {
                                     Text("Date: \(workout.formattedDate)")
                                     Text("Meet Day")
@@ -46,6 +47,7 @@ struct TrainingLogView: View {
                                     Text("Date: \(workout.formattedDate)")
                                     Text("Off Day")
                                         .font(.title3)
+                                // Else, format to show all relevant information with Extras section
                                 } else {
                                     Text("Date: \(workout.formattedDate)")
                                     if workout.technique {
@@ -66,6 +68,7 @@ struct TrainingLogView: View {
                                         Text("Sets: \(workout.sets)")
                                             .padding(.top,3)
                                     }
+                                    // Extras section
                                     DisclosureGroup("Extra Info.") {
                                         ForEach([
                                             (key: "Track", value: workout.track),

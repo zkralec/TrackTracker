@@ -66,9 +66,15 @@ struct SettingsView: View {
                         Section {
                             VStack {
                                 if viewModel.events.isEmpty {
-                                    Text("No selected events")
-                                        .foregroundStyle(.secondary)
-                                        .padding()
+                                    HStack {
+                                        Spacer()
+                                        
+                                        Text("No selected events")
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                        
+                                        Spacer()
+                                    }
                                 } else {
                                     Text("Event PRs")
                                         .font(.headline)
@@ -101,7 +107,7 @@ struct SettingsView: View {
                                     }
                                 }
                             }
-                            .padding(.bottom)
+                            .padding()
                         }
                         .listSectionSpacing(15)
 

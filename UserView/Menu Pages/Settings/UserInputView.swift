@@ -71,6 +71,7 @@ struct UserInputView: View {
                                             isFocused = true
                                         }
                                 }
+                                .padding(.vertical, 10)
                             }
                             
                             // Height section
@@ -100,6 +101,7 @@ struct UserInputView: View {
                                     }
                                     .padding(5)
                                 }
+                                .padding(.vertical, 10)
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
                             }
                             .listSectionSpacing(15)
@@ -122,6 +124,7 @@ struct UserInputView: View {
                                             isFocused = true
                                         }
                                 }
+                                .padding(.vertical, 10)
                             }
                             .listSectionSpacing(15)
                             
@@ -141,6 +144,7 @@ struct UserInputView: View {
                                     .pickerStyle(WheelPickerStyle())
                                     .padding(.horizontal, 110)
                                 }
+                                .padding(.vertical, 10)
                             }
                             .listSectionSpacing(15)
                             
@@ -153,7 +157,6 @@ struct UserInputView: View {
                                         Text("Gender")
                                             .font(.headline)
                                             .fontWeight(.medium)
-                                            .padding(10)
                                         
                                         Picker("", selection: $gender) {
                                             ForEach(Gender.allCases) { gender in

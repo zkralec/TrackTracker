@@ -85,9 +85,15 @@ struct ProfileView: View {
                         Section {
                             VStack {
                                 if events.isEmpty {
-                                    Text("No selected events")
-                                        .foregroundStyle(.secondary)
-                                        .padding()
+                                    HStack {
+                                        Spacer()
+                                        
+                                        Text("No selected events")
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                        
+                                        Spacer()
+                                    }
                                 } else {
                                     Text("Personal Records")
                                         .font(.headline)
@@ -103,9 +109,15 @@ struct ProfileView: View {
                                             }
                                             .padding(.vertical, 4)
                                         } else {
-                                            Text("No personal record set for \(event.rawValue)")
-                                                .foregroundStyle(.secondary)
-                                                .padding(.vertical, 4)
+                                            HStack {
+                                                Spacer()
+                                                
+                                                Text("No personal record set for \(event.rawValue)")
+                                                    .foregroundStyle(.secondary)
+                                                    .padding(.vertical, 4)
+                                                
+                                                Spacer()
+                                            }
                                         }
                                     }
                                 }

@@ -130,7 +130,7 @@ struct SideBar: View {
                     
                     Text("App Version: 0.1.1 - alpha")
                         .font(.footnote)
-                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                        .foregroundStyle(colorScheme == .dark ? .white : .black)
                         .padding(.leading, 25)
                 }
                 .frame(width: UIScreen.main.bounds.width * 0.60)

@@ -35,12 +35,12 @@ struct HomeView: View {
                                     Text("Current Streak")
                                         .font(.headline)
                                         .fontWeight(.medium)
-                                        .foregroundColor(.primary) // Automatically adapts to color scheme
+                                        .foregroundStyle(.primary) // Automatically adapts to color scheme
                                         .padding(.top, 20)
                                     
                                     Text("\(StreakData.streakCount())")
                                         .font(.system(size: 60, weight: .bold))
-                                        .foregroundColor(.primary)
+                                        .foregroundStyle(.primary)
                                         .padding(.bottom, 20)
                                         .padding(.top, 5)
                                 }
@@ -54,9 +54,15 @@ struct HomeView: View {
                         Section {
                             VStack {
                                 if events.isEmpty {
-                                    Text("No selected events")
-                                        .foregroundColor(.secondary)
-                                        .padding()
+                                    HStack {
+                                        Spacer()
+                                        
+                                        Text("No selected events")
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                        
+                                        Spacer()
+                                    }
                                 } else {
                                     Text("Personal Records")
                                         .font(.headline)
@@ -72,9 +78,15 @@ struct HomeView: View {
                                             }
                                             .padding(.vertical, 4)
                                         } else {
-                                            Text("No personal record set for \(event.rawValue)")
-                                                .foregroundColor(.secondary)
-                                                .padding(.vertical, 4)
+                                            HStack {
+                                                Spacer()
+                                                
+                                                Text("No personal record set for \(event.rawValue)")
+                                                    .foregroundStyle(.secondary)
+                                                    .padding(.vertical, 4)
+                                                
+                                                Spacer()
+                                            }
                                         }
                                     }
                                 }
@@ -96,7 +108,7 @@ struct HomeView: View {
                                     
                                     if meets.isEmpty {
                                         Text("No meet days selected")
-                                            .foregroundColor(.secondary)
+                                            .foregroundStyle(.secondary)
                                             .padding()
                                             .roundedBackground()
                                     } else {

@@ -13,7 +13,7 @@ struct CustomCircleButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .font(.title)
             .padding()
             .background(

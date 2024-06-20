@@ -19,7 +19,7 @@ struct WelcomeView: View {
                 Text("Track Tracker")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
-                    .foregroundColor(.primary) // Adapts to color scheme
+                    .foregroundStyle(.primary)
                     .multilineTextAlignment(.center)
                 
                 // App logo
