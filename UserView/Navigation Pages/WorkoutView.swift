@@ -301,7 +301,7 @@ struct WorkoutView: View {
                                 }
                             }
                         }
-                        .padding(.bottom, 5)
+                        .padding(.bottom, 15)
                         .listSectionSpacing(15)
                         
                         // Sets field
@@ -337,7 +337,7 @@ struct WorkoutView: View {
                                 .roundedBackground()
                             }
                         }
-                        .padding(.bottom, 5)
+                        .padding(.bottom, 15)
                         .listSectionSpacing(15)
                         
                         // Section for the training or day type
@@ -364,7 +364,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                         
                         
@@ -391,7 +390,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                         
                         // Weather Section
@@ -418,7 +416,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                         
                         // Equipment Section
@@ -449,7 +446,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                         
                         // Condition Section
@@ -474,7 +470,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                         
                         // Intensity Section
@@ -499,7 +494,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                         
                         // Field Events Section
@@ -528,7 +522,6 @@ struct WorkoutView: View {
                             }
                             .fontWeight(.medium)
                         }
-                        .padding(.vertical, 5)
                         .listSectionSpacing(15)
                     }
                     .modifier(ToolbarModifier(isFocused: $isFocused))

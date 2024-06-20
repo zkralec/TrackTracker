@@ -104,7 +104,7 @@ struct HomeView: View {
                                     Text("Meet Days")
                                         .font(.headline)
                                         .fontWeight(.medium)
-                                        .padding()
+                                        .padding(.bottom,8)
                                     
                                     if meets.isEmpty {
                                         Text("No meet days selected")
