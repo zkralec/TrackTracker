@@ -18,6 +18,8 @@ struct UserInputView: View {
     @State private var gender = Gender.male
     @State private var userData: UserData?
     @State private var currPage: Int = -1
+    
+    @FocusState private var focusedField: Int?
     @ObservedObject var userDataManager = UserDataManager.shared
     @Environment(\.colorScheme) var colorScheme // Access the current color scheme
 
@@ -57,8 +59,12 @@ struct UserInputView: View {
                                         .roundedBackground()
                                         .padding(10)
                                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                                        .focused($focusedField, equals: 201)  // Given a unique identifier
                                         .onTapGesture {
-                                            isFocused = true
+                                            withAnimation {
+                                                self.isFocused = true
+                                                self.focusedField = 201
+                                            }
                                         }
                                     
                                     TextField("Last Name", text: $lName)
@@ -67,8 +73,12 @@ struct UserInputView: View {
                                         .roundedBackground()
                                         .padding(10)
                                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                                        .focused($focusedField, equals: 202)  // Given a unique identifier
                                         .onTapGesture {
-                                            isFocused = true
+                                            withAnimation {
+                                                self.isFocused = true
+                                                self.focusedField = 202
+                                            }
                                         }
                                 }
                                 .padding(.vertical, 10)
@@ -215,6 +225,8 @@ struct UserInputView: View {
             MealsView()
         } else if currPage == 3 {
             HomeView()
+        }else if currPage == 4 {
+            SettingsView()
         } else if currPage == 8 {
             TrainingLogView()
         }

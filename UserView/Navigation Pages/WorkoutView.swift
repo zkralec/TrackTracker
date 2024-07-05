@@ -45,6 +45,7 @@ struct WorkoutView: View {
     @State private var isResistanceBand = false
     @State private var isWeights = false
     @State private var isSled = false
+    @State private var isWickets = false
     @State private var isHurdles = false
     @State private var isWeightedVest = false
     @State private var isPlyoBox = false
@@ -79,6 +80,7 @@ struct WorkoutView: View {
         }
     }()
     
+    @FocusState private var focusedField: Int?
     @AppStorage("isDayComplete") private var isDayComplete = false
     
     var onDisappearAction: ((Bool) -> Void)?
@@ -170,6 +172,7 @@ struct WorkoutView: View {
                                         workoutData?.resistanceBand = isResistanceBand
                                         workoutData?.weights = isWeights
                                         workoutData?.sled = isSled
+                                        workoutData?.wickets = isWickets
                                         workoutData?.hurdles = isHurdles
                                         workoutData?.weightedVest = isWeightedVest
                                         workoutData?.plyoBox = isPlyoBox
@@ -244,9 +247,11 @@ struct WorkoutView: View {
                                         .keyboardType(.numberPad)
                                         .padding(10)
                                         .disabled(isDayComplete)
+                                        .focused($focusedField, equals: index)
                                         .onTapGesture {
                                             withAnimation {
                                                 self.isFocused = true
+                                                self.focusedField = index
                                             }
                                         }
                                         .roundedBackground()
@@ -329,9 +334,11 @@ struct WorkoutView: View {
                                 .keyboardType(.numberPad)
                                 .padding(10)
                                 .disabled(isDayComplete)
+                                .focused($focusedField, equals: 200)  // Given a unique identifier
                                 .onTapGesture {
                                     withAnimation {
                                         self.isFocused = true
+                                        self.focusedField = 200
                                     }
                                 }
                                 .roundedBackground()
@@ -356,9 +363,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete || (!binding.wrappedValue && anyDayToggleOn))
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -366,13 +371,12 @@ struct WorkoutView: View {
                         }
                         .listSectionSpacing(15)
                         
-                        
                         // Surface Section
                         Section {
                             DisclosureGroup("Surface") {
                                 VStack(spacing: 15) {
                                     ForEach([
-                                        ("Track", $isTrack),
+                                        ("Outdoor Track", $isTrack),
                                         ("Indoor Track", $isIndoorTrack),
                                         ("Dirt", $isDirt),
                                         ("Grass/Hills", $isGrassHills),
@@ -382,9 +386,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete || (!binding.wrappedValue && anySurfaceToggleOn))
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -408,9 +410,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete)
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -427,6 +427,7 @@ struct WorkoutView: View {
                                         ("Resistance Band", $isResistanceBand),
                                         ("Weights", $isWeights),
                                         ("Sled", $isSled),
+                                        ("Wickets", $isWickets),
                                         ("Hurdles", $isHurdles),
                                         ("Weighted Vest", $isWeightedVest),
                                         ("Plyo Box", $isPlyoBox),
@@ -438,9 +439,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete)
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -462,9 +461,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete || (!binding.wrappedValue && anyConditionToggleOn))
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -486,9 +483,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete || (!binding.wrappedValue && anyIntensityToggleOn))
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -514,9 +509,7 @@ struct WorkoutView: View {
                                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                                             .font(.subheadline)
                                             .disabled(isDayComplete)
-                                            .padding(3)
-                                            .roundedBackground()
-                                            .padding(.horizontal, 8)
+                                            .padding(.horizontal, 10)
                                     }
                                 }
                             }
@@ -535,6 +528,8 @@ struct WorkoutView: View {
                 }
                 .onAppear {
                     resetDayCompletionIfNeeded()
+                    
+                    WorkoutData.clearAllData()
                     
                     // Update the empty storage before loading data
                     WorkoutData.updateDataAtStartOfDay(currentDate: currDate)
@@ -571,6 +566,7 @@ struct WorkoutView: View {
                                                   resistanceBand: false,
                                                   weights: false,
                                                   sled: false,
+                                                  wickets: false,
                                                   hurdles: false,
                                                   weightedVest: false,
                                                   plyoBox: false,
@@ -630,6 +626,7 @@ struct WorkoutView: View {
                             isResistanceBand = workoutData.resistanceBand
                             isWeights = workoutData.weights
                             isSled = workoutData.sled
+                            isWickets = workoutData.wickets
                             isHurdles = workoutData.hurdles
                             isWeightedVest = workoutData.weightedVest
                             isPlyoBox = workoutData.plyoBox
@@ -704,6 +701,7 @@ struct WorkoutView: View {
                                                   resistanceBand: false,
                                                   weights: false,
                                                   sled: false,
+                                                  wickets: false,
                                                   hurdles: false,
                                                   weightedVest: false,
                                                   plyoBox: false,
@@ -762,6 +760,7 @@ struct WorkoutView: View {
                     workoutData?.resistanceBand = isResistanceBand
                     workoutData?.weights = isWeights
                     workoutData?.sled = isSled
+                    workoutData?.wickets = isWickets
                     workoutData?.hurdles = isHurdles
                     workoutData?.weightedVest = isWeightedVest
                     workoutData?.plyoBox = isPlyoBox

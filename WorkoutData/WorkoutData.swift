@@ -39,6 +39,7 @@ struct WorkoutData: Codable, Hashable {
     var resistanceBand: Bool
     var weights: Bool
     var sled: Bool
+    var wickets: Bool
     var hurdles: Bool
     var weightedVest: Bool
     var plyoBox: Bool
@@ -167,6 +168,7 @@ extension WorkoutData {
                                                  resistanceBand: false,
                                                  weights: false,
                                                  sled: false,
+                                                 wickets: false,
                                                  hurdles: false,
                                                  weightedVest: false,
                                                  plyoBox: false,

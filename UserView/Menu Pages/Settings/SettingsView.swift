@@ -16,19 +16,24 @@ class SettingsViewModel: ObservableObject {
     @Published var isFocused = false
     @Published var isSideMenuOpen = false
     @Published var events: [EventData] = []
-
+    @Published var isDarkMode: Bool = UserDefaults.standard.bool(forKey: "isDarkMode") {
+        didSet {
+            UserDefaults.standard.set(isDarkMode, forKey: "isDarkMode")
+        }
+    }
+    
     init() {
         loadEvents()
         loadPR()
     }
-
+    
     // Save the user's event PRs
     func savePR(for event: EventData, prValue: String) {
         print("Saving PRs")
         UserDefaults.standard.set(prValue, forKey: event.rawValue)
         prs[event] = prValue
     }
-
+    
     // Load the user's event PRs
     func loadPR() {
         print("Loading PRs")
@@ -39,7 +44,7 @@ class SettingsViewModel: ObservableObject {
         }
         print("Loaded PRs: \(prs)") // Log the loaded PRs to ensure they are correct
     }
-
+    
     // Load the user's selected events
     private func loadEvents() {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
@@ -50,17 +55,17 @@ class SettingsViewModel: ObservableObject {
 
 struct SettingsView: View {
     @StateObject var viewModel = SettingsViewModel()
-
+    
     var body: some View {
         if viewModel.currPage == 4 {
             ZStack {
                 VStack {
                     // Menu bar icon
                     MenuButton(isSideMenuOpen: $viewModel.isSideMenuOpen)
-
+                    
                     // Display title
                     TitleBackground(title: "Settings")
-
+                    
                     List {
                         // Shows users their events and allows for PR input
                         Section {
@@ -85,9 +90,9 @@ struct SettingsView: View {
                                             Text(event.rawValue)
                                                 .padding(5)
                                                 .roundedBackground()
-
+                                            
                                             Spacer()
-
+                                            
                                             TextField("Enter PR", text: Binding(
                                                 get: {
                                                     viewModel.prs[event] ?? ""
@@ -110,12 +115,22 @@ struct SettingsView: View {
                             .padding()
                         }
                         .listSectionSpacing(15)
-
+                        
+                        Section {
+                            Toggle("Dark Mode", isOn: $viewModel.isDarkMode)
+                                .onChange(of: viewModel.isDarkMode){
+                                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                                        windowScene.windows.first?.overrideUserInterfaceStyle = viewModel.isDarkMode ? .dark : .light
+                                    }
+                                }
+                        }
+                        .listSectionSpacing(15)
+                        
                         Section {
                             // Future toggle for notifications
                         }
                         .listSectionSpacing(15)
-
+                        
                         // Allows user to navigate to EventView to change their selected events
                         Section {
                             VStack {
@@ -131,7 +146,7 @@ struct SettingsView: View {
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(.blue)
                                             .frame(width: 70)
-
+                                        
                                         Spacer()
                                     }
                                     .fontWeight(.medium)
@@ -141,7 +156,7 @@ struct SettingsView: View {
                             }
                         }
                         .listSectionSpacing(15)
-
+                        
                         // Allows user to navigate to MeetView to change their meet days
                         Section {
                             VStack {
@@ -157,7 +172,7 @@ struct SettingsView: View {
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(.blue)
                                             .frame(width: 70)
-
+                                        
                                         Spacer()
                                     }
                                     .fontWeight(.medium)
@@ -167,7 +182,7 @@ struct SettingsView: View {
                             }
                         }
                         .listSectionSpacing(15)
-
+                        
                         // Allows user to navigate to UserInputView to change their information
                         Section {
                             VStack {
@@ -184,7 +199,7 @@ struct SettingsView: View {
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(.blue)
                                             .frame(width: 70)
-
+                                        
                                         Spacer()
                                     }
                                     .fontWeight(.medium)
@@ -199,6 +214,9 @@ struct SettingsView: View {
                     .background(Color.gray.opacity(0.05))
                     .onAppear {
                         viewModel.loadPR()
+                        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                            windowScene.windows.first?.overrideUserInterfaceStyle = viewModel.isDarkMode ? .dark : .light
+                        }
                     }
                 }
                 // Show side menu if needed
@@ -224,8 +242,4 @@ struct SettingsView: View {
             TrainingLogView()
         }
     }
-}
-
-#Preview {
-    SettingsView()
 }
