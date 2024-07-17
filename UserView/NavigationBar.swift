@@ -98,18 +98,17 @@ struct NavigationBar: View {
                             currPage = 7
                         }
                     }) {
-                        VStack {
-                            Image(systemName: "person.fill")
-                                .foregroundStyle(.blue)
-                                .frame(width: 30, height: 30)
-                            Text("Profile")
-                                .font(.caption)
-                                .foregroundStyle(.blue)
-                                .padding(4)
-                        }
+                        Image(systemName: "person.fill")
+                            .foregroundStyle(.blue)
+                            .frame(width: 30, height: 30)
                     }
                     .frame(width: 70, height: 30)
                     .buttonStyle(ButtonPress())
+                    
+                    Text("Profile")
+                        .font(.caption)
+                        .foregroundStyle(.blue)
+                        .padding(4)
                 }
             }
             .padding(.bottom,-10)

@@ -527,72 +527,13 @@ struct WorkoutView: View {
                     }
                 }
                 .onAppear {
+                    // Will reset the day completion if necessary
                     resetDayCompletionIfNeeded()
-                    
-                    WorkoutData.clearAllData()
                     
                     // Update the empty storage before loading data
                     WorkoutData.updateDataAtStartOfDay(currentDate: currDate)
                     
                     // Load workout data
-                    if workoutData == nil {
-                        workoutData = WorkoutData(date: Date(),
-                                                  meters: [],
-                                                  sets: 0,
-                                                  
-                                                  recovery: false,
-                                                  off: false,
-                                                  meet: false,
-                                                  technique: false,
-                                                  workout: false,
-                                                  tempo: false,
-                                                  
-                                                  dayComplete: false,
-                                                  
-                                                  track: false,
-                                                  indoorTrack: false,
-                                                  dirt: false,
-                                                  grasshills: false,
-                                                  asphalt: false,
-                                                  
-                                                  rain: false,
-                                                  snow: false,
-                                                  windy: false,
-                                                  normal: false,
-                                                  hot: false,
-                                                  cold: false,
-                                                  
-                                                  blocks: false,
-                                                  resistanceBand: false,
-                                                  weights: false,
-                                                  sled: false,
-                                                  wickets: false,
-                                                  hurdles: false,
-                                                  weightedVest: false,
-                                                  plyoBox: false,
-                                                  medicineBall: false,
-                                                  stationaryBike: false,
-                                                  treadmill: false,
-                                                  
-                                                  injury: false,
-                                                  soreness: false,
-                                                  fatigued: false,
-                                                  peakForm: false,
-                                                  
-                                                  low: false,
-                                                  moderate: false,
-                                                  high: false,
-                                                  maximum: false,
-                                                  
-                                                  highJump: false,
-                                                  poleVault: false,
-                                                  hammerThrow: false,
-                                                  discus: false,
-                                                  shotPut: false,
-                                                  javelin: false,
-                                                  longJump: false,
-                                                  tripleJump: false)
-                    }
                     if let loadedData = workoutData?.loadData() {
                         workoutData = loadedData
                         
@@ -653,6 +594,64 @@ struct WorkoutView: View {
                             isLongJump = workoutData.longJump
                             isTripleJump = workoutData.tripleJump
                         }
+                    }
+                    if workoutData == nil {
+                        workoutData = WorkoutData(date: Date(),
+                                                  meters: [],
+                                                  sets: 0,
+                                                  
+                                                  recovery: false,
+                                                  off: false,
+                                                  meet: false,
+                                                  technique: false,
+                                                  workout: false,
+                                                  tempo: false,
+                                                  
+                                                  dayComplete: false,
+                                                  
+                                                  track: false,
+                                                  indoorTrack: false,
+                                                  dirt: false,
+                                                  grasshills: false,
+                                                  asphalt: false,
+                                                  
+                                                  rain: false,
+                                                  snow: false,
+                                                  windy: false,
+                                                  normal: false,
+                                                  hot: false,
+                                                  cold: false,
+                                                  
+                                                  blocks: false,
+                                                  resistanceBand: false,
+                                                  weights: false,
+                                                  sled: false,
+                                                  wickets: false,
+                                                  hurdles: false,
+                                                  weightedVest: false,
+                                                  plyoBox: false,
+                                                  medicineBall: false,
+                                                  stationaryBike: false,
+                                                  treadmill: false,
+                                                  
+                                                  injury: false,
+                                                  soreness: false,
+                                                  fatigued: false,
+                                                  peakForm: false,
+                                                  
+                                                  low: false,
+                                                  moderate: false,
+                                                  high: false,
+                                                  maximum: false,
+                                                  
+                                                  highJump: false,
+                                                  poleVault: false,
+                                                  hammerThrow: false,
+                                                  discus: false,
+                                                  shotPut: false,
+                                                  javelin: false,
+                                                  longJump: false,
+                                                  tripleJump: false)
                     }
                     
                     // Retrieve the state of complete day mode from UserDefaults
