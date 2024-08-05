@@ -76,7 +76,7 @@ extension WorkoutData {
     }
     
     // Loads the user workout data
-    func loadData() -> WorkoutData? {
+    static func loadData() -> WorkoutData? {
         if let data = UserDefaults.standard.data(forKey: "workoutData") {
             do {
                 let decodedData = try JSONDecoder().decode(WorkoutData.self, from: data)
@@ -93,7 +93,7 @@ extension WorkoutData {
     // Saves the user workout data to storage and updates past workout data
     func saveData() {
         // Check if the saved data is different from the current data or if it's a new day
-        if let savedData = loadData() {
+        if let savedData = WorkoutData.loadData() {
             let isDifferent = savedData != self
             let isNewDay = !Calendar.current.isDate(savedData.date, inSameDayAs: self.date)
             

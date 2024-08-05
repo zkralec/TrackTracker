@@ -533,10 +533,11 @@ struct WorkoutView: View {
                     // Update the empty storage before loading data
                     WorkoutData.updateDataAtStartOfDay(currentDate: currDate)
                     
-                    // Load workout data
-                    if let loadedData = workoutData?.loadData() {
+                    // Load workout data if available
+                    if let loadedData = WorkoutData.loadData() {
                         workoutData = loadedData
                         
+                        // Update UI state with loaded data
                         if let workoutData = workoutData {
                             meters = workoutData.meters.isEmpty ? [""] : workoutData.meters.map { String($0) }
                             numSets = workoutData.sets > 0 ? String(workoutData.sets) : ""
@@ -594,8 +595,8 @@ struct WorkoutView: View {
                             isLongJump = workoutData.longJump
                             isTripleJump = workoutData.tripleJump
                         }
-                    }
-                    if workoutData == nil {
+                    } else {
+                        // If no data is found use default values
                         workoutData = WorkoutData(date: Date(),
                                                   meters: [],
                                                   sets: 0,
