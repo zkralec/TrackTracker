@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Keeps track of the last 10 workouts a user completed
 struct TrainingLogView: View {
     @State private var currPage: Int = 8
     @State private var isSideMenuOpen = false

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This is the bar at the bottom of almost every page for navigation
 struct NavigationBar: View {
     @Binding var currPage: Int
     

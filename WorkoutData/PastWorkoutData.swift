@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Keeps track of all the past workout data
 struct PastWorkoutData: Codable {
     var pastWorkouts: [WorkoutData]
     

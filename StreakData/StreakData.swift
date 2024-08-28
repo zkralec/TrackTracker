@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Gets and updates the number of times a user has kept track of their workouts without missing a day
 struct StreakData {
     static func updateStreakIfNeeded(fieldModified: Bool) {
         // Get the current date

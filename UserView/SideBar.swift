@@ -1,5 +1,6 @@
 import SwiftUI
 
+// This is the side bar for enhanced navigation
 struct SideBar: View {
     @Binding var currPage: Int
     @Binding var isSideMenuOpen: Bool

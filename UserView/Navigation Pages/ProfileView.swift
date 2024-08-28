@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Keeps track of the users personal info
 struct ProfileView: View {
     @State private var currPage = 7
     @State private var isSideMenuOpen = false

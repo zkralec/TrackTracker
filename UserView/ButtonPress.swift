@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Gives button clicks a satisfying enimaiton
 struct ButtonPress: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

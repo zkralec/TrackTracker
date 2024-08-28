@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Adds a done button to exit a text popup
 struct ToolbarModifier: ViewModifier {
     @Binding var isFocused: Bool
 

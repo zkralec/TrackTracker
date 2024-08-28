@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This button brings up the side bar for more navigation
 struct MenuButton: View {
     @Binding var isSideMenuOpen: Bool
     

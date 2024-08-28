@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Makes a custom circular button style
 struct CustomCircleButtonStyle: ButtonStyle {
     var buttonColor: Color = .blue
     var buttonSize: CGFloat = 50
