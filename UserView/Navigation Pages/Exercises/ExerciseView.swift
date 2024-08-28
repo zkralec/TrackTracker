@@ -41,7 +41,3 @@ struct ExerciseView: View {
         }
     }
 }
-
-#Preview {
-    ExerciseView()
-}

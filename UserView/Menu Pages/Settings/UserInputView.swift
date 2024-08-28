@@ -232,7 +232,3 @@ struct UserInputView: View {
         }
     }
 }
-
-#Preview {
-    UserInputView()
-}

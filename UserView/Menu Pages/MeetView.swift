@@ -213,7 +213,3 @@ extension Date {
         return formatter.string(from: self)
     }
 }
-
-#Preview {
-    MeetView()
-}

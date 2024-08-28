@@ -202,7 +202,3 @@ struct HomeView: View {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
     }
 }
-
-#Preview {
-    HomeView()
-}
