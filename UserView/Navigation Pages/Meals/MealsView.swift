@@ -39,6 +39,10 @@ struct MealsView: View {
                         .font(.subheadline)
                         .padding(5)
                         .roundedBackground()
+                    
+                    // Display helpful info for meal order
+                    Text("Breakfast/Lunch/Dinner")
+                        .font(.subheadline)
                         .padding(.bottom, 20.0)
                     
                     NavigationStack {

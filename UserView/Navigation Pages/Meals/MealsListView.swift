@@ -16,28 +16,28 @@ struct MealsListView: View {
             ForEach(mealPlan.meals) { meal in
                 Section {
                     VStack(alignment: .leading) {
-                            // Meal title
-                            Text(meal.title)
-                                .font(.headline)
-                                .padding(.bottom, 4)
-                            
-                            // Ready time
-                            Text("Ready in: \(meal.readyInMinutes) minutes")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
-                            
-                            // Servings
-                            Text("Servings: \(meal.servings)")
-                                .font(.subheadline)
-                                .foregroundStyle(.gray)
-                            
-                            // Link to food details
-                            Link("View Details", destination: meal.sourceUrl)
-                                .font(.subheadline)
-                                .foregroundStyle(.blue)
-                                .underline()
-                                .padding(.top, 4)
-                            
+                        // Meal title
+                        Text(meal.title)
+                            .font(.headline)
+                            .padding(.bottom, 4)
+                        
+                        // Ready time
+                        Text("Ready in: \(meal.readyInMinutes) minutes")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                        
+                        // Servings
+                        Text("Servings: \(meal.servings)")
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                        
+                        // Link to food details
+                        Link("View Details", destination: meal.sourceUrl)
+                            .font(.subheadline)
+                            .foregroundStyle(.blue)
+                            .underline()
+                            .padding(.top, 4)
+                        
                     }
                     .padding()
                 }
