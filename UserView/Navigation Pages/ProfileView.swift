@@ -146,8 +146,6 @@ struct ProfileView: View {
                 SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
                 
             }
-        } else if currPage == -1 {
-            UserInputView()
         } else if currPage == 0 {
             WorkoutView()
         } else if currPage == 1 {
@@ -164,6 +162,8 @@ struct ProfileView: View {
             MeetView()
         } else if currPage == 8 {
             TrainingLogView()
+        } else if currPage == 9 {
+            InjuryView()
         }
     }
     

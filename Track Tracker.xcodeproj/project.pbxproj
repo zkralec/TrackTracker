@@ -27,6 +27,7 @@
 		146154012BDDC5570068504B /* TrainingLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154002BDDC5560068504B /* TrainingLogView.swift */; };
 		146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154022BE3D8510068504B /* PastWorkoutData.swift */; };
 		1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */; };
+		148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609AE2C9CB43700A3E73F /* InjuryView.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
@@ -93,6 +94,7 @@
 		146154002BDDC5560068504B /* TrainingLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLogView.swift; sourceTree = "<group>"; };
 		146154022BE3D8510068504B /* PastWorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastWorkoutData.swift; sourceTree = "<group>"; };
 		1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPrompt.swift; sourceTree = "<group>"; };
+		148609AE2C9CB43700A3E73F /* InjuryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryView.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 		1492220C2BDC753E00F633BE /* Menu Pages */ = {
 			isa = PBXGroup;
 			children = (
+				148609AE2C9CB43700A3E73F /* InjuryView.swift */,
 				1492220E2BDC8F0B00F633BE /* EventView.swift */,
 				14535DFC2BACE1C20080531D /* MeetView.swift */,
 				146154002BDDC5560068504B /* TrainingLogView.swift */,
@@ -530,6 +533,7 @@
 				14DAEF6C2B7FD39D00AF4667 /* WorkoutData.swift in Sources */,
 				14DAEF6E2B7FDBFA00AF4667 /* ExerciseView.swift in Sources */,
 				14DAEF702B7FDC0200AF4667 /* MealsView.swift in Sources */,
+				148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */,
 				14BF431A2BA14F4F004B3321 /* ExerciseData.swift in Sources */,
 				14535DF62BAC6B650080531D /* HomeView.swift in Sources */,
 			);

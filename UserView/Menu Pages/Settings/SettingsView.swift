@@ -240,6 +240,8 @@ struct SettingsView: View {
             ProfileView()
         } else if viewModel.currPage == 8 {
             TrainingLogView()
+        } else if viewModel.currPage == 9 {
+            InjuryView()
         }
     }
 }

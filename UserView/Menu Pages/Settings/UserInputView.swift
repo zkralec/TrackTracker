@@ -22,6 +22,14 @@ struct UserInputView: View {
     @FocusState private var focusedField: Int?
     @ObservedObject var userDataManager = UserDataManager.shared
     @Environment(\.colorScheme) var colorScheme // Access the current color scheme
+    
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
 
     // Gender enum
     enum Gender: String, CaseIterable, Identifiable {
@@ -217,18 +225,18 @@ struct UserInputView: View {
             } else {
                 HomeView()
             }
-        } else if currPage == 0 {
-            WorkoutView()
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 2 {
-            MealsView()
         } else if currPage == 3 {
             HomeView()
-        }else if currPage == 4 {
+        } else if currPage == 4 {
             SettingsView()
+        } else if currPage == 5 {
+            EventView(events: $events)
+        } else if currPage == 6 {
+            MeetView()
         } else if currPage == 8 {
             TrainingLogView()
+        } else if currPage == 9 {
+            InjuryView()
         }
     }
 }

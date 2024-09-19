@@ -176,8 +176,12 @@ struct TrainingLogView: View {
             SettingsView()
         } else if currPage == 5 {
             EventView(events: $events)
+        } else if currPage == 6 {
+            MeetView()
         } else if currPage == 7 {
             ProfileView()
+        } else if currPage == 9 {
+            InjuryView()
         }
     }
 }

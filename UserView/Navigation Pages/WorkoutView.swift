@@ -798,8 +798,6 @@ struct WorkoutView: View {
                 // Show side menu if needed
                 SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 7 {
-            ProfileView()
         } else if currPage == 1 {
             ExerciseView()
         } else if currPage == 2 {
@@ -812,8 +810,12 @@ struct WorkoutView: View {
             EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
+        } else if currPage == 7 {
+            ProfileView()
         } else if currPage == 8 {
             TrainingLogView()
+        } else if currPage == 9 {
+            InjuryView()
         }
     }
     
