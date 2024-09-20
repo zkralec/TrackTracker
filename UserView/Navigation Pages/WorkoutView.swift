@@ -334,7 +334,7 @@ struct WorkoutView: View {
                                 .keyboardType(.numberPad)
                                 .padding(10)
                                 .disabled(isDayComplete)
-                                .focused($focusedField, equals: 200)  // Given a unique identifier
+                                .focused($focusedField, equals: 200)
                                 .onTapGesture {
                                     withAnimation {
                                         self.isFocused = true

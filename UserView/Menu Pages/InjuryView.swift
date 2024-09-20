@@ -35,8 +35,6 @@ struct InjuryView: View {
                         // Show some treatment options. ex. stretches, ice, compression, cupping, etc.
                         // Add a timeline to predict full recovery depending on the severity.
                         // Add restrictions for things you should not do while injured.
-                        
-                        // Set notifications for reminders to stretch. User can enable or disable.
                     }
                 }
                 // Show side menu if needed
