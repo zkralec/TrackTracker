@@ -215,9 +215,8 @@ struct UserInputView: View {
                         let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, fName: fName, lName: lName, heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
                         userData.saveUserData()
                         
-                        if currPage != -1 {
-                            GlobalVariables.userInput = true
-                        }
+                        // Only need to show this page first once on startup
+                        GlobalVariables.userInput = true
                     }
                     // Show side menu if needed
                     SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)

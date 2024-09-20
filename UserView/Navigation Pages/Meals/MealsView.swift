@@ -32,18 +32,17 @@ struct MealsView: View {
                     MenuButton(isSideMenuOpen: $isSideMenuOpen)
                     
                     // Title
-                    TitleBackground(title: "Meals")
+                    TitleBackground(title: "Daily Meals")
+                    
+                    // Display helpful info for meal order
+                    Text(" Breakfast - Lunch - Dinner ")
+                        .font(.subheadline)
                     
                     // Display user information
                     Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
                         .font(.subheadline)
                         .padding(5)
                         .roundedBackground()
-                    
-                    // Display helpful info for meal order
-                    Text("Breakfast/Lunch/Dinner")
-                        .font(.subheadline)
-                        .padding(.bottom, 20.0)
                     
                     NavigationStack {
                         // Check if meal plan is fetched
