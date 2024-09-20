@@ -86,6 +86,24 @@ struct SideBar: View {
                             }
                             .padding(6)
                             
+                            // Injury log button
+                            Button(action: {
+                                withAnimation {
+                                    currPage = 9
+                                    isSideMenuOpen.toggle()
+                                }
+                            }) {
+                                HStack {
+                                    Image(systemName: "cross")
+                                        .foregroundStyle(.blue)
+                                    Text("Injury Log")
+                                        .padding(.vertical)
+                                }
+                                .fontWeight(.medium)
+                                .font(.system(size: 20))
+                            }
+                            .padding(6)
+                            
                             // Training log button
                             Button(action: {
                                 withAnimation {

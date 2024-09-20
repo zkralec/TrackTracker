@@ -9,9 +9,39 @@ import SwiftUI
 
 struct InjuryView: View {
     @State private var currPage: Int = 9
+    @State private var isSideMenuOpen = false
     
     var body: some View {
         if currPage == 9 {
+            ZStack {
+                VStack {
+                    // Menu bar icon
+                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                    
+                    TitleBackground(title: "Injury Log")
+                    
+                    // Add content here!
+                    List {
+                        Text("Placeholder")
+                        
+                        // Have a button to add a new injury.
+                        // Take user to new page to create new injury?
+                        
+                        // Want to have dropdown for muscle injury group. ex. hamstring, shins, quads, etc.
+                        // Have another dropdown after with injuries for that muscle group.
+                        // Have a wheel for the date.
+                        // Have a status dropdown for active, recovering, recovered.
+                        
+                        // Show some treatment options. ex. stretches, ice, compression, cupping, etc.
+                        // Add a timeline to predict full recovery depending on the severity.
+                        // Add restrictions for things you should not do while injured.
+                        
+                        // Set notifications for reminders to stretch. User can enable or disable.
+                    }
+                }
+                // Show side menu if needed
+                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+            }
             
         } else if currPage == 3 {
             HomeView()
