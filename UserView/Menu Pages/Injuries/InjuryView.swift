@@ -20,7 +20,16 @@ struct InjuryView: View {
                     
                     TitleBackground(title: "Injury Log")
                     
-                    // Add content here!
+                    Button(action: {
+                        withAnimation {
+                            currPage = 10
+                        }
+                    }) {
+                        Text("Add an Injury")
+                    }
+                    .padding(.top, 10)
+                    
+                    // Add content here
                     List {
                         Text("Placeholder")
                         
@@ -51,6 +60,8 @@ struct InjuryView: View {
             ProfileView()
         } else if currPage == 8 {
             TrainingLogView()
+        } else if currPage == 10 {
+            InjuryDetailView()
         }
     }
 }

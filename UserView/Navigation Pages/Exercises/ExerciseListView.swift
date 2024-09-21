@@ -31,10 +31,19 @@ struct ExerciseListView: View {
         if currPage == 1 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    // Title
-                    TitleBackground(title: "Exercises")
+                    if showButtons {
+                        // Menu bar icon
+                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                        
+                        // Title
+                        TitleBackground(title: "Exercises")
+                    } else {
+                        withAnimation {
+                            // Title
+                            TitleBackground(title: "Exercises")
+                                .padding(.top,28)
+                        }
+                    }
                     
                     if showButtons {
                         VStack {
@@ -210,7 +219,7 @@ struct ExerciseDetailsView: View {
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                   
+                    
                     
                     Text("Difficulty: \(exercise.difficulty)")
                         .padding()
