@@ -62,7 +62,11 @@ struct TrainingLogView: View {
                                         Text("Date: \(workout.formattedDate)")
                                         Text("Off Day")
                                             .font(.title3)
-                                        // Else, format to show all relevant information with Extras section
+                                    } else if workout.injury {
+                                        Text("Date: \(workout.formattedDate)")
+                                        Text("Injured")
+                                            .font(.title3)
+                                    // Else, format to show all relevant information with Extras section
                                     } else {
                                         Text("Date: \(workout.formattedDate)")
                                         if workout.technique {

@@ -11,6 +11,9 @@ struct InjuryView: View {
     @State private var currPage: Int = 9
     @State private var isSideMenuOpen = false
     
+    @State private var injuryLog: [InjuryData] = []
+    @State private var isPresentingInjuryDetail = false
+    
     var body: some View {
         if currPage == 9 {
             ZStack {
@@ -20,36 +23,63 @@ struct InjuryView: View {
                     
                     TitleBackground(title: "Injury Log")
                     
+                    // Add new injury button
                     Button(action: {
                         withAnimation {
-                            currPage = 10
+                            isPresentingInjuryDetail = true
                         }
                     }) {
-                        Text("Add an Injury")
+                        Text("Add New Injury")
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                    .padding(.top, 10)
+                    .buttonStyle(CustomButtonStyle())
                     
-                    // Add content here
                     List {
-                        Text("Placeholder")
-                        
-                        // Have a button to add a new injury.
-                        // Take user to new page to create new injury?
-                        
-                        // Want to have dropdown for muscle injury group. ex. hamstring, shins, quads, etc.
-                        // Have another dropdown after with injuries for that muscle group.
-                        // Have a wheel for the date.
-                        // Have a status dropdown for active, recovering, recovered.
-                        
-                        // Show some treatment options. ex. stretches, ice, compression, cupping, etc.
-                        // Add a timeline to predict full recovery depending on the severity.
-                        // Add restrictions for things you should not do while injured.
+                        // Injuries Section
+                        Section(header: Text("Injuries")) {
+                            if injuryLog.isEmpty {
+                                HStack {
+                                    Spacer()
+                                    Text("No injuries logged yet.")
+                                        .foregroundStyle(.secondary)
+                                        .padding()
+                                    Spacer()
+                                }
+                            } else {
+                                ForEach(injuryLog) { injury in
+                                    HStack {
+                                        VStack(alignment: .leading) {
+                                            Text("\(injury.muscleGroup)")
+                                                .font(.headline)
+                                            Text("Date: \(injury.injuryDate, style: .date)")
+                                            Text("Type: \(injury.injuryType)")
+                                            Text("Severity: \(injury.severity)")
+                                        }
+                                        Spacer()
+                                        Button("Edit") {
+                                            isPresentingInjuryDetail = true
+                                        }
+                                        .buttonStyle(BorderlessButtonStyle())
+                                    }
+                                    .padding(.vertical, 4)
+                                }
+                            }
+                        }
+                    }
+                    .listSectionSpacing(15)
+                    .sheet(isPresented: $isPresentingInjuryDetail) {
+                        InjuryDetailView()
+                    }
+                    
+                    // Navigation bar buttons
+                    VStack {
+                        NavigationBar(currPage: $currPage)
                     }
                 }
                 // Show side menu if needed
                 SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
             }
-            
         } else if currPage == 3 {
             HomeView()
         } else if currPage == 4 {
@@ -60,8 +90,6 @@ struct InjuryView: View {
             ProfileView()
         } else if currPage == 8 {
             TrainingLogView()
-        } else if currPage == 10 {
-            InjuryDetailView()
         }
     }
 }
