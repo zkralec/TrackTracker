@@ -111,7 +111,7 @@ struct WorkoutView: View {
                     HStack {
                         // Button to show user's input and recovery suggestions
                         Button(action: {
-                            if !isMeet && !isOff && !isRecovery && isDayComplete {
+                            if !isMeet && !isOff && !isRecovery && !isInjury && isDayComplete {
                                 withAnimation {
                                     showExperiencePrompt = true
                                 }

@@ -10,86 +10,150 @@ import SwiftUI
 struct InjuryView: View {
     @State private var currPage: Int = 9
     @State private var isSideMenuOpen = false
-    
     @State private var injuryLog: [InjuryData] = []
+    @State private var selectedInjury: InjuryData?
     @State private var isPresentingInjuryDetail = false
+    @State private var isEditing = false
+    
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
     
     var body: some View {
         if currPage == 9 {
-            ZStack {
-                VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    TitleBackground(title: "Injury Log")
-                    
-                    // Add new injury button
-                    Button(action: {
-                        withAnimation {
+            NavigationStack {
+                ZStack {
+                    VStack {
+                        // Menu bar icon
+                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                        
+                        TitleBackground(title: "Injury Log")
+                        
+                        // Add new injury button
+                        Button(action: {
+                            selectedInjury = InjuryData.default // Default injury for adding
+                            isEditing = true
                             isPresentingInjuryDetail = true
+                        }) {
+                            Text("Add New Injury")
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                         }
-                    }) {
-                        Text("Add New Injury")
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .buttonStyle(CustomButtonStyle())
-                    
-                    List {
-                        // Injuries Section
-                        Section(header: Text("Injuries")) {
+                        .buttonStyle(CustomButtonStyle())
+                        
+                        List {
+                            // Injuries Section
+                            
                             if injuryLog.isEmpty {
-                                HStack {
-                                    Spacer()
-                                    Text("No injuries logged yet.")
-                                        .foregroundStyle(.secondary)
-                                        .padding()
-                                    Spacer()
+                                Section {
+                                    HStack {
+                                        Spacer()
+                                        Text("No injuries logged yet.")
+                                            .foregroundStyle(.secondary)
+                                            .padding()
+                                        Spacer()
+                                    }
                                 }
                             } else {
-                                ForEach(injuryLog) { injury in
-                                    HStack {
+                                ForEach(injuryLog.indices, id: \.self) { index in
+                                    Section {
+                                        let injury = injuryLog[index]
                                         VStack(alignment: .leading) {
-                                            Text("\(injury.muscleGroup)")
-                                                .font(.headline)
-                                            Text("Date: \(injury.injuryDate, style: .date)")
-                                            Text("Type: \(injury.injuryType)")
-                                            Text("Severity: \(injury.severity)")
+                                            HStack {
+                                                VStack(alignment: .leading) {
+                                                    Text("\(injury.muscleGroup)")
+                                                        .font(.headline)
+                                                    Text("Date: \(injury.injuryDate, style: .date)")
+                                                    Text("Type: \(injury.injuryType)")
+                                                    Text("Location: \(injury.location)")
+                                                    Text("Severity: \(injury.severity) / 5")
+                                                }
+                                                Spacer()
+                                                Button("Edit") {
+                                                    selectedInjury = injury
+                                                    isEditing = true
+                                                    isPresentingInjuryDetail = true
+                                                }
+                                                .buttonStyle(BorderlessButtonStyle())
+                                                .padding(.trailing, 10)
+                                                Button(action: {
+                                                    withAnimation {
+                                                        deleteInjury(at: index)
+                                                    }
+                                                }) {
+                                                    Image(systemName: "trash")
+                                                        .foregroundColor(.red)
+                                                }
+                                                .buttonStyle(BorderlessButtonStyle())
+                                            }
+                                            .padding(.vertical, 4)
+                                            
+                                            // New Details Section
+                                            NavigationLink(destination: InjuryDetailsView(injury: injury, injuryLog: $injuryLog)) {
+                                                Text("View Details")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.blue)
+                                                    .padding(.top, 4)
+                                            }
                                         }
-                                        Spacer()
-                                        Button("Edit") {
-                                            isPresentingInjuryDetail = true
-                                        }
-                                        .buttonStyle(BorderlessButtonStyle())
+                                        .padding(.bottom, 10)
                                     }
-                                    .padding(.vertical, 4)
+                                    .listSectionSpacing(15)
                                 }
                             }
                         }
+                        .background(Color(.systemGray6).opacity(0.05))
+                        .sheet(isPresented: $isPresentingInjuryDetail) {
+                            InjuryEditView(injuryLog: $injuryLog, injury: selectedInjury ?? InjuryData.default, isEditing: isEditing)
+                        }
+                        
+                        // Navigation bar buttons
+                        VStack {
+                            NavigationBar(currPage: $currPage)
+                        }
                     }
-                    .listSectionSpacing(15)
-                    .sheet(isPresented: $isPresentingInjuryDetail) {
-                        InjuryDetailView()
-                    }
-                    
-                    // Navigation bar buttons
-                    VStack {
-                        NavigationBar(currPage: $currPage)
-                    }
+                    // Show side menu if needed
+                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
                 }
-                // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+            }
+            .onAppear {
+                loadInjuryLog()
             }
         } else if currPage == 3 {
             HomeView()
         } else if currPage == 4 {
             SettingsView()
+        } else if currPage == 5 {
+            EventView(events: $events)
         } else if currPage == 6 {
             MeetView()
         } else if currPage == 7 {
             ProfileView()
         } else if currPage == 8 {
             TrainingLogView()
+        }
+    }
+    
+    private func deleteInjury(at index: Int) {
+        injuryLog.remove(at: index)
+        saveInjuryLog()
+    }
+    
+    private func loadInjuryLog() {
+        if let data = UserDefaults.standard.data(forKey: "injuryLog") {
+            if let decoded = try? JSONDecoder().decode([InjuryData].self, from: data) {
+                injuryLog = decoded
+            }
+        }
+    }
+    
+    private func saveInjuryLog() {
+        if let encoded = try? JSONEncoder().encode(injuryLog) {
+            UserDefaults.standard.set(encoded, forKey: "injuryLog")
         }
     }
 }

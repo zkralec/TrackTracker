@@ -28,8 +28,9 @@
 		146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154022BE3D8510068504B /* PastWorkoutData.swift */; };
 		1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */; };
 		148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609AE2C9CB43700A3E73F /* InjuryView.swift */; };
-		148609B22C9DDE3700A3E73F /* InjuryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B12C9DDE3700A3E73F /* InjuryDetailView.swift */; };
+		148609B22C9DDE3700A3E73F /* InjuryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B12C9DDE3700A3E73F /* InjuryEditView.swift */; };
 		148609B52C9F06E000A3E73F /* InjuryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B42C9F06E000A3E73F /* InjuryData.swift */; };
+		148609B72C9F13DD00A3E73F /* InjuryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B62C9F13DD00A3E73F /* InjuryDetailsView.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
@@ -97,8 +98,9 @@
 		146154022BE3D8510068504B /* PastWorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastWorkoutData.swift; sourceTree = "<group>"; };
 		1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPrompt.swift; sourceTree = "<group>"; };
 		148609AE2C9CB43700A3E73F /* InjuryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryView.swift; sourceTree = "<group>"; };
-		148609B12C9DDE3700A3E73F /* InjuryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryDetailView.swift; sourceTree = "<group>"; };
+		148609B12C9DDE3700A3E73F /* InjuryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryEditView.swift; sourceTree = "<group>"; };
 		148609B42C9F06E000A3E73F /* InjuryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryData.swift; sourceTree = "<group>"; };
+		148609B62C9F13DD00A3E73F /* InjuryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryDetailsView.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
@@ -280,7 +282,8 @@
 			isa = PBXGroup;
 			children = (
 				148609AE2C9CB43700A3E73F /* InjuryView.swift */,
-				148609B12C9DDE3700A3E73F /* InjuryDetailView.swift */,
+				148609B12C9DDE3700A3E73F /* InjuryEditView.swift */,
+				148609B62C9F13DD00A3E73F /* InjuryDetailsView.swift */,
 			);
 			path = Injuries;
 			sourceTree = "<group>";
@@ -533,13 +536,14 @@
 				149222072BDB141300F633BE /* ProfileView.swift in Sources */,
 				14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */,
 				14BF431C2BA157E7004B3321 /* ExerciseListView.swift in Sources */,
+				148609B72C9F13DD00A3E73F /* InjuryDetailsView.swift in Sources */,
 				1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */,
 				14BF431F2BA7CEC9004B3321 /* TitleBackground.swift in Sources */,
 				14535E122BC45EB50080531D /* NavigationBar.swift in Sources */,
 				14DAEF7A2B80034600AF4667 /* UserDataManager.swift in Sources */,
 				14535E102BC45B720080531D /* ButtonPress.swift in Sources */,
 				14BF43182BA14F3D004B3321 /* ExerciseManager.swift in Sources */,
-				148609B22C9DDE3700A3E73F /* InjuryDetailView.swift in Sources */,
+				148609B22C9DDE3700A3E73F /* InjuryEditView.swift in Sources */,
 				146154012BDDC5570068504B /* TrainingLogView.swift in Sources */,
 				14535E0C2BB268030080531D /* AppDelegate.swift in Sources */,
 				14DAEF5C2B7FB4A200AF4667 /* WelcomeView.swift in Sources */,

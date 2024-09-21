@@ -10,7 +10,7 @@ import SwiftUI
 // Page for recommended exercises
 struct ExerciseView: View {
     @State private var showButtons = true
-    @State private var muscleTarget = ""
+    @State private var muscleTarget = "abdominals"
     @State private var dataFetched = false
     @State private var exerciseData: ExerciseData?
     
