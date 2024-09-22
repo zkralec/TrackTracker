@@ -13,14 +13,14 @@ struct InjuryView: View {
     @State private var injuryLog: [InjuryData] = []
     @State private var selectedInjury: InjuryData?
     @State private var isPresentingInjuryDetail = false
-    @State private var isEditing = false
+    @State private var isEditing: Bool = false
     
+    // Load selected events from UserDefaults
     @State private var events: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
             return savedEvents.compactMap { EventData(rawValue: $0) }
-        } else {
-            return []
         }
+        return []
     }()
     
     var body: some View {
@@ -28,15 +28,16 @@ struct InjuryView: View {
             NavigationStack {
                 ZStack {
                     VStack {
-                        // Menu bar icon
+                        // Menu button
                         MenuButton(isSideMenuOpen: $isSideMenuOpen)
                         
+                        // Title background
                         TitleBackground(title: "Injury Log")
                         
-                        // Add new injury button
+                        // Button to add a new injury
                         Button(action: {
-                            selectedInjury = InjuryData.default // Default injury for adding
-                            isEditing = true
+                            selectedInjury = nil
+                            isEditing = false
                             isPresentingInjuryDetail = true
                         }) {
                             Text("Add New Injury")
@@ -45,9 +46,9 @@ struct InjuryView: View {
                         }
                         .buttonStyle(CustomButtonStyle())
                         
+                        // List of injuries
                         List {
-                            // Injuries Section
-                            
+                            // Display message if no injuries are logged
                             if injuryLog.isEmpty {
                                 Section {
                                     HStack {
@@ -59,20 +60,23 @@ struct InjuryView: View {
                                     }
                                 }
                             } else {
+                                // Display each logged injury
                                 ForEach(injuryLog.indices, id: \.self) { index in
                                     Section {
                                         let injury = injuryLog[index]
                                         VStack(alignment: .leading) {
                                             HStack {
+                                                // Injury details
                                                 VStack(alignment: .leading) {
-                                                    Text("\(injury.muscleGroup)")
-                                                        .font(.headline)
+                                                    Text(injury.muscleGroup).font(.headline)
                                                     Text("Date: \(injury.injuryDate, style: .date)")
                                                     Text("Type: \(injury.injuryType)")
                                                     Text("Location: \(injury.location)")
                                                     Text("Severity: \(injury.severity) / 5")
                                                 }
                                                 Spacer()
+                                                
+                                                // Edit button
                                                 Button("Edit") {
                                                     selectedInjury = injury
                                                     isEditing = true
@@ -80,6 +84,8 @@ struct InjuryView: View {
                                                 }
                                                 .buttonStyle(BorderlessButtonStyle())
                                                 .padding(.trailing, 10)
+                                                
+                                                // Delete button
                                                 Button(action: {
                                                     withAnimation {
                                                         deleteInjury(at: index)
@@ -92,7 +98,7 @@ struct InjuryView: View {
                                             }
                                             .padding(.vertical, 4)
                                             
-                                            // New Details Section
+                                            // Navigation to details view
                                             NavigationLink(destination: InjuryDetailsView(injury: injury, injuryLog: $injuryLog)) {
                                                 Text("View Details")
                                                     .font(.subheadline)
@@ -107,14 +113,13 @@ struct InjuryView: View {
                             }
                         }
                         .background(Color(.systemGray6).opacity(0.05))
+                        // Sheet for editing injury details
                         .sheet(isPresented: $isPresentingInjuryDetail) {
                             InjuryEditView(injuryLog: $injuryLog, injury: selectedInjury ?? InjuryData.default, isEditing: isEditing)
                         }
                         
                         // Navigation bar buttons
-                        VStack {
-                            NavigationBar(currPage: $currPage)
-                        }
+                        NavigationBar(currPage: $currPage)
                     }
                     // Show side menu if needed
                     SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
@@ -123,34 +128,38 @@ struct InjuryView: View {
             .onAppear {
                 loadInjuryLog()
             }
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 8 {
-            TrainingLogView()
+        } else {
+            if currPage == 3 {
+                HomeView()
+            } else if currPage == 4 {
+                SettingsView()
+            } else if currPage == 5 {
+                EventView(events: $events)
+            } else if currPage == 6 {
+                MeetView()
+            } else if currPage == 7 {
+                ProfileView()
+            } else if currPage == 8 {
+                TrainingLogView()
+            }
         }
     }
     
+    // Delete an injury from the log
     private func deleteInjury(at index: Int) {
         injuryLog.remove(at: index)
         saveInjuryLog()
     }
     
+    // Load the injury log from UserDefaults
     private func loadInjuryLog() {
-        if let data = UserDefaults.standard.data(forKey: "injuryLog") {
-            if let decoded = try? JSONDecoder().decode([InjuryData].self, from: data) {
-                injuryLog = decoded
-            }
+        if let data = UserDefaults.standard.data(forKey: "injuryLog"),
+           let decoded = try? JSONDecoder().decode([InjuryData].self, from: data) {
+            injuryLog = decoded
         }
     }
     
+    // Save the injury log to UserDefaults
     private func saveInjuryLog() {
         if let encoded = try? JSONEncoder().encode(injuryLog) {
             UserDefaults.standard.set(encoded, forKey: "injuryLog")

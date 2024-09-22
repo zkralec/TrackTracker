@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InjuryEditView: View {
-    // States for capturing injury details
+    // State variables for injury details
     @State private var injuryDate: Date = Date()
     @State private var muscleGroup: String = "Hamstring"
     @State private var injuryType: String = "Strain"
@@ -17,13 +17,14 @@ struct InjuryEditView: View {
     @State private var allowedActivities: [String] = []
     @State private var restrictedActivities: [String] = []
     
-    // Shared injuryLog data
+    // Binding variables for injury log and selected injury
     @Binding var injuryLog: [InjuryData]
     var injury: InjuryData
     var isEditing: Bool
     
-    // Muscle groups and dependent options
+    // Defined muscle groups and associated injury types and locations
     let muscleGroups = ["Hamstring", "Quads", "Calves", "Shins", "Lower Back", "Hip Flexor", "Glutes", "Elbow"]
+    
     var injuryTypesByMuscleGroup: [String: [String]] = [
         "Hamstring": ["Strain", "Tear", "Tendinitis"],
         "Quads": ["Strain", "Tear", "Tendinitis"],
@@ -55,21 +56,15 @@ struct InjuryEditView: View {
                     .padding(.top, 28)
                 
                 List {
-                    // Injury Date
+                    // Injury date
                     Section {
-                        VStack {
-                            Text("Injury Date")
-                                .font(.title3)
-                                .fontWeight(.medium)
-                                .padding()
-                            
-                            DatePicker("Select Date", selection: $injuryDate, displayedComponents: [.date])
-                                .datePickerStyle(GraphicalDatePickerStyle())
-                        }
+                        DatePicker("Injury Date", selection: $injuryDate, displayedComponents: [.date])
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .padding()
                     }
                     .listSectionSpacing(15)
                     
-                    // Muscle Group
+                    // Muscle group
                     Section {
                         Picker("Muscle Group", selection: $muscleGroup) {
                             ForEach(muscleGroups, id: \.self) { group in
@@ -77,18 +72,17 @@ struct InjuryEditView: View {
                             }
                         }
                         .onChange(of: muscleGroup) {
-                            // Update default injury type based on the muscle group
+                            // Update injury type and location based on muscle group
                             if let types = injuryTypesByMuscleGroup[muscleGroup], !types.contains(injuryType) {
                                 injuryType = types.first ?? ""
                             }
-                            // Reset location to default for the selected muscle group
                             location = locationsByMuscleGroup[muscleGroup]?.first ?? ""
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
                     .listSectionSpacing(15)
                     
-                    // Injury Type (dependent on muscle group)
+                    // Injury type
                     Section {
                         Picker("Injury Type", selection: $injuryType) {
                             if let types = injuryTypesByMuscleGroup[muscleGroup] {
@@ -101,7 +95,7 @@ struct InjuryEditView: View {
                     }
                     .listSectionSpacing(15)
                     
-                    // Injury Location (dropdown based on muscle group and injury type)
+                    // Injury location
                     Section {
                         Picker("Location", selection: $location) {
                             if let locations = locationsByMuscleGroup[muscleGroup] {
@@ -114,7 +108,7 @@ struct InjuryEditView: View {
                     }
                     .listSectionSpacing(15)
                     
-                    // Severity Level (Slider out of 5)
+                    // Severity slider
                     Section {
                         VStack(alignment: .leading) {
                             Text("Severity: \(Int(severity))")
@@ -125,15 +119,10 @@ struct InjuryEditView: View {
                     }
                     .listSectionSpacing(15)
                     
-                    // Confirm Button
+                    // Confirm button
                     Section {
                         Button(action: {
-                            // Update the injuryLog with the new or edited injury
-                            if let index = injuryLog.firstIndex(where: { $0.id == injury.id }) {
-                                injuryLog[index] = injury
-                            } else {
-                                injuryLog.append(injury)
-                            }
+                            addInjury()
                             saveInjuryLog()
                             presentationMode.wrappedValue.dismiss()
                         }) {
@@ -151,12 +140,55 @@ struct InjuryEditView: View {
                 .background(Color(.systemGray6).opacity(0.05))
             }
         }
+        .onAppear {
+            // Load edited injury data
+            if isEditing {
+                injuryDate = injury.injuryDate
+                muscleGroup = injury.muscleGroup
+                injuryType = injury.injuryType
+                severity = Double(injury.severity)
+                location = injury.location
+                allowedActivities = injury.allowedActivities
+                restrictedActivities = injury.restrictedActivities
+                print("Injury loaded: \(injury)")
+            }
+        }
     }
     
+    // Reset to default values
+    private func resetFields() {
+        injuryDate = Date()
+        muscleGroup = "Hamstring"
+        injuryType = "Strain"
+        severity = 1.0
+        location = "Upper"
+        allowedActivities = []
+        restrictedActivities = []
+    }
+    
+    // Add or update in injury log
+    private func addInjury() {
+        let newInjury = InjuryData(
+            injuryDate: injuryDate,
+            muscleGroup: muscleGroup,
+            injuryType: injuryType,
+            severity: Int(severity),
+            location: location,
+            allowedActivities: allowedActivities,
+            restrictedActivities: restrictedActivities
+        )
+        
+        if isEditing, let index = injuryLog.firstIndex(where: { $0.id == injury.id }) {
+            injuryLog[index] = newInjury
+        } else {
+            injuryLog.append(newInjury)
+        }
+    }
+    
+    // Save the injury
     private func saveInjuryLog() {
         if let encoded = try? JSONEncoder().encode(injuryLog) {
             UserDefaults.standard.set(encoded, forKey: "injuryLog")
         }
     }
-    
 }
