@@ -30,6 +30,7 @@ struct WorkoutView: View {
     
     @State private var isTrack = false
     @State private var isIndoorTrack = false
+    @State private var isTurf = false
     @State private var isDirt = false
     @State private var isGrassHills = false
     @State private var isAsphalt = false
@@ -157,6 +158,7 @@ struct WorkoutView: View {
                                         
                                         workoutData?.track = isTrack
                                         workoutData?.indoorTrack = isIndoorTrack
+                                        workoutData?.turf = isTurf
                                         workoutData?.dirt = isDirt
                                         workoutData?.grasshills = isGrassHills
                                         workoutData?.asphalt = isAsphalt
@@ -378,6 +380,7 @@ struct WorkoutView: View {
                                     ForEach([
                                         ("Outdoor Track", $isTrack),
                                         ("Indoor Track", $isIndoorTrack),
+                                        ("Turf", $isTurf),
                                         ("Dirt", $isDirt),
                                         ("Grass/Hills", $isGrassHills),
                                         ("Asphalt", $isAsphalt)
@@ -527,6 +530,9 @@ struct WorkoutView: View {
                     }
                 }
                 .onAppear {
+                    // Only use when adding new vars to be saved
+                    // WorkoutData.clearAllData()
+                    
                     // Will reset the day completion if necessary
                     resetDayCompletionIfNeeded()
                     
@@ -553,6 +559,7 @@ struct WorkoutView: View {
                             
                             isTrack = workoutData.track
                             isIndoorTrack = workoutData.indoorTrack
+                            isTurf = workoutData.turf
                             isDirt = workoutData.dirt
                             isGrassHills = workoutData.grasshills
                             isAsphalt = workoutData.asphalt
@@ -612,6 +619,7 @@ struct WorkoutView: View {
                                                   
                                                   track: false,
                                                   indoorTrack: false,
+                                                  turf: false,
                                                   dirt: false,
                                                   grasshills: false,
                                                   asphalt: false,
@@ -686,6 +694,7 @@ struct WorkoutView: View {
                                                   
                                                   track: false,
                                                   indoorTrack: false,
+                                                  turf: false,
                                                   dirt: false,
                                                   grasshills: false,
                                                   asphalt: false,
@@ -745,6 +754,7 @@ struct WorkoutView: View {
                     
                     workoutData?.track = isTrack
                     workoutData?.indoorTrack = isIndoorTrack
+                    workoutData?.turf = isTurf
                     workoutData?.dirt = isDirt
                     workoutData?.grasshills = isGrassHills
                     workoutData?.asphalt = isAsphalt

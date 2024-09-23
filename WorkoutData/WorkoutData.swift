@@ -24,6 +24,7 @@ struct WorkoutData: Codable, Hashable {
     
     var track: Bool
     var indoorTrack: Bool
+    var turf: Bool
     var dirt: Bool
     var grasshills: Bool
     var asphalt: Bool
@@ -153,6 +154,7 @@ extension WorkoutData {
                                                  
                                                  track: false,
                                                  indoorTrack: false,
+                                                 turf: false,
                                                  dirt: false,
                                                  grasshills: false,
                                                  asphalt: false,

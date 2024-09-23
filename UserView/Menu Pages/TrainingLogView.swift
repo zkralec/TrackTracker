@@ -92,6 +92,7 @@ struct TrainingLogView: View {
                                             ForEach([
                                                 (key: "Track", value: workout.track),
                                                 (key: "Indoor Track", value: workout.indoorTrack),
+                                                (key: "Turf", value: workout.turf),
                                                 (key: "Dirt", value: workout.dirt),
                                                 (key: "Grass Hills", value: workout.grasshills),
                                                 (key: "Asphalt", value: workout.asphalt)
