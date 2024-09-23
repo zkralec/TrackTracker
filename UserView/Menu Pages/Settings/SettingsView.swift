@@ -85,6 +85,7 @@ struct SettingsView: View {
                                         .font(.headline)
                                         .fontWeight(.medium)
                                         .padding()
+                                        .padding(.top,-10)
                                     ForEach(viewModel.events, id: \.self) { event in
                                         HStack {
                                             Text(event.rawValue)
@@ -140,17 +141,17 @@ struct SettingsView: View {
                                     }
                                 }) {
                                     HStack {
+                                        Spacer()
+                                        
                                         Text("Modify Selected Events")
-                                            .padding(.vertical)
                                             .foregroundStyle(.blue)
+                                            .fontWeight(.medium)
+                                            .font(.system(size: 20))
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(.blue)
-                                            .frame(width: 70)
                                         
                                         Spacer()
                                     }
-                                    .fontWeight(.medium)
-                                    .font(.system(size: 20))
                                 }
                                 .buttonStyle(ButtonPress())
                             }
@@ -166,17 +167,17 @@ struct SettingsView: View {
                                     }
                                 }) {
                                     HStack {
+                                        Spacer()
+                                        
                                         Text("Modify Meet Days")
-                                            .padding(.vertical)
                                             .foregroundStyle(.blue)
+                                            .fontWeight(.medium)
+                                            .font(.system(size: 20))
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(.blue)
-                                            .frame(width: 70)
                                         
                                         Spacer()
                                     }
-                                    .fontWeight(.medium)
-                                    .font(.system(size: 20))
                                 }
                                 .buttonStyle(ButtonPress())
                             }
@@ -193,17 +194,17 @@ struct SettingsView: View {
                                     }
                                 }) {
                                     HStack {
+                                        Spacer()
+                                        
                                         Text("Modify User Info")
-                                            .padding(.vertical)
                                             .foregroundStyle(.blue)
+                                            .fontWeight(.medium)
+                                            .font(.system(size: 20))
                                         Image(systemName: "chevron.right")
                                             .foregroundStyle(.blue)
-                                            .frame(width: 70)
                                         
                                         Spacer()
                                     }
-                                    .fontWeight(.medium)
-                                    .font(.system(size: 20))
                                 }
                                 .buttonStyle(ButtonPress())
                             }

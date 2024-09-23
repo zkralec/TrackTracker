@@ -266,7 +266,7 @@ struct WorkoutView: View {
                                         HStack {
                                             VStack {
                                                 Button(action: {
-                                                    if meters.count < 5 {
+                                                    if meters.count < 6 {
                                                         meters.append("")
                                                     }
                                                 }) {

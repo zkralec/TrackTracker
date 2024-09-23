@@ -127,13 +127,12 @@ struct InjuryEditView: View {
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Text("Confirm")
-                                .font(.headline)
-                                .padding()
+                                .font(.system(size: 20))
+                                .fontWeight(.medium)
                                 .frame(maxWidth: .infinity)
-                                .background(Color.blue)
                                 .foregroundColor(.white)
-                                .cornerRadius(10)
                         }
+                        .buttonStyle(CustomButtonStyle())
                     }
                     .listSectionSpacing(15)
                 }
