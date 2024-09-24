@@ -129,6 +129,7 @@ struct SettingsView: View {
                         
                         Section {
                             // Future toggle for notifications
+                            // Toggle("Enable Notifications", isOn: )
                         }
                         .listSectionSpacing(15)
                         

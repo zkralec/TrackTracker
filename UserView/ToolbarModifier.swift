@@ -8,6 +8,7 @@
 import SwiftUI
 
 // Adds a done button to exit a text popup
+// CURRENTLY BUGGED WITH iOS 18
 struct ToolbarModifier: ViewModifier {
     @Binding var isFocused: Bool
 
