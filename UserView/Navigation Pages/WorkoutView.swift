@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 // Other main page for the user, mainly lots of UI and fields
 struct WorkoutView: View {
@@ -19,6 +20,7 @@ struct WorkoutView: View {
     @State private var showExperiencePrompt = false
     @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
     @State private var workoutData: WorkoutData?
+    @ObservedObject var settings = SettingsViewModel()
     
     @State private var isRecovery = false
     @State private var isOff = false
@@ -206,6 +208,10 @@ struct WorkoutView: View {
                                     }
                                 } else {
                                     selectedExperience = nil
+                                }
+                                if settings.isHapticsEnabled {
+                                    let generator = UIImpactFeedbackGenerator(style: .light)
+                                    generator.impactOccurred()
                                 }
                             }
                         }) {

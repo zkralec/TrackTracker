@@ -21,8 +21,14 @@ class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(isDarkMode, forKey: "isDarkMode")
         }
     }
+    @Published var isHapticsEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(isHapticsEnabled, forKey: "isHapticsEnabled")
+        }
+    }
     
     init() {
+        self.isHapticsEnabled = UserDefaults.standard.bool(forKey: "isHapticsEnabled")
         loadEvents()
         loadPR()
     }
@@ -130,6 +136,12 @@ struct SettingsView: View {
                         Section {
                             // Future toggle for notifications
                             // Toggle("Enable Notifications", isOn: )
+                        }
+                        .listSectionSpacing(15)
+                        
+                        // Toggle haptic feedback
+                        Section {
+                            Toggle("Enable Haptics", isOn: $viewModel.isHapticsEnabled)
                         }
                         .listSectionSpacing(15)
                         
