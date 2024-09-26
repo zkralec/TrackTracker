@@ -35,7 +35,7 @@ struct HomeView: View {
                                     Text("Current Streak")
                                         .font(.headline)
                                         .fontWeight(.medium)
-                                        .foregroundStyle(.primary) // Automatically adapts to color scheme
+                                        .foregroundStyle(.primary)
                                         .padding(.top, 20)
                                     
                                     Text("\(StreakData.streakCount())")

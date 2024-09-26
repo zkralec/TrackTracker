@@ -142,7 +142,6 @@ struct WorkoutView: View {
                                 isDayComplete.toggle()
                                 isFocused = false
                                 if isDayComplete {
-                                    withAnimation {
                                         if !isMeet && !isOff && !isRecovery {
                                             showExperiencePrompt = true
                                         }
@@ -205,10 +204,10 @@ struct WorkoutView: View {
                                         
                                         workoutData?.saveData()
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                    }
                                 } else {
                                     selectedExperience = nil
                                 }
+                                // Feature to enable or disable haptics
                                 if settings.isHapticsEnabled {
                                     let generator = UIImpactFeedbackGenerator(style: .light)
                                     generator.impactOccurred()
@@ -233,6 +232,7 @@ struct WorkoutView: View {
                         }
                     }
                     
+                    // List for all the user input fields and toggles
                     List {
                         Section {
                             VStack {

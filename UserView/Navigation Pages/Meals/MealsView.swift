@@ -77,6 +77,7 @@ struct MealsView: View {
                     .onAppear {
                         // Calculate maintenance calories
                         userDataManager.calculateMaintenanceCalories()
+                        
                         // Fetch a meal plan if needed
                         fetchMeals()
                     }

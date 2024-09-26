@@ -101,6 +101,7 @@ struct ProfileView: View {
                                         .fontWeight(.medium)
                                         .padding(.bottom, 8)
                                     
+                                    // Go and get each event and pr for that event (if any)
                                     ForEach(events, id: \.self) { event in
                                         if let record = prs[event], !record.isEmpty {
                                             HStack {
