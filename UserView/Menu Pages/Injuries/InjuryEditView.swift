@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InjuryEditView: View {
-    // State variables for injury details
     @State private var injuryDate: Date = Date()
     @State private var muscleGroup: String = "Hamstring"
     @State private var injuryType: String = "Strain"
@@ -16,13 +15,13 @@ struct InjuryEditView: View {
     @State private var location: String = "Upper"
     @State private var allowedActivities: [String] = []
     @State private var restrictedActivities: [String] = []
+    @ObservedObject var settings = SettingsViewModel()
     
-    // Binding variables for injury log and selected injury
     @Binding var injuryLog: [InjuryData]
     var injury: InjuryData
     var isEditing: Bool
     
-    // Defined muscle groups and associated injury types and locations
+    // Muscle groups
     let muscleGroups = ["Hamstring", "Quads", "Calves", "Shins", "Lower Back", "Hip Flexor", "Glutes", "Elbow"]
     
     var injuryTypesByMuscleGroup: [String: [String]] = [
@@ -124,6 +123,11 @@ struct InjuryEditView: View {
                         Button(action: {
                             addInjury()
                             saveInjuryLog()
+                            // Feature to enable or disable haptics
+                            if settings.isHapticsEnabled {
+                                let generator = UIImpactFeedbackGenerator(style: .light)
+                                generator.impactOccurred()
+                            }
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Text("Confirm")
@@ -141,6 +145,10 @@ struct InjuryEditView: View {
         }
         .onAppear {
             // Load edited injury data
+            
+            // CURRENTLY BUGGED
+            // isEditing is false when clicking edit before adding a new workout
+            // investigating problem currently
             if isEditing {
                 injuryDate = injury.injuryDate
                 muscleGroup = injury.muscleGroup

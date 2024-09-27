@@ -20,10 +20,10 @@ struct InjuryData: Identifiable, Codable {
     static var `default`: InjuryData {
         InjuryData(
             injuryDate: Date(),
-            muscleGroup: "Abdominals",
+            muscleGroup: "Hamstring",
             injuryType: "Strain",
             severity: 1,
-            location: "",
+            location: "Upper",
             allowedActivities: ["Light Stretching"],
             restrictedActivities: ["Heavy Lifting"]
         )
