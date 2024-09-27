@@ -156,16 +156,10 @@
 			children = (
 				145953A62C7CFC38005731F7 /* README.md */,
 				14E1E7A02C1C755100E2C178 /* Misc. */,
-				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14DAEF712B7FDDE000AF4667 /* CustomAssets */,
+				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14535E0A2BB267F10080531D /* Notifications */,
-				148609B32C9F06B200A3E73F /* InjuryData */,
-				14BF43162BA145F5004B3321 /* ExerciseData */,
-				14BF430D2BA0FA1F004B3321 /* MealData */,
-				14DAEF652B7FCD5800AF4667 /* UserData */,
-				14535DF72BACC2DD0080531D /* StreakData */,
-				14535DFE2BAD2A030080531D /* EventData */,
-				14BF431D2BA2A561004B3321 /* WorkoutData */,
+				148609B82CA7217600A3E73F /* Data Binder */,
 				14B413152B7FA560000AFC94 /* UserView */,
 				141CA4BB2B7D3B4600A3D82E /* Track Tracker */,
 				141CA4CC2B7D3B4800A3D82E /* Track TrackerTests */,
@@ -294,6 +288,20 @@
 				148609B42C9F06E000A3E73F /* InjuryData.swift */,
 			);
 			path = InjuryData;
+			sourceTree = "<group>";
+		};
+		148609B82CA7217600A3E73F /* Data Binder */ = {
+			isa = PBXGroup;
+			children = (
+				148609B32C9F06B200A3E73F /* InjuryData */,
+				14535DF72BACC2DD0080531D /* StreakData */,
+				14BF43162BA145F5004B3321 /* ExerciseData */,
+				14BF430D2BA0FA1F004B3321 /* MealData */,
+				14DAEF652B7FCD5800AF4667 /* UserData */,
+				14535DFE2BAD2A030080531D /* EventData */,
+				14BF431D2BA2A561004B3321 /* WorkoutData */,
+			);
+			path = "Data Binder";
 			sourceTree = "<group>";
 		};
 		1492220C2BDC753E00F633BE /* Menu Pages */ = {
