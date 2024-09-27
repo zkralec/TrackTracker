@@ -256,12 +256,15 @@ struct WorkoutView: View {
                                         .padding(10)
                                         .disabled(isDayComplete)
                                         .focused($focusedField, equals: index)
-                                        .onTapGesture {
-                                            withAnimation {
-                                                self.isFocused = true
-                                                self.focusedField = index
-                                            }
-                                        }
+                                        .contentShape(Rectangle())
+                                        // This fixes iOS 18 bug that was introduced/
+                                        .highPriorityGesture(
+                                            TapGesture().onEnded {
+                                                withAnimation {
+                                                    isFocused = true
+                                                    focusedField = index
+                                                }
+                                            })
                                         .roundedBackground()
                                     }
                                 }
@@ -343,12 +346,14 @@ struct WorkoutView: View {
                                 .padding(10)
                                 .disabled(isDayComplete)
                                 .focused($focusedField, equals: 200)
-                                .onTapGesture {
-                                    withAnimation {
-                                        self.isFocused = true
-                                        self.focusedField = 200
-                                    }
-                                }
+                                // This fixes iOS 18 bug that was introduced
+                                .highPriorityGesture(
+                                    TapGesture().onEnded {
+                                        withAnimation {
+                                            isFocused = true
+                                            focusedField = 200
+                                        }
+                                    })
                                 .roundedBackground()
                             }
                         }
