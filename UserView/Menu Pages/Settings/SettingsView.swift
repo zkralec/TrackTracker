@@ -29,8 +29,6 @@ class SettingsViewModel: ObservableObject {
     
     init() {
         self.isHapticsEnabled = UserDefaults.standard.bool(forKey: "isHapticsEnabled")
-        loadEvents()
-        loadPR()
     }
     
     // Save the user's event PRs
@@ -48,11 +46,10 @@ class SettingsViewModel: ObservableObject {
                 prs[event] = prValue
             }
         }
-        print("Loaded PRs: \(prs)") // Log the loaded PRs to ensure they are correct
     }
     
     // Load the user's selected events
-    private func loadEvents() {
+    func loadEvents() {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
             events = savedEvents.compactMap { EventData(rawValue: $0) }
         }
@@ -227,6 +224,7 @@ struct SettingsView: View {
                     .modifier(ToolbarModifier(isFocused: $viewModel.isFocused))
                     .background(Color.gray.opacity(0.05))
                     .onAppear {
+                        viewModel.loadEvents()
                         viewModel.loadPR()
                         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                             windowScene.windows.first?.overrideUserInterfaceStyle = viewModel.isDarkMode ? .dark : .light
