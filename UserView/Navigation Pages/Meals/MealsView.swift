@@ -51,7 +51,7 @@ struct MealsView: View {
                                 .toolbar {
                                     ToolbarItem(placement: .topBarTrailing) {
                                         Button(action: {
-                                            fetchRefreshedMeals()
+                                            fetchMeals(isRefreshed: true)
                                         }) {
                                             Image(systemName: "arrow.circlepath")
                                                 .frame(width: 10, height: 10)
@@ -113,27 +113,13 @@ struct MealsView: View {
         return "\(caloriesFormatter.string(from: NSNumber(value: calories)) ?? "")"
     }
     
-    // Fetches meal plans if under daily limit
-    private func fetchMeals() {
-        if shouldFetchMealPlan {
-            MealsManager.fetchMealPlans(calories: userDataManager.maintenanceCalories) { result in
-                switch result {
-                case .success(let fetchedMealPlan):
-                    mealPlan = fetchedMealPlan
-                    shouldFetchMealPlan = false // Prevent accidental fetching
-                case .failure(let error):
-                    print("Error fetching meal plan: \(error)")
-                }
-            }
-        }
-    }
-    
-    // Bypasses daily limit of fetching and gets new meals
-    private func fetchRefreshedMeals() {
-        MealsManager.fetchRefreshedMealPlan(calories: userDataManager.maintenanceCalories) { result in
+    // Fetches meal plans if a day has passed since last fetch
+    private func fetchMeals(isRefreshed: Bool? = nil) {
+        MealsManager.fetchMealPlan(calories: userDataManager.maintenanceCalories, isRefreshed: isRefreshed ?? false) { result in
             switch result {
             case .success(let fetchedMealPlan):
                 mealPlan = fetchedMealPlan
+                shouldFetchMealPlan = false
             case .failure(let error):
                 print("Error fetching meal plan: \(error)")
             }
