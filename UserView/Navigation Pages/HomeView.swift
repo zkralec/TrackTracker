@@ -169,7 +169,7 @@ struct HomeView: View {
                 meets = decoded
             }
         }
-        removePastMeets() // Call to remove past meet dates
+        removePastMeets()
     }
     
     // Remove past meet dates
