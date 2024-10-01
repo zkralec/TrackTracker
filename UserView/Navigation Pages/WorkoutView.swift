@@ -14,11 +14,13 @@ struct WorkoutView: View {
     @State private var currPage: Int = 0
     @State private var isSideMenuOpen = false
     @State private var meters: [String] = [""]
+    @State private var times: [String] = [""]
     @State private var numSets = ""
     @State private var isFieldModified = false
     @State private var isFocused = false
     @State private var showExperiencePrompt = false
     @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
+    @State private var isDistanceMode = true
     @State private var workoutData: WorkoutData?
     @ObservedObject var settings = SettingsViewModel()
     
@@ -142,68 +144,69 @@ struct WorkoutView: View {
                                 isDayComplete.toggle()
                                 isFocused = false
                                 if isDayComplete {
-                                        if !isMeet && !isOff && !isRecovery {
-                                            showExperiencePrompt = true
-                                        }
-                                        workoutData?.meters = meters.compactMap { Int($0) }
-                                        workoutData?.sets = Int(numSets) ?? 0
-                                        
-                                        workoutData?.recovery = isRecovery
-                                        workoutData?.off = isOff
-                                        workoutData?.meet = isMeet
-                                        workoutData?.technique = isTechnique
-                                        workoutData?.workout = isWorkout
-                                        workoutData?.tempo = isTempo
-                                        
-                                        workoutData?.dayComplete = isDayComplete
-                                        
-                                        workoutData?.track = isTrack
-                                        workoutData?.indoorTrack = isIndoorTrack
-                                        workoutData?.turf = isTurf
-                                        workoutData?.dirt = isDirt
-                                        workoutData?.grasshills = isGrassHills
-                                        workoutData?.asphalt = isAsphalt
-                                        
-                                        workoutData?.rain = isRain
-                                        workoutData?.snow = isSnow
-                                        workoutData?.windy = isWindy
-                                        workoutData?.normal = isNormal
-                                        workoutData?.hot = isHot
-                                        workoutData?.cold = isCold
-                                        
-                                        workoutData?.blocks = isBlocks
-                                        workoutData?.resistanceBand = isResistanceBand
-                                        workoutData?.weights = isWeights
-                                        workoutData?.sled = isSled
-                                        workoutData?.wickets = isWickets
-                                        workoutData?.hurdles = isHurdles
-                                        workoutData?.weightedVest = isWeightedVest
-                                        workoutData?.plyoBox = isPlyoBox
-                                        workoutData?.medicineBall = isMedicineBall
-                                        workoutData?.stationaryBike = isStationaryBike
-                                        workoutData?.treadmill = isTreadmill
-                                        
-                                        workoutData?.injury = isInjury
-                                        workoutData?.soreness = isSoreness
-                                        workoutData?.fatigued = isFatigued
-                                        workoutData?.peakForm = isPeakForm
-                                        
-                                        workoutData?.low = isLow
-                                        workoutData?.moderate = isModerate
-                                        workoutData?.high = isHigh
-                                        workoutData?.maximum = isMaximum
-                                        
-                                        workoutData?.highJump = isHighJump
-                                        workoutData?.poleVault = isPoleVault
-                                        workoutData?.hammerThrow = isHammerThrow
-                                        workoutData?.discus = isDiscus
-                                        workoutData?.shotPut = isShotPut
-                                        workoutData?.javelin = isJavelin
-                                        workoutData?.longJump = isLongJump
-                                        workoutData?.tripleJump = isTripleJump
-                                        
-                                        workoutData?.saveData()
-                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    if !isMeet && !isOff && !isRecovery {
+                                        showExperiencePrompt = true
+                                    }
+                                    workoutData?.meters = meters.compactMap { Int($0) }
+                                    workoutData?.times = times.compactMap { Int($0) }
+                                    workoutData?.sets = Int(numSets) ?? 0
+                                    
+                                    workoutData?.recovery = isRecovery
+                                    workoutData?.off = isOff
+                                    workoutData?.meet = isMeet
+                                    workoutData?.technique = isTechnique
+                                    workoutData?.workout = isWorkout
+                                    workoutData?.tempo = isTempo
+                                    
+                                    workoutData?.dayComplete = isDayComplete
+                                    
+                                    workoutData?.track = isTrack
+                                    workoutData?.indoorTrack = isIndoorTrack
+                                    workoutData?.turf = isTurf
+                                    workoutData?.dirt = isDirt
+                                    workoutData?.grasshills = isGrassHills
+                                    workoutData?.asphalt = isAsphalt
+                                    
+                                    workoutData?.rain = isRain
+                                    workoutData?.snow = isSnow
+                                    workoutData?.windy = isWindy
+                                    workoutData?.normal = isNormal
+                                    workoutData?.hot = isHot
+                                    workoutData?.cold = isCold
+                                    
+                                    workoutData?.blocks = isBlocks
+                                    workoutData?.resistanceBand = isResistanceBand
+                                    workoutData?.weights = isWeights
+                                    workoutData?.sled = isSled
+                                    workoutData?.wickets = isWickets
+                                    workoutData?.hurdles = isHurdles
+                                    workoutData?.weightedVest = isWeightedVest
+                                    workoutData?.plyoBox = isPlyoBox
+                                    workoutData?.medicineBall = isMedicineBall
+                                    workoutData?.stationaryBike = isStationaryBike
+                                    workoutData?.treadmill = isTreadmill
+                                    
+                                    workoutData?.injury = isInjury
+                                    workoutData?.soreness = isSoreness
+                                    workoutData?.fatigued = isFatigued
+                                    workoutData?.peakForm = isPeakForm
+                                    
+                                    workoutData?.low = isLow
+                                    workoutData?.moderate = isModerate
+                                    workoutData?.high = isHigh
+                                    workoutData?.maximum = isMaximum
+                                    
+                                    workoutData?.highJump = isHighJump
+                                    workoutData?.poleVault = isPoleVault
+                                    workoutData?.hammerThrow = isHammerThrow
+                                    workoutData?.discus = isDiscus
+                                    workoutData?.shotPut = isShotPut
+                                    workoutData?.javelin = isJavelin
+                                    workoutData?.longJump = isLongJump
+                                    workoutData?.tripleJump = isTripleJump
+                                    
+                                    workoutData?.saveData()
+                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                 } else {
                                     selectedExperience = nil
                                 }
@@ -236,7 +239,15 @@ struct WorkoutView: View {
                     List {
                         Section {
                             VStack {
-                                Text("Distance and Reps")
+                                // Toggle between distance and time
+                                Picker("Mode", selection: $isDistanceMode) {
+                                    Text("Distance").tag(true)
+                                    Text("Time").tag(false)
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                                .padding(10)
+                                
+                                Text(isDistanceMode ? "Distance and Reps" : "Time and Reps")
                                     .font(.headline)
                                     .fontWeight(.medium)
                                     .padding(10)
@@ -557,6 +568,7 @@ struct WorkoutView: View {
                         // Update UI state with loaded data
                         if let workoutData = workoutData {
                             meters = workoutData.meters.isEmpty ? [""] : workoutData.meters.map { String($0) }
+                            times = workoutData.times.isEmpty ? [""] : workoutData.times.map { String($0) }
                             numSets = workoutData.sets > 0 ? String(workoutData.sets) : ""
                             
                             isRecovery = workoutData.recovery
@@ -617,6 +629,7 @@ struct WorkoutView: View {
                         // If no data is found use default values
                         workoutData = WorkoutData(date: Date(),
                                                   meters: [],
+                                                  times: [],
                                                   sets: 0,
                                                   
                                                   recovery: false,
@@ -692,6 +705,7 @@ struct WorkoutView: View {
                     if workoutData == nil {
                         workoutData = WorkoutData(date: Date(),
                                                   meters: [],
+                                                  times: [],
                                                   sets: 0,
                                                   
                                                   recovery: false,
@@ -752,6 +766,7 @@ struct WorkoutView: View {
                         StreakData.updateStreakIfNeeded(fieldModified: isFieldModified)
                     }
                     workoutData?.meters = meters.compactMap { Int($0) }
+                    workoutData?.times = times.compactMap { Int($0) }
                     workoutData?.sets = Int(numSets) ?? 0
                     
                     workoutData?.recovery = isRecovery

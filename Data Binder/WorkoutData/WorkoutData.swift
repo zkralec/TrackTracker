@@ -11,6 +11,7 @@ import Foundation
 struct WorkoutData: Codable, Hashable {
     var date: Date
     var meters: [Int]
+    var times: [Int]
     var sets: Int
     
     var recovery: Bool
@@ -141,6 +142,7 @@ extension WorkoutData {
             UserDefaults.standard.set(currentDate, forKey: "currentDate")
             let defaultWorkoutData = WorkoutData(date: currentDate,
                                                  meters: [],
+                                                 times: [],
                                                  sets: 0,
                                                  
                                                  recovery: false,
