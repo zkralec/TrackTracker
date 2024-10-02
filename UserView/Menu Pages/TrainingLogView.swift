@@ -81,8 +81,10 @@ struct TrainingLogView: View {
                                         VStack(alignment: .leading) {
                                             if workout.metersString != "" {
                                                 Text("Distance/Reps: (\(workout.metersString)) meters")
+                                            } else if workout.timesString != "" {
+                                                Text("Time/Reps: (\(workout.timesString)) seconds")
                                             } else {
-                                                Text("Distance/Reps: None")
+                                                Text("Distance/Time/Reps: None")
                                             }
                                             Text("Sets: \(workout.sets)")
                                                 .padding(.top,3)
@@ -194,6 +196,10 @@ struct TrainingLogView: View {
 extension WorkoutData {
     var metersString: String {
         return meters.map { "\($0)" }.joined(separator: ", ")
+    }
+    
+    var timesString: String {
+        return times.map { "\($0)" }.joined(separator: ", ")
     }
     
     var formattedDate: String {

@@ -20,7 +20,7 @@ struct WorkoutView: View {
     @State private var isFocused = false
     @State private var showExperiencePrompt = false
     @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
-    @State private var isDistanceMode = true
+    @State private var isDistanceMode: Bool
     @State private var workoutData: WorkoutData?
     @ObservedObject var settings = SettingsViewModel()
     
@@ -84,6 +84,33 @@ struct WorkoutView: View {
             return []
         }
     }()
+    
+    // Have the meters or times field appear depending on saved values
+    init() {
+        // Check data and determine mode
+        let hasTimes = !WorkoutData.loadData()!.times.isEmpty
+        let hasMeters = !WorkoutData.loadData()!.meters.isEmpty
+        
+        print(hasTimes)
+        print(hasMeters)
+        
+        print(WorkoutData.loadData()!.times)
+        print(WorkoutData.loadData()!.meters)
+        
+        if !hasTimes && hasMeters {
+            print("METERS HAS DATA")
+            isDistanceMode = true
+        } else if hasTimes && !hasMeters {
+            print("TIMES HAS DATA")
+            isDistanceMode = false
+        } else if !hasTimes && !hasMeters {
+            print("NEITHER HAVE DATA")
+            isDistanceMode = true
+        } else {
+            print("BOTH HAVE DATA")
+            isDistanceMode = true
+        }
+    }
     
     @FocusState private var focusedField: Int?
     @AppStorage("isDayComplete") private var isDayComplete = false
@@ -252,79 +279,108 @@ struct WorkoutView: View {
                                     .fontWeight(.medium)
                                     .padding(10)
                                 
-                                // Creates meter fields for user input
+                                // Creates meter or time fields for user input
                                 VStack {
-                                    ForEach(0..<meters.count, id: \.self) { index in
-                                        TextField("Meters", text: Binding(
-                                            get: { meters[index] },
-                                            set: { newValue in
-                                                if validateMetersInput(newValue) {
-                                                    meters[index] = newValue
+                                    if isDistanceMode {
+                                        ForEach(0..<meters.count, id: \.self) { index in
+                                            TextField("Meters", text: Binding(
+                                                get: { meters[index] },
+                                                set: { newValue in
+                                                    if validateMetersInput(newValue) {
+                                                        meters[index] = newValue
+                                                    }
                                                 }
-                                            }
-                                        ))
-                                        .keyboardType(.numberPad)
-                                        .padding(10)
-                                        .disabled(isDayComplete)
-                                        .focused($focusedField, equals: index)
-                                        .contentShape(Rectangle())
-                                        // This fixes iOS 18 bug that was introduced/
-                                        .highPriorityGesture(
-                                            TapGesture().onEnded {
-                                                withAnimation {
-                                                    isFocused = true
-                                                    focusedField = index
+                                            ))
+                                            .keyboardType(.numberPad)
+                                            .padding(10)
+                                            .disabled(isDayComplete)
+                                            .focused($focusedField, equals: index)
+                                            .contentShape(Rectangle())
+                                            .highPriorityGesture(
+                                                TapGesture().onEnded {
+                                                    withAnimation {
+                                                        isFocused = true
+                                                        focusedField = index
+                                                    }
                                                 }
-                                            })
-                                        .roundedBackground()
+                                            )
+                                            .roundedBackground()
+                                        }
+                                    } else {
+                                        ForEach(0..<times.count, id: \.self) { index in
+                                            TextField("Seconds", text: Binding(
+                                                get: { times[index] },
+                                                set: { newValue in
+//                                                    if validateTimeInput(newValue) {
+                                                        times[index] = newValue
+//                                                    }
+                                                }
+                                            ))
+                                            .keyboardType(.numberPad)
+                                            .padding(10)
+                                            .disabled(isDayComplete)
+                                            .focused($focusedField, equals: index)
+                                            .contentShape(Rectangle())
+                                            .highPriorityGesture(
+                                                TapGesture().onEnded {
+                                                    withAnimation {
+                                                        isFocused = true
+                                                        focusedField = index
+                                                    }
+                                                }
+                                            )
+                                            .roundedBackground()
+                                        }
                                     }
                                 }
                                 
-                                // Buttons to add or remove reps
+                                // Add/Remove buttons for reps
                                 if !isDayComplete {
-                                    withAnimation {
-                                        HStack {
-                                            VStack {
-                                                Button(action: {
-                                                    if meters.count < 6 {
-                                                        meters.append("")
-                                                    }
-                                                }) {
-                                                    Image(systemName: "plus")
-                                                        .foregroundStyle(.white)
-                                                        .frame(width: 30, height: 10)
+                                    HStack {
+                                        VStack {
+                                            Button(action: {
+                                                if isDistanceMode && meters.count < 6 {
+                                                    meters.append("")
+                                                } else if !isDistanceMode && times.count < 6 {
+                                                    times.append("")
                                                 }
-                                                .padding(.top, 8)
-                                                .buttonStyle(CustomButtonStyle())
-                                                
-                                                Text("Add")
-                                                    .font(.caption)
-                                                    .foregroundStyle(.blue)
-                                                    .padding(4)
+                                            }) {
+                                                Image(systemName: "plus")
+                                                    .foregroundStyle(.white)
+                                                    .frame(width: 30, height: 10)
                                             }
+                                            .padding(.top, 8)
+                                            .buttonStyle(CustomButtonStyle())
                                             
-                                            VStack {
-                                                Button(action: {
-                                                    if meters.count > 1 {
-                                                        meters.removeLast()
-                                                    }
-                                                }) {
-                                                    Image(systemName: "minus")
-                                                        .foregroundStyle(.white)
-                                                        .frame(width: 30, height: 10)
-                                                }
-                                                .padding(.top, 8)
-                                                .buttonStyle(CustomButtonStyle())
-                                                
-                                                Text("Remove")
-                                                    .font(.caption)
-                                                    .foregroundStyle(.blue)
-                                                    .padding(4)
-                                            }
+                                            Text("Add")
+                                                .font(.caption)
+                                                .foregroundStyle(.blue)
+                                                .padding(4)
                                         }
-                                        .padding(.horizontal, 10)
-                                        .padding(.bottom, -10)
+                                        
+                                        VStack {
+                                            Button(action: {
+                                                if isDistanceMode && meters.count > 1 {
+                                                    meters.removeLast()
+                                                } else if !isDistanceMode && times.count > 1 {
+                                                    times.removeLast()
+                                                }
+                                            }) {
+                                                Image(systemName: "minus")
+                                                    .foregroundStyle(.white)
+                                                    .frame(width: 30, height: 10)
+                                            }
+                                            .padding(.top, 8)
+                                            .buttonStyle(CustomButtonStyle())
+                                            
+                                            Text("Remove")
+                                                .font(.caption)
+                                                .foregroundStyle(.blue)
+                                                .padding(4)
+                                        }
                                     }
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, -10)
                                 }
                             }
                         }
@@ -855,10 +911,13 @@ struct WorkoutView: View {
         }
     }
     
+    // Function to validate the input for time
+    //
+    
     // Function to validate the input for meters
     private func validateMetersInput(_ value: String) -> Bool {
         guard let intValue = Int(value) else { return false }
-        return intValue <= 10_000
+        return intValue <= 42_195
     }
     
     // Function to validate the input for the number of reps
