@@ -90,13 +90,7 @@ struct WorkoutView: View {
         // Check data and determine mode
         let hasTimes = !WorkoutData.loadData()!.times.isEmpty
         let hasMeters = !WorkoutData.loadData()!.meters.isEmpty
-        
-        print(hasTimes)
-        print(hasMeters)
-        
-        print(WorkoutData.loadData()!.times)
-        print(WorkoutData.loadData()!.meters)
-        
+
         if !hasTimes && hasMeters {
             print("METERS HAS DATA")
             isDistanceMode = true
@@ -311,9 +305,9 @@ struct WorkoutView: View {
                                             TextField("Seconds", text: Binding(
                                                 get: { times[index] },
                                                 set: { newValue in
-//                                                    if validateTimeInput(newValue) {
+                                                    if validateTimeInput(newValue) {
                                                         times[index] = newValue
-//                                                    }
+                                                    }
                                                 }
                                             ))
                                             .keyboardType(.numberPad)
@@ -912,18 +906,18 @@ struct WorkoutView: View {
     }
     
     // Function to validate the input for time
-    //
+    private func validateTimeInput(_ input: String) -> Bool {
+        return (input.isEmpty || Int(input) != nil) && input.count <= 5
+    }
     
     // Function to validate the input for meters
-    private func validateMetersInput(_ value: String) -> Bool {
-        guard let intValue = Int(value) else { return false }
-        return intValue <= 42_195
+    private func validateMetersInput(_ input: String) -> Bool {
+        return (input.isEmpty || Int(input) != nil) && input.count <= 5
     }
     
     // Function to validate the input for the number of reps
-    private func validateNumberOfRepsInput(_ value: String) -> Bool {
-        guard let intValue = Int(value) else { return false }
-        return intValue <= 100
+    private func validateNumberOfRepsInput(_ input: String) -> Bool {
+        return (input.isEmpty || Int(input) != nil) && input.count <= 5
     }
     
     // Function to reset isDayComplete if it's a new day
