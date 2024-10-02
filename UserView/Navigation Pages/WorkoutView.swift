@@ -92,16 +92,12 @@ struct WorkoutView: View {
         let hasMeters = !WorkoutData.loadData()!.meters.isEmpty
 
         if !hasTimes && hasMeters {
-            print("METERS HAS DATA")
             isDistanceMode = true
         } else if hasTimes && !hasMeters {
-            print("TIMES HAS DATA")
             isDistanceMode = false
         } else if !hasTimes && !hasMeters {
-            print("NEITHER HAVE DATA")
             isDistanceMode = true
         } else {
-            print("BOTH HAVE DATA")
             isDistanceMode = true
         }
     }
@@ -111,6 +107,8 @@ struct WorkoutView: View {
     
     var onDisappearAction: ((Bool) -> Void)?
     private var previousDaysData: [WorkoutData] = []
+    
+    // Will disable toggles in section after one is toggled
     var anyDayToggleOn: Bool {
         isOff || isTechnique || isWorkout || isTempo || isRecovery || isMeet
     }
@@ -238,6 +236,7 @@ struct WorkoutView: View {
                                 }
                             }
                         }) {
+                            // Is day complete button
                             if !isDayComplete {
                                 Image(systemName: "checkmark.circle")
                                     .foregroundStyle(.blue)
@@ -250,6 +249,7 @@ struct WorkoutView: View {
                         }
                         .padding(.trailing, 20)
                     }
+                    // Once day is complete, prompt user with recovery page if needed
                     .sheet(isPresented: $showExperiencePrompt) {
                         if !isMeet && !isOff {
                             RecoveryPrompt(isPresented: $showExperiencePrompt, selectedExperience: $selectedExperience)
@@ -275,6 +275,7 @@ struct WorkoutView: View {
                                 
                                 // Creates meter or time fields for user input
                                 VStack {
+                                    // Distance fields
                                     if isDistanceMode {
                                         ForEach(0..<meters.count, id: \.self) { index in
                                             TextField("Meters", text: Binding(
@@ -301,6 +302,7 @@ struct WorkoutView: View {
                                             .roundedBackground()
                                         }
                                     } else {
+                                        // Times fields
                                         ForEach(0..<times.count, id: \.self) { index in
                                             TextField("Seconds", text: Binding(
                                                 get: { times[index] },
@@ -394,7 +396,7 @@ struct WorkoutView: View {
                                     
                                     Spacer()
                                 }
-                                
+                                // Input field for sets
                                 TextField("Number of Sets", text: Binding(
                                     get: { numSets },
                                     set: { newValue in
