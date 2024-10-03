@@ -148,7 +148,7 @@ struct SideBar: View {
                     Spacer()
                     
                     // App version
-                    Text("App Version: 0.1.2 - alpha")
+                    Text("App Version: 0.1.3 - alpha")
                         .font(.footnote)
                         .foregroundStyle(colorScheme == .dark ? .white : .black)
                         .padding(.leading, 25)
