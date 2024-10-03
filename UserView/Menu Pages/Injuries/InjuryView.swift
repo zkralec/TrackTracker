@@ -117,6 +117,13 @@ struct InjuryView: View {
                         .sheet(isPresented: $isPresentingInjuryDetail) {
                             InjuryEditView(injuryLog: $injuryLog, injury: selectedInjury ?? InjuryData.default, isEditing: isEditing)
                         }
+                        .onChange(of: isPresentingInjuryDetail) {
+                            if selectedInjury != nil {
+                                isEditing = true
+                            } else {
+                                isEditing = false
+                            }
+                        }
                         
                         // Navigation bar buttons
                         NavigationBar(currPage: $currPage)
