@@ -144,11 +144,7 @@ struct InjuryEditView: View {
             }
         }
         .onAppear {
-            // Load edited injury data
-            
-            // CURRENTLY BUGGED
-            // isEditing is false when clicking edit before adding a new workout
-            // investigating problem currently
+            // Will load the correct injury data if the user is editing an injury
             if isEditing {
                 injuryDate = injury.injuryDate
                 muscleGroup = injury.muscleGroup
