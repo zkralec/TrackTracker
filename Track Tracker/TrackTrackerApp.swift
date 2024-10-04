@@ -20,9 +20,6 @@ struct TrackTrackerApp: App {
                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                         windowScene.windows.first?.overrideUserInterfaceStyle = settingsViewModel.isDarkMode ? .dark : .light
                     }
-                    
-                    // Update the streak when the app starts
-                    StreakData.updateStreakIfNeeded(fieldModified: false)
                 }
         }
     }

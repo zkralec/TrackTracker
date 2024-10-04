@@ -9,8 +9,8 @@ import SwiftUI
 
 // Welcomes users when opening app
 struct WelcomeView: View {
-    @State private var welcomeScreen = true // Shows welcome view or not
-    @Environment(\.colorScheme) var colorScheme // Access the current color scheme
+    @State private var welcomeScreen = true
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         VStack {
