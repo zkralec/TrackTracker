@@ -124,9 +124,6 @@ struct InjuryView: View {
                                 isEditing = false
                             }
                         }
-                        
-                        // Navigation bar buttons
-                        NavigationBar(currPage: $currPage)
                     }
                     // Show side menu if needed
                     SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)

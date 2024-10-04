@@ -96,7 +96,7 @@ struct TrainingLogView: View {
                                                 (key: "Indoor Track", value: workout.indoorTrack),
                                                 (key: "Turf", value: workout.turf),
                                                 (key: "Dirt", value: workout.dirt),
-                                                (key: "Grass Hills", value: workout.grasshills),
+                                                (key: "Grass/Hills", value: workout.grasshills),
                                                 (key: "Asphalt", value: workout.asphalt)
                                             ], id: \.key) { surface in
                                                 if surface.value {
