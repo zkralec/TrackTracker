@@ -13,6 +13,7 @@ struct InjuryDetailsView: View {
     
     var body: some View {
         VStack {
+            // Title
             TitleBackground(title: "Injury Details")
                 .padding(.horizontal, -15)
             

@@ -24,6 +24,7 @@ struct InjuryEditView: View {
     // Muscle groups
     let muscleGroups = ["Hamstring", "Quads", "Calves", "Shins", "Lower Back", "Hip Flexor", "Glutes", "Elbow"]
     
+    // Injury types for muscle groups
     var injuryTypesByMuscleGroup: [String: [String]] = [
         "Hamstring": ["Strain", "Tear", "Tendinitis"],
         "Quads": ["Strain", "Tear", "Tendinitis"],
@@ -35,6 +36,7 @@ struct InjuryEditView: View {
         "Elbow": ["Tendinitis", "Strain", "Ligament Tear", "Bursitis"]
     ]
     
+    // Locations for muscle groups
     var locationsByMuscleGroup: [String: [String]] = [
         "Hamstring": ["Upper", "Middle", "Lower"],
         "Quads": ["Upper", "Middle", "Lower"],
@@ -51,6 +53,7 @@ struct InjuryEditView: View {
     var body: some View {
         ZStack {
             VStack {
+                // Display title
                 TitleBackground(title: "Injury Editing")
                     .padding(.top, 28)
                 

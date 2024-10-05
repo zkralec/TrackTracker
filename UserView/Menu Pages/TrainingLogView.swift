@@ -91,6 +91,7 @@ struct TrainingLogView: View {
                                         }
                                         // Extras section
                                         DisclosureGroup("Extra Info.") {
+                                            // Surfaces
                                             ForEach([
                                                 (key: "Track", value: workout.track),
                                                 (key: "Indoor Track", value: workout.indoorTrack),
@@ -103,6 +104,7 @@ struct TrainingLogView: View {
                                                     Text("Surface: \(surface.key)")
                                                 }
                                             }
+                                            // Weather
                                             let weatherOptions = [
                                                 (key: "Rain", value: workout.rain),
                                                 (key: "Snow", value: workout.snow),
@@ -115,6 +117,7 @@ struct TrainingLogView: View {
                                             if selectedWeather != "" {
                                                 Text("Weather: \(selectedWeather)")
                                             }
+                                            // Equipment
                                             let equipmentOptions = [
                                                 (key: "Blocks", value: workout.blocks),
                                                 (key: "Resistance Band", value: workout.resistanceBand),
@@ -131,6 +134,7 @@ struct TrainingLogView: View {
                                             if selectedEquipment != "" {
                                                 Text("Equipment: \(selectedEquipment)")
                                             }
+                                            // Condition
                                             ForEach([
                                                 (key: "Injury", value: workout.injury),
                                                 (key: "Soreness", value: workout.soreness),
@@ -141,6 +145,7 @@ struct TrainingLogView: View {
                                                     Text("Condition: \(condition.key)")
                                                 }
                                             }
+                                            // Intensity
                                             ForEach([
                                                 (key: "Low", value: workout.low),
                                                 (key: "Moderate", value: workout.moderate),
@@ -151,6 +156,7 @@ struct TrainingLogView: View {
                                                     Text("Intensity: \(intensity.key)")
                                                 }
                                             }
+                                            // Field events
                                             let eventOptions = [
                                                 (key: "High Jump", value: workout.highJump),
                                                 (key: "Pole Vault", value: workout.poleVault),

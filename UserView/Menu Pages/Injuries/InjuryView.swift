@@ -31,7 +31,7 @@ struct InjuryView: View {
                         // Menu button
                         MenuButton(isSideMenuOpen: $isSideMenuOpen)
                         
-                        // Title background
+                        // Title
                         TitleBackground(title: "Injury Log")
                         
                         // Button to add a new injury

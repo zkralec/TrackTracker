@@ -112,14 +112,12 @@ struct ProfileView: View {
                                             .padding(.vertical, 4)
                                         } else {
                                             HStack {
+                                                Text(event.rawValue)
                                                 Spacer()
-                                                
-                                                Text("No personal record set for \(event.rawValue)")
+                                                Text("Enter in Settings")
                                                     .foregroundStyle(.secondary)
-                                                    .padding(.vertical, 4)
-                                                
-                                                Spacer()
                                             }
+                                            .padding(.vertical, 4)
                                         }
                                     }
                                 }
