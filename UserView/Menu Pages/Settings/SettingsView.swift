@@ -21,6 +21,12 @@ class SettingsViewModel: ObservableObject {
             UserDefaults.standard.set(isDarkMode, forKey: "isDarkMode")
         }
     }
+    @Published var isNotificationsEnabled: Bool {
+        didSet {
+            UserDefaults.standard.set(isNotificationsEnabled, forKey: "isNotificationsEnabled")
+            updateNotificationSettings()
+        }
+    }
     @Published var isHapticsEnabled: Bool {
         didSet {
             UserDefaults.standard.set(isHapticsEnabled, forKey: "isHapticsEnabled")
@@ -28,6 +34,7 @@ class SettingsViewModel: ObservableObject {
     }
     
     init() {
+        self.isNotificationsEnabled = UserDefaults.standard.bool(forKey: "isNotificationsEnabled")
         self.isHapticsEnabled = UserDefaults.standard.bool(forKey: "isHapticsEnabled")
     }
     
@@ -52,6 +59,22 @@ class SettingsViewModel: ObservableObject {
     func loadEvents() {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
             events = savedEvents.compactMap { EventData(rawValue: $0) }
+        }
+    }
+    
+    // Update the user's selected notification settings
+    func updateNotificationSettings() {
+        if isNotificationsEnabled {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+                if granted {
+                    print("Notifications enabled")
+                } else {
+                    print("Notifications disabled")
+                }
+            }
+        } else {
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            print("Notifications disabled")
         }
     }
 }
@@ -130,9 +153,9 @@ struct SettingsView: View {
                         }
                         .listSectionSpacing(15)
                         
+                        // Toggle for notifications
                         Section {
-                            // Future toggle for notifications
-                            // Toggle("Enable Notifications", isOn: )
+                            Toggle("Enable Notifications", isOn: $viewModel.isNotificationsEnabled)
                         }
                         .listSectionSpacing(15)
                         
