@@ -1,3 +1,10 @@
+//
+//  UserInputView.swift
+//  Track Tracker
+//
+//  Created by Zachary Kralec on 2/16/24.
+//
+
 import SwiftUI
 
 // Manages global variable

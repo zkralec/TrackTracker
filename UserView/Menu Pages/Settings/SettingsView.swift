@@ -96,6 +96,7 @@ struct SettingsView: View {
                         // Shows users their events and allows for PR input
                         Section {
                             VStack {
+                                // If no events
                                 if viewModel.events.isEmpty {
                                     HStack {
                                         Spacer()
@@ -106,6 +107,7 @@ struct SettingsView: View {
                                         
                                         Spacer()
                                     }
+                                // If there are events
                                 } else {
                                     Text("Event PRs")
                                         .font(.headline)
@@ -120,6 +122,7 @@ struct SettingsView: View {
                                             
                                             Spacer()
                                             
+                                            // User can enter pr here
                                             TextField("Enter PR", text: Binding(
                                                 get: {
                                                     viewModel.prs[event] ?? ""
@@ -143,6 +146,7 @@ struct SettingsView: View {
                         }
                         .listSectionSpacing(15)
                         
+                        // Toggle for dark mode or light mode
                         Section {
                             Toggle("Dark Mode", isOn: $viewModel.isDarkMode)
                                 .onChange(of: viewModel.isDarkMode){
@@ -165,7 +169,7 @@ struct SettingsView: View {
                         }
                         .listSectionSpacing(15)
                         
-                        // Allows user to navigate to EventView to change their selected events
+                        // Allows user to go to EventView to change their events
                         Section {
                             VStack {
                                 Button(action: {
@@ -191,7 +195,7 @@ struct SettingsView: View {
                         }
                         .listSectionSpacing(15)
                         
-                        // Allows user to navigate to MeetView to change their meet days
+                        // Allows user to go to MeetView to change their meet days
                         Section {
                             VStack {
                                 Button(action: {
@@ -217,7 +221,7 @@ struct SettingsView: View {
                         }
                         .listSectionSpacing(15)
                         
-                        // Allows user to navigate to UserInputView to change their information
+                        // Allows user to go to UserInputView to change their user info
                         Section {
                             VStack {
                                 Button(action: {

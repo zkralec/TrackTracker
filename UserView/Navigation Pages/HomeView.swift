@@ -1,3 +1,10 @@
+//
+//  HomeView.swift
+//  Track Tracker
+//
+//  Created by Zachary Kralec on 3/21/24.
+//
+
 import SwiftUI
 
 // Main page for the user, shows a variety of info
