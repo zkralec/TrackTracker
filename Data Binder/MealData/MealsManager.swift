@@ -5,7 +5,6 @@
 //  Created by Zachary Kralec on 3/10/24.
 //
 
-// Extra comments since more confusing
 import Foundation
 
 // Struct for managing meal plans with steps to avoid exceeding daily API fetch limit

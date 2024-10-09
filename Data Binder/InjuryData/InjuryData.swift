@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Holds all injury data variables
 struct InjuryData: Identifiable, Codable {
     var id = UUID()
     var injuryDate: Date
@@ -17,6 +18,7 @@ struct InjuryData: Identifiable, Codable {
     var allowedActivities: [String]
     var restrictedActivities: [String]
 
+    // Default preset
     static var `default`: InjuryData {
         InjuryData(
             injuryDate: Date(),

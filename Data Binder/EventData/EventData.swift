@@ -25,6 +25,7 @@ enum EventData: String, CaseIterable, Hashable, Identifiable {
     case fourByOneHundredRelay = "4x100 Meter Relay"
     case fourByTwoHundredRelay = "4x200 Meter Relay"
     case fourByFourHundredRelay = "4x400 Meter Relay"
+    
     // Field events
     case highJump = "High Jump"
     case longJump = "Long Jump"

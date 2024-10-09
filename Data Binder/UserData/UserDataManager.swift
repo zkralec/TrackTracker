@@ -26,8 +26,9 @@ class UserDataManager: ObservableObject {
             return
         }
         
-        let weightInKg = userData.weight * 0.453592 // Convert weight from lbs to kg
-        let heightInCm = (Double(userData.heightFeet * 12) + Double(userData.heightInches)) * 2.54 // Convert height from ft/in to cm
+        // Convert weight and height
+        let weightInKg = userData.weight * 0.453592
+        let heightInCm = (Double(userData.heightFeet * 12) + Double(userData.heightInches)) * 2.54
         
         let bmr: Double
         let genderMultiplier: Double
@@ -40,7 +41,8 @@ class UserDataManager: ObservableObject {
             genderMultiplier = 0.9
         }
         
-        let maintenanceCalories = bmr * 1.725 * genderMultiplier // Assuming very active
+        // BMR * 1.725 because we assume track athletes are very active
+        let maintenanceCalories = bmr * 1.725 * genderMultiplier
         
         self.maintenanceCalories = maintenanceCalories
     }

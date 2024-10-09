@@ -5,7 +5,6 @@
 //  Created by Zachary Kralec on 3/12/24.
 //
 
-// Extra comments since more confusing
 import Foundation
 
 // Manages and handles exercise data
