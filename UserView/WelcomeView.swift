@@ -25,7 +25,7 @@ struct WelcomeView: View {
                 // App logo
                 Image(uiImage: colorScheme == .dark ? UIImage(named: "DarkLogo")! : UIImage(named: "LightLogo")!)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
+                    .scaledToFit()
                     .frame(width: 300, height: 300)
                     .onAppear {
                         // Removes welcome screen after 2 seconds

@@ -27,6 +27,8 @@
 		146154012BDDC5570068504B /* TrainingLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154002BDDC5560068504B /* TrainingLogView.swift */; };
 		146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154022BE3D8510068504B /* PastWorkoutData.swift */; };
 		1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */; };
+		14823F0A2CB6BD030058C57F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F092CB6BD030058C57F /* LoginView.swift */; };
+		14823F0C2CB6C0120058C57F /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0B2CB6C0120058C57F /* LoginInputView.swift */; };
 		148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609AE2C9CB43700A3E73F /* InjuryView.swift */; };
 		148609B22C9DDE3700A3E73F /* InjuryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B12C9DDE3700A3E73F /* InjuryEditView.swift */; };
 		148609B52C9F06E000A3E73F /* InjuryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B42C9F06E000A3E73F /* InjuryData.swift */; };
@@ -97,6 +99,8 @@
 		146154002BDDC5560068504B /* TrainingLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLogView.swift; sourceTree = "<group>"; };
 		146154022BE3D8510068504B /* PastWorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastWorkoutData.swift; sourceTree = "<group>"; };
 		1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPrompt.swift; sourceTree = "<group>"; };
+		14823F092CB6BD030058C57F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		14823F0B2CB6C0120058C57F /* LoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputView.swift; sourceTree = "<group>"; };
 		148609AE2C9CB43700A3E73F /* InjuryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryView.swift; sourceTree = "<group>"; };
 		148609B12C9DDE3700A3E73F /* InjuryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryEditView.swift; sourceTree = "<group>"; };
 		148609B42C9F06E000A3E73F /* InjuryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryData.swift; sourceTree = "<group>"; };
@@ -272,6 +276,15 @@
 			path = RecoveryInfo;
 			sourceTree = "<group>";
 		};
+		14823F082CB6BCEC0058C57F /* Login Pages */ = {
+			isa = PBXGroup;
+			children = (
+				14823F092CB6BD030058C57F /* LoginView.swift */,
+				14823F0B2CB6C0120058C57F /* LoginInputView.swift */,
+			);
+			path = "Login Pages";
+			sourceTree = "<group>";
+		};
 		148609B02C9DDE1E00A3E73F /* Injuries */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				14DAEF5B2B7FB4A200AF4667 /* WelcomeView.swift */,
+				14823F082CB6BCEC0058C57F /* Login Pages */,
 				1492220D2BDC758F00F633BE /* Navigation Pages */,
 				1492220C2BDC753E00F633BE /* Menu Pages */,
 			);
@@ -537,6 +551,7 @@
 				1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */,
 				14DAEF5A2B7FB02300AF4667 /* UserInputView.swift in Sources */,
 				14BF43112BA0FBCC004B3321 /* MealsManager.swift in Sources */,
+				14823F0C2CB6C0120058C57F /* LoginInputView.swift in Sources */,
 				14535DF92BACC2F10080531D /* StreakData.swift in Sources */,
 				14BF430F2BA0FA34004B3321 /* MealPlan.swift in Sources */,
 				1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */,
@@ -571,6 +586,7 @@
 				14DAEF702B7FDC0200AF4667 /* MealsView.swift in Sources */,
 				148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */,
 				14BF431A2BA14F4F004B3321 /* ExerciseData.swift in Sources */,
+				14823F0A2CB6BD030058C57F /* LoginView.swift in Sources */,
 				14535DF62BAC6B650080531D /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
