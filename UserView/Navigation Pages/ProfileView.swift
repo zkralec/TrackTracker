@@ -36,20 +36,15 @@ struct ProfileView: View {
                     
                     List {
                         // User information display section
-                        Section {
+                        Section("General") {
                             HStack {
                                 Spacer()
                                 
                                 VStack {
                                     // Display user information
                                     if let userData = userDataManager.userData {
-                                        Text("User Information")
-                                            .font(.title2)
-                                            .fontWeight(.medium)
-                                            .padding()
                                         HStack {
-                                            Text("\(userData.fName.first?.description ?? "")" +
-                                                 "\(userData.lName.first?.description ?? "")")
+                                            Text("FL")
                                             .font(.title)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(Color.white)
@@ -59,26 +54,29 @@ struct ProfileView: View {
                                             
                                             VStack(alignment: .leading, spacing: 4) {
                                                 HStack {
-                                                    Text(userData.fName)
+                                                    Text("First")
                                                         .padding(5)
                                                         .padding(.trailing, -6)
-                                                    Text(userData.lName)
+                                                    Text("Last")
                                                         .padding(5)
                                                         .padding(.leading, -6)
                                                 }
                                                 .font(.title3)
                                                 .fontWeight(.semibold)
                                                 
-                                                Text(userData.email)
+                                                Text("name@example.com")
                                                     .font(.footnote)
                                                     .tint(.secondary)
                                                     .padding(.leading, 6)
                                             }
                                         }
-                                        .padding(.bottom,10)
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 10)
+                                        .roundedBackground()
+                                        .padding()
                                         
                                         HStack {
-                                            VStack {
+                                            VStack(alignment: .trailing, spacing: 4) {
                                                 Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
                                                     .font(.subheadline)
                                                     .padding(5)
@@ -89,7 +87,7 @@ struct ProfileView: View {
                                                     .roundedBackground()
                                             }
                                             
-                                            VStack {
+                                            VStack(alignment: .leading, spacing: 4) {
                                                 Text("Age: \(userData.age + 18)")
                                                     .font(.subheadline)
                                                     .padding(5)
@@ -110,7 +108,7 @@ struct ProfileView: View {
                         .listSectionSpacing(15)
                         
                         // User can see main events and their PR
-                        Section {
+                        Section("Personal Records") {
                             VStack {
                                 if events.isEmpty {
                                     HStack {
@@ -123,11 +121,6 @@ struct ProfileView: View {
                                         Spacer()
                                     }
                                 } else {
-                                    Text("Personal Records")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(.bottom, 8)
-                                    
                                     // Go and get each event and pr for that event (if any)
                                     ForEach(events, id: \.self) { event in
                                         if let record = prs[event], !record.isEmpty {
@@ -207,4 +200,8 @@ struct ProfileView: View {
             }
         }
     }
+}
+
+#Preview {
+    ProfileView().preferredColorScheme(.dark)
 }

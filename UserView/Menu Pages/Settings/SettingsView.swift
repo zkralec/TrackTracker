@@ -94,7 +94,7 @@ struct SettingsView: View {
                     
                     List {
                         // Shows users their events and allows for PR input
-                        Section {
+                        Section("Event PRs") {
                             VStack {
                                 // If no events
                                 if viewModel.events.isEmpty {
@@ -109,11 +109,6 @@ struct SettingsView: View {
                                     }
                                 // If there are events
                                 } else {
-                                    Text("Event PRs")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding()
-                                        .padding(.top,-10)
                                     ForEach(viewModel.events, id: \.self) { event in
                                         HStack {
                                             Text(event.rawValue)
@@ -146,83 +141,26 @@ struct SettingsView: View {
                         }
                         .listSectionSpacing(15)
                         
-                        // Toggle for dark mode or light mode
-                        Section {
+                        
+                        Section("Toggles") {
+                            // Toggle for dark mode or light mode
                             Toggle("Dark Mode", isOn: $viewModel.isDarkMode)
                                 .onChange(of: viewModel.isDarkMode){
                                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                                         windowScene.windows.first?.overrideUserInterfaceStyle = viewModel.isDarkMode ? .dark : .light
                                     }
                                 }
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Toggle for notifications
-                        Section {
+                            
+                            // Toggle for notifications
                             Toggle("Enable Notifications", isOn: $viewModel.isNotificationsEnabled)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Toggle haptic feedback
-                        Section {
+                            
+                            // Toggle haptic feedback
                             Toggle("Enable Haptics", isOn: $viewModel.isHapticsEnabled)
                         }
                         .listSectionSpacing(15)
                         
-                        // Allows user to go to EventView to change their events
-                        Section {
-                            VStack {
-                                Button(action: {
-                                    withAnimation {
-                                        viewModel.currPage = 5
-                                    }
-                                }) {
-                                    HStack {
-                                        Spacer()
-                                        
-                                        Text("Modify Selected Events")
-                                            .foregroundStyle(.blue)
-                                            .fontWeight(.medium)
-                                            .font(.system(size: 20))
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(.blue)
-                                        
-                                        Spacer()
-                                    }
-                                }
-                                .buttonStyle(ButtonPress())
-                            }
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Allows user to go to MeetView to change their meet days
-                        Section {
-                            VStack {
-                                Button(action: {
-                                    withAnimation {
-                                        viewModel.currPage = 6
-                                    }
-                                }) {
-                                    HStack {
-                                        Spacer()
-                                        
-                                        Text("Modify Meet Days")
-                                            .foregroundStyle(.blue)
-                                            .fontWeight(.medium)
-                                            .font(.system(size: 20))
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(.blue)
-                                        
-                                        Spacer()
-                                    }
-                                }
-                                .buttonStyle(ButtonPress())
-                            }
-                        }
-                        .listSectionSpacing(15)
-                        
                         // Allows user to go to UserInputView to change their user info
-                        Section {
+                        Section("User Data") {
                             VStack {
                                 Button(action: {
                                     withAnimation {
@@ -231,22 +169,34 @@ struct SettingsView: View {
                                     }
                                 }) {
                                     HStack {
-                                        Spacer()
-                                        
-                                        Text("Modify User Info")
-                                            .foregroundStyle(.blue)
-                                            .fontWeight(.medium)
-                                            .font(.system(size: 20))
-                                        Image(systemName: "chevron.right")
-                                            .foregroundStyle(.blue)
-                                        
-                                        Spacer()
+                                        Text("Modify User Data")
+                                            .fontWeight(.semibold)
+                                        Image(systemName: "arrow.right")
                                     }
+                                    .foregroundStyle(Color.blue)
+                                    .frame(width: UIScreen.main.bounds.width - 56, height: 24)
                                 }
                                 .buttonStyle(ButtonPress())
                             }
                         }
                         .listSectionSpacing(15)
+                        
+                        // Allows user to do various things with their account
+                        Section("Account") {
+                            // Button to sign out
+                            Button {
+                                print("Sign out")
+                            } label: {
+                                SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
+                            }
+                            
+                            // Button to delete account
+                            Button {
+                                print("Delete account")
+                            } label: {
+                                SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
+                            }
+                        }
                     }
                     .modifier(ToolbarModifier(isFocused: $viewModel.isFocused))
                     .background(Color.gray.opacity(0.05))

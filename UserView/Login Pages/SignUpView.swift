@@ -70,7 +70,7 @@ struct SignUpView: View {
                     userData.saveUserData()
                 }
             } label: {
-                NavigationLink {
+                NavigationLink { // Need to set GlobalVariables.userInput = false
                     UserInputView() // Temporary until I get login fully working
                         .navigationBarBackButtonHidden()
                 } label: {
