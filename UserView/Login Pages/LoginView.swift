@@ -41,6 +41,14 @@ struct LoginView: View {
                 .padding(.vertical, 12)
                 
                 // Forgot password?
+                NavigationLink {
+                    
+                } label: {
+                    Text("Forgot password?")
+                        .fontWeight(.semibold)
+                        .font(.system(size: 14))
+                }
+
                 
                 // Sign in button
                 Button {
@@ -51,16 +59,27 @@ struct LoginView: View {
                             .fontWeight(.semibold)
                         Image(systemName: "arrow.right")
                     }
-                    .frame(width: UIScreen.main.bounds.width - 48, height: 24)
+                    .frame(width: UIScreen.main.bounds.width - 56, height: 24)
                 }
                 .buttonStyle(CustomButtonStyle())
-                .padding(.top, 24)
+                .padding(.top, 10)
                 
                 
                 Spacer()
                 
                 
                 // Sign up
+                NavigationLink {
+                    
+                } label: {
+                    HStack(spacing: 3) {
+                        Text("Don't have an account?")
+                        Text("Sign up")
+                            .fontWeight(.bold)
+                    }
+                    .font(.system(size: 14))
+                }
+
             }
         }
     }

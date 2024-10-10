@@ -20,13 +20,17 @@ struct LoginInputView: View {
                 .fontWeight(.semibold)
                 .font(.footnote)
             
-            if isSecureField {
-                SecureField(placeholder, text: $text)
-                    .font(.system(size: 14))
-            } else {
-                TextField(placeholder, text: $text)
-                    .font(.system(size: 14))
+            VStack {
+                if isSecureField {
+                    SecureField(placeholder, text: $text)
+                        .font(.system(size: 14))
+                } else {
+                    TextField(placeholder, text: $text)
+                        .font(.system(size: 14))
+                }
             }
+            .frame(height: 32)
+            .roundedBackground()
             
             Divider()
         }
