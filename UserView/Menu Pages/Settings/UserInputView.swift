@@ -14,8 +14,6 @@ struct GlobalVariables {
 
 // Page to gather user data
 struct UserInputView: View {
-    @State private var fName = ""
-    @State private var lName = ""
     @State private var heightFeet: Int = 0
     @State private var heightInches: Int = 0
     @State private var weight: Double = 0.0
@@ -60,45 +58,6 @@ struct UserInputView: View {
                         TitleBackground(title: "User Information")
                         
                         List {
-                            // Name section
-                            Section {
-                                VStack {
-                                    Text("Name")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(10)
-                                    
-                                    TextField("First Name", text: $fName)
-                                        .textFieldStyle(DefaultTextFieldStyle())
-                                        .padding(10)
-                                        .roundedBackground()
-                                        .padding(10)
-                                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                                        .focused($focusedField, equals: 201)  // Given a unique identifier
-                                        .onTapGesture {
-                                            withAnimation {
-                                                self.isFocused = true
-                                                self.focusedField = 201
-                                            }
-                                        }
-                                    
-                                    TextField("Last Name", text: $lName)
-                                        .textFieldStyle(DefaultTextFieldStyle())
-                                        .padding(10)
-                                        .roundedBackground()
-                                        .padding(10)
-                                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                                        .focused($focusedField, equals: 202)  // Given a unique identifier
-                                        .onTapGesture {
-                                            withAnimation {
-                                                self.isFocused = true
-                                                self.focusedField = 202
-                                            }
-                                        }
-                                }
-                                .padding(.vertical, 10)
-                            }
-                            
                             // Height section
                             Section {
                                 VStack {
@@ -208,8 +167,6 @@ struct UserInputView: View {
                         // Load user data
                         if let userData = UserData.loadUserData() {
                             self.userDataManager.userData = userData
-                            self.fName = userData.fName
-                            self.lName = userData.lName
                             self.heightFeet = userData.heightFeet
                             self.heightInches = userData.heightInches
                             self.weight = userData.weight
@@ -219,7 +176,7 @@ struct UserInputView: View {
                     }
                     .onDisappear {
                         // Save user data
-                        let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, fName: fName, lName: lName, heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
+                        let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
                         userData.saveUserData()
                         
                         // Only need to show this page first once on startup

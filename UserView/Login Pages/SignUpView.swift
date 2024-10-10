@@ -23,7 +23,7 @@ struct SignUpView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: 100, height: 120)
-                .padding(.top, -6)
+                .padding(.vertical, 32)
             
             // Form fields
             VStack(spacing: 10) {
@@ -63,6 +63,9 @@ struct SignUpView: View {
             // Sign in button
             Button {
                 print("Sign user up")
+                // Saving user name in UserData
+                let userData = UserData(fName: fName, lName: lName)
+                userData.saveUserData()
             } label: {
                 HStack {
                     Text("SIGN UP")
@@ -80,7 +83,8 @@ struct SignUpView: View {
                 dismiss()
             } label: {
                 NavigationLink {
-                    
+                    LoginView()
+                        .navigationBarBackButtonHidden()
                 } label: {
                     HStack(spacing: 3) {
                         Text("Already have an account?")
@@ -91,7 +95,6 @@ struct SignUpView: View {
                     .font(.system(size: 14))
                 }
             }
-
         }
     }
 }

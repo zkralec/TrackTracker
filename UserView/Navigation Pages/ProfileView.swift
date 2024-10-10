@@ -47,14 +47,25 @@ struct ProfileView: View {
                                             .fontWeight(.medium)
                                             .padding()
                                         HStack {
-                                            Text("\(userData.fName)")
-                                                .font(.title3)
-                                                .padding(5)
-                                                .padding(.trailing,-6)
-                                            Text("\(userData.lName)")
-                                                .font(.title3)
-                                                .padding(5)
-                                                .padding(.leading,-6)
+                                            Text("\(userData.fName.first?.description ?? "")" +
+                                                 "\(userData.lName.first?.description ?? "")")
+                                            .font(.title)
+                                            .fontWeight(.semibold)
+                                            .foregroundStyle(Color.white)
+                                            .frame(width: 72, height: 72)
+                                            .background(Color(.systemGray3))
+                                            .clipShape(Circle())
+                                            
+                                            VStack {
+                                                Text(userData.fName)
+                                                    .font(.title3)
+                                                    .padding(5)
+                                                    .padding(.trailing,-6)
+                                                Text(userData.lName)
+                                                    .font(.title3)
+                                                    .padding(5)
+                                                    .padding(.leading,-6)
+                                            }
                                         }
                                         .padding(.bottom,10)
                                         Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")

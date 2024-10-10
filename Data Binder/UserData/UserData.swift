@@ -17,13 +17,13 @@ struct UserData: Codable, Equatable {
     }
     
     // User gender, height, weight, and age
-    var gender: Gender
-    var fName: String
-    var lName: String
-    var heightFeet: Int
-    var heightInches: Int
-    var weight: Double
-    var age: Int
+    var gender = Gender.male
+    var fName = "First Name"
+    var lName = "Last Name"
+    var heightFeet = 6
+    var heightInches = 0
+    var weight = 175.0
+    var age = 21
     
     // Save user data to  storage
     func saveUserData() {
