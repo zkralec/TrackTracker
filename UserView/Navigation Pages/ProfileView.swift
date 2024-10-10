@@ -22,6 +22,7 @@ struct ProfileView: View {
     }()
     
     @StateObject var userDataManager = UserDataManager()
+    @State private var userData: UserData?
     
     var body: some View {
         if currPage == 7 {
@@ -56,34 +57,49 @@ struct ProfileView: View {
                                             .background(Color(.systemGray3))
                                             .clipShape(Circle())
                                             
-                                            VStack {
-                                                Text(userData.fName)
-                                                    .font(.title3)
-                                                    .padding(5)
-                                                    .padding(.trailing,-6)
-                                                Text(userData.lName)
-                                                    .font(.title3)
-                                                    .padding(5)
-                                                    .padding(.leading,-6)
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                HStack {
+                                                    Text(userData.fName)
+                                                        .padding(5)
+                                                        .padding(.trailing, -6)
+                                                    Text(userData.lName)
+                                                        .padding(5)
+                                                        .padding(.leading, -6)
+                                                }
+                                                .font(.title3)
+                                                .fontWeight(.semibold)
+                                                
+                                                Text(userData.email)
+                                                    .font(.footnote)
+                                                    .tint(.secondary)
+                                                    .padding(.leading, 6)
                                             }
                                         }
                                         .padding(.bottom,10)
-                                        Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
-                                            .font(.subheadline)
-                                            .padding(5)
-                                            .roundedBackground()
-                                        Text("Weight: \(formatWeight(userData.weight))")
-                                            .font(.subheadline)
-                                            .padding(5)
-                                            .roundedBackground()
-                                        Text("Age: \(userData.age + 18)")
-                                            .font(.subheadline)
-                                            .padding(5)
-                                            .roundedBackground()
-                                        Text("Gender: \(userData.gender.rawValue)")
-                                            .font(.subheadline)
-                                            .padding(5)
-                                            .roundedBackground()
+                                        
+                                        HStack {
+                                            VStack {
+                                                Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                                    .roundedBackground()
+                                                Text("Weight: \(formatWeight(userData.weight))")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                                    .roundedBackground()
+                                            }
+                                            
+                                            VStack {
+                                                Text("Age: \(userData.age + 18)")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                                    .roundedBackground()
+                                                Text("Gender: \(userData.gender.rawValue)")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                                    .roundedBackground()
+                                            }
+                                        }
                                     }
                                 }
                                 
@@ -154,7 +170,6 @@ struct ProfileView: View {
                 }
                 // Show side menu if needed
                 SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
-                
             }
         } else if currPage == 0 {
             WorkoutView()

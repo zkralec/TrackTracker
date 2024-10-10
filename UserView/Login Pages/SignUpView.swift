@@ -62,17 +62,25 @@ struct SignUpView: View {
             
             // Sign in button
             Button {
-                print("Sign user up")
-                // Saving user name in UserData
-                let userData = UserData(fName: fName, lName: lName)
-                userData.saveUserData()
-            } label: {
-                HStack {
-                    Text("SIGN UP")
-                        .fontWeight(.semibold)
-                    Image(systemName: "arrow.right")
+                Task {
+                    print("Sign user up")
+                    
+                    // Saving user name in UserData
+                    let userData = UserData(fName: fName, lName: lName, email: email)
+                    userData.saveUserData()
                 }
-                .frame(width: UIScreen.main.bounds.width - 56, height: 24)
+            } label: {
+                NavigationLink {
+                    UserInputView() // Temporary until I get login fully working
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    HStack {
+                        Text("SIGN UP")
+                            .fontWeight(.semibold)
+                        Image(systemName: "arrow.right")
+                    }
+                    .frame(width: UIScreen.main.bounds.width - 56, height: 24)
+                }
             }
             .buttonStyle(CustomButtonStyle())
             .padding(.top, 10)

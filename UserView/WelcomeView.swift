@@ -31,13 +31,14 @@ struct WelcomeView: View {
                         // Removes welcome screen after 2 seconds
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             withAnimation {
-                                welcomeScreen = false // Hide the welcome screen
+                                // Hide the welcome screen
+                                welcomeScreen = false
                             }
                         }
                     }
             } else {
-                // Go to UserInputView after welcome
-                UserInputView()
+                // Go to LoginView after welcome
+                LoginView()
             }
         }
     }
