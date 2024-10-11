@@ -32,6 +32,7 @@
 		14823F0E2CB6F0320058C57F /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0D2CB6F0320058C57F /* ForgotPasswordView.swift */; };
 		14823F102CB80F410058C57F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0F2CB80F410058C57F /* SignUpView.swift */; };
 		14823F142CB846D70058C57F /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F132CB846D70058C57F /* SettingsRowView.swift */; };
+		14823F162CB963AC0058C57F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F152CB963AC0058C57F /* UserModel.swift */; };
 		148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609AE2C9CB43700A3E73F /* InjuryView.swift */; };
 		148609B22C9DDE3700A3E73F /* InjuryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B12C9DDE3700A3E73F /* InjuryEditView.swift */; };
 		148609B52C9F06E000A3E73F /* InjuryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B42C9F06E000A3E73F /* InjuryData.swift */; };
@@ -107,6 +108,7 @@
 		14823F0D2CB6F0320058C57F /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		14823F0F2CB80F410058C57F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		14823F132CB846D70058C57F /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		14823F152CB963AC0058C57F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		148609AE2C9CB43700A3E73F /* InjuryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryView.swift; sourceTree = "<group>"; };
 		148609B12C9DDE3700A3E73F /* InjuryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryEditView.swift; sourceTree = "<group>"; };
 		148609B42C9F06E000A3E73F /* InjuryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryData.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			children = (
 				14DAEF662B7FCDBC00AF4667 /* UserData.swift */,
 				14DAEF792B80034600AF4667 /* UserDataManager.swift */,
+				14823F152CB963AC0058C57F /* UserModel.swift */,
 			);
 			path = UserData;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				14823F0C2CB6C0120058C57F /* LoginInputView.swift in Sources */,
 				14535DF92BACC2F10080531D /* StreakData.swift in Sources */,
 				14BF430F2BA0FA34004B3321 /* MealPlan.swift in Sources */,
+				14823F162CB963AC0058C57F /* UserModel.swift in Sources */,
 				1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */,
 				14535E002BAD2A1D0080531D /* EventData.swift in Sources */,
 				14823F0E2CB6F0320058C57F /* ForgotPasswordView.swift in Sources */,

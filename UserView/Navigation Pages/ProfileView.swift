@@ -44,7 +44,7 @@ struct ProfileView: View {
                                     // Display user information
                                     if let userData = userDataManager.userData {
                                         HStack {
-                                            Text("FL")
+                                            Text(User.mockUser.initials)
                                             .font(.title)
                                             .fontWeight(.semibold)
                                             .foregroundStyle(Color.white)
@@ -53,21 +53,14 @@ struct ProfileView: View {
                                             .clipShape(Circle())
                                             
                                             VStack(alignment: .leading, spacing: 4) {
-                                                HStack {
-                                                    Text("First")
-                                                        .padding(5)
-                                                        .padding(.trailing, -6)
-                                                    Text("Last")
-                                                        .padding(5)
-                                                        .padding(.leading, -6)
-                                                }
-                                                .font(.title3)
-                                                .fontWeight(.semibold)
+                                                Text(User.mockUser.fullName)
+                                                    .font(.subheadline)
+                                                    .fontWeight(.semibold)
+                                                    .padding(.top, 4)
                                                 
-                                                Text("name@example.com")
+                                                Text(User.mockUser.email)
                                                     .font(.footnote)
-                                                    .tint(.secondary)
-                                                    .padding(.leading, 6)
+                                                    .foregroundStyle(Color.secondary)
                                             }
                                         }
                                         .padding(.horizontal)

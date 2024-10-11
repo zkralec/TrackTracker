@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State private var fName = ""
-    @State private var lName = ""
+    @State private var fullName = ""
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPass = ""
@@ -28,14 +27,9 @@ struct SignUpView: View {
             // Form fields
             VStack(spacing: 10) {
                 // First name
-                LoginInputView(text: $fName,
-                               title: "First Name",
-                               placeholder: "Enter first name")
-                
-                // Last name
-                LoginInputView(text: $lName,
-                               title: "Last Name",
-                               placeholder: "Enter last name")
+                LoginInputView(text: $fullName,
+                               title: "Full Name",
+                               placeholder: "Enter full name")
                 
                 // Username
                 LoginInputView(text: $email,
@@ -66,7 +60,7 @@ struct SignUpView: View {
                     print("Sign user up")
                     
                     // Saving user name in UserData
-                    let userData = UserData(fName: fName, lName: lName, email: email)
+                    let userData = UserData(fullName: fullName, email: email)
                     userData.saveUserData()
                 }
             } label: {

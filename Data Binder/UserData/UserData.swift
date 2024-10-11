@@ -18,8 +18,7 @@ struct UserData: Codable, Equatable {
     
     // User gender, height, weight, and age
     var gender = Gender.male
-    var fName = "First Name"
-    var lName = "Last Name"
+    var fullName = "First Last"
     var email = "name@example.com"
     var heightFeet = 6
     var heightInches = 0
