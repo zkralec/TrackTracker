@@ -141,12 +141,6 @@ struct ProfileView: View {
                             .padding()
                         }
                         .listSectionSpacing(15)
-                        
-                        // Shows the user the longest streak they have maintained
-                        Section {
-                            
-                        }
-                        .listSectionSpacing(15)
                     }
                    
                     // Navigation bar buttons
@@ -193,8 +187,4 @@ struct ProfileView: View {
             }
         }
     }
-}
-
-#Preview {
-    ProfileView().preferredColorScheme(.dark)
 }
