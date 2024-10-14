@@ -7,9 +7,9 @@
 
 import Foundation
 
+// Used to keep api keys hidden on github pushes
 struct APIKeys {
     static let shared = APIKeys()
-
     let apiKey: String?
 
     private init() {
