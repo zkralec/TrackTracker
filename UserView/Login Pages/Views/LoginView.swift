@@ -11,6 +11,7 @@ struct LoginView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var email = ""
     @State private var password = ""
+    @StateObject var viewModel = AuthViewModel()
     
     var body: some View {
         NavigationStack {
@@ -52,6 +53,9 @@ struct LoginView: View {
                 
                 // Sign in button
                 Button {
+                    Task {
+                        try await viewModel.signIn(withEmail: email, password: password)
+                    }
                     print("Logging user in")
                 } label: {
                     HStack {
