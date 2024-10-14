@@ -178,7 +178,7 @@
 			children = (
 				145953A62C7CFC38005731F7 /* README.md */,
 				14E1E7A02C1C755100E2C178 /* Misc. */,
-				14DAEF712B7FDDE000AF4667 /* CustomAssets */,
+				14823F262CBD87350058C57F /* Cutsom Assets */,
 				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14535E0A2BB267F10080531D /* Notifications */,
 				148609B82CA7217600A3E73F /* Data Binder */,
@@ -324,6 +324,22 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
+		14823F262CBD87350058C57F /* Cutsom Assets */ = {
+			isa = PBXGroup;
+			children = (
+				14DAEF722B7FDDFB00AF4667 /* CustomButtonStyle.swift */,
+				14BF43142BA112F1004B3321 /* RoundedBackground.swift */,
+				14BF431E2BA7CEC9004B3321 /* TitleBackground.swift */,
+				14535E0D2BC45A000080531D /* CustomCircleButtonStyle.swift */,
+				14535E0F2BC45B720080531D /* ButtonPress.swift */,
+				144BEBFC2BC4CB990002AEB9 /* ToolbarModifier.swift */,
+				14535E112BC45EB50080531D /* NavigationBar.swift */,
+				149222082BDB1ADE00F633BE /* MenuButton.swift */,
+				1492220A2BDBDB8E00F633BE /* SideBar.swift */,
+			);
+			path = "Cutsom Assets";
+			sourceTree = "<group>";
+		};
 		148609B02C9DDE1E00A3E73F /* Injuries */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,23 +442,6 @@
 				14823F152CB963AC0058C57F /* UserModel.swift */,
 			);
 			path = UserData;
-			sourceTree = "<group>";
-		};
-		14DAEF712B7FDDE000AF4667 /* CustomAssets */ = {
-			isa = PBXGroup;
-			children = (
-				14DAEF722B7FDDFB00AF4667 /* CustomButtonStyle.swift */,
-				14BF43142BA112F1004B3321 /* RoundedBackground.swift */,
-				14BF431E2BA7CEC9004B3321 /* TitleBackground.swift */,
-				14535E0D2BC45A000080531D /* CustomCircleButtonStyle.swift */,
-				14535E0F2BC45B720080531D /* ButtonPress.swift */,
-				144BEBFC2BC4CB990002AEB9 /* ToolbarModifier.swift */,
-				14535E112BC45EB50080531D /* NavigationBar.swift */,
-				149222082BDB1ADE00F633BE /* MenuButton.swift */,
-				1492220A2BDBDB8E00F633BE /* SideBar.swift */,
-			);
-			name = CustomAssets;
-			path = UserView;
 			sourceTree = "<group>";
 		};
 		14E1E7A02C1C755100E2C178 /* Misc. */ = {
