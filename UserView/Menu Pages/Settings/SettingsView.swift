@@ -161,22 +161,13 @@ struct SettingsView: View {
                         
                         // Allows user to go to UserInputView to change their user info
                         Section("User Data") {
-                            VStack {
-                                Button(action: {
-                                    withAnimation {
-                                        GlobalVariables.userInput = false
-                                        viewModel.currPage = -1
-                                    }
-                                }) {
-                                    HStack {
-                                        Text("Modify User Data")
-                                            .fontWeight(.semibold)
-                                        Image(systemName: "arrow.right")
-                                    }
-                                    .foregroundStyle(Color.blue)
-                                    .frame(width: UIScreen.main.bounds.width - 56, height: 24)
+                            Button {
+                                withAnimation {
+                                    GlobalVariables.userInput = false
+                                    viewModel.currPage = -1
                                 }
-                                .buttonStyle(ButtonPress())
+                            } label: {
+                                SettingsRowView(imageName: "person.circle", title: "Modify User Data", tintColor: .blue)
                             }
                         }
                         .listSectionSpacing(15)
@@ -233,4 +224,8 @@ struct SettingsView: View {
             InjuryView()
         }
     }
+}
+
+#Preview {
+    SettingsView()
 }
