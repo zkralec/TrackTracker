@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @Environment(\.colorScheme) var colorScheme
     @State private var fullName = ""
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPass = ""
+    
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
@@ -57,11 +59,7 @@ struct SignUpView: View {
             // Sign in button
             Button {
                 Task {
-                    print("Sign user up")
-                    
-                    // Saving user name in UserData
-                    let userData = UserData(fullName: fullName, email: email)
-                    userData.saveUserData()
+                    try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
                 }
             } label: {
                 NavigationLink { // Need to set GlobalVariables.userInput = false

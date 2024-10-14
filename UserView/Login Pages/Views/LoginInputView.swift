@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginInputView: View {
     @Binding var text: String
+    
     let title: String
     let placeholder: String
     var isSecureField = false

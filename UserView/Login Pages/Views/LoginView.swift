@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Environment(\.colorScheme) var colorScheme
     @State private var email = ""
     @State private var password = ""
-    @StateObject var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel: AuthViewModel
+    
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationStack {
@@ -56,7 +57,6 @@ struct LoginView: View {
                     Task {
                         try await viewModel.signIn(withEmail: email, password: password)
                     }
-                    print("Logging user in")
                 } label: {
                     HStack {
                         Text("SIGN IN")

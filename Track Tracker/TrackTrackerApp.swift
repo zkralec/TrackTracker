@@ -11,10 +11,12 @@ import SwiftUI
 struct TrackTrackerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var settingsViewModel = SettingsViewModel()
+    @StateObject var viewModel = AuthViewModel()
     
     var body: some Scene {
         WindowGroup {
             WelcomeView()
+                .environmentObject(viewModel)
                 .environmentObject(settingsViewModel)
                 .onAppear {
                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
