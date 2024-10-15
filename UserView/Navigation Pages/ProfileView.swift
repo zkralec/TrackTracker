@@ -12,7 +12,7 @@ struct ProfileView: View {
     @State private var currPage = 7
     @State private var isSideMenuOpen = false
     @State private var prs = [EventData: String]()
-    
+    @State private var userData: UserData?
     @State private var events: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
             return savedEvents.compactMap { EventData(rawValue: $0) }
@@ -22,7 +22,8 @@ struct ProfileView: View {
     }()
     
     @StateObject var userDataManager = UserDataManager()
-    @State private var userData: UserData?
+    
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         if currPage == 7 {
@@ -34,113 +35,115 @@ struct ProfileView: View {
                     //Display title
                     TitleBackground(title: "Profile")
                     
-                    List {
-                        // User information display section
-                        Section("General") {
-                            HStack {
-                                Spacer()
-                                
-                                VStack {
-                                    // Display user information
-                                    if let userData = userDataManager.userData {
-                                        HStack {
-                                            Text(User.mockUser.initials)
-                                            .font(.title)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(Color.white)
-                                            .frame(width: 72, height: 72)
-                                            .background(Color(.systemGray3))
-                                            .clipShape(Circle())
-                                            
-                                            VStack(alignment: .leading, spacing: 4) {
-                                                Text(User.mockUser.fullName)
-                                                    .font(.subheadline)
-                                                    .fontWeight(.semibold)
-                                                    .padding(.top, 4)
+                    if let user = viewModel.currentUser {
+                        List {
+                            // User information display section
+                            Section("General") {
+                                HStack {
+                                    Spacer()
+                                    
+                                    VStack {
+                                        // Display user information
+                                        if let userData = userDataManager.userData {
+                                            HStack {
+                                                Text(user.initials)
+                                                .font(.title)
+                                                .fontWeight(.semibold)
+                                                .foregroundStyle(Color.white)
+                                                .frame(width: 72, height: 72)
+                                                .background(Color(.systemGray3))
+                                                .clipShape(Circle())
                                                 
-                                                Text(User.mockUser.email)
-                                                    .font(.footnote)
-                                                    .foregroundStyle(Color.secondary)
+                                                VStack(alignment: .leading, spacing: 4) {
+                                                    Text(user.fullName)
+                                                        .font(.subheadline)
+                                                        .fontWeight(.semibold)
+                                                        .padding(.top, 4)
+                                                    
+                                                    Text(user.email)
+                                                        .font(.footnote)
+                                                        .foregroundStyle(Color.secondary)
+                                                }
                                             }
-                                        }
-                                        .padding(.horizontal)
-                                        .padding(.vertical, 10)
-                                        .roundedBackground()
-                                        .padding()
-                                        
-                                        HStack {
-                                            VStack(alignment: .trailing, spacing: 4) {
-                                                Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
-                                                    .font(.subheadline)
-                                                    .padding(5)
-                                                    .roundedBackground()
-                                                Text("Weight: \(formatWeight(userData.weight))")
-                                                    .font(.subheadline)
-                                                    .padding(5)
-                                                    .roundedBackground()
-                                            }
-                                            
-                                            VStack(alignment: .leading, spacing: 4) {
-                                                Text("Age: \(userData.age + 18)")
-                                                    .font(.subheadline)
-                                                    .padding(5)
-                                                    .roundedBackground()
-                                                Text("Gender: \(userData.gender.rawValue)")
-                                                    .font(.subheadline)
-                                                    .padding(5)
-                                                    .roundedBackground()
-                                            }
-                                        }
-                                    }
-                                }
-                                
-                                Spacer()
-                            }
-                            .padding(.bottom)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // User can see main events and their PR
-                        Section("Personal Records") {
-                            VStack {
-                                if events.isEmpty {
-                                    HStack {
-                                        Spacer()
-                                        
-                                        Text("No selected events")
-                                            .foregroundStyle(.secondary)
+                                            .padding(.horizontal)
+                                            .padding(.vertical, 10)
+                                            .roundedBackground()
                                             .padding()
-                                        
-                                        Spacer()
+                                            
+                                            HStack {
+                                                VStack(alignment: .trailing, spacing: 4) {
+                                                    Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
+                                                        .font(.subheadline)
+                                                        .padding(5)
+                                                        .roundedBackground()
+                                                    Text("Weight: \(formatWeight(userData.weight))")
+                                                        .font(.subheadline)
+                                                        .padding(5)
+                                                        .roundedBackground()
+                                                }
+                                                
+                                                VStack(alignment: .leading, spacing: 4) {
+                                                    Text("Age: \(userData.age + 18)")
+                                                        .font(.subheadline)
+                                                        .padding(5)
+                                                        .roundedBackground()
+                                                    Text("Gender: \(userData.gender.rawValue)")
+                                                        .font(.subheadline)
+                                                        .padding(5)
+                                                        .roundedBackground()
+                                                }
+                                            }
+                                        }
                                     }
-                                } else {
-                                    // Go and get each event and pr for that event (if any)
-                                    ForEach(events, id: \.self) { event in
-                                        if let record = prs[event], !record.isEmpty {
-                                            HStack {
-                                                Text(event.rawValue)
-                                                Spacer()
-                                                Text(record)
+                                    
+                                    Spacer()
+                                }
+                                .padding(.bottom)
+                            }
+                            .listSectionSpacing(15)
+                            
+                            // User can see main events and their PR
+                            Section("Personal Records") {
+                                VStack {
+                                    if events.isEmpty {
+                                        HStack {
+                                            Spacer()
+                                            
+                                            Text("No selected events")
+                                                .foregroundStyle(.secondary)
+                                                .padding()
+                                            
+                                            Spacer()
+                                        }
+                                    } else {
+                                        // Go and get each event and pr for that event (if any)
+                                        ForEach(events, id: \.self) { event in
+                                            if let record = prs[event], !record.isEmpty {
+                                                HStack {
+                                                    Text(event.rawValue)
+                                                    Spacer()
+                                                    Text(record)
+                                                }
+                                                .padding(.vertical, 4)
+                                            } else {
+                                                HStack {
+                                                    Text(event.rawValue)
+                                                    Spacer()
+                                                    Text("Enter in Settings")
+                                                        .foregroundStyle(.secondary)
+                                                }
+                                                .padding(.vertical, 4)
                                             }
-                                            .padding(.vertical, 4)
-                                        } else {
-                                            HStack {
-                                                Text(event.rawValue)
-                                                Spacer()
-                                                Text("Enter in Settings")
-                                                    .foregroundStyle(.secondary)
-                                            }
-                                            .padding(.vertical, 4)
                                         }
                                     }
                                 }
+                                .onAppear {
+                                    loadPR()
+                                }
+                                .padding()
                             }
-                            .onAppear {
-                                loadPR()
-                            }
-                            .padding()
+                            .listSectionSpacing(15)
                         }
-                        .listSectionSpacing(15)
                     }
                    
                     // Navigation bar buttons
