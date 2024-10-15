@@ -81,6 +81,7 @@ class SettingsViewModel: ObservableObject {
 
 struct SettingsView: View {
     @StateObject var viewModel = SettingsViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
         if viewModel.currPage == 4 {
@@ -176,7 +177,7 @@ struct SettingsView: View {
                         Section("Account") {
                             // Button to sign out
                             Button {
-                                print("Sign out")
+                                authViewModel.signOut()
                             } label: {
                                 SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
                             }

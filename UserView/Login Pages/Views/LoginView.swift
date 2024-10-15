@@ -11,7 +11,6 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     @EnvironmentObject var viewModel: AuthViewModel
-    
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
