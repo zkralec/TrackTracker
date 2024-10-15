@@ -17,19 +17,11 @@ struct UserData: Codable, Equatable {
     }
     
     // User gender, height, weight, and age
-    var gender = Gender.male
-    var fullName = "First Last"
-    var email = "name@example.com"
-    var heightFeet = 6
-    var heightInches = 0
-    var weight = 175.0
-    var age = 21
-    
-    // Clear user data ONLY USE WHEN ADDING NEW VARIABLES
-    func clearUserData() {
-        UserDefaults.standard.removeObject(forKey: "userData")
-        print("Cleared all user data.")
-    }
+    var gender: Gender
+    var heightFeet: Int
+    var heightInches: Int
+    var weight: Double
+    var age: Int
     
     // Save user data to  storage
     func saveUserData() {

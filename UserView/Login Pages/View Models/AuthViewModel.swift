@@ -6,24 +6,30 @@
 //
 
 import Foundation
-import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
+@MainActor
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     
+    // If there is a current user, do not sign in
     init() {
+        self.userSession = Auth.auth().currentUser
         
+        Task {
+            await fetchUser()
+        }
     }
     
+    // Signs in the user if they decided to sign out
     func signIn(withEmail email: String, password: String) async throws {
-        print("Sign in!!!")
+        print("Sign in")
     }
     
+    // Creates a user when the user enters valid profile info
     func createUser(withEmail email: String, password: String, fullName: String) async throws {
-        print("TESTING")
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
@@ -35,15 +41,20 @@ class AuthViewModel: ObservableObject {
         }
     }
     
+    // Signs out the user
     func signOut() {
         
     }
     
+    // Deletes the user account
     func deleteAccount() {
         
     }
     
-    func fetchLoginDetails() {
-        
+    // Will fetch user details for loading
+    func fetchUser() async {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
+        self.currentUser = try? snapshot.data(as: User.self)
     }
 }
