@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct TrackTrackerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var settingsViewModel = SettingsViewModel()
     @StateObject var viewModel = AuthViewModel()
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {

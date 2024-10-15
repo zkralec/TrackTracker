@@ -56,23 +56,18 @@ struct SignUpView: View {
             .padding(.horizontal)
             .padding(.vertical, 12)
             
-            // Sign in button
+            // Sign up button
             Button {
                 Task {
                     try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
                 }
             } label: {
-                NavigationLink { // Need to set GlobalVariables.userInput = false
-                    UserInputView() // Temporary until I get login fully working
-                        .navigationBarBackButtonHidden()
-                } label: {
-                    HStack {
-                        Text("SIGN UP")
-                            .fontWeight(.semibold)
-                        Image(systemName: "arrow.right")
-                    }
-                    .frame(width: UIScreen.main.bounds.width - 56, height: 24)
+                HStack {
+                    Text("SIGN UP")
+                        .fontWeight(.semibold)
+                    Image(systemName: "arrow.right")
                 }
+                .frame(width: UIScreen.main.bounds.width - 56, height: 24)
             }
             .buttonStyle(CustomButtonStyle())
             .padding(.top, 10)
