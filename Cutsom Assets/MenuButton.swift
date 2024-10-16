@@ -24,7 +24,7 @@ struct MenuButton: View {
             }
             .frame(width: 70, height: 30)
             .buttonStyle(ButtonPress())
-            .padding(.bottom,-10)
+            .padding(.bottom, -10)
             
             Spacer()
         }

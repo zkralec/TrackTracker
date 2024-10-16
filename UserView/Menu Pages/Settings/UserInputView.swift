@@ -26,7 +26,6 @@ struct UserInputView: View {
     
     @FocusState private var focusedField: Int?
     @ObservedObject var userDataManager = UserDataManager.shared
-    @Environment(\.colorScheme) var colorScheme // Access the current color scheme
     
     @State private var events: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
@@ -59,105 +58,68 @@ struct UserInputView: View {
                         
                         List {
                             // Height section
-                            Section {
-                                VStack {
-                                    Text("Height")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(10)
-                                    
-                                    HStack {
-                                        Picker("Feet", selection: $heightFeet) {
-                                            ForEach(3..<9) { feet in
-                                                Text("\(feet) ft").tag(feet)
-                                                    .foregroundStyle(Color.primary)
-                                            }
+                            Section("Height") {
+                                HStack {
+                                    Picker("Feet", selection: $heightFeet) {
+                                        ForEach(3..<9) { feet in
+                                            Text("\(feet) ft").tag(feet)
+                                                .foregroundStyle(Color.primary)
                                         }
-                                        .pickerStyle(.wheel)
-                                        
-                                        Picker("Inches", selection: $heightInches) {
-                                            ForEach(0..<12) { inches in
-                                                Text("\(inches) in").tag(inches)
-                                                    .foregroundStyle(Color.primary)
-                                            }
-                                        }
-                                        .pickerStyle(.wheel)
                                     }
-                                    .padding(5)
+                                    .pickerStyle(.wheel)
+                                    
+                                    Picker("Inches", selection: $heightInches) {
+                                        ForEach(0..<12) { inches in
+                                            Text("\(inches) in").tag(inches)
+                                                .foregroundStyle(Color.primary)
+                                        }
+                                    }
+                                    .pickerStyle(.wheel)
                                 }
-                                .padding(.vertical, 10)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
                             }
                             .listSectionSpacing(15)
                             
                             // Weight section
-                            Section {
-                                VStack {
-                                    Text("Weight (lbs)")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(10)
-                                    
-                                    TextField("Enter weight (lbs)", value: $weight, formatter: NumberFormatter())
-                                        .keyboardType(.numberPad)
-                                        .padding()
-                                        .textFieldStyle(DefaultTextFieldStyle())
-                                        .roundedBackground()
-                                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                                        .onTapGesture {
-                                            isFocused = true
+                            Section("Weight") {
+                                TextField("Enter weight (lbs)", value: $weight, formatter: NumberFormatter())
+                                    .keyboardType(.numberPad)
+                                    .padding(10)
+                                    .focused($focusedField, equals: 201)
+                                    .contentShape(Rectangle())
+                                    .highPriorityGesture(
+                                        TapGesture().onEnded {
+                                            withAnimation {
+                                                isFocused = true
+                                                focusedField = 201
+                                            }
                                         }
-                                }
-                                .padding(.vertical, 10)
+                                    )
+                                    .roundedBackground()
                             }
                             .listSectionSpacing(15)
                             
                             // Age section
-                            Section {
-                                VStack {
-                                    Text("Age")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(10)
-                                    
-                                    Picker("Age", selection: $age) {
-                                        ForEach(18..<100) { age in
-                                            Text("\(age)")
-                                        }
+                            Section("Age") {
+                                Picker("Age", selection: $age) {
+                                    ForEach(18..<100) { age in
+                                        Text("\(age)")
                                     }
-                                    .pickerStyle(WheelPickerStyle())
-                                    .padding(.horizontal, 110)
                                 }
-                                .padding(.vertical, 10)
+                                .pickerStyle(WheelPickerStyle())
                             }
                             .listSectionSpacing(15)
                             
                             // Gender section
-                            Section {
-                                HStack {
-                                    Spacer()
-                                    
-                                    VStack {
-                                        Text("Gender")
-                                            .font(.headline)
-                                            .fontWeight(.medium)
-                                        
-                                        Picker("", selection: $gender) {
-                                            ForEach(Gender.allCases) { gender in
-                                                Text(gender.rawValue).tag(gender)
-                                            }
-                                        }
-                                        .labelsHidden()
-                                        .pickerStyle(DefaultPickerStyle())
-                                        .padding(.trailing, 10)
-                                        .roundedBackground()
-                                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                            Section("Gender") {
+                                Picker("", selection: $gender) {
+                                    ForEach(Gender.allCases) { gender in
+                                        Text(gender.rawValue).tag(gender)
                                     }
-                                    
-                                    Spacer()
                                 }
-                                .padding(.vertical, 10)
-                                .padding()
+                                .labelsHidden()
+                                .pickerStyle(DefaultPickerStyle())
+                                .tint(Color.primary)
+                                .padding(.vertical, 6)
                             }
                             .listSectionSpacing(15)
                         }

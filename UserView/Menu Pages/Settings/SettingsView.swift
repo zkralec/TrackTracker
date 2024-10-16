@@ -202,7 +202,6 @@ struct SettingsView: View {
                         }
                     }
                     .modifier(ToolbarModifier(isFocused: $viewModel.isFocused))
-                    .background(Color.gray.opacity(0.05))
                     .onAppear {
                         viewModel.loadEvents()
                         viewModel.loadPR()

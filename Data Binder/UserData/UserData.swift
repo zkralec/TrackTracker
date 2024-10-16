@@ -23,6 +23,12 @@ struct UserData: Codable, Equatable {
     var weight: Double
     var age: Int
     
+    // Clear user data ONLY USE WHEN ADDING NEW VARIABLES
+    func clearUserData() {
+        UserDefaults.standard.removeObject(forKey: "userData")
+        print("Cleared all user data.")
+    }
+    
     // Save user data to  storage
     func saveUserData() {
         do {
