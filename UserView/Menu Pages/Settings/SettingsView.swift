@@ -82,6 +82,7 @@ class SettingsViewModel: ObservableObject {
 struct SettingsView: View {
     @StateObject var viewModel = SettingsViewModel()
     @EnvironmentObject var authViewModel: AuthViewModel
+    @State private var deleteConfirmation = false
     
     var body: some View {
         if viewModel.currPage == 4 {
@@ -186,11 +187,17 @@ struct SettingsView: View {
                             
                             // Button to delete account
                             Button {
-                                withAnimation {
-                                    print("Delete account")
-                                }
+                                deleteConfirmation = true
                             } label: {
                                 SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
+                            }
+                            .confirmationDialog("Are you sure you want to delete your account? This action is permanent.", isPresented: $deleteConfirmation, titleVisibility: .visible) {
+                                Button("Delete Account") {
+                                    Task {
+                                        try await authViewModel.deleteAccount()
+                                    }
+                                }
+                                Button("Cancel", role: .cancel) {}
                             }
                         }
                     }

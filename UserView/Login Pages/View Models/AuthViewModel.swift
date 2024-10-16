@@ -64,8 +64,13 @@ class AuthViewModel: ObservableObject {
     }
     
     // Deletes the user account
-    func deleteAccount() {
-        
+    func deleteAccount() async throws {
+        guard let user  = Auth.auth().currentUser else {
+            throw URLError(.badURL)
+        }
+        try await user.delete()
+        self.userSession = nil
+        self.currentUser = nil
     }
     
     // Will fetch user details for loading
