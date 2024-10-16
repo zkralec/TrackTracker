@@ -65,6 +65,8 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width - 56, height: 24)
                 }
                 .buttonStyle(CustomButtonStyle())
+                .disabled(!formValid)
+                .opacity(formValid ? 1.0 : 0.5)
                 .padding(.top, 10)
                 
                 
@@ -85,6 +87,15 @@ struct LoginView: View {
                 }
             }
         }
+    }
+}
+
+extension LoginView: AuthenticationFormProtocol {
+    var formValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count > 5
     }
 }
 

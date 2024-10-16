@@ -177,14 +177,18 @@ struct SettingsView: View {
                         Section("Account") {
                             // Button to sign out
                             Button {
-                                authViewModel.signOut()
+                                withAnimation {
+                                    authViewModel.signOut()
+                                }
                             } label: {
                                 SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
                             }
                             
                             // Button to delete account
                             Button {
-                                print("Delete account")
+                                withAnimation {
+                                    print("Delete account")
+                                }
                             } label: {
                                 SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
                             }

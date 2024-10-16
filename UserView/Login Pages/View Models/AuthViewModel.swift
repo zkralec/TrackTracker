@@ -9,6 +9,10 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
+protocol AuthenticationFormProtocol {
+    var formValid: Bool {get}
+}
+
 @MainActor
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
@@ -25,7 +29,13 @@ class AuthViewModel: ObservableObject {
     
     // Signs in the user if they decided to sign out
     func signIn(withEmail email: String, password: String) async throws {
-        print("Sign in")
+        do {
+            let result = try await Auth.auth().signIn(withEmail: email, password: password)
+            self.userSession = result.user
+            await fetchUser()
+        } catch {
+            print("DEBUG: Failed to log in with error \(error.localizedDescription)")
+        }
     }
     
     // Creates a user when the user enters valid profile info
@@ -49,7 +59,7 @@ class AuthViewModel: ObservableObject {
             self.userSession = nil
             self.currentUser = nil
         } catch {
-            print("Failed to sign out with error \(error.localizedDescription)")
+            print("DEBUG: Failed to sign out with error \(error.localizedDescription)")
         }
     }
     

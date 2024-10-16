@@ -27,11 +27,12 @@ struct SignUpView: View {
                 .padding(.vertical, 32)
             
             // Form fields
-            VStack(spacing: 10) {
+            VStack(spacing: 8) {
                 // First name
                 LoginInputView(text: $fullName,
                                title: "Full Name",
                                placeholder: "Enter full name")
+                
                 
                 // Username
                 LoginInputView(text: $email,
@@ -46,12 +47,32 @@ struct SignUpView: View {
                                isSecureField: true)
                 .autocapitalization(.none)
                 
-                // Confirm password
-                LoginInputView(text: $confirmPass,
-                               title: "Confirm Password",
-                               placeholder: "Confirm your password",
-                               isSecureField: true)
-                .autocapitalization(.none)
+                ZStack(alignment: .trailing) {
+                    // Confirm password
+                    LoginInputView(text: $confirmPass,
+                                   title: "Confirm Password",
+                                   placeholder: "Confirm your password",
+                                   isSecureField: true)
+                    .autocapitalization(.none)
+                    
+                    if !password.isEmpty && !confirmPass.isEmpty {
+                        if password == confirmPass {
+                            Image(systemName: "checkmark.circle.fill")
+                                .imageScale(.large)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.green)
+                                .padding(.top, 15)
+                                .padding(.trailing, 5)
+                        } else {
+                            Image(systemName: "xmark.circle.fill")
+                                .imageScale(.large)
+                                .fontWeight(.bold)
+                                .foregroundStyle(Color.red)
+                                .padding(.top, 15)
+                                .padding(.trailing, 5)
+                        }
+                    }
+                }
             }
             .padding(.horizontal)
             .padding(.vertical, 12)
@@ -70,6 +91,8 @@ struct SignUpView: View {
                 .frame(width: UIScreen.main.bounds.width - 56, height: 24)
             }
             .buttonStyle(CustomButtonStyle())
+            .disabled(!formValid)
+            .opacity(formValid ? 1.0 : 0.5)
             .padding(.top, 10)
             
             Spacer()
@@ -91,6 +114,18 @@ struct SignUpView: View {
                 }
             }
         }
+    }
+}
+
+extension SignUpView: AuthenticationFormProtocol {
+    var formValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count > 5
+        && !fullName.isEmpty
+        && fullName.contains(" ")
+        && confirmPass == password
     }
 }
 
