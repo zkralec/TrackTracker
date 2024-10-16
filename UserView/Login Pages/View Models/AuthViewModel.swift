@@ -65,12 +65,24 @@ class AuthViewModel: ObservableObject {
     
     // Deletes the user account
     func deleteAccount() async throws {
-        guard let user  = Auth.auth().currentUser else {
-            throw URLError(.badURL)
-        }
-        try await user.delete()
-        self.userSession = nil
-        self.currentUser = nil
+        guard let user = Auth.auth().currentUser else {
+                throw URLError(.badURL)
+            }
+            do {
+                try await Firestore.firestore().collection("users").document(user.uid).delete()
+                print("DEBUG: Successfully deleted user document for userID: \(user.uid)")
+            } catch {
+                print("DEBUG: Error deleting Firestore documents: \(error.localizedDescription)")
+                throw error
+            }
+            do {
+                try await user.delete()
+                self.userSession = nil
+                self.currentUser = nil
+            } catch {
+                print("DEBUG: Error deleting user: \(error.localizedDescription)")
+                throw error
+            }
     }
     
     // Will fetch user details for loading
@@ -78,5 +90,13 @@ class AuthViewModel: ObservableObject {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
         self.currentUser = try? snapshot.data(as: User.self)
+    }
+    
+    func resetPassword(withEmail email: String) async {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+        } catch {
+            print("DEBUG: Failed to send password reset with error \(error.localizedDescription)")
+        }
     }
 }
