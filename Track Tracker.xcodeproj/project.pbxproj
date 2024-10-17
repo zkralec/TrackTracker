@@ -10,9 +10,6 @@
 		141CA4BD2B7D3B4600A3D82E /* TrackTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CA4BC2B7D3B4600A3D82E /* TrackTrackerApp.swift */; };
 		141CA4C12B7D3B4800A3D82E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 141CA4C02B7D3B4800A3D82E /* Assets.xcassets */; };
 		141CA4C42B7D3B4800A3D82E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 141CA4C32B7D3B4800A3D82E /* Preview Assets.xcassets */; };
-		141CA4CE2B7D3B4800A3D82E /* Track_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CA4CD2B7D3B4800A3D82E /* Track_TrackerTests.swift */; };
-		141CA4D82B7D3B4800A3D82E /* Track_TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CA4D72B7D3B4800A3D82E /* Track_TrackerUITests.swift */; };
-		141CA4DA2B7D3B4800A3D82E /* Track_TrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141CA4D92B7D3B4800A3D82E /* Track_TrackerUITestsLaunchTests.swift */; };
 		144BEBFD2BC4CB990002AEB9 /* ToolbarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144BEBFC2BC4CB990002AEB9 /* ToolbarModifier.swift */; };
 		14535DF62BAC6B650080531D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DF52BAC6B650080531D /* HomeView.swift */; };
 		14535DF92BACC2F10080531D /* StreakData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DF82BACC2F00080531D /* StreakData.swift */; };
@@ -91,10 +88,7 @@
 		141CA4C02B7D3B4800A3D82E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		141CA4C32B7D3B4800A3D82E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		141CA4C92B7D3B4800A3D82E /* Track TrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Track TrackerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		141CA4CD2B7D3B4800A3D82E /* Track_TrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track_TrackerTests.swift; sourceTree = "<group>"; };
 		141CA4D32B7D3B4800A3D82E /* Track TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Track TrackerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		141CA4D72B7D3B4800A3D82E /* Track_TrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track_TrackerUITests.swift; sourceTree = "<group>"; };
-		141CA4D92B7D3B4800A3D82E /* Track_TrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track_TrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		144BEBFC2BC4CB990002AEB9 /* ToolbarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModifier.swift; sourceTree = "<group>"; };
 		14535DF52BAC6B650080531D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		14535DF82BACC2F00080531D /* StreakData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakData.swift; sourceTree = "<group>"; };
@@ -185,8 +179,6 @@
 				148609B82CA7217600A3E73F /* Data Binder */,
 				14535E0A2BB267F10080531D /* Notifications */,
 				141CA4BB2B7D3B4600A3D82E /* Track Tracker */,
-				141CA4CC2B7D3B4800A3D82E /* Track TrackerTests */,
-				141CA4D62B7D3B4800A3D82E /* Track TrackerUITests */,
 				141CA4BA2B7D3B4600A3D82E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -218,23 +210,6 @@
 				141CA4C32B7D3B4800A3D82E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		141CA4CC2B7D3B4800A3D82E /* Track TrackerTests */ = {
-			isa = PBXGroup;
-			children = (
-				141CA4CD2B7D3B4800A3D82E /* Track_TrackerTests.swift */,
-			);
-			path = "Track TrackerTests";
-			sourceTree = "<group>";
-		};
-		141CA4D62B7D3B4800A3D82E /* Track TrackerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				141CA4D72B7D3B4800A3D82E /* Track_TrackerUITests.swift */,
-				141CA4D92B7D3B4800A3D82E /* Track_TrackerUITestsLaunchTests.swift */,
-			);
-			path = "Track TrackerUITests";
 			sourceTree = "<group>";
 		};
 		14535DF72BACC2DD0080531D /* StreakData */ = {
@@ -735,7 +710,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				141CA4CE2B7D3B4800A3D82E /* Track_TrackerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,8 +717,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				141CA4D82B7D3B4800A3D82E /* Track_TrackerUITests.swift in Sources */,
-				141CA4DA2B7D3B4800A3D82E /* Track_TrackerUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
