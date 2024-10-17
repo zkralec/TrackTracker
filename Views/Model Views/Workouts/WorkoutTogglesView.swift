@@ -8,11 +8,35 @@
 import SwiftUI
 
 struct WorkoutTogglesView: View {
+    let sectionTitle: String
+    let toggles: [(String, Binding<Bool>)]
+    let isDisabled: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Section {
+            DisclosureGroup(sectionTitle) {
+                VStack(spacing: 15) {
+                    ForEach(toggles, id: \.0) { label, binding in
+                        Toggle(label, isOn: binding)
+                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
+                            .font(.subheadline)
+                            .disabled(isDisabled)
+                            .padding(.trailing)
+                    }
+                }
+            }
+        }
+        .listSectionSpacing(15)
+    }
+
+    private func areAnyTogglesOn(_ toggles: [(String, Binding<Bool>)]) -> Bool {
+        toggles.contains { $0.1.wrappedValue }
     }
 }
 
 #Preview {
-    WorkoutTogglesView()
+    @Previewable @State var isOff = false
+    return WorkoutTogglesView (
+        sectionTitle: "Test Toggles", toggles: [("Off day", $isOff)], isDisabled: false
+    )
 }

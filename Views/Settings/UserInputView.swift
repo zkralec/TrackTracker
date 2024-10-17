@@ -95,6 +95,7 @@ struct UserInputView: View {
                                         }
                                     )
                                     .roundedBackground()
+                                    .padding(10)
                             }
                             .listSectionSpacing(15)
                             

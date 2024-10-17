@@ -90,7 +90,7 @@ struct WorkoutView: View {
         // Check data and determine mode
         let hasTimes = !WorkoutData.loadData()!.times.isEmpty
         let hasMeters = !WorkoutData.loadData()!.meters.isEmpty
-
+        
         if !hasTimes && hasMeters {
             isDistanceMode = true
         } else if hasTimes && !hasMeters {
@@ -258,20 +258,16 @@ struct WorkoutView: View {
                     
                     // List for all the user input fields and toggles
                     List {
-                        Section {
+                        Section(isDistanceMode ? "Distance and Reps" : "Time and Reps") {
                             VStack {
                                 // Toggle between distance and time
                                 Picker("Mode", selection: $isDistanceMode) {
                                     Text("Distance").tag(true)
                                     Text("Time").tag(false)
                                 }
+                                .disabled(isDayComplete)
                                 .pickerStyle(SegmentedPickerStyle())
                                 .padding(10)
-                                
-                                Text(isDistanceMode ? "Distance and Reps" : "Time and Reps")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding(10)
                                 
                                 // Creates meter or time fields for user input
                                 VStack {
@@ -300,6 +296,7 @@ struct WorkoutView: View {
                                                 }
                                             )
                                             .roundedBackground()
+                                            .padding(10)
                                         }
                                     } else {
                                         // Times fields
@@ -326,6 +323,7 @@ struct WorkoutView: View {
                                                 }
                                             )
                                             .roundedBackground()
+                                            .padding(10)
                                         }
                                     }
                                 }
@@ -333,173 +331,107 @@ struct WorkoutView: View {
                                 // Add/Remove buttons for reps
                                 if !isDayComplete {
                                     HStack {
-                                        VStack {
-                                            Button(action: {
-                                                if isDistanceMode && meters.count < 6 {
-                                                    meters.append("")
-                                                } else if !isDistanceMode && times.count < 6 {
-                                                    times.append("")
-                                                }
-                                            }) {
-                                                Image(systemName: "plus")
-                                                    .foregroundStyle(.white)
-                                                    .frame(width: 30, height: 10)
+                                        Button(action: {
+                                            if isDistanceMode && meters.count < 6 {
+                                                meters.append("")
+                                            } else if !isDistanceMode && times.count < 6 {
+                                                times.append("")
                                             }
-                                            .padding(.top, 8)
-                                            .buttonStyle(CustomButtonStyle())
-                                            
-                                            Text("Add")
-                                                .font(.caption)
-                                                .foregroundStyle(.blue)
-                                                .padding(4)
+                                        }) {
+                                            Image(systemName: "plus")
+                                                .foregroundStyle(.white)
+                                                .frame(width: 30, height: 10)
                                         }
+                                        .padding(.top, 8)
+                                        .buttonStyle(CustomButtonStyle())
                                         
-                                        VStack {
-                                            Button(action: {
-                                                if isDistanceMode && meters.count > 1 {
-                                                    meters.removeLast()
-                                                } else if !isDistanceMode && times.count > 1 {
-                                                    times.removeLast()
-                                                }
-                                            }) {
-                                                Image(systemName: "minus")
-                                                    .foregroundStyle(.white)
-                                                    .frame(width: 30, height: 10)
+                                        Button(action: {
+                                            if isDistanceMode && meters.count > 1 {
+                                                meters.removeLast()
+                                            } else if !isDistanceMode && times.count > 1 {
+                                                times.removeLast()
                                             }
-                                            .padding(.top, 8)
-                                            .buttonStyle(CustomButtonStyle())
-                                            
-                                            Text("Remove")
-                                                .font(.caption)
-                                                .foregroundStyle(.blue)
-                                                .padding(4)
+                                        }) {
+                                            Image(systemName: "minus")
+                                                .foregroundStyle(.white)
+                                                .frame(width: 30, height: 10)
                                         }
+                                        .padding(.top, 8)
+                                        .buttonStyle(CustomButtonStyle())
                                     }
                                     .padding(.horizontal, 10)
-                                    .padding(.bottom, -10)
+                                    .padding(.bottom, 10)
                                 }
                             }
                         }
-                        .padding(.bottom, 15)
                         .listSectionSpacing(15)
                         
                         // Sets field
-                        Section {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text("Sets")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(10)
-                                    
-                                    Spacer()
-                                }
-                                // Input field for sets
-                                TextField("Number of Sets", text: Binding(
-                                    get: { numSets },
-                                    set: { newValue in
-                                        if validateNumberOfRepsInput(newValue) {
-                                            numSets = newValue
-                                        }
+                        Section("Sets") {
+                            // Input field for sets
+                            TextField("Number of Sets", text: Binding(
+                                get: { numSets },
+                                set: { newValue in
+                                    if validateNumberOfRepsInput(newValue) {
+                                        numSets = newValue
                                     }
-                                ))
-                                .keyboardType(.numberPad)
-                                .padding(10)
-                                .disabled(isDayComplete)
-                                .focused($focusedField, equals: 200)
-                                // This fixes iOS 18 bug that was introduced
-                                .highPriorityGesture(
-                                    TapGesture().onEnded {
-                                        withAnimation {
-                                            isFocused = true
-                                            focusedField = 200
-                                        }
-                                    })
-                                .roundedBackground()
-                            }
+                                }
+                            ))
+                            .keyboardType(.numberPad)
+                            .padding(10)
+                            .disabled(isDayComplete)
+                            .focused($focusedField, equals: 200)
+                            // This fixes iOS 18 bug that was introduced
+                            .highPriorityGesture(
+                                TapGesture().onEnded {
+                                    withAnimation {
+                                        isFocused = true
+                                        focusedField = 200
+                                    }
+                                })
+                            .roundedBackground()
+                            .padding(10)
                         }
-                        .padding(.bottom, 15)
                         .listSectionSpacing(15)
                         
-                        // Section for the training or day type
-                        Section {
-                            DisclosureGroup("Day Type") {
-                                VStack(spacing: 15) {
-                                    ForEach([
+                        if !isDayComplete {
+                            // Section for the training or day type
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Workout Type",
+                                    toggles: [
                                         ("Off Day", $isOff),
                                         ("Technique Day", $isTechnique),
                                         ("Workout Day", $isWorkout),
                                         ("Tempo Day", $isTempo),
                                         ("Recovery Day", $isRecovery),
                                         ("Meet Day", $isMeet)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete || (!binding.wrappedValue && anyDayToggleOn))
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
+                                    ],
+                                    isDisabled: isDayComplete || anyDayToggleOn
+                                )
                             }
-                            .fontWeight(.medium)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Surface Section
-                        Section {
-                            DisclosureGroup("Surface") {
-                                VStack(spacing: 15) {
-                                    ForEach([
-                                        ("Outdoor Track", $isTrack),
-                                        ("Indoor Track", $isIndoorTrack),
-                                        ("Turf", $isTurf),
-                                        ("Dirt", $isDirt),
-                                        ("Grass/Hills", $isGrassHills),
-                                        ("Asphalt", $isAsphalt)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete || (!binding.wrappedValue && anySurfaceToggleOn))
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
+                            .listSectionSpacing(15)
+                            
+                            // Intensity Section
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Intensity",
+                                    toggles: [
+                                        ("Low", $isLow),
+                                        ("Moderate", $isModerate),
+                                        ("High", $isHigh),
+                                        ("Maximum", $isMaximum)
+                                    ],
+                                    isDisabled: isDayComplete || anyIntensityToggleOn
+                                )
                             }
-                            .fontWeight(.medium)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Weather Section
-                        Section {
-                            DisclosureGroup("Weather") {
-                                VStack(spacing: 15) {
-                                    ForEach([
-                                        ("Rain", $isRain),
-                                        ("Snow", $isSnow),
-                                        ("Windy", $isWindy),
-                                        ("Normal", $isNormal),
-                                        ("Hot", $isHot),
-                                        ("Cold", $isCold)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete)
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
-                            }
-                            .fontWeight(.medium)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Equipment Section
-                        Section {
-                            DisclosureGroup("Equipment") {
-                                VStack(spacing: 15) {
-                                    ForEach([
+                            .listSectionSpacing(15)
+                            
+                            // Equipment Section
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Equipment",
+                                    toggles: [
                                         ("Blocks", $isBlocks),
                                         ("Resistance Band", $isResistanceBand),
                                         ("Weights", $isWeights),
@@ -511,68 +443,66 @@ struct WorkoutView: View {
                                         ("Medicine Ball", $isMedicineBall),
                                         ("Stationary Bike", $isStationaryBike),
                                         ("Treadmill", $isTreadmill)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete)
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
+                                    ],
+                                    isDisabled: isDayComplete
+                                )
                             }
-                            .fontWeight(.medium)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Condition Section
-                        Section {
-                            DisclosureGroup("Condition") {
-                                VStack(spacing: 15) {
-                                    ForEach([
+                            .listSectionSpacing(15)
+                            
+                            // Surface Section
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Surface Type",
+                                    toggles: [
+                                        ("Outdoor Track", $isTrack),
+                                        ("Indoor Track", $isIndoorTrack),
+                                        ("Turf", $isTurf),
+                                        ("Dirt", $isDirt),
+                                        ("Grass/Hills", $isGrassHills),
+                                        ("Asphalt", $isAsphalt)
+                                    ],
+                                    isDisabled: isDayComplete || anySurfaceToggleOn
+                                )
+                            }
+                            .listSectionSpacing(15)
+                            
+                            // Condition Section
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Condition",
+                                    toggles: [
                                         ("Injury", $isInjury),
                                         ("Soreness", $isSoreness),
                                         ("Fatigued", $isFatigued),
                                         ("Peak Form", $isPeakForm)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete || (!binding.wrappedValue && anyConditionToggleOn))
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
+                                    ],
+                                    isDisabled: isDayComplete || anyConditionToggleOn
+                                )
                             }
-                            .fontWeight(.medium)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Intensity Section
-                        Section {
-                            DisclosureGroup("Intensity") {
-                                VStack(spacing: 15) {
-                                    ForEach([
-                                        ("Low", $isLow),
-                                        ("Moderate", $isModerate),
-                                        ("High", $isHigh),
-                                        ("Maximum", $isMaximum)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete || (!binding.wrappedValue && anyIntensityToggleOn))
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
+                            .listSectionSpacing(15)
+                            
+                            // Weather Section
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Weather",
+                                    toggles: [
+                                        ("Rain", $isRain),
+                                        ("Snow", $isSnow),
+                                        ("Windy", $isWindy),
+                                        ("Normal", $isNormal),
+                                        ("Hot", $isHot),
+                                        ("Cold", $isCold)
+                                    ],
+                                    isDisabled: isDayComplete
+                                )
                             }
-                            .fontWeight(.medium)
-                        }
-                        .listSectionSpacing(15)
-                        
-                        // Field Events Section
-                        Section {
-                            DisclosureGroup("Field Events") {
-                                VStack(spacing: 15) {
-                                    ForEach([
+                            .listSectionSpacing(15)
+                            
+                            // Field Events Section
+                            Section {
+                                WorkoutTogglesView(
+                                    sectionTitle: "Field Events",
+                                    toggles: [
                                         ("High Jump", $isHighJump),
                                         ("Pole Vault", $isPoleVault),
                                         ("Hammer Throw", $isHammerThrow),
@@ -581,18 +511,19 @@ struct WorkoutView: View {
                                         ("Javelin", $isJavelin),
                                         ("Long Jump", $isLongJump),
                                         ("Triple Jump", $isTripleJump)
-                                    ], id: \.0) { label, binding in
-                                        Toggle(label, isOn: binding)
-                                            .toggleStyle(SwitchToggleStyle(tint: Color.blue))
-                                            .font(.subheadline)
-                                            .disabled(isDayComplete)
-                                            .padding(.horizontal, 10)
-                                    }
-                                }
+                                    ],
+                                    isDisabled: isDayComplete
+                                )
                             }
-                            .fontWeight(.medium)
+                            .listSectionSpacing(15)
+                        } else {
+                            Section("Misc.") {
+                                Text("If toggles need to be modified, make sure day is not complete.")
+                                    .foregroundColor(.gray)
+                                    .multilineTextAlignment(.center)
+                                    .padding(10)
+                            }
                         }
-                        .listSectionSpacing(15)
                     }
                     .modifier(ToolbarModifier(isFocused: $isFocused))
                     

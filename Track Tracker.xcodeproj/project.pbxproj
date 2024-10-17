@@ -244,16 +244,6 @@
 			path = Meals;
 			sourceTree = "<group>";
 		};
-		14535E072BADC4FB0080531D /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				14535DFA2BACCB730080531D /* SettingsView.swift */,
-				14DAEF592B7FB02300AF4667 /* UserInputView.swift */,
-				14823F132CB846D70058C57F /* SettingsRowView.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
 		14535E0A2BB267F10080531D /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +316,7 @@
 				14823F382CC152E20058C57F /* Welcome */,
 				14823F2B2CC14E1A0058C57F /* Authentication */,
 				14823F2C2CC14E240058C57F /* Navigation */,
-				14823F2D2CC14E320058C57F /* Workout & Exercise */,
+				14823F2D2CC14E320058C57F /* Meets, Events, History */,
 				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
 				14823F2E2CC14E410058C57F /* Injury Management */,
 				14823F312CC1511D0058C57F /* Model Views */,
@@ -351,14 +341,14 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
-		14823F2D2CC14E320058C57F /* Workout & Exercise */ = {
+		14823F2D2CC14E320058C57F /* Meets, Events, History */ = {
 			isa = PBXGroup;
 			children = (
 				14823F302CC14FC10058C57F /* Workouts */,
 				14535DFC2BACE1C20080531D /* MeetView.swift */,
 				1492220E2BDC8F0B00F633BE /* EventView.swift */,
 			);
-			path = "Workout & Exercise";
+			path = "Meets, Events, History";
 			sourceTree = "<group>";
 		};
 		14823F2E2CC14E410058C57F /* Injury Management */ = {
@@ -372,7 +362,9 @@
 		14823F2F2CC14E4F0058C57F /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				14535E072BADC4FB0080531D /* Settings */,
+				14535DFA2BACCB730080531D /* SettingsView.swift */,
+				14DAEF592B7FB02300AF4667 /* UserInputView.swift */,
+				14823F132CB846D70058C57F /* SettingsRowView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
