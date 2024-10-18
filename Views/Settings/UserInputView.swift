@@ -47,7 +47,6 @@ struct UserInputView: View {
     var body: some View {
         // If the user has not completed input send to this view
         if currPage == -1 {
-            if !GlobalVariables.userInput {
                 ZStack {
                     VStack {
                         // Menu bar icon
@@ -141,16 +140,10 @@ struct UserInputView: View {
                         // Save user data
                         let userData = UserData(gender: UserData.Gender(rawValue: gender.rawValue) ?? .male, heightFeet: heightFeet, heightInches: heightInches, weight: weight, age: age)
                         userData.saveUserData()
-                        
-                        // Only need to show this page first once on startup
-                        GlobalVariables.userInput = true
                     }
                     // Show side menu if needed
                     SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
                 }
-            } else {
-                HomeView()
-            }
         } else if currPage == 3 {
             HomeView()
         } else if currPage == 4 {

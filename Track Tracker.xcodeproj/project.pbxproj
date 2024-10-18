@@ -36,6 +36,7 @@
 		14823F1F2CBD5E440058C57F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 14823F1E2CBD5E440058C57F /* FirebaseStorage */; };
 		14823F252CBD767C0058C57F /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F242CBD767C0058C57F /* AuthViewModel.swift */; };
 		14823F352CC1517E0058C57F /* WorkoutTogglesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F342CC1517E0058C57F /* WorkoutTogglesView.swift */; };
+		14823F3A2CC198650058C57F /* WorkoutDataDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F392CC198650058C57F /* WorkoutDataDefault.swift */; };
 		148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609AE2C9CB43700A3E73F /* InjuryView.swift */; };
 		148609B22C9DDE3700A3E73F /* InjuryEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B12C9DDE3700A3E73F /* InjuryEditView.swift */; };
 		148609B52C9F06E000A3E73F /* InjuryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B42C9F06E000A3E73F /* InjuryData.swift */; };
@@ -112,6 +113,7 @@
 		14823F172CBD5C140058C57F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14823F242CBD767C0058C57F /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		14823F342CC1517E0058C57F /* WorkoutTogglesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTogglesView.swift; sourceTree = "<group>"; };
+		14823F392CC198650058C57F /* WorkoutDataDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDataDefault.swift; sourceTree = "<group>"; };
 		148609AE2C9CB43700A3E73F /* InjuryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryView.swift; sourceTree = "<group>"; };
 		148609B12C9DDE3700A3E73F /* InjuryEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryEditView.swift; sourceTree = "<group>"; };
 		148609B42C9F06E000A3E73F /* InjuryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryData.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 			children = (
 				14DAEF6B2B7FD39D00AF4667 /* WorkoutData.swift */,
 				146154022BE3D8510068504B /* PastWorkoutData.swift */,
+				14823F392CC198650058C57F /* WorkoutDataDefault.swift */,
 			);
 			path = WorkoutData;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 				14535DF92BACC2F10080531D /* StreakData.swift in Sources */,
 				14BF430F2BA0FA34004B3321 /* MealPlan.swift in Sources */,
 				14823F252CBD767C0058C57F /* AuthViewModel.swift in Sources */,
+				14823F3A2CC198650058C57F /* WorkoutDataDefault.swift in Sources */,
 				14823F162CB963AC0058C57F /* UserModel.swift in Sources */,
 				1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */,
 				14535E002BAD2A1D0080531D /* EventData.swift in Sources */,

@@ -37,6 +37,7 @@ struct MealsView: View {
                     // Display helpful info for meal order
                     Text(" Breakfast - Lunch - Dinner ")
                         .font(.subheadline)
+                        .padding(.top, 5)
                     
                     // Display user information
                     Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")

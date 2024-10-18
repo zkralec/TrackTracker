@@ -165,7 +165,6 @@ struct SettingsView: View {
                         Section("User Data") {
                             Button {
                                 withAnimation {
-                                    GlobalVariables.userInput = false
                                     viewModel.currPage = -1
                                 }
                             } label: {
