@@ -16,14 +16,6 @@ struct ExerciseManager {
     // Function to fetch exercises from the API
     static func fetchExercises(muscleType: String, completion: @escaping (Result<ExerciseData, Error>) -> Void) {
         print("Calling shouldFetchExercises for muscleType: \(muscleType)")
-        
-        // Check if data is still valid (i.e., within the same day)
-        if shouldUseCachedData(), let cachedData = getCachedExerciseData() {
-            print("Using cached data.")
-            completion(.success(cachedData))
-            return
-        }
-        
         print("Fetching exercises from the API.")
         
         // Get API key
