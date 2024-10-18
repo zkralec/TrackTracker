@@ -40,49 +40,46 @@ struct MeetView: View {
                     
                     List {
                         // Remove and display meet dates
-                        Section {
+                        Section("Meets") {
                             HStack {
                                 Spacer()
                                 
                                 VStack {
-                                    Text("Meet Days")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding()
-                                    
                                     if meets.isEmpty {
                                         Text("No meet days selected")
                                             .foregroundStyle(.secondary)
                                             .padding()
                                             .roundedBackground()
-                                            .padding(.bottom)
+                                            .padding(10)
                                     } else {
-                                        ForEach(meets, id: \.self) { date in
-                                            Text(date.formatted())
-                                                .padding(5)
-                                                .roundedBackground()
-                                        }
-                                        
-                                        // Remove the last meet day
-                                        Button(action: {
-                                            withAnimation {
-                                                removeMeet(at: meets.count - 1)
-                                                print("Removed last meet")
+                                        VStack {
+                                            ForEach(meets, id: \.self) { date in
+                                                Text(date.formatted())
+                                                    .padding(5)
+                                                    .roundedBackground()
                                             }
-                                        }) {
-                                            HStack {
-                                                Image(systemName: "minus")
-                                                    .foregroundStyle(.white)
-                                                    .frame(width: 30, height: 30)
-                                                Text("Remove Last")
-                                                    .font(.subheadline)
-                                                    .foregroundStyle(.white)
-                                                    .padding(4)
+                                            
+                                            // Remove the last meet day
+                                            Button(action: {
+                                                withAnimation {
+                                                    removeMeet(at: meets.count - 1)
+                                                    print("Removed last meet")
+                                                }
+                                            }) {
+                                                HStack {
+                                                    Image(systemName: "minus")
+                                                        .foregroundStyle(.white)
+                                                        .frame(width: 30, height: 30)
+                                                    Text("Remove Last")
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(.white)
+                                                        .padding(4)
+                                                }
+                                                .padding(-8)
                                             }
-                                            .padding(-8)
+                                            .buttonStyle(CustomButtonStyle())
                                         }
-                                        .buttonStyle(CustomButtonStyle())
-                                        .padding()
+                                        .padding(10)
                                     }
                                 }
                                 
@@ -92,17 +89,11 @@ struct MeetView: View {
                         .listSectionSpacing(15)
                         
                         // Allows user to set their meet days
-                        Section {
+                        Section("Add Meet Days") {
                             VStack {
-                                Text("Add Meet Days")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                                    .padding(.top)
-                                
                                 // Calendar
                                 DatePicker("", selection: $date, displayedComponents: .date)
                                     .datePickerStyle(GraphicalDatePickerStyle())
-                                    .padding()
                                 
                                 // Add meet date button
                                 Button(action: {
@@ -125,12 +116,11 @@ struct MeetView: View {
                                     .padding(-8)
                                 }
                                 .buttonStyle(CustomButtonStyle())
-                                .padding(.bottom)
                             }
+                            .padding(10)
                         }
                         .listSectionSpacing(15)
                     }
-                    .background(Color.gray.opacity(0.05))
                 }
                 .onAppear {
                     loadMeets()

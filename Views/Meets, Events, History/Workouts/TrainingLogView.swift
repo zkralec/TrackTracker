@@ -184,7 +184,6 @@ struct TrainingLogView: View {
                             }
                         }
                     }
-                    .background(Color.gray.opacity(0.05))
                 }
                 // Show side menu if needed
                 SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
