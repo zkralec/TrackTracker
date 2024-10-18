@@ -60,24 +60,29 @@ struct InjuryView: View {
                                         Spacer()
                                         Text("No injuries logged yet.")
                                             .foregroundStyle(.secondary)
-                                            .padding()
+                                            .padding(10)
                                         Spacer()
                                     }
                                 }
                             } else {
                                 // Display each logged injury
                                 ForEach(injuryLog.indices, id: \.self) { index in
-                                    Section {
-                                        let injury = injuryLog[index]
+                                    let injury = injuryLog[index]
+                                    Section("\(injury.muscleGroup) Injury") {
                                         VStack(alignment: .leading) {
                                             HStack {
                                                 // Injury details
                                                 VStack(alignment: .leading) {
-                                                    Text(injury.muscleGroup).font(.headline)
-                                                    Text("Date: \(injury.injuryDate, style: .date)")
-                                                    Text("Type: \(injury.injuryType)")
-                                                    Text("Location: \(injury.location)")
-                                                    Text("Severity: \(injury.severity) / 5")
+                                                    Text(injury.muscleGroup)
+                                                        .font(.headline)
+                                                        .padding(2)
+                                                    VStack(alignment: .leading){
+                                                        Text("Date: \(injury.injuryDate, style: .date)")
+                                                        Text("Type: \(injury.injuryType)")
+                                                        Text("Location: \(injury.location)")
+                                                        Text("Severity: \(injury.severity) / 5")
+                                                    }
+                                                    .font(.subheadline)
                                                 }
                                                 Spacer()
                                                 

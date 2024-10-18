@@ -15,61 +15,43 @@ struct InjuryDetailsView: View {
         VStack {
             // Title
             TitleBackground(title: "Injury Details")
-                .padding(.horizontal, -15)
+                .padding(.top, -37)
             
             List {
                 // Injury details section
-                Section {
-                    Text("Injury Information:")
-                        .font(.headline)
-                        .padding(.top, 10)
-                    
+                Section("Injury Information") {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Muscle Group: \(injury.muscleGroup)")
                         Text("Injury Type: \(injury.injuryType)")
                         Text("Location: \(injury.location)")
                         Text("Severity: \(injury.severity) / 5")
                     }
-                    .padding(.vertical, 8)
+                    .padding(10)
                 }
                 .listSectionSpacing(15)
                 
                 // Suggested activities section
-                Section {
-                    Text("Suggested Activities:")
-                        .font(.headline)
-                        .padding(.top, 10)
-                    
+                Section("Suggested Activities") {
                     Text(getSuggestedActivities(muscleGroup: injury.muscleGroup, injuryType: injury.injuryType))
-                        .padding(.vertical, 8)
+                        .padding(10)
                 }
                 .listSectionSpacing(15)
                 
                 // Restricted activities section
-                Section {
-                    Text("Restricted Activities:")
-                        .font(.headline)
-                        .padding(.top, 10)
-                    
+                Section("Restricted Activities") {
                     Text(getRestrictedActivities(muscleGroup: injury.muscleGroup, injuryType: injury.injuryType))
-                        .padding(.vertical, 8)
+                        .padding(10)
                 }
                 .listSectionSpacing(15)
                 
                 // Recommended exercises section
-                Section {
-                    Text("Recommended Exercises:")
-                        .font(.headline)
-                        .padding(.top, 10)
-                    
+                Section("Recommended Exercises") {
                     Text(getRecommendedExercises(muscleGroup: injury.muscleGroup, injuryType: injury.injuryType))
+                        .padding(10)
                 }
                 .listSectionSpacing(15)
             }
-            .background(Color(.systemGray6).opacity(0.05))
-            .padding(.horizontal, -15)
         }
-        .padding(.horizontal)
     }
     
     // Function to get suggested activities

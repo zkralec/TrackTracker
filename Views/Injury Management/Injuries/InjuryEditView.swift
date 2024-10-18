@@ -62,7 +62,6 @@ struct InjuryEditView: View {
                     Section {
                         DatePicker("Injury Date", selection: $injuryDate, displayedComponents: [.date])
                             .datePickerStyle(GraphicalDatePickerStyle())
-                            .padding()
                     }
                     .listSectionSpacing(15)
                     
