@@ -272,7 +272,7 @@ struct WorkoutView: View {
                                 }
                                 .disabled(isDayComplete)
                                 .pickerStyle(SegmentedPickerStyle())
-                                .padding(10)
+                                .padding(.bottom, 10)
                                 
                                 // Creates meter or time fields for user input
                                 VStack {
@@ -362,10 +362,9 @@ struct WorkoutView: View {
                                         .padding(.top, 8)
                                         .buttonStyle(CustomButtonStyle())
                                     }
-                                    .padding(.horizontal, 10)
-                                    .padding(.bottom, 10)
                                 }
                             }
+                            .padding()
                         }
                         .listSectionSpacing(15)
                         
@@ -393,7 +392,7 @@ struct WorkoutView: View {
                                     }
                                 })
                             .roundedBackground()
-                            .padding(10)
+                            .padding()
                         }
                         .listSectionSpacing(15)
                         
@@ -524,7 +523,7 @@ struct WorkoutView: View {
                                 Text("If toggles need to be modified, make sure day is not complete.")
                                     .foregroundColor(.gray)
                                     .multilineTextAlignment(.center)
-                                    .padding(10)
+                                    .padding()
                             }
                         }
                     }

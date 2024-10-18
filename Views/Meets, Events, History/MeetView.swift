@@ -49,8 +49,6 @@ struct MeetView: View {
                                         Text("No meet days selected")
                                             .foregroundStyle(.secondary)
                                             .padding()
-                                            .roundedBackground()
-                                            .padding(10)
                                     } else {
                                         VStack {
                                             ForEach(meets, id: \.self) { date in
@@ -79,7 +77,7 @@ struct MeetView: View {
                                             }
                                             .buttonStyle(CustomButtonStyle())
                                         }
-                                        .padding(10)
+                                        .padding()
                                     }
                                 }
                                 
@@ -117,7 +115,7 @@ struct MeetView: View {
                                 }
                                 .buttonStyle(CustomButtonStyle())
                             }
-                            .padding(10)
+                            .padding()
                         }
                         .listSectionSpacing(15)
                     }

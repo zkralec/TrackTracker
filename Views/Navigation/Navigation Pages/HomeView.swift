@@ -49,7 +49,7 @@ struct HomeView: View {
                                         .font(.system(size: 60, weight: .bold))
                                         .foregroundStyle(.primary)
                                 }
-                                .padding(10)
+                                .padding()
                                 
                                 Spacer()
                             }
@@ -90,7 +90,7 @@ struct HomeView: View {
                                     }
                                 }
                             }
-                            .padding(10)
+                            .padding()
                         }
                         .listSectionSpacing(15)
                         
@@ -103,8 +103,6 @@ struct HomeView: View {
                                     if meets.isEmpty {
                                         Text("No meet days selected")
                                             .foregroundStyle(.secondary)
-                                            .padding()
-                                            .roundedBackground()
                                     } else {
                                         ForEach(meets, id: \.self) { date in
                                             Text(date.formatted())
@@ -117,7 +115,7 @@ struct HomeView: View {
                                     loadPR()
                                     loadMeets()
                                 }
-                                .padding(10)
+                                .padding()
                                 
                                 Spacer()
                             }

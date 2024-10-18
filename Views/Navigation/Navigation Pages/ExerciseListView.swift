@@ -44,9 +44,8 @@ struct ExerciseListView: View {
                         }
                     } else {
                         withAnimation {
-                            // Title
-                            TitleBackground(title: "Exercises")
-                                .padding(.top,28)
+                                // Title
+                                TitleBackground(title: "Exercises")
                         }
                     }
                     
@@ -80,7 +79,6 @@ struct ExerciseListView: View {
                                 }
                             }
                             .roundedBackground()
-                            .padding()
                         }
                     }
                     
@@ -182,68 +180,55 @@ struct ExerciseDetailsView: View {
     
     var body: some View {
         VStack {
-            HStack(alignment: .center) {
-                Button(action: {
-                    withAnimation {
-                        presentationMode.wrappedValue.dismiss()
-                        showButtons = true
-                    }
-                }) {
-                    Image(systemName: "chevron.left")
-                        .foregroundStyle(.blue)
-                        .font(.system(size: 25))
-                        .frame(width: 30, height: 30)
-                }
-                .buttonStyle(ButtonPress())
-                .padding(.vertical)
-                .padding(.leading, 20)
-                
-                Spacer()
-                
-                Text("Muscle Target: \(muscleTarget)")
-                    .font(.headline)
-                    .fontWeight(.medium)
-                    .padding(.vertical, 10)
-                    .padding(.leading, -70)
-                
-                Spacer()
-            }
-            
             List {
                 // Display full details of the exercise
-                Section {
+                Section("Muscle Target") {
+                    Text(muscleTarget.capitalized)
+                        .padding(5)
+                }
+                
+                Section("Exercise") {
                     Text("\(exercise.name)")
-                        .padding()
-                        .font(.title2)
-                        .fontWeight(.medium)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    
-                    
-                    Text("Equipment: \(exercise.equipment)")
-                        .padding()
+                        .padding(5)
+                }
+                
+                Section("Equipment") {
+                    Text(exercise.equipment.capitalized)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    
-                    
-                    Text("Difficulty: \(exercise.difficulty)")
-                        .padding()
+                        .padding(5)
+                }
+                
+                Section("Difficulty") {
+                    Text(exercise.difficulty.capitalized)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(5)
+                }
                     
-                    
-                    
-                    Text("Instructions: \(exercise.instructions)")
-                        .padding()
+                Section("Instructions") {
+                    Text(exercise.instructions.capitalizedSentence)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(5)
                 }
             }
+            .listSectionSpacing(5)
             .onAppear {
                 showButtons = false
                 if muscleTarget == "" {
                     muscleTarget = "abdominals"
                 }
             }
-            .navigationBarBackButtonHidden(true)
+            .onDisappear {
+                showButtons = true
+            }
         }
+    }
+}
+
+extension String {
+    var capitalizedSentence: String {
+        let firstLetter = self.prefix(1).capitalized
+        let remainingLetters = self.dropFirst().lowercased()
+        return firstLetter + remainingLetters
     }
 }

@@ -50,6 +50,7 @@ struct InjuryView: View {
                                 .cornerRadius(10)
                         }
                         .buttonStyle(CustomButtonStyle())
+                        .padding(10)
                         
                         // List of injuries
                         List {
@@ -60,7 +61,7 @@ struct InjuryView: View {
                                         Spacer()
                                         Text("No injuries logged yet.")
                                             .foregroundStyle(.secondary)
-                                            .padding(10)
+                                            .padding()
                                         Spacer()
                                     }
                                 }
