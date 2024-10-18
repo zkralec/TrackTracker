@@ -57,23 +57,19 @@ struct TrainingLogView: View {
                         }
                         else {
                             ForEach(sortedPastWorkouts, id: \.self) { workout in
-                                Section {
+                                Section(workout.formattedDate) {
                                     // If meet or off, use simplified formatting
                                     if workout.meet {
-                                        Text("Date: \(workout.formattedDate)")
                                         Text("Meet Day")
                                             .font(.title3)
                                     } else if workout.off {
-                                        Text("Date: \(workout.formattedDate)")
                                         Text("Off Day")
                                             .font(.title3)
                                     } else if workout.injury {
-                                        Text("Date: \(workout.formattedDate)")
                                         Text("Injured")
                                             .font(.title3)
                                     // Else, format to show all relevant information with Extras section
                                     } else {
-                                        Text("Date: \(workout.formattedDate)")
                                         if workout.technique {
                                             Text("Practice Type: Technique Day")
                                         } else if workout.workout {
@@ -91,8 +87,13 @@ struct TrainingLogView: View {
                                             } else {
                                                 Text("Distance/Time/Reps: None")
                                             }
-                                            Text("Sets: \(workout.sets)")
-                                                .padding(.top,3)
+                                            if workout.sets == 0 {
+                                                Text("Sets: None")
+                                                    .padding(.top, 3)
+                                            } else {
+                                                Text("Sets: \(workout.sets)")
+                                                    .padding(.top, 3)
+                                            }
                                         }
                                         // Extras section
                                         DisclosureGroup("Extra Info.") {

@@ -301,7 +301,6 @@ struct WorkoutView: View {
                                                 }
                                             )
                                             .roundedBackground()
-                                            .padding(10)
                                         }
                                     } else {
                                         // Times fields
@@ -328,7 +327,6 @@ struct WorkoutView: View {
                                                 }
                                             )
                                             .roundedBackground()
-                                            .padding(10)
                                         }
                                     }
                                 }

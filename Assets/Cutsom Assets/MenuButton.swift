@@ -22,10 +22,8 @@ struct MenuButton: View {
                     .font(.system(size: 25))
                     .foregroundStyle(.blue)
             }
-            .frame(width: 30, height: 30)
+            .frame(width: 70, height: 30)
             .buttonStyle(ButtonPress())
-            
-            Spacer()
         }
     }
 }
