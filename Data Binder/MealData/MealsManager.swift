@@ -19,7 +19,7 @@ struct MealsManager {
         print("Fetching meal plan.")
         
         // Check if we should fetch a new meal plan or load
-        if !(isRefreshed ?? false) && !shouldFetchMealPlan() {
+        if !(isRefreshed ?? false) {
             print("Loading stored meal plan.")
             loadStoredMealPlan(completion: completion)
             return

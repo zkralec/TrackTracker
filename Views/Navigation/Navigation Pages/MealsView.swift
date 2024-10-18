@@ -11,7 +11,7 @@ import SwiftUI
 struct MealsView: View {
     @State private var currPage: Int = 2
     @State private var mealPlan: MealPlan?
-    @State private var shouldFetchMealPlan = true
+    @State private var shouldFetchMealPlan = false
     @State private var isSideMenuOpen = false
     
     @State private var events: [EventData] = {
@@ -85,7 +85,7 @@ struct MealsView: View {
                         userDataManager.calculateMaintenanceCalories()
                         
                         // Fetch a meal plan if needed
-                        fetchMeals()
+                        fetchMeals(isRefreshed: shouldFetchMealPlan)
                     }
                 }
                 // Show side menu if needed
