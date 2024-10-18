@@ -17,10 +17,16 @@ struct EventView: View {
         if currPage == 5 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    TitleBackground(title: "Events")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Events")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     // List of events with navigation links
                     List {

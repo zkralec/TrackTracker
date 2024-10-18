@@ -29,11 +29,16 @@ struct TrainingLogView: View {
         if currPage == 8 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    // Title
-                    TitleBackground(title: "Training Log")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Training Log")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     // Display past 10 day history of workouts
                     List {

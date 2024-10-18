@@ -27,11 +27,16 @@ struct MeetView: View {
         if currPage == 6 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    // Title
-                    TitleBackground(title: "Meets")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Meets")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     List {
                         // Remove and display meet dates

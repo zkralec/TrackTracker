@@ -126,11 +126,16 @@ struct WorkoutView: View {
         if currPage == 0 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    // Display title
-                    TitleBackground(title: "Workouts")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Workouts")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     HStack {
                         // Button to show user's input and recovery suggestions

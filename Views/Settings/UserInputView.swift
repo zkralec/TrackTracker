@@ -49,11 +49,16 @@ struct UserInputView: View {
         if currPage == -1 {
                 ZStack {
                     VStack {
-                        // Menu bar icon
-                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                        
-                        // Display title
-                        TitleBackground(title: "User Information")
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "User Information")
+                            
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                Spacer()
+                            }
+                        }
                         
                         List {
                             // Height section

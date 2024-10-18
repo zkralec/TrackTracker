@@ -28,11 +28,16 @@ struct MealsView: View {
         if currPage == 2 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    // Title
-                    TitleBackground(title: "Daily Meals")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Daily Meals")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     // Display helpful info for meal order
                     Text(" Breakfast - Lunch - Dinner ")

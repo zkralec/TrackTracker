@@ -88,11 +88,16 @@ struct SettingsView: View {
         if viewModel.currPage == 4 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $viewModel.isSideMenuOpen)
-                    
-                    // Display title
-                    TitleBackground(title: "Settings")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Settings")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $viewModel.isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     List {
                         // Shows users their events and allows for PR input

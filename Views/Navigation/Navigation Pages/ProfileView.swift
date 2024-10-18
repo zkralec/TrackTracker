@@ -29,11 +29,16 @@ struct ProfileView: View {
         if currPage == 7 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    //Display title
-                    TitleBackground(title: "Profile")
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Profile")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
                     
                     if let user = viewModel.currentUser {
                         List {

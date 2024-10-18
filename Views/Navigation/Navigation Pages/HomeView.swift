@@ -26,31 +26,30 @@ struct HomeView: View {
         if currPage == 3 {
             ZStack {
                 VStack {
-                    // Menu bar icon
-                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                    
-                    // Display title
-                    TitleBackground(title: "Home")
-                    
+                    ZStack {
+                        // Display title
+                        TitleBackground(title: "Home")
+                        
+                        HStack {
+                            // Menu bar icon
+                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            Spacer()
+                        }
+                    }
+
                     List {
                         // Current streak of tracking workouts
-                        Section {
+                        Section("Streak") {
                             HStack {
                                 Spacer()
                                 
                                 VStack {
-                                    Text("Current Streak")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .foregroundStyle(.primary)
-                                        .padding(.top, 20)
-                                    
+                                    Text("Workout Input Streak")
                                     Text("\(StreakData.streakCount())")
                                         .font(.system(size: 60, weight: .bold))
                                         .foregroundStyle(.primary)
-                                        .padding(.bottom, 20)
-                                        .padding(.top, 5)
                                 }
+                                .padding(10)
                                 
                                 Spacer()
                             }
@@ -58,7 +57,7 @@ struct HomeView: View {
                         .listSectionSpacing(15)
                         
                         // User can see main events and their PR
-                        Section {
+                        Section("Personal Records") {
                             VStack {
                                 if events.isEmpty {
                                     HStack {
@@ -71,11 +70,6 @@ struct HomeView: View {
                                         Spacer()
                                     }
                                 } else {
-                                    Text("Personal Records")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(.bottom, 8)
-                                    
                                     ForEach(events, id: \.self) { event in
                                         if let record = prs[event], !record.isEmpty {
                                             HStack {
@@ -96,21 +90,16 @@ struct HomeView: View {
                                     }
                                 }
                             }
-                            .padding()
+                            .padding(10)
                         }
                         .listSectionSpacing(15)
                         
                         // Display meet dates
-                        Section {
+                        Section("Meet Days") {
                             HStack {
                                 Spacer()
                                 
                                 VStack {
-                                    Text("Meet Days")
-                                        .font(.headline)
-                                        .fontWeight(.medium)
-                                        .padding(.bottom,8)
-                                    
                                     if meets.isEmpty {
                                         Text("No meet days selected")
                                             .foregroundStyle(.secondary)
@@ -128,7 +117,7 @@ struct HomeView: View {
                                     loadPR()
                                     loadMeets()
                                 }
-                                .padding()
+                                .padding(10)
                                 
                                 Spacer()
                             }

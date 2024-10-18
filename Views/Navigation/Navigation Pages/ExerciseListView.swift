@@ -32,11 +32,16 @@ struct ExerciseListView: View {
             ZStack {
                 VStack {
                     if showButtons {
-                        // Menu bar icon
-                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                        
-                        // Title
-                        TitleBackground(title: "Exercises")
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "Exercises")
+                            
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                Spacer()
+                            }
+                        }
                     } else {
                         withAnimation {
                             // Title

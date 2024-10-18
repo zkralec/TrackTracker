@@ -28,11 +28,16 @@ struct InjuryView: View {
             NavigationStack {
                 ZStack {
                     VStack {
-                        // Menu button
-                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                        
-                        // Title
-                        TitleBackground(title: "Injury Log")
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "Injury Log")
+                            
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                Spacer()
+                            }
+                        }
                         
                         // Button to add a new injury
                         Button(action: {
