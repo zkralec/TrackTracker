@@ -54,6 +54,7 @@ struct ForgotPasswordView: View {
     }
 }
 
+// Form validation to make sure email is typed in
 extension ForgotPasswordView: AuthenticationFormProtocol {
     var formValid: Bool {
         return !email.isEmpty

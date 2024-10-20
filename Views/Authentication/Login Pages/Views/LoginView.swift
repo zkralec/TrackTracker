@@ -90,6 +90,7 @@ struct LoginView: View {
     }
 }
 
+// Form validation to make sure fields have valid info
 extension LoginView: AuthenticationFormProtocol {
     var formValid: Bool {
         return !email.isEmpty

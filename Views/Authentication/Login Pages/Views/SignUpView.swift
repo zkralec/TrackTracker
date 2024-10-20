@@ -117,6 +117,7 @@ struct SignUpView: View {
     }
 }
 
+// Form validation to make sure fields have valid info
 extension SignUpView: AuthenticationFormProtocol {
     var formValid: Bool {
         return !email.isEmpty
