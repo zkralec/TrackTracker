@@ -68,6 +68,11 @@ struct MealsView: View {
                                         
                                     }
                                 }
+                        } else if userDataManager.maintenanceCalories == 0 {
+                            Text("To get recommended meals, please enter user data in Settings -> Modify User Data")
+                                .foregroundStyle(Color.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding()
                         } else {
                             // Loading indicator
                             ProgressView()

@@ -87,16 +87,20 @@ struct WorkoutView: View {
     
     // Have the meters or times field appear depending on saved values
     init() {
-        // Check data and determine mode
-        let hasTimes = !WorkoutData.loadData()!.times.isEmpty
-        let hasMeters = !WorkoutData.loadData()!.meters.isEmpty
-        
-        if !hasTimes && hasMeters {
-            isDistanceMode = true
-        } else if hasTimes && !hasMeters {
-            isDistanceMode = false
-        } else if !hasTimes && !hasMeters {
-            isDistanceMode = true
+        // Safely unwrap the optional data returned by WorkoutData.loadData()
+        if let workoutData = WorkoutData.loadData() {
+            let hasTimes = !workoutData.times.isEmpty
+            let hasMeters = !workoutData.meters.isEmpty
+            
+            if !hasTimes && hasMeters {
+                isDistanceMode = true
+            } else if hasTimes && !hasMeters {
+                isDistanceMode = false
+            } else if !hasTimes && !hasMeters {
+                isDistanceMode = true
+            } else {
+                isDistanceMode = true
+            }
         } else {
             isDistanceMode = true
         }

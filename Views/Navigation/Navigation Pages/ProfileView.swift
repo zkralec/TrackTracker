@@ -49,7 +49,6 @@ struct ProfileView: View {
                                     
                                     VStack {
                                         // Display user information
-                                        if let userData = userDataManager.userData {
                                             HStack {
                                                 Text(user.initials)
                                                 .font(.title)
@@ -75,6 +74,7 @@ struct ProfileView: View {
                                             .roundedBackground()
                                             .padding()
                                             
+                                        if let userData = userDataManager.userData {
                                             HStack {
                                                 VStack(alignment: .trailing, spacing: 4) {
                                                     Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
@@ -98,6 +98,11 @@ struct ProfileView: View {
                                                         .roundedBackground()
                                                 }
                                             }
+                                        } else {
+                                            Text("To get more user info displayed, go to Settings -> Modify User Data")
+                                                .foregroundStyle(Color.secondary)
+                                                .multilineTextAlignment(.center)
+                                                .padding()
                                         }
                                     }
                                     
