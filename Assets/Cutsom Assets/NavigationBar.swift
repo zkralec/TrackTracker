@@ -14,7 +14,7 @@ struct NavigationBar: View {
     var body: some View {
         VStack {
             Divider()
-                .padding(.top,-8)
+                .padding(.top, -8)
             // Navigation buttons
             HStack {
                 VStack {

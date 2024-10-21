@@ -70,7 +70,7 @@ struct ExerciseListView: View {
                                     Text("Quadriceps").tag("quadriceps")
                                 }
                                 .tint(.blue)
-                                .padding(.leading,-11)
+                                .padding(.leading, -10)
                                 // Automatically changes and fetches exercises
                                 .onChange(of: muscleTarget) {
                                     withAnimation {
@@ -80,6 +80,7 @@ struct ExerciseListView: View {
                             }
                             .roundedBackground()
                         }
+                        .padding(.bottom, 5)
                     }
                     
                     // Scrollable section for all fetched exercises
