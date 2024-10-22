@@ -9,7 +9,6 @@ import SwiftUI
 
 // Main page for the user, shows a variety of info
 struct HomeView: View {
-    @State private var currPage: Int = 3
     @State private var isSideMenuOpen = false
     @State private var prs = [EventData: String]()
     @State private var meets: [Date] = []
@@ -23,7 +22,7 @@ struct HomeView: View {
     }()
     
     var body: some View {
-        if currPage == 3 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -36,7 +35,7 @@ struct HomeView: View {
                             Spacer()
                         }
                     }
-
+                    
                     List {
                         // Current streak of tracking workouts
                         Section("Streak") {
@@ -125,31 +124,11 @@ struct HomeView: View {
                     .background(Color(.systemGray6).opacity(0.05))
                     
                     // Navigation bar buttons
-                    VStack {
-                        NavigationBar(currPage: $currPage)
-                    }
+                    NavigationBar()
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 0 {
-            WorkoutView()
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 2 {
-            MealsView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
     

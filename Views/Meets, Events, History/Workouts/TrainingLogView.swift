@@ -9,7 +9,6 @@ import SwiftUI
 
 // Keeps track of the last 10 workouts a user completed
 struct TrainingLogView: View {
-    @State private var currPage: Int = 8
     @State private var isSideMenuOpen = false
     @State private var pastWorkoutData = PastWorkoutData.loadPast()
     
@@ -26,7 +25,7 @@ struct TrainingLogView: View {
     }
     
     var body: some View {
-        if currPage == 8 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -186,20 +185,8 @@ struct TrainingLogView: View {
                     }
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
 }

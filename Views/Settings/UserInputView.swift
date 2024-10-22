@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-// Manages global variable
-struct GlobalVariables {
-    @AppStorage("hasCompletedInput") static var userInput: Bool = false
-}
-
 // Page to gather user data
 struct UserInputView: View {
     @State private var heightFeet: Int = 0
@@ -22,7 +17,6 @@ struct UserInputView: View {
     @State var isSideMenuOpen = false
     @State private var gender = Gender.male
     @State private var userData: UserData?
-    @State private var currPage: Int = -1
     
     @FocusState private var focusedField: Int?
     @ObservedObject var userDataManager = UserDataManager.shared
@@ -46,7 +40,7 @@ struct UserInputView: View {
     
     var body: some View {
         // If the user has not completed input send to this view
-        if currPage == -1 {
+        NavigationStack {
                 ZStack {
                     VStack {
                         ZStack {
@@ -147,20 +141,8 @@ struct UserInputView: View {
                         userData.saveUserData()
                     }
                     // Show side menu if needed
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                    SideBar(isSideMenuOpen: $isSideMenuOpen)
                 }
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
 }

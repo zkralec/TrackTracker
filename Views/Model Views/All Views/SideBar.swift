@@ -2,9 +2,16 @@ import SwiftUI
 
 // This is the side bar for enhanced navigation
 struct SideBar: View {
-    @Binding var currPage: Int
     @Binding var isSideMenuOpen: Bool
     @Environment(\.colorScheme) var colorScheme
+    
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
     
     var body: some View {
         ZStack {
@@ -33,12 +40,10 @@ struct SideBar: View {
                     HStack {
                         VStack(alignment: .leading) {
                             // Home button
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 3
-                                    isSideMenuOpen.toggle()
-                                }
-                            }) {
+                            NavigationLink {
+                                HomeView()
+                                    .navigationBarBackButtonHidden()
+                            } label: {
                                 HStack {
                                     Image(systemName: "house")
                                         .foregroundStyle(.blue)
@@ -48,15 +53,16 @@ struct SideBar: View {
                                 .fontWeight(.medium)
                                 .font(.system(size: 20))
                             }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
+                            }
                             .padding(6)
                             
                             // Events button
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 5
-                                    isSideMenuOpen.toggle()
-                                }
-                            }) {
+                            NavigationLink {
+                                EventView(events: $events)
+                                    .navigationBarBackButtonHidden()
+                            } label: {
                                 HStack {
                                     Image(systemName: "figure.track.and.field")
                                         .foregroundStyle(.blue)
@@ -66,15 +72,16 @@ struct SideBar: View {
                                 .fontWeight(.medium)
                                 .font(.system(size: 20))
                             }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
+                            }
                             .padding(6)
                             
                             // Meets button
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 6
-                                    isSideMenuOpen.toggle()
-                                }
-                            }) {
+                            NavigationLink {
+                                MeetView()
+                                    .navigationBarBackButtonHidden()
+                            } label: {
                                 HStack {
                                     Image(systemName: "calendar")
                                         .foregroundStyle(.blue)
@@ -84,15 +91,16 @@ struct SideBar: View {
                                 .fontWeight(.medium)
                                 .font(.system(size: 20))
                             }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
+                            }
                             .padding(6)
                             
                             // Injury log button
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 9
-                                    isSideMenuOpen.toggle()
-                                }
-                            }) {
+                            NavigationLink {
+                                InjuryView()
+                                    .navigationBarBackButtonHidden()
+                            } label: {
                                 HStack {
                                     Image(systemName: "cross")
                                         .foregroundStyle(.blue)
@@ -102,15 +110,16 @@ struct SideBar: View {
                                 .fontWeight(.medium)
                                 .font(.system(size: 20))
                             }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
+                            }
                             .padding(6)
                             
                             // Training log button
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 8
-                                    isSideMenuOpen.toggle()
-                                }
-                            }) {
+                            NavigationLink {
+                                TrainingLogView()
+                                    .navigationBarBackButtonHidden()
+                            } label: {
                                 HStack {
                                     Image(systemName: "note.text")
                                         .foregroundStyle(.blue)
@@ -120,15 +129,16 @@ struct SideBar: View {
                                 .fontWeight(.medium)
                                 .font(.system(size: 20))
                             }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
+                            }
                             .padding(6)
                             
                             // Settings button
-                            Button(action: {
-                                withAnimation {
-                                    currPage = 4
-                                    isSideMenuOpen.toggle()
-                                }
-                            }) {
+                            NavigationLink {
+                                SettingsView()
+                                    .navigationBarBackButtonHidden()
+                            } label: {
                                 HStack {
                                     Image(systemName: "gearshape")
                                         .foregroundStyle(.blue)
@@ -137,6 +147,9 @@ struct SideBar: View {
                                 }
                                 .fontWeight(.medium)
                                 .font(.system(size: 20))
+                            }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
                             }
                             .padding(6)
                         }

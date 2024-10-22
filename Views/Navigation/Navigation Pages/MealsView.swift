@@ -9,7 +9,6 @@ import SwiftUI
 
 // Page for meal info and user calories
 struct MealsView: View {
-    @State private var currPage: Int = 2
     @State private var mealPlan: MealPlan?
     @State private var shouldFetchMealPlan = false
     @State private var isSideMenuOpen = false
@@ -25,7 +24,7 @@ struct MealsView: View {
     @StateObject var userDataManager = UserDataManager()
     
     var body: some View {
-        if currPage == 2 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -50,32 +49,42 @@ struct MealsView: View {
                         .padding(5)
                         .roundedBackground()
                     
-                    NavigationStack {
-                        // Check if meal plan is fetched
-                        if let mealPlan = mealPlan {
-                            MealsListView(mealPlan: mealPlan)
-                                .toolbar {
-                                    ToolbarItem(placement: .topBarTrailing) {
-                                        Button(action: {
-                                            fetchMeals(isRefreshed: true)
-                                        }) {
-                                            Image(systemName: "arrow.circlepath")
-                                                .frame(width: 10, height: 10)
-                                            Text("  Refresh Meals")
-                                                .foregroundStyle(Color.blue)
-                                                .font(.caption)
-                                        }
-                                        
+                    // Check if meal plan is fetched
+                    if let mealPlan = mealPlan {
+                        MealsListView(mealPlan: mealPlan)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button(action: {
+                                        fetchMeals(isRefreshed: true)
+                                    }) {
+                                        Image(systemName: "arrow.circlepath")
+                                            .frame(width: 10, height: 10)
+                                        Text("  Refresh Meals")
+                                            .foregroundStyle(Color.blue)
+                                            .font(.caption)
                                     }
+                                    
                                 }
-                        } else if userDataManager.maintenanceCalories == 0 {
+                            }
+                    } else if userDataManager.maintenanceCalories == 0 {
+                        VStack {
+                            Spacer()
+                            
                             Text("To get recommended meals, please enter user data in Settings -> Modify User Data")
                                 .foregroundStyle(Color.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding()
-                        } else {
-                            // Loading indicator
+                            
+                            Spacer()
+                        }
+                    } else {
+                        // Loading indicator
+                        VStack {
+                            Spacer()
+                            
                             ProgressView()
+                            
+                            Spacer()
                         }
                     }
                     
@@ -83,7 +92,7 @@ struct MealsView: View {
                     
                     // Navigation bar buttons
                     VStack {
-                        NavigationBar(currPage: $currPage)
+                        NavigationBar()
                     }
                     .onAppear {
                         // Calculate maintenance calories
@@ -94,26 +103,8 @@ struct MealsView: View {
                     }
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 0 {
-            WorkoutView()
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
     

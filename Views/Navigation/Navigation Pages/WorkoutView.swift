@@ -11,7 +11,6 @@ import UIKit
 // Other main page for the user, mainly lots of UI and fields
 struct WorkoutView: View {
     @State private var currDate = Date()
-    @State private var currPage: Int = 0
     @State private var isSideMenuOpen = false
     @State private var meters: [String] = [""]
     @State private var times: [String] = [""]
@@ -127,7 +126,7 @@ struct WorkoutView: View {
     }
     
     var body: some View {
-        if currPage == 0 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -535,9 +534,7 @@ struct WorkoutView: View {
                     
                     // Navigation bar buttons
                     if !isFocused {
-                        VStack {
-                            NavigationBar(currPage: $currPage)
-                        }
+                        NavigationBar()
                     }
                 }
                 .onAppear {
@@ -821,26 +818,8 @@ struct WorkoutView: View {
                     onDisappearAction?(isFieldModified)
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 2 {
-            MealsView()
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
     

@@ -9,7 +9,6 @@ import SwiftUI
 
 // Keeps track of the users personal info
 struct ProfileView: View {
-    @State private var currPage = 7
     @State private var isSideMenuOpen = false
     @State private var prs = [EventData: String]()
     @State private var userData: UserData?
@@ -26,7 +25,7 @@ struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
-        if currPage == 7 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -49,31 +48,31 @@ struct ProfileView: View {
                                     
                                     VStack {
                                         // Display user information
-                                            HStack {
-                                                Text(user.initials)
+                                        HStack {
+                                            Text(user.initials)
                                                 .font(.title)
                                                 .fontWeight(.semibold)
                                                 .foregroundStyle(Color.white)
                                                 .frame(width: 72, height: 72)
                                                 .background(Color(.systemGray3))
                                                 .clipShape(Circle())
-                                                
-                                                VStack(alignment: .leading, spacing: 4) {
-                                                    Text(user.fullName)
-                                                        .font(.subheadline)
-                                                        .fontWeight(.semibold)
-                                                        .padding(.top, 4)
-                                                    
-                                                    Text(user.email)
-                                                        .font(.footnote)
-                                                        .foregroundStyle(Color.secondary)
-                                                }
-                                            }
-                                            .padding(.horizontal)
-                                            .padding(.vertical, 10)
-                                            .roundedBackground()
-                                            .padding()
                                             
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(user.fullName)
+                                                    .font(.subheadline)
+                                                    .fontWeight(.semibold)
+                                                    .padding(.top, 4)
+                                                
+                                                Text(user.email)
+                                                    .font(.footnote)
+                                                    .foregroundStyle(Color.secondary)
+                                            }
+                                        }
+                                        .padding(.horizontal)
+                                        .padding(.vertical, 10)
+                                        .roundedBackground()
+                                        .padding()
+                                        
                                         if let userData = userDataManager.userData {
                                             HStack {
                                                 VStack(alignment: .trailing, spacing: 4) {
@@ -155,33 +154,12 @@ struct ProfileView: View {
                             .listSectionSpacing(15)
                         }
                     }
-                   
                     // Navigation bar buttons
-                    VStack {
-                        NavigationBar(currPage: $currPage)
-                    }
+                    NavigationBar()
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 0 {
-            WorkoutView()
-        } else if currPage == 1 {
-            ExerciseView()
-        } else if currPage == 2 {
-            MealsView()
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
     

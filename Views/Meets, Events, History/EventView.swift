@@ -9,12 +9,11 @@ import SwiftUI
 
 // Allows user to choose the events they do
 struct EventView: View {
-    @State private var currPage: Int = 5
     @State private var isSideMenuOpen = false
     @Binding var events: [EventData]
     
     var body: some View {
-        if currPage == 5 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -57,20 +56,8 @@ struct EventView: View {
                     .background(Color.gray.opacity(0.05))
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 6 {
-            MeetView()
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
     

@@ -10,7 +10,6 @@ import Combine
 
 // Holds all the settings the user can modify
 class SettingsViewModel: ObservableObject {
-    @Published var currPage: Int = 4
     @Published var prs = [EventData: String]()
     @Published var meets: [Date] = []
     @Published var isFocused = false
@@ -85,7 +84,7 @@ struct SettingsView: View {
     @State private var deleteConfirmation = false
     
     var body: some View {
-        if viewModel.currPage == 4 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -168,10 +167,9 @@ struct SettingsView: View {
                         
                         // Allows user to go to UserInputView to change their user info
                         Section("User Data") {
-                            Button {
-                                withAnimation {
-                                    viewModel.currPage = -1
-                                }
+                            NavigationLink {
+                                UserInputView()
+                                    .navigationBarBackButtonHidden()
                             } label: {
                                 SettingsRowView(imageName: "person.circle", title: "Modify User Data", tintColor: .blue)
                             }
@@ -215,28 +213,8 @@ struct SettingsView: View {
                     }
                 }
                 // Show side menu if needed
-                SideBar(currPage: $viewModel.currPage, isSideMenuOpen: $viewModel.isSideMenuOpen)
+                SideBar(isSideMenuOpen: $viewModel.isSideMenuOpen)
             }
-        } else if viewModel.currPage == -1 {
-            UserInputView()
-        } else if viewModel.currPage == 0 {
-            WorkoutView()
-        } else if viewModel.currPage == 1 {
-            ExerciseView()
-        } else if viewModel.currPage == 2 {
-            MealsView()
-        } else if viewModel.currPage == 3 {
-            HomeView()
-        } else if viewModel.currPage == 5 {
-            EventView(events: $viewModel.events)
-        } else if viewModel.currPage == 6 {
-            MeetView()
-        } else if viewModel.currPage == 7 {
-            ProfileView()
-        } else if viewModel.currPage == 8 {
-            TrainingLogView()
-        } else if viewModel.currPage == 9 {
-            InjuryView()
         }
     }
 }

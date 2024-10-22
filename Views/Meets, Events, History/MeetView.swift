@@ -12,7 +12,6 @@ import UserNotifications
 struct MeetView: View {
     @State private var date = Date()
     @State private var meets: [Date] = []
-    @State private var currPage: Int = 6
     @State private var isSideMenuOpen = false
     
     @State private var events: [EventData] = {
@@ -24,7 +23,7 @@ struct MeetView: View {
     }()
     
     var body: some View {
-        if currPage == 6 {
+        NavigationStack {
             ZStack {
                 VStack {
                     ZStack {
@@ -124,20 +123,8 @@ struct MeetView: View {
                     loadMeets()
                 }
                 // Show side menu if needed
-                SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
-        } else if currPage == 3 {
-            HomeView()
-        } else if currPage == 4 {
-            SettingsView()
-        } else if currPage == 5 {
-            EventView(events: $events)
-        } else if currPage == 7 {
-            ProfileView()
-        } else if currPage == 8 {
-            TrainingLogView()
-        } else if currPage == 9 {
-            InjuryView()
         }
     }
     

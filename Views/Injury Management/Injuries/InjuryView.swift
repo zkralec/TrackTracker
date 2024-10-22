@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct InjuryView: View {
-    @State private var currPage: Int = 9
     @State private var isSideMenuOpen = false
     @State private var injuryLog: [InjuryData] = []
     @State private var selectedInjury: InjuryData?
@@ -24,7 +23,7 @@ struct InjuryView: View {
     }()
     
     var body: some View {
-        if currPage == 9 {
+        NavigationStack {
             NavigationStack {
                 ZStack {
                     VStack {
@@ -137,25 +136,11 @@ struct InjuryView: View {
                         }
                     }
                     // Show side menu if needed
-                    SideBar(currPage: $currPage, isSideMenuOpen: $isSideMenuOpen)
+                    SideBar(isSideMenuOpen: $isSideMenuOpen)
                 }
             }
             .onAppear {
                 loadInjuryLog()
-            }
-        } else {
-            if currPage == 3 {
-                HomeView()
-            } else if currPage == 4 {
-                SettingsView()
-            } else if currPage == 5 {
-                EventView(events: $events)
-            } else if currPage == 6 {
-                MeetView()
-            } else if currPage == 7 {
-                ProfileView()
-            } else if currPage == 8 {
-                TrainingLogView()
             }
         }
     }

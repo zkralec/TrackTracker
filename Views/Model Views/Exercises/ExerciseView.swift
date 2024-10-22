@@ -18,7 +18,7 @@ struct ExerciseView: View {
         VStack {
             // Check if exercises are fetched
             if let exerciseData = exerciseData {
-                ExerciseListView(muscleTarget: $muscleTarget, showButtons: $showButtons, exerciseData: exerciseData,
+                ExerciseListView(muscleTarget: $muscleTarget, exerciseData: exerciseData,
                         onExerciseDataFetched: { fetchedData in
                         self.exerciseData = fetchedData
                     }
