@@ -10,34 +10,35 @@ import SwiftUI
 // Formats the fetched meal data
 struct MealsListView: View {
     var mealPlan: MealPlan
+    let mealTitles = ["Breakfast", "Lunch", "Dinner"]
     
     var body: some View {
         List {
-            ForEach(mealPlan.meals) { meal in
-                Section {
+            // Use the indices to map meals and titles
+            ForEach(mealPlan.meals.indices, id: \.self) { index in
+                Section(header: Text(mealTitles[index])) {  // Use the title based on index
                     VStack(alignment: .leading) {
                         // Meal title
-                        Text(meal.title)
+                        Text(mealPlan.meals[index].title)
                             .font(.headline)
                             .padding(.bottom, 4)
                         
                         // Ready time
-                        Text("Ready in: \(meal.readyInMinutes) minutes")
+                        Text("Ready in: \(mealPlan.meals[index].readyInMinutes) minutes")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                         
                         // Servings
-                        Text("Servings: \(meal.servings)")
+                        Text("Servings: \(mealPlan.meals[index].servings)")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                         
                         // Link to food details
-                        Link("View Details", destination: meal.sourceUrl)
+                        Link("View Details", destination: mealPlan.meals[index].sourceUrl)
                             .font(.subheadline)
                             .foregroundStyle(.blue)
                             .underline()
                             .padding(.top, 4)
-                        
                     }
                     .padding()
                 }

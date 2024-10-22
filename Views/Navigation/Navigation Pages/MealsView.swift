@@ -24,7 +24,7 @@ struct MealsView: View {
     @StateObject var userDataManager = UserDataManager()
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             ZStack {
                 VStack {
                     ZStack {
@@ -34,38 +34,32 @@ struct MealsView: View {
                         HStack {
                             // Menu bar icon
                             MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                            
                             Spacer()
+                            
+                            // Refresh button at the top-right
+                            Button(action: {
+                                fetchMeals(isRefreshed: true)
+                            }) {
+                                Image(systemName: "arrow.circlepath")
+                                    .frame(width: 70, height: 30)
+                            }
                         }
+                        .padding(.top, 5)
                     }
                     
-                    // Display helpful info for meal order
-                    Text(" Breakfast - Lunch - Dinner ")
-                        .font(.subheadline)
-                        .padding(.top, 5)
-                    
-                    // Display user information
-                    Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
-                        .font(.subheadline)
-                        .padding(5)
-                        .roundedBackground()
+                    VStack {
+                        // Display user information
+                        Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
+                            .font(.subheadline)
+                            .padding(5)
+                            .roundedBackground()
+                    }
+                    .padding(.bottom, 50)
                     
                     // Check if meal plan is fetched
                     if let mealPlan = mealPlan {
                         MealsListView(mealPlan: mealPlan)
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button(action: {
-                                        fetchMeals(isRefreshed: true)
-                                    }) {
-                                        Image(systemName: "arrow.circlepath")
-                                            .frame(width: 10, height: 10)
-                                        Text("  Refresh Meals")
-                                            .foregroundStyle(Color.blue)
-                                            .font(.caption)
-                                    }
-                                    
-                                }
-                            }
                     } else if userDataManager.maintenanceCalories == 0 {
                         VStack {
                             Spacer()

@@ -70,8 +70,8 @@ struct ExerciseListView: View {
                         }
                         .roundedBackground()
                     }
-                    .padding(.top, -10)
-                    .padding(.bottom)
+                    .padding(.top, -5)
+                    .padding(.bottom, 30)
                     
                     // Scrollable section for all fetched exercises
                     NavigationStack {
