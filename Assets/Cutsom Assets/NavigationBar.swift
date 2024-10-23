@@ -19,23 +19,21 @@ struct NavigationBar: View {
                 HStack {
                     VStack {
                         // Exercise button
-                        NavigationStack {
-                            NavigationLink {
-                                ExerciseView()
-                                    .navigationBarBackButtonHidden()
-                            } label: {
-                                Image(systemName: "dumbbell.fill")
-                                    .foregroundStyle(.blue)
-                                    .frame(width: 30, height: 30)
-                            }
-                            .frame(width: 70, height: 30)
-                            .buttonStyle(ButtonPress())
-                            
-                            Text("Exercises")
-                                .font(.caption)
+                        NavigationLink {
+                            ExerciseView()
+                                .navigationBarBackButtonHidden()
+                        } label: {
+                            Image(systemName: "dumbbell.fill")
                                 .foregroundStyle(.blue)
-                                .padding(4)
+                                .frame(width: 30, height: 30)
                         }
+                        .frame(width: 70, height: 30)
+                        .buttonStyle(ButtonPress())
+                        
+                        Text("Exercises")
+                            .font(.caption)
+                            .foregroundStyle(.blue)
+                            .padding(4)
                     }
                     
                     VStack {
