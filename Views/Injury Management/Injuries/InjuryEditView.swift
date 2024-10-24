@@ -142,7 +142,6 @@ struct InjuryEditView: View {
                     }
                     .listSectionSpacing(15)
                 }
-                .background(Color(.systemGray6).opacity(0.05))
             }
         }
         .onAppear {

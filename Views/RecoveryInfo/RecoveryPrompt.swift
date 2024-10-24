@@ -12,8 +12,6 @@ struct RecoveryPrompt: View {
     @Binding var isPresented: Bool
     @Binding var selectedExperience: String?
     
-    @Environment(\.colorScheme) var colorScheme
-    
     // Whole list of recovery ideas depending on workout difficulty
     let recoveryIdeas: [String: [(title: String, description: String)]] = [
         "Easy": [
@@ -78,8 +76,6 @@ struct RecoveryPrompt: View {
                         Text(experience)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(colorScheme == .dark ? Color.white.opacity(0.1) : Color.blue)
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .padding(.vertical, 5)
@@ -121,14 +117,11 @@ struct RecoveryPrompt: View {
                 Text("Done")
                     .padding()
                     .frame(maxWidth: .infinity)
-                    .background(colorScheme == .dark ? Color.white.opacity(0.1) : Color.blue)
-                    .foregroundColor(colorScheme == .dark ? Color.white : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding()
         }
         .padding()
-        .background(colorScheme == .dark ? Color.black.opacity(0.8) : Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 10)
         .ignoresSafeArea()

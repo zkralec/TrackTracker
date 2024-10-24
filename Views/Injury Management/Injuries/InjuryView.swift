@@ -122,7 +122,6 @@ struct InjuryView: View {
                                 }
                             }
                         }
-                        .background(Color(.systemGray6).opacity(0.05))
                         // Sheet for editing injury details
                         .sheet(isPresented: $isPresentingInjuryDetail) {
                             InjuryEditView(injuryLog: $injuryLog, injury: selectedInjury ?? InjuryData.default, isEditing: isEditing)

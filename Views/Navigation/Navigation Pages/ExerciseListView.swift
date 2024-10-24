@@ -116,7 +116,6 @@ struct ExerciseListView: View {
                             }
                         }
                         .padding(.top, -15)
-                        .background(Color.gray.opacity(0.05))
                     }
                     // Navigation bar buttons
                     NavigationBar()

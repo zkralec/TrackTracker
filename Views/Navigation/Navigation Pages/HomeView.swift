@@ -121,7 +121,6 @@ struct HomeView: View {
                         }
                         .listSectionSpacing(15)
                     }
-                    .background(Color(.systemGray6).opacity(0.05))
                     
                     // Navigation bar buttons
                     NavigationBar()

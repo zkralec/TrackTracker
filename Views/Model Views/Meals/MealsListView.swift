@@ -46,6 +46,5 @@ struct MealsListView: View {
             }
         }
         .padding(.top, -35)
-        .background(Color.gray.opacity(0.05))
     }
 }

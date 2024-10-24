@@ -53,7 +53,6 @@ struct EventView: View {
                             .listSectionSpacing(5)
                         }
                     }
-                    .background(Color.gray.opacity(0.05))
                 }
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
