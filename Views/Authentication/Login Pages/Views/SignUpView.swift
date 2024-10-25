@@ -29,84 +29,51 @@ struct SignUpView: View {
             // Form fields
             VStack(spacing: 8) {
                 // First name
-                ZStack(alignment: .trailing) {
-                    VStack {
-                        LoginInputView(text: $fullName,
-                                       title: "Full Name",
-                                       placeholder: "Enter full name")
-                        
-                        HStack(alignment: .center) {
-                            if !fullName.contains(" ") && fullName != "" {
-                                Text("Name Format: 'First Last'")
-                                    .foregroundStyle(Color.secondary)
-                                    .font(.footnote)
-                                    .padding(.bottom, 5)
-                            }
-                        }
-                    }
+                VStack {
+                    LoginInputView(text: $fullName,
+                                   title: "Full Name",
+                                   placeholder: "Enter full name")
                     
-                    if fullName.contains(" ") && fullName != " " {
-                        Image(systemName: "checkmark.circle.fill")
-                            .imageScale(.large)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.green)
-                            .padding(.top, 15)
-                            .padding(.trailing, 5)
-                    }
-                }
-                
-                // Username
-                ZStack(alignment: .trailing) {
-                    VStack {
-                        LoginInputView(text: $email,
-                                       title: "Email Address",
-                                       placeholder: "name@example.com")
-                        .autocapitalization(.none)
-                        
-                        HStack(alignment: .center) {
-                            if !email.contains("@") && email != "" {
-                                Text("Email Format: 'name@example.com'")
-                                    .foregroundStyle(Color.secondary)
-                                    .font(.footnote)
-                                    .padding(.bottom, 5)
-                            }
-                        }
-                    }
-                    
-                    if email.contains("@") && email != "@" {
-                        Image(systemName: "checkmark.circle.fill")
-                            .imageScale(.large)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.green)
-                            .padding(.top, 15)
-                            .padding(.trailing, 5)
-                    }
-                }
-                
-                // Password
-                ZStack(alignment: .trailing) {
-                    VStack {
-                        LoginInputView(text: $password,
-                                       title: "Password",
-                                       placeholder: "Enter your password",
-                                       isSecureField: true)
-                        .autocapitalization(.none)
-                        
-                        if !password.isEmpty && password.count < 6 {
-                            Text("Password must be 6 or more characters")
+                    HStack(alignment: .center) {
+                        if !fullName.contains(" ") && fullName != "" {
+                            Text("Name Format: 'First Last'")
                                 .foregroundStyle(Color.secondary)
                                 .font(.footnote)
                                 .padding(.bottom, 5)
                         }
                     }
+                }
+                
+                // Username
+                VStack {
+                    LoginInputView(text: $email,
+                                   title: "Email Address",
+                                   placeholder: "name@example.com")
+                    .autocapitalization(.none)
                     
-                    if password.count > 5 {
-                        Image(systemName: "checkmark.circle.fill")
-                            .imageScale(.large)
-                            .fontWeight(.bold)
-                            .foregroundStyle(Color.green)
-                            .padding(.top, 15)
-                            .padding(.trailing, 5)
+                    HStack(alignment: .center) {
+                        if !email.contains("@") && email != "" {
+                            Text("Email Format: 'name@example.com'")
+                                .foregroundStyle(Color.secondary)
+                                .font(.footnote)
+                                .padding(.bottom, 5)
+                        }
+                    }
+                }
+                
+                // Password
+                VStack {
+                    LoginInputView(text: $password,
+                                   title: "Password",
+                                   placeholder: "Enter your password",
+                                   isSecureField: true)
+                    .autocapitalization(.none)
+                    
+                    if !password.isEmpty && password.count < 6 {
+                        Text("Password must be 6 or more characters")
+                            .foregroundStyle(Color.secondary)
+                            .font(.footnote)
+                            .padding(.bottom, 5)
                     }
                 }
                 
