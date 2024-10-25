@@ -29,10 +29,35 @@ struct SignUpView: View {
             // Form fields
             VStack(spacing: 8) {
                 // First name
-                LoginInputView(text: $fullName,
-                               title: "Full Name",
-                               placeholder: "Enter full name")
-                
+                ZStack(alignment: .trailing) {
+                    VStack {
+                        LoginInputView(text: $fullName,
+                                       title: "Full Name",
+                                       placeholder: "Enter full name")
+                        
+                        HStack {
+                            Spacer()
+                            
+                            if !fullName.contains(" ") && fullName != "" {
+                                Text("Name Format: 'First Last'")
+                                    .foregroundStyle(Color.secondary)
+                                    .font(.subheadline)
+                                    .padding(.bottom, 5)
+                            }
+                            
+                            Spacer()
+                        }
+                    }
+                    
+                    if fullName.contains(" ") && fullName != " " {
+                        Image(systemName: "checkmark.circle.fill")
+                            .imageScale(.large)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.green)
+                            .padding(.top, 15)
+                            .padding(.trailing, 5)
+                    }
+                }
                 
                 // Username
                 LoginInputView(text: $email,

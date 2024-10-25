@@ -50,7 +50,6 @@ struct LoginView: View {
                         .font(.system(size: 14))
                 }
 
-                
                 // Sign in button
                 Button {
                     Task {
@@ -69,9 +68,7 @@ struct LoginView: View {
                 .opacity(formValid ? 1.0 : 0.5)
                 .padding(.top, 10)
                 
-                
                 Spacer()
-                
                 
                 // Sign up
                 NavigationLink {
