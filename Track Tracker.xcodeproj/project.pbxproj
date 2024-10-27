@@ -45,6 +45,7 @@
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
 		1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220E2BDC8F0B00F633BE /* EventView.swift */; };
+		14960F1D2CCE696300798C27 /* CustomKeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14960F1C2CCE696300798C27 /* CustomKeyboardToolbar.swift */; };
 		14BF430F2BA0FA34004B3321 /* MealPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF430E2BA0FA34004B3321 /* MealPlan.swift */; };
 		14BF43112BA0FBCC004B3321 /* MealsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF43102BA0FBCC004B3321 /* MealsManager.swift */; };
 		14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF43122BA106FD004B3321 /* MealsListView.swift */; };
@@ -122,6 +123,7 @@
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		1492220E2BDC8F0B00F633BE /* EventView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		14960F1C2CCE696300798C27 /* CustomKeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomKeyboardToolbar.swift; sourceTree = "<group>"; };
 		14BF430E2BA0FA34004B3321 /* MealPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlan.swift; sourceTree = "<group>"; };
 		14BF43102BA0FBCC004B3321 /* MealsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsManager.swift; sourceTree = "<group>"; };
 		14BF43122BA106FD004B3321 /* MealsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsListView.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				144BEBFC2BC4CB990002AEB9 /* ToolbarModifier.swift */,
 				14535E112BC45EB50080531D /* NavigationBar.swift */,
 				149222082BDB1ADE00F633BE /* MenuButton.swift */,
+				14960F1C2CCE696300798C27 /* CustomKeyboardToolbar.swift */,
 			);
 			path = "Cutsom Assets";
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				144BEBFD2BC4CB990002AEB9 /* ToolbarModifier.swift in Sources */,
 				14BF43152BA112F1004B3321 /* RoundedBackground.swift in Sources */,
 				141CA4BD2B7D3B4600A3D82E /* TrackTrackerApp.swift in Sources */,
+				14960F1D2CCE696300798C27 /* CustomKeyboardToolbar.swift in Sources */,
 				14DAEF6A2B7FD00000AF4667 /* WorkoutView.swift in Sources */,
 				149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */,
 				14E1E7A62C1C7ACC00E2C178 /* GetAPIKeys.swift in Sources */,

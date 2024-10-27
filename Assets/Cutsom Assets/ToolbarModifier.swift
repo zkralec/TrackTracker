@@ -7,27 +7,21 @@
 
 import SwiftUI
 
-// Adds a done button to exit a text popup
-// CURRENTLY BUGGED WITH iOS 18
+// Formatting and logic for the custom keyboard dismiss button
 struct ToolbarModifier: ViewModifier {
     @Binding var isFocused: Bool
 
     func body(content: Content) -> some View {
-        content
-            .toolbar {
-                ToolbarItem(placement: .keyboard) {
-                    if isFocused {
-                        HStack {
-                            Spacer()
-                            Button("Done") {
-                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                isFocused = false
-                            }
-                            .padding(.horizontal)
-                        }
-                    }
+        ZStack {
+            content
+                .padding(.bottom, isFocused ? 44 : 0)
+            
+            if isFocused {
+                VStack {
                     Spacer()
+                    CustomKeyboardToolbar(isFocused: $isFocused)
                 }
             }
+        }
     }
 }
