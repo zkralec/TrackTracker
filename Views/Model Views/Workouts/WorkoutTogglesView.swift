@@ -20,7 +20,7 @@ struct WorkoutTogglesView: View {
                         Toggle(label, isOn: binding)
                             .toggleStyle(SwitchToggleStyle(tint: Color.blue))
                             .font(.subheadline)
-                            .disabled(isDisabled)
+                            .disabled(!binding.wrappedValue && anyTogglesOn(toggles))
                             .padding(.trailing)
                     }
                 }
@@ -29,7 +29,7 @@ struct WorkoutTogglesView: View {
         .listSectionSpacing(15)
     }
 
-    private func areAnyTogglesOn(_ toggles: [(String, Binding<Bool>)]) -> Bool {
+    private func anyTogglesOn(_ toggles: [(String, Binding<Bool>)]) -> Bool {
         toggles.contains { $0.1.wrappedValue }
     }
 }
