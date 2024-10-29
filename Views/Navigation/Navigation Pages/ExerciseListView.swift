@@ -95,19 +95,13 @@ struct ExerciseListView: View {
                                             .foregroundStyle(.gray)
                                         
                                         // Instructions
-                                        if exercise.instructions.count > 100 {
-                                            withAnimation {
-                                                NavigationLink(destination: ExerciseDetailsView(muscleTarget: $muscleTarget, exercise: exercise)) {
-                                                    Text("View Details")
-                                                        .foregroundStyle(.blue)
-                                                        .font(.subheadline)
-                                                        .padding(.top, 4)
-                                                }
+                                        withAnimation {
+                                            NavigationLink(destination: ExerciseDetailsView(muscleTarget: $muscleTarget, exercise: exercise)) {
+                                                Text("View Details")
+                                                    .foregroundStyle(.blue)
+                                                    .font(.subheadline)
+                                                    .padding(.top, 4)
                                             }
-                                        } else {
-                                            Text("Instructions: \(exercise.instructions)")
-                                                .font(.subheadline)
-                                                .foregroundStyle(.gray)
                                         }
                                     }
                                     .padding()
@@ -119,6 +113,9 @@ struct ExerciseListView: View {
                     }
                     // Navigation bar buttons
                     NavigationBar()
+                        .onAppear {
+                            print(muscleTarget)
+                        }
                 }
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
