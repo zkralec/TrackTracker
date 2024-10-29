@@ -17,7 +17,7 @@ struct WorkoutView: View {
     @State private var numSets = ""
     @State private var isFieldModified = false
     @State private var isFocused = false
-    @State private var showExperiencePrompt = false
+    @State private var showRecoverySuggestions = false
     @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
     @State private var isDistanceMode: Bool
     @State private var workoutData: WorkoutData?
@@ -145,7 +145,7 @@ struct WorkoutView: View {
                         Button(action: {
                             if !isMeet && !isOff && !isRecovery && !isInjury && isDayComplete {
                                 withAnimation {
-                                    showExperiencePrompt = true
+                                    showRecoverySuggestions = true
                                 }
                             }
                         }) {
@@ -170,9 +170,12 @@ struct WorkoutView: View {
                             withAnimation {
                                 isDayComplete.toggle()
                                 isFocused = false
+                                
                                 if isDayComplete {
                                     if !isMeet && !isOff && !isRecovery {
-                                        showExperiencePrompt = true
+                                        showRecoverySuggestions = true
+                                        // Schedules recovery notification
+                                        scheduleNotification(for: currDate)
                                     }
                                     workoutData?.meters = meters.compactMap { Int($0) }
                                     workoutData?.times = times.compactMap { Int($0) }
@@ -258,9 +261,9 @@ struct WorkoutView: View {
                         .padding(.trailing, 20)
                     }
                     // Once day is complete, prompt user with recovery page if needed
-                    .sheet(isPresented: $showExperiencePrompt) {
+                    .sheet(isPresented: $showRecoverySuggestions) {
                         if !isMeet && !isOff {
-                            RecoveryPrompt(isPresented: $showExperiencePrompt, selectedExperience: $selectedExperience)
+                            RecoveryPrompt(isPresented: $showRecoverySuggestions, selectedExperience: $selectedExperience)
                         }
                     }
                     
@@ -338,9 +341,9 @@ struct WorkoutView: View {
                                 if !isDayComplete {
                                     HStack {
                                         Button(action: {
-                                            if isDistanceMode && meters.count < 6 {
+                                            if isDistanceMode && meters.count < 10 {
                                                 meters.append("")
-                                            } else if !isDistanceMode && times.count < 6 {
+                                            } else if !isDistanceMode && times.count < 10 {
                                                 times.append("")
                                             }
                                         }) {
@@ -824,22 +827,22 @@ struct WorkoutView: View {
     }
     
     // Function to validate the input for time
-    private func validateTimeInput(_ input: String) -> Bool {
+    func validateTimeInput(_ input: String) -> Bool {
         return (input.isEmpty || Int(input) != nil) && input.count <= 5
     }
     
     // Function to validate the input for meters
-    private func validateMetersInput(_ input: String) -> Bool {
+    func validateMetersInput(_ input: String) -> Bool {
         return (input.isEmpty || Int(input) != nil) && input.count <= 5
     }
     
     // Function to validate the input for the number of reps
-    private func validateNumberOfRepsInput(_ input: String) -> Bool {
+    func validateNumberOfRepsInput(_ input: String) -> Bool {
         return (input.isEmpty || Int(input) != nil) && input.count <= 5
     }
     
     // Function to reset isDayComplete if it's a new day
-    private func resetDayCompletionIfNeeded() {
+    func resetDayCompletionIfNeeded() {
         // Retrieve last complete date from UserDefaults
         if let lastCompleteDate = UserDefaults.standard.object(forKey: "lastCompleteDate") as? Date {
             // Check if last complete date is not today
@@ -857,6 +860,30 @@ struct WorkoutView: View {
         } else {
             // No last complete date found, likely first launch, set it to today
             UserDefaults.standard.set(Date(), forKey: "lastCompleteDate")
+        }
+    }
+    
+    // Makes a notification that will go off at the correct date
+    func scheduleNotification(for date: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = "Complete recovery!"
+        content.body = "Look at recovery suggestions in the Workout tab to view suggestions."
+        content.sound = UNNotificationSound.default
+        
+        var triggerDate = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        triggerDate.hour = 13
+        triggerDate.minute = 0
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: date.formatted(), content: content, trigger: trigger)
+        
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error.localizedDescription)")
+            } else {
+                print("Notification scheduled successfully for \(date.formatted())")
+            }
         }
     }
 }

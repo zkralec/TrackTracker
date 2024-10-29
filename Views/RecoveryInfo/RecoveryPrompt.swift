@@ -78,6 +78,8 @@ struct RecoveryPrompt: View {
                             .frame(maxWidth: .infinity)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
+                    .roundedBackground()
+                    .foregroundStyle(Color.primary)
                     .padding(.vertical, 5)
                 }
             // Suggestions based on experience will appear in a list
@@ -88,7 +90,7 @@ struct RecoveryPrompt: View {
                 
                 // Formatting for list and suggestions
                 GeometryReader { geometry in
-                    let maxHeight = geometry.size.height * 1.5
+                    let maxHeight = geometry.size.height * 1
                     List(ideas, id: \.title) { idea in
                         Section {
                             VStack(alignment: .leading) {
@@ -105,7 +107,6 @@ struct RecoveryPrompt: View {
                     .frame(maxHeight: maxHeight)
                 }
                 .padding(.horizontal)
-                .background(Color.clear)
             }
             
             Spacer()
@@ -119,11 +120,12 @@ struct RecoveryPrompt: View {
                     .frame(maxWidth: .infinity)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
+            .roundedBackground()
+            .foregroundStyle(Color.primary)
             .padding()
         }
         .padding()
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 10)
         .ignoresSafeArea()
     }
     
