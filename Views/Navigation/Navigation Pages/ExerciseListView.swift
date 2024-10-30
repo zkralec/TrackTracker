@@ -111,11 +111,11 @@ struct ExerciseListView: View {
                         }
                         .padding(.top, -15)
                     }
+                    .onAppear {
+                        muscleTarget = "abdominals"
+                    }
                     // Navigation bar buttons
                     NavigationBar()
-                        .onAppear {
-                            print(muscleTarget)
-                        }
                 }
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
