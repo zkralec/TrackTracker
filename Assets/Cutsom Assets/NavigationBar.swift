@@ -20,7 +20,7 @@ struct NavigationBar: View {
                     VStack {
                         // Exercise button
                         NavigationLink {
-                            ExerciseView()
+                            WeightsView()
                                 .navigationBarBackButtonHidden()
                         } label: {
                             Image(systemName: "dumbbell.fill")
@@ -30,7 +30,7 @@ struct NavigationBar: View {
                         .frame(width: 70, height: 30)
                         .buttonStyle(ButtonPress())
                         
-                        Text("Exercises")
+                        Text("Weights")
                             .font(.caption)
                             .foregroundStyle(.blue)
                             .padding(4)
