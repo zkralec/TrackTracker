@@ -35,7 +35,11 @@ struct WeightsView: View {
                     }
                     
                     List {
-                        
+                        // Add weights info here:
+                        // Exercise
+                        // Reps
+                        // Sets
+                        // Weight
                     }
                     
                     // Navigation bar buttons
