@@ -9,6 +9,9 @@ import SwiftUI
 
 struct WeightsView: View {
     @State private var isSideMenuOpen = false
+    @State private var fullWeights: [String] = [""]
+    @State private var exercise = ""
+    @State private var suggestExercises = false
     
     var body: some View {
         NavigationStack {
@@ -24,9 +27,8 @@ struct WeightsView: View {
                             
                             Spacer()
                             
-                            NavigationLink {
-                                ExerciseView()
-                                    .navigationBarBackButtonHidden()
+                            Button {
+                                suggestExercises = true
                             } label: {
                                 Image(systemName: "info.circle")
                                     .frame(width: 70, height: 30)
@@ -37,9 +39,33 @@ struct WeightsView: View {
                     List {
                         // Add weights info here:
                         // Exercise
-                        // Reps
-                        // Sets
+                        Section("Exercise") {
+                            TextField("Exercise Name", text: $exercise,
+                                      onEditingChanged: { changed in
+                                
+                            })
+                            .padding(10)
+                            .roundedBackground()
+                        }
+                        
                         // Weight
+                        Section("Weight") {
+                            Text("Placeholder")
+                        }
+                        
+                        // Reps
+                        Section("Reps") {
+                            Text("Placeholder")
+                        }
+                        
+                        // Sets
+                        Section("Sets") {
+                            Text("Placeholder")
+                        }
+                    }
+                    .listSectionSpacing(15)
+                    .sheet(isPresented: $suggestExercises) {
+                        ExerciseView()
                     }
                     
                     // Navigation bar buttons

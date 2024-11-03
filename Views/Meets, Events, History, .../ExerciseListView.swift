@@ -10,7 +10,6 @@ import SwiftUI
 // Formatts the fetched exercise data
 struct ExerciseListView: View {
     @State private var muscleTitle = "Abdominals"
-    @State private var isSideMenuOpen = false
     
     @Binding var muscleTarget: String
     
@@ -29,17 +28,6 @@ struct ExerciseListView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    ZStack {
-                        // Display title
-                        TitleBackground(title: "Exercises")
-                        
-                        HStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                            Spacer()
-                        }
-                    }
-                    
                     VStack {
                         HStack {
                             // Subtitle
@@ -70,8 +58,8 @@ struct ExerciseListView: View {
                         }
                         .roundedBackground()
                     }
-                    .padding(.top, -5)
-                    .padding(.bottom, 30)
+                    .padding(.top, 35)
+                    .padding(.bottom, 5)
                     
                     // Scrollable section for all fetched exercises
                     NavigationStack {
@@ -106,19 +94,14 @@ struct ExerciseListView: View {
                                     }
                                     .padding()
                                 }
-                                .listSectionSpacing(15)
                             }
                         }
-                        .padding(.top, -15)
+                        .listSectionSpacing(15)
                     }
                     .onAppear {
                         muscleTarget = "abdominals"
                     }
-                    // Navigation bar buttons
-                    NavigationBar()
                 }
-                // Show side menu if needed
-                SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
         }
     }
