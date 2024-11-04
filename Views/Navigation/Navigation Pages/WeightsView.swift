@@ -14,6 +14,7 @@ struct WeightsView: View {
     @State private var weight = ""
     @State private var reps = ""
     @State private var sets = ""
+    @State private var discTitle = ""
     @State private var suggestExercises = false
     
     var body: some View {
@@ -39,7 +40,7 @@ struct WeightsView: View {
                         }
                     }
                     // Eventually replace with user input
-                    WeightsExerciseModel(exercise: "Hang Clean", weight: ["135", "145", "155"], reps: ["3", "3", "3"], sets: "3", discTitle: "Exercise 1")
+                    WeightsExerciseModel(exercise: exercise, weight: [weight], reps: [reps], sets: sets, discTitle: discTitle)
                     // Want to add a + and - button to add or remove exercises
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()

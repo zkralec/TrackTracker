@@ -18,63 +18,61 @@ struct WeightsExerciseModel: View {
         List {
             // Add weights info here:
             DisclosureGroup(discTitle) {
-//                VStack {
-                    // Exercise
-                    Section("Exercise") {
-                        TextField("Exercise Name", text: Binding(
-                            get: { exercise },
-                            set: { newValue in
-                                exercise = newValue
-                            }
-                        ))
-                        .multilineTextAlignment(.leading)
-                        .roundedBackground()
-                    }
-                    
-                    // Weight
-                    Section("Weight") {
-                        HStack {
-                            ForEach(0..<weight.count, id: \.self) { index in // Future: Replace weight.count with sets
-                                TextField("Weight (lbs)", text: Binding(
-                                    get: { weight[index] },
-                                    set: { newValue in
-                                        weight[index] = newValue
-                                    }
-                                ))
-                                .multilineTextAlignment(.center)
-                                .roundedBackground()
-                            }
+                // Exercise
+                Section("Exercise") {
+                    TextField("Exercise Name", text: Binding(
+                        get: { exercise },
+                        set: { newValue in
+                            exercise = newValue
+                        }
+                    ))
+                    .multilineTextAlignment(.center)
+                    .roundedBackground()
+                }
+                
+                // Weight
+                Section("Weight") {
+                    HStack {
+                        ForEach(0..<weight.count, id: \.self) { index in // Future: Replace weight.count with sets
+                            TextField("Weight (lbs)", text: Binding(
+                                get: { weight[index] },
+                                set: { newValue in
+                                    weight[index] = newValue
+                                }
+                            ))
+                            .multilineTextAlignment(.center)
+                            .roundedBackground()
                         }
                     }
-                    
-                    // Reps
-                    Section("Reps") {
-                        HStack {
-                            ForEach(0..<reps.count, id: \.self) { index in // Future: Replace reps.count with sets
-                                TextField("Reps", text: Binding(
-                                    get: { reps[index] },
-                                    set: { newValue in
-                                        reps[index] = newValue
-                                    }
-                                ))
-                                .multilineTextAlignment(.center)
-                                .roundedBackground()
-                            }
+                }
+                
+                // Reps
+                Section("Reps") {
+                    HStack {
+                        ForEach(0..<reps.count, id: \.self) { index in // Future: Replace reps.count with sets
+                            TextField("Reps", text: Binding(
+                                get: { reps[index] },
+                                set: { newValue in
+                                    reps[index] = newValue
+                                }
+                            ))
+                            .multilineTextAlignment(.center)
+                            .roundedBackground()
                         }
                     }
-                    
-                    // Sets
-                    Section("Sets") {
-                        TextField("Sets", text: Binding(
-                            get: { sets },
-                            set: { newValue in
-                                sets = newValue
-                            }
-                        ))
-                        .multilineTextAlignment(.leading)
-                        .roundedBackground()
-                    }
-                //}
+                }
+                
+                // Sets
+                Section("Sets") {
+                    TextField("Sets", text: Binding(
+                        get: { sets },
+                        set: { newValue in
+                            sets = newValue
+                        }
+                    ))
+                    .multilineTextAlignment(.center)
+                    .roundedBackground()
+                }
             }
         }
         .listSectionSpacing(2)
