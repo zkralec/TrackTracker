@@ -13,34 +13,67 @@ struct WeightsExerciseModel: View {
     @State var reps: [String]
     @State var sets: String
     @State var discTitle: String
+    @State var count: Int
     
     var body: some View {
         List {
             // Add weights info here:
             DisclosureGroup(discTitle) {
-                // Exercise
-                Section("Exercise") {
-                    TextField("Exercise Name", text: $exercise,
-                              onEditingChanged: { changed in
-                        
-                    })
-                    .padding(10)
-                    .roundedBackground()
-                }
-                
-                // Weight
-                Section("Weight") {
-                    Text("Placeholder")
-                }
-                
-                // Reps
-                Section("Reps") {
-                    Text("Placeholder")
-                }
-                
-                // Sets
-                Section("Sets") {
-                    Text("Placeholder")
+                ForEach(0..<count, id: \.self) { index in
+                    // Exercise
+                    Section("Exercise") {
+                        TextField("Exercise Name", text: Binding(
+                            get: { exercise },
+                            set: { newValue in
+                                exercise = newValue
+                            }
+                        ))
+                        .padding(10)
+                        .roundedBackground()
+                    }
+                    
+                    // Weight
+                    Section("Weight") {
+                        TextField("Weight (lbs)", text: Binding(
+                            // Want to format as:
+                            // HStack {
+                            //      TextField(Weight 1)
+                            //      TextField(Weight 2)
+                            //      TextField(Weight 3)
+                            //      ...
+                            // }
+                            get: { weight[index] },
+                            set: { newValue in
+                                weight[index] = newValue
+                            }
+                        ))
+                        .padding(10)
+                        .roundedBackground()
+                    }
+                    
+                    // Reps
+                    Section("Reps") {
+                        TextField("Reps", text: Binding(
+                            get: { reps[index] },
+                            set: { newValue in
+                                reps[index] = newValue
+                            }
+                        ))
+                        .padding(10)
+                        .roundedBackground()
+                    }
+                    
+                    // Sets
+                    Section("Sets") {
+                        TextField("Sets", text: Binding(
+                            get: { sets },
+                            set: { newValue in
+                                sets = newValue
+                            }
+                        ))
+                        .padding(10)
+                        .roundedBackground()
+                    }
                 }
             }
         }
@@ -49,5 +82,5 @@ struct WeightsExerciseModel: View {
 }
 
 #Preview {
-    WeightsExerciseModel(exercise: "Bench Press", weight: ["155", "175", "195", "205", "225"], reps: ["5", "5", "5", "3", "3"], sets: "5", discTitle: "Exercise 1")
+    WeightsExerciseModel(exercise: "Bench Press", weight: ["155", "175", "195", "205", "225"], reps: ["5", "5", "5", "3", "3"], sets: "5", discTitle: "Exercise 1", count: 1)
 }
