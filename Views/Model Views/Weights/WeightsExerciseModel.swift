@@ -13,13 +13,12 @@ struct WeightsExerciseModel: View {
     @State var reps: [String]
     @State var sets: String
     @State var discTitle: String
-    @State var count: Int
     
     var body: some View {
         List {
             // Add weights info here:
             DisclosureGroup(discTitle) {
-                ForEach(0..<count, id: \.self) { index in
+//                VStack {
                     // Exercise
                     Section("Exercise") {
                         TextField("Exercise Name", text: Binding(
@@ -28,39 +27,40 @@ struct WeightsExerciseModel: View {
                                 exercise = newValue
                             }
                         ))
-                        .padding(10)
+                        .multilineTextAlignment(.leading)
                         .roundedBackground()
                     }
                     
                     // Weight
                     Section("Weight") {
-                        TextField("Weight (lbs)", text: Binding(
-                            // Want to format as:
-                            // HStack {
-                            //      TextField(Weight 1)
-                            //      TextField(Weight 2)
-                            //      TextField(Weight 3)
-                            //      ...
-                            // }
-                            get: { weight[index] },
-                            set: { newValue in
-                                weight[index] = newValue
+                        HStack {
+                            ForEach(0..<weight.count, id: \.self) { index in // Future: Replace weight.count with sets
+                                TextField("Weight (lbs)", text: Binding(
+                                    get: { weight[index] },
+                                    set: { newValue in
+                                        weight[index] = newValue
+                                    }
+                                ))
+                                .multilineTextAlignment(.center)
+                                .roundedBackground()
                             }
-                        ))
-                        .padding(10)
-                        .roundedBackground()
+                        }
                     }
                     
                     // Reps
                     Section("Reps") {
-                        TextField("Reps", text: Binding(
-                            get: { reps[index] },
-                            set: { newValue in
-                                reps[index] = newValue
+                        HStack {
+                            ForEach(0..<reps.count, id: \.self) { index in // Future: Replace reps.count with sets
+                                TextField("Reps", text: Binding(
+                                    get: { reps[index] },
+                                    set: { newValue in
+                                        reps[index] = newValue
+                                    }
+                                ))
+                                .multilineTextAlignment(.center)
+                                .roundedBackground()
                             }
-                        ))
-                        .padding(10)
-                        .roundedBackground()
+                        }
                     }
                     
                     // Sets
@@ -71,16 +71,16 @@ struct WeightsExerciseModel: View {
                                 sets = newValue
                             }
                         ))
-                        .padding(10)
+                        .multilineTextAlignment(.leading)
                         .roundedBackground()
                     }
-                }
+                //}
             }
         }
-        .listSectionSpacing(15)
+        .listSectionSpacing(2)
     }
 }
 
 #Preview {
-    WeightsExerciseModel(exercise: "Bench Press", weight: ["155", "175", "195", "205", "225"], reps: ["5", "5", "5", "3", "3"], sets: "5", discTitle: "Exercise 1", count: 1)
+    WeightsExerciseModel(exercise: "Bench Press", weight: ["155", "175", "195", "205", "225"], reps: ["5", "5", "5", "3", "3"], sets: "5", discTitle: "Exercise 1")
 }

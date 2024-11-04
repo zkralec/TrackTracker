@@ -39,7 +39,7 @@ struct WeightsView: View {
                         }
                     }
                     // Eventually replace with user input
-                    WeightsExerciseModel(exercise: "Hang Clean", weight: ["135", "145", "155"], reps: ["3", "3", "3"], sets: "3", discTitle: "Exercise 1", count: 1)
+                    WeightsExerciseModel(exercise: "Hang Clean", weight: ["135", "145", "155"], reps: ["3", "3", "3"], sets: "3", discTitle: "Exercise 1")
                     // Want to add a + and - button to add or remove exercises
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()
