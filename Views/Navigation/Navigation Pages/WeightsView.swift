@@ -11,6 +11,9 @@ struct WeightsView: View {
     @State private var isSideMenuOpen = false
     @State private var fullWeights: [String] = [""]
     @State private var exercise = ""
+    @State private var weight = ""
+    @State private var reps = ""
+    @State private var sets = ""
     @State private var suggestExercises = false
     
     var body: some View {
@@ -36,34 +39,7 @@ struct WeightsView: View {
                         }
                     }
                     
-                    List {
-                        // Add weights info here:
-                        // Exercise
-                        Section("Exercise") {
-                            TextField("Exercise Name", text: $exercise,
-                                      onEditingChanged: { changed in
-                                
-                            })
-                            .padding(10)
-                            .roundedBackground()
-                        }
-                        
-                        // Weight
-                        Section("Weight") {
-                            Text("Placeholder")
-                        }
-                        
-                        // Reps
-                        Section("Reps") {
-                            Text("Placeholder")
-                        }
-                        
-                        // Sets
-                        Section("Sets") {
-                            Text("Placeholder")
-                        }
-                    }
-                    .listSectionSpacing(15)
+                    WeightsExerciseModel(exercise: "Hang Clean", weight: ["135", "145", "155"], reps: ["3", "3", "3"], sets: "3", discTitle: "Exercise 1")
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()
                     }
