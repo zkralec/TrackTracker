@@ -63,7 +63,7 @@ struct WeightsExerciseModel: View {
                 }
                 
                 // Sets
-                Section("Sets") {
+                Section("Sets") { // Add + button which will add another row to weight and reps, increase ForEach count?
                     TextField("Sets", text: Binding(
                         get: { sets },
                         set: { newValue in
