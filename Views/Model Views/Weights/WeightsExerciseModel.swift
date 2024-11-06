@@ -16,13 +16,16 @@ struct WeightsExerciseModel: View {
     
     var body: some View {
         List {
-            DisclosureGroup(discTitle) {
+            DisclosureGroup(discTitle.capitalized) {
                 // Exercise
                 Section("Exercise") {
                     TextField("Exercise Name", text: Binding(
                         get: { exercise },
                         set: { newValue in
                             exercise = newValue
+                            if !exercise.isEmpty && !exercise.isBlank {
+                                discTitle = exercise
+                            }
                         }
                     ))
                     .multilineTextAlignment(.center)
@@ -111,7 +114,16 @@ struct WeightsExerciseModel: View {
             }
         }
         .listSectionSpacing(2)
+        .onAppear {
+            if discTitle.isEmpty { discTitle = "Exercise 1" }
+        }
     }
+}
+
+extension String {
+  var isBlank: Bool {
+    return allSatisfy({ $0.isWhitespace })
+  }
 }
 
 #Preview {
