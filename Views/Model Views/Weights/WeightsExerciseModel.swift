@@ -11,12 +11,11 @@ struct WeightsExerciseModel: View {
     @State var exercise: String
     @State var weight: [String]
     @State var reps: [String]
-    @State var sets: String
     @State var discTitle: String
+    @State var sets: Int = 1  // Make 'sets' a mutable @State variable
     
     var body: some View {
         List {
-            // Add weights info here:
             DisclosureGroup(discTitle) {
                 // Exercise
                 Section("Exercise") {
@@ -33,11 +32,15 @@ struct WeightsExerciseModel: View {
                 // Weight
                 Section("Weight") {
                     HStack {
-                        ForEach(0..<weight.count, id: \.self) { index in // Future: Replace weight.count with sets
+                        ForEach(0..<sets, id: \.self) { index in
                             TextField("Weight (lbs)", text: Binding(
                                 get: { weight[index] },
                                 set: { newValue in
-                                    weight[index] = newValue
+                                    if weight.count > index {
+                                        weight[index] = newValue
+                                    } else {
+                                        weight.append(newValue)
+                                    }
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -49,11 +52,15 @@ struct WeightsExerciseModel: View {
                 // Reps
                 Section("Reps") {
                     HStack {
-                        ForEach(0..<reps.count, id: \.self) { index in // Future: Replace reps.count with sets
+                        ForEach(0..<sets, id: \.self) { index in
                             TextField("Reps", text: Binding(
                                 get: { reps[index] },
                                 set: { newValue in
-                                    reps[index] = newValue
+                                    if reps.count > index {
+                                        reps[index] = newValue
+                                    } else {
+                                        reps.append(newValue)
+                                    }
                                 }
                             ))
                             .multilineTextAlignment(.center)
@@ -63,15 +70,43 @@ struct WeightsExerciseModel: View {
                 }
                 
                 // Sets
-                Section("Sets") { // Add + button which will add another row to weight and reps, increase ForEach count?
-                    TextField("Sets", text: Binding(
-                        get: { sets },
-                        set: { newValue in
-                            sets = newValue
+                Section("Sets") {
+                    HStack {
+                        Spacer()
+                        
+                        Button {
+                            if sets > 1 {
+                                sets -= 1
+                                weight.removeLast()
+                                reps.removeLast()
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle")
+                                .foregroundStyle(.blue)
+                                .frame(width: 50, height: 30)
                         }
-                    ))
-                    .multilineTextAlignment(.center)
-                    .roundedBackground()
+                        .contentShape(Rectangle())
+                        
+                        Text("\(sets)")
+                            .multilineTextAlignment(.center)
+                            .frame(width: 50)
+                            .roundedBackground()
+                        
+                        Button {
+                            if sets < 5 {
+                                sets += 1
+                                weight.append("")
+                                reps.append("")
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle")
+                                .foregroundStyle(.blue)
+                                .frame(width: 50, height: 30)
+                        }
+                        .contentShape(Rectangle())
+                        
+                        Spacer()
+                    }
                 }
             }
         }
@@ -80,5 +115,5 @@ struct WeightsExerciseModel: View {
 }
 
 #Preview {
-    WeightsExerciseModel(exercise: "Bench Press", weight: ["155", "175", "195", "205", "225"], reps: ["5", "5", "5", "3", "3"], sets: "5", discTitle: "Exercise 1")
+    WeightsExerciseModel(exercise: "Bench Press", weight: ["155", "175", "195", "205", "225"], reps: ["5", "5", "5", "3", "3"], discTitle: "Exercise 1")
 }
