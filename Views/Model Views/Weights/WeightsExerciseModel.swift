@@ -12,7 +12,7 @@ struct WeightsExerciseModel: View {
     @State var weight: [String]
     @State var reps: [String]
     @State var discTitle: String
-    @State var sets: Int = 1  // Make 'sets' a mutable @State variable
+    @State var sets: Int = 1
     
     var body: some View {
         List {
@@ -85,7 +85,7 @@ struct WeightsExerciseModel: View {
                                 .foregroundStyle(.blue)
                                 .frame(width: 50, height: 30)
                         }
-                        .contentShape(Rectangle())
+                        .buttonStyle(BorderlessButtonStyle())
                         
                         Text("\(sets)")
                             .multilineTextAlignment(.center)
@@ -103,7 +103,7 @@ struct WeightsExerciseModel: View {
                                 .foregroundStyle(.blue)
                                 .frame(width: 50, height: 30)
                         }
-                        .contentShape(Rectangle())
+                        .buttonStyle(BorderlessButtonStyle())
                         
                         Spacer()
                     }
