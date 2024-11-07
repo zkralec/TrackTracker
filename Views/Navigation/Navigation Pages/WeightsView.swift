@@ -16,6 +16,7 @@ struct WeightsView: View {
     @State private var sets = "1"
     @State private var discTitle = ""
     @State private var suggestExercises = false
+    @State var count: Int = 1
     
     var body: some View {
         NavigationStack {
@@ -39,9 +40,41 @@ struct WeightsView: View {
                             }
                         }
                     }
-                    // Eventually replace with user input
-                    WeightsExerciseModel(exercise: exercise, weight: [weight], reps: [reps], discTitle: discTitle)
-                    // Want to add a + and - button to add or remove exercises
+                    
+                    HStack {
+                        Button {
+                            if count > 1 {
+                                count -= 1
+                            }
+                        } label: {
+                            Image(systemName: "minus.circle")
+                                .foregroundStyle(.blue)
+                                .frame(width: 50, height: 30)
+                            
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        
+                        Button {
+                            if count < 10 {
+                                count += 1
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle")
+                                .foregroundStyle(.blue)
+                                .frame(width: 50, height: 30)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                    
+                    // Exercise Models
+                    List {
+                        ForEach(1..<count+1, id: \.self) { index in
+                            Section {
+                                WeightsExerciseModel(exercise: exercise, weight: [weight], reps: [reps], discTitle: "Exercise \(index)")
+                            }
+                        }
+                    }
+                    .listSectionSpacing(15)
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()
                     }
@@ -52,6 +85,13 @@ struct WeightsView: View {
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
+        }
+        .onAppear {
+            // Load weight data if not a new day
+        }
+        .onDisappear {
+            // Save weight data for current day
+            // Possibly add to TrainingLogView
         }
     }
 }
