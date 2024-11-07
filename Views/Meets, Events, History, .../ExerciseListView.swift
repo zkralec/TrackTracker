@@ -56,9 +56,8 @@ struct ExerciseListView: View {
                                 }
                             }
                         }
-                        .roundedBackground()
                     }
-                    .padding(.top, 35)
+                    .padding(.top, 15)
                     .padding(.bottom, 5)
                     
                     // Scrollable section for all fetched exercises
