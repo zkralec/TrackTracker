@@ -341,33 +341,34 @@ struct WorkoutView: View {
                                 if !isDayComplete {
                                     HStack {
                                         Button(action: {
-                                            if isDistanceMode && meters.count < 10 {
-                                                meters.append("")
-                                            } else if !isDistanceMode && times.count < 10 {
-                                                times.append("")
-                                            }
-                                        }) {
-                                            Image(systemName: "plus")
-                                                .foregroundStyle(.white)
-                                                .frame(width: 30, height: 10)
-                                        }
-                                        .padding(.top, 8)
-                                        .buttonStyle(CustomButtonStyle())
-                                        
-                                        Button(action: {
                                             if isDistanceMode && meters.count > 1 {
                                                 meters.removeLast()
                                             } else if !isDistanceMode && times.count > 1 {
                                                 times.removeLast()
                                             }
                                         }) {
-                                            Image(systemName: "minus")
-                                                .foregroundStyle(.white)
-                                                .frame(width: 30, height: 10)
+                                            Image(systemName: "minus.circle")
+                                                .foregroundStyle(.blue)
+                                                .frame(width: 30, height: 30)
                                         }
-                                        .padding(.top, 8)
-                                        .buttonStyle(CustomButtonStyle())
+                                        .padding(.trailing)
+                                        .buttonStyle(BorderlessButtonStyle())
+                                        
+                                        Button(action: {
+                                            if isDistanceMode && meters.count < 10 {
+                                                meters.append("")
+                                            } else if !isDistanceMode && times.count < 10 {
+                                                times.append("")
+                                            }
+                                        }) {
+                                            Image(systemName: "plus.circle")
+                                                .foregroundStyle(.blue)
+                                                .frame(width: 30, height: 30)
+                                        }
+                                        .padding(.leading)
+                                        .buttonStyle(BorderlessButtonStyle())
                                     }
+                                    .padding(.top)
                                 }
                             }
                             .padding()

@@ -49,9 +49,10 @@ struct WeightsView: View {
                         } label: {
                             Image(systemName: "minus.circle")
                                 .foregroundStyle(.blue)
-                                .frame(width: 50, height: 30)
+                                .frame(width: 30, height: 30)
                             
                         }
+                        .padding(.trailing)
                         .buttonStyle(BorderlessButtonStyle())
                         
                         Button {
@@ -63,6 +64,7 @@ struct WeightsView: View {
                                 .foregroundStyle(.blue)
                                 .frame(width: 50, height: 30)
                         }
+                        .padding(.leading)
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     

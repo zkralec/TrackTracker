@@ -44,6 +44,7 @@
 		148F24432CD542AA007EB8FC /* WeightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24422CD542AA007EB8FC /* WeightsView.swift */; };
 		148F24462CD54440007EB8FC /* ExerciseSuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24452CD54440007EB8FC /* ExerciseSuggestionButton.swift */; };
 		148F24482CD91933007EB8FC /* WeightsExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */; };
+		148F244A2CDE5671007EB8FC /* WeightsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24492CDE5671007EB8FC /* WeightsData.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
@@ -125,6 +126,7 @@
 		148F24422CD542AA007EB8FC /* WeightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsView.swift; sourceTree = "<group>"; };
 		148F24452CD54440007EB8FC /* ExerciseSuggestionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSuggestionButton.swift; sourceTree = "<group>"; };
 		148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsExerciseModel.swift; sourceTree = "<group>"; };
+		148F24492CDE5671007EB8FC /* WeightsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsData.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 		14BF43162BA145F5004B3321 /* ExerciseData */ = {
 			isa = PBXGroup;
 			children = (
+				148F24492CDE5671007EB8FC /* WeightsData.swift */,
 				14BF43192BA14F4F004B3321 /* ExerciseData.swift */,
 				14BF43172BA14F3D004B3321 /* ExerciseManager.swift */,
 			);
@@ -677,6 +680,7 @@
 				14535E002BAD2A1D0080531D /* EventData.swift in Sources */,
 				14823F0E2CB6F0320058C57F /* ForgotPasswordView.swift in Sources */,
 				149222072BDB141300F633BE /* ProfileView.swift in Sources */,
+				148F244A2CDE5671007EB8FC /* WeightsData.swift in Sources */,
 				14823F352CC1517E0058C57F /* WorkoutTogglesView.swift in Sources */,
 				14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */,
 				148F24462CD54440007EB8FC /* ExerciseSuggestionButton.swift in Sources */,
