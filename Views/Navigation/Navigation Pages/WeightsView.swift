@@ -9,15 +9,10 @@ import SwiftUI
 
 struct WeightsView: View {
     @State private var isSideMenuOpen = false
-    @State private var fullWeights: [String] = [""]
-    @State private var exercise = ""
-    @State private var weight = ""
-    @State private var reps = ""
-    @State private var sets = "1"
-    @State private var discTitle = ""
     @State private var suggestExercises = false
+    @State private var exercises: [WeightExercise] = []
     @State var count: Int = 1
-    
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -44,25 +39,29 @@ struct WeightsView: View {
                     HStack {
                         Button {
                             if count > 1 {
+                                // Remove the last exercise
+                                exercises.removeLast()
                                 count -= 1
                             }
                         } label: {
                             Image(systemName: "minus.circle")
                                 .foregroundStyle(.blue)
                                 .frame(width: 30, height: 30)
-                            
                         }
                         .padding(.trailing)
                         .buttonStyle(BorderlessButtonStyle())
                         
                         Button {
                             if count < 10 {
+                                // Add a new exercise
+                                let newExercise = WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise \(exercises.count + 1)", sets: 1)
+                                exercises.append(newExercise)
                                 count += 1
                             }
                         } label: {
                             Image(systemName: "plus.circle")
                                 .foregroundStyle(.blue)
-                                .frame(width: 50, height: 30)
+                                .frame(width: 30, height: 30)
                         }
                         .padding(.leading)
                         .buttonStyle(BorderlessButtonStyle())
@@ -70,13 +69,17 @@ struct WeightsView: View {
                     
                     // Exercise Models
                     List {
-                        ForEach(1..<count+1, id: \.self) { index in
-                            Section {
-                                WeightsExerciseModel(exercise: exercise, weight: [weight], reps: [reps], discTitle: "Exercise \(index)")
-                            }
+                        ForEach($exercises) { $exercise in
+                            WeightsExerciseModel(
+                                exercise: $exercise.exercise,
+                                weight: $exercise.weight,
+                                reps: $exercise.reps,
+                                discTitle: $exercise.discTitle,
+                                sets: $exercise.sets
+                            )
                         }
                     }
-                    .listSectionSpacing(15)
+                    .listSectionSpacing(5)
                     // Presents suggested exercises for muscle group
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()
@@ -90,15 +93,14 @@ struct WeightsView: View {
             }
         }
         .onAppear {
-            // Load weight data if not a new day
+            // Load weight data and check for new day
+            let loadedExercises = WeightsData.loadData()
+            exercises = loadedExercises.isEmpty ? [WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise 1", sets: 1)] : loadedExercises
+            count = exercises.count
         }
         .onDisappear {
             // Save weight data for current day
-            // Possibly add to TrainingLogView
+            WeightsData.saveData(exercises)
         }
     }
-}
-
-#Preview {
-    WeightsView()
 }
