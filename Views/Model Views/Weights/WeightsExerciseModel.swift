@@ -17,12 +17,20 @@ struct WeightsExerciseModel: View {
     @Binding var sets: Int
     
     var body: some View {
-        DisclosureGroup(discTitle) {
+        DisclosureGroup(discTitle.capitalized) {
             // Exercise
             Section("Exercise") {
-                TextField("Exercise Name", text: $exercise)
-                    .multilineTextAlignment(.center)
-                    .roundedBackground()
+                TextField("Weight (lbs)", text: Binding(
+                    get: { exercise },
+                    set: { newValue in
+                        exercise = newValue
+                        if formValid {
+                            discTitle = exercise
+                        }
+                    }
+                ))
+                .multilineTextAlignment(.center)
+                .roundedBackground()
             }
             
             // Weight
@@ -72,3 +80,13 @@ struct WeightsExerciseModel: View {
         }
     }
 }
+
+extension WeightsExerciseModel: AuthenticationFormProtocol {
+    var formValid: Bool {
+        return !exercise.isEmpty
+        && !(exercise == " ")
+    }
+}
+
+// Remember to add form validation for each item: Exercise (character limit), Weight (character limit), Reps (character limit)
+
