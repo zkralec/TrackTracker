@@ -85,6 +85,7 @@ extension WeightsExerciseModel: AuthenticationFormProtocol {
     var formValid: Bool {
         return !exercise.isEmpty
         && !(exercise == " ")
+        // Check if all whitespaces
     }
 }
 
