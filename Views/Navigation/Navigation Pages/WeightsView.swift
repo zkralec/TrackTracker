@@ -36,6 +36,7 @@ struct WeightsView: View {
                         }
                     }
                     
+                    // Change button style to bottom left of the list (looks like stepper?)
                     HStack {
                         Button {
                             if count > 1 {

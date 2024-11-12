@@ -337,6 +337,7 @@ struct WorkoutView: View {
                                     }
                                 }
                                 
+                                // Change style to bottom left of section (stepper like style?)
                                 // Add/Remove buttons for reps
                                 if !isDayComplete {
                                     HStack {

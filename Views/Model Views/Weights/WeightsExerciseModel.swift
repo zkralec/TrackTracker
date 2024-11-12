@@ -23,9 +23,11 @@ struct WeightsExerciseModel: View {
                 TextField("Weight (lbs)", text: Binding(
                     get: { exercise },
                     set: { newValue in
-                        exercise = newValue
-                        if formValid {
-                            discTitle = exercise
+                        if validateExerciseInput(newValue) {
+                            exercise = newValue
+                            if formValid {
+                                discTitle = exercise
+                            }
                         }
                     }
                 ))
@@ -40,10 +42,12 @@ struct WeightsExerciseModel: View {
                         TextField("Weight (lbs)", text: Binding(
                             get: { weight.indices.contains(index) ? weight[index] : "" },
                             set: { newValue in
-                                if weight.indices.contains(index) {
-                                    weight[index] = newValue
-                                } else {
-                                    weight.append(newValue)
+                                if validateWeightInput(newValue) {
+                                    if weight.indices.contains(index) {
+                                        weight[index] = newValue
+                                    } else {
+                                        weight.append(newValue)
+                                    }
                                 }
                             }
                         ))
@@ -60,10 +64,12 @@ struct WeightsExerciseModel: View {
                         TextField("Reps", text: Binding(
                             get: { reps.indices.contains(index) ? reps[index] : "" },
                             set: { newValue in
-                                if reps.indices.contains(index) {
-                                    reps[index] = newValue
-                                } else {
-                                    reps.append(newValue)
+                                if validateRepsInput(newValue) {
+                                    if reps.indices.contains(index) {
+                                        reps[index] = newValue
+                                    } else {
+                                        reps.append(newValue)
+                                    }
                                 }
                             }
                         ))
@@ -89,5 +95,17 @@ extension WeightsExerciseModel: AuthenticationFormProtocol {
     }
 }
 
-// Remember to add form validation for each item: Exercise (character limit), Weight (character limit), Reps (character limit)
+// Function to validate the input for exercise
+func validateExerciseInput(_ input: String) -> Bool {
+    return (input.isEmpty || input != " ") && input.count <= 30
+}
 
+// Function to validate the input for weight
+func validateWeightInput(_ input: String) -> Bool {
+    return (input.isEmpty || Int(input) != nil) && input.count <= 4
+}
+
+// Function to validate the input for the number of reps
+func validateRepsInput(_ input: String) -> Bool {
+    return (input.isEmpty || Int(input) != nil) && input.count <= 2
+}
