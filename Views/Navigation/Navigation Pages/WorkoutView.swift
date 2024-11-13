@@ -369,6 +369,7 @@ struct WorkoutView: View {
                                         .padding(.leading)
                                         .buttonStyle(BorderlessButtonStyle())
                                     }
+                                    .roundedBackground()
                                     .padding(.top)
                                 }
                             }

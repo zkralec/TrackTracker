@@ -15,12 +15,14 @@ struct WeightsExerciseModel: View {
     @Binding var reps: [String]
     @Binding var discTitle: String
     @Binding var sets: Int
+    @Binding var isFocused: Bool
+    @FocusState private var fieldIsFocused: Bool
     
     var body: some View {
         DisclosureGroup(discTitle.capitalized) {
             // Exercise
             Section("Exercise") {
-                TextField("Weight (lbs)", text: Binding(
+                TextField("Exercise Name", text: Binding(
                     get: { exercise },
                     set: { newValue in
                         if validateExerciseInput(newValue) {
@@ -31,6 +33,10 @@ struct WeightsExerciseModel: View {
                         }
                     }
                 ))
+                .focused($fieldIsFocused)
+                .onChange(of: fieldIsFocused, initial: true) {
+                    isFocused = fieldIsFocused
+                }
                 .multilineTextAlignment(.center)
                 .roundedBackground()
             }
@@ -51,6 +57,10 @@ struct WeightsExerciseModel: View {
                                 }
                             }
                         ))
+                        .focused($fieldIsFocused)
+                        .onChange(of: fieldIsFocused, initial: true) {
+                            isFocused = fieldIsFocused
+                        }
                         .multilineTextAlignment(.center)
                         .roundedBackground()
                     }
@@ -73,6 +83,10 @@ struct WeightsExerciseModel: View {
                                 }
                             }
                         ))
+                        .focused($fieldIsFocused)
+                        .onChange(of: fieldIsFocused, initial: true) {
+                            isFocused = fieldIsFocused
+                        }
                         .multilineTextAlignment(.center)
                         .roundedBackground()
                     }
@@ -90,9 +104,18 @@ struct WeightsExerciseModel: View {
 extension WeightsExerciseModel: AuthenticationFormProtocol {
     var formValid: Bool {
         return !exercise.isEmpty
-        && !(exercise == " ")
-        // Check if all whitespaces
+        && !allWhiteSpaces(exercise)
     }
+}
+
+// Function to return true if string is all whitespaces
+func allWhiteSpaces(_ input: String) -> Bool {
+    for i in input {
+        if i != " " {
+            return false
+        }
+    }
+    return true
 }
 
 // Function to validate the input for exercise

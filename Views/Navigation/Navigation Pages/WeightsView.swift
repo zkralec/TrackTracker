@@ -10,6 +10,7 @@ import SwiftUI
 struct WeightsView: View {
     @State private var isSideMenuOpen = false
     @State private var suggestExercises = false
+    @State private var isFocused = false
     @State private var exercises: [WeightExercise] = []
     @State var count: Int = 1
 
@@ -36,38 +37,6 @@ struct WeightsView: View {
                         }
                     }
                     
-                    // Change button style to bottom left of the list (looks like stepper?)
-                    HStack {
-                        Button {
-                            if count > 1 {
-                                // Remove the last exercise
-                                exercises.removeLast()
-                                count -= 1
-                            }
-                        } label: {
-                            Image(systemName: "minus.circle")
-                                .foregroundStyle(.blue)
-                                .frame(width: 30, height: 30)
-                        }
-                        .padding(.trailing)
-                        .buttonStyle(BorderlessButtonStyle())
-                        
-                        Button {
-                            if count < 10 {
-                                // Add a new exercise
-                                let newExercise = WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise \(exercises.count + 1)", sets: 1)
-                                exercises.append(newExercise)
-                                count += 1
-                            }
-                        } label: {
-                            Image(systemName: "plus.circle")
-                                .foregroundStyle(.blue)
-                                .frame(width: 30, height: 30)
-                        }
-                        .padding(.leading)
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
-                    
                     // Exercise Models
                     List {
                         ForEach($exercises) { $exercise in
@@ -76,7 +45,8 @@ struct WeightsView: View {
                                 weight: $exercise.weight,
                                 reps: $exercise.reps,
                                 discTitle: $exercise.discTitle,
-                                sets: $exercise.sets
+                                sets: $exercise.sets,
+                                isFocused: $isFocused
                             )
                         }
                     }
@@ -86,8 +56,44 @@ struct WeightsView: View {
                         ExerciseView()
                     }
                     
-                    // Navigation bar buttons
-                    NavigationBar()
+                    if !isFocused {
+                        // Change button style to bottom left of the list (looks like stepper?)
+                        HStack {
+                            Button {
+                                if count > 1 {
+                                    // Remove the last exercise
+                                    exercises.removeLast()
+                                    count -= 1
+                                }
+                            } label: {
+                                Image(systemName: "minus.circle")
+                                    .foregroundStyle(.blue)
+                                    .frame(width: 30, height: 30)
+                            }
+                            .padding(.trailing)
+                            .buttonStyle(BorderlessButtonStyle())
+                            
+                            Button {
+                                if count < 10 {
+                                    // Add a new exercise
+                                    let newExercise = WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise \(exercises.count + 1)", sets: 1)
+                                    exercises.append(newExercise)
+                                    count += 1
+                                }
+                            } label: {
+                                Image(systemName: "plus.circle")
+                                    .foregroundStyle(.blue)
+                                    .frame(width: 30, height: 30)
+                            }
+                            .padding(.leading)
+                            .buttonStyle(BorderlessButtonStyle())
+                        }
+                        .roundedBackground()
+                        .padding(.bottom, 8)
+                        
+                        // Navigation bar buttons
+                        NavigationBar()
+                    }
                 }
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
