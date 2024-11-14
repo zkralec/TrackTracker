@@ -40,17 +40,19 @@ struct WeightsView: View {
                     // Exercise Models
                     List {
                         ForEach($exercises) { $exercise in
-                            WeightsExerciseModel(
-                                exercise: $exercise.exercise,
-                                weight: $exercise.weight,
-                                reps: $exercise.reps,
-                                discTitle: $exercise.discTitle,
-                                sets: $exercise.sets,
-                                isFocused: $isFocused
-                            )
+                            Section {
+                                WeightsExerciseModel(
+                                    exercise: $exercise.exercise,
+                                    weight: $exercise.weight,
+                                    reps: $exercise.reps,
+                                    discTitle: $exercise.discTitle,
+                                    sets: $exercise.sets,
+                                    isFocused: $isFocused
+                                )
+                            }
                         }
                     }
-                    .listSectionSpacing(5)
+                    .listSectionSpacing(15)
                     // Presents suggested exercises for muscle group
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()

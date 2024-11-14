@@ -375,7 +375,6 @@ struct WorkoutView: View {
                             }
                             .padding()
                         }
-                        .listSectionSpacing(15)
                         
                         // Sets field
                         Section("Sets") {
@@ -403,130 +402,126 @@ struct WorkoutView: View {
                             .roundedBackground()
                             .padding()
                         }
-                        .listSectionSpacing(15)
                         
                         if !isDayComplete {
-                            // Section for the training or day type
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Workout Type",
-                                    toggles: [
-                                        ("Off Day", $isOff),
-                                        ("Technique Day", $isTechnique),
-                                        ("Workout Day", $isWorkout),
-                                        ("Tempo Day", $isTempo),
-                                        ("Recovery Day", $isRecovery),
-                                        ("Meet Day", $isMeet)
-                                    ],
-                                    isDisabled: isDayComplete || anyDayToggleOn
-                                )
+                            Section("Extra") {
+                                DisclosureGroup("Extra Selections") {
+                                    // Section for the training or day type
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Workout Type",
+                                            toggles: [
+                                                ("Off Day", $isOff),
+                                                ("Technique Day", $isTechnique),
+                                                ("Workout Day", $isWorkout),
+                                                ("Tempo Day", $isTempo),
+                                                ("Recovery Day", $isRecovery),
+                                                ("Meet Day", $isMeet)
+                                            ],
+                                            isDisabled: isDayComplete || anyDayToggleOn
+                                        )
+                                    }
+                                    
+                                    // Intensity Section
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Intensity",
+                                            toggles: [
+                                                ("Low", $isLow),
+                                                ("Moderate", $isModerate),
+                                                ("High", $isHigh),
+                                                ("Maximum", $isMaximum)
+                                            ],
+                                            isDisabled: isDayComplete || anyIntensityToggleOn
+                                        )
+                                    }
+                                    
+                                    // Equipment Section
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Equipment",
+                                            toggles: [
+                                                ("Blocks", $isBlocks),
+                                                ("Resistance Band", $isResistanceBand),
+                                                ("Weights", $isWeights),
+                                                ("Sled", $isSled),
+                                                ("Wickets", $isWickets),
+                                                ("Hurdles", $isHurdles),
+                                                ("Weighted Vest", $isWeightedVest),
+                                                ("Plyo Box", $isPlyoBox),
+                                                ("Medicine Ball", $isMedicineBall),
+                                                ("Stationary Bike", $isStationaryBike),
+                                                ("Treadmill", $isTreadmill)
+                                            ],
+                                            isDisabled: isDayComplete
+                                        )
+                                    }
+                                    
+                                    // Surface Section
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Surface Type",
+                                            toggles: [
+                                                ("Outdoor Track", $isTrack),
+                                                ("Indoor Track", $isIndoorTrack),
+                                                ("Turf", $isTurf),
+                                                ("Dirt", $isDirt),
+                                                ("Grass/Hills", $isGrassHills),
+                                                ("Asphalt", $isAsphalt)
+                                            ],
+                                            isDisabled: isDayComplete || anySurfaceToggleOn
+                                        )
+                                    }
+                                    
+                                    // Condition Section
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Condition",
+                                            toggles: [
+                                                ("Injury", $isInjury),
+                                                ("Soreness", $isSoreness),
+                                                ("Fatigued", $isFatigued),
+                                                ("Peak Form", $isPeakForm)
+                                            ],
+                                            isDisabled: isDayComplete || anyConditionToggleOn
+                                        )
+                                    }
+                                    
+                                    // Weather Section
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Weather",
+                                            toggles: [
+                                                ("Rain", $isRain),
+                                                ("Snow", $isSnow),
+                                                ("Windy", $isWindy),
+                                                ("Normal", $isNormal),
+                                                ("Hot", $isHot),
+                                                ("Cold", $isCold)
+                                            ],
+                                            isDisabled: isDayComplete
+                                        )
+                                    }
+                                    
+                                    // Field Events Section
+                                    Section {
+                                        WorkoutTogglesView(
+                                            sectionTitle: "Field Events",
+                                            toggles: [
+                                                ("High Jump", $isHighJump),
+                                                ("Pole Vault", $isPoleVault),
+                                                ("Hammer Throw", $isHammerThrow),
+                                                ("Discus", $isDiscus),
+                                                ("Shot Put", $isShotPut),
+                                                ("Javelin", $isJavelin),
+                                                ("Long Jump", $isLongJump),
+                                                ("Triple Jump", $isTripleJump)
+                                            ],
+                                            isDisabled: isDayComplete
+                                        )
+                                    }
+                                }
                             }
-                            .listSectionSpacing(15)
-                            
-                            // Intensity Section
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Intensity",
-                                    toggles: [
-                                        ("Low", $isLow),
-                                        ("Moderate", $isModerate),
-                                        ("High", $isHigh),
-                                        ("Maximum", $isMaximum)
-                                    ],
-                                    isDisabled: isDayComplete || anyIntensityToggleOn
-                                )
-                            }
-                            .listSectionSpacing(15)
-                            
-                            // Equipment Section
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Equipment",
-                                    toggles: [
-                                        ("Blocks", $isBlocks),
-                                        ("Resistance Band", $isResistanceBand),
-                                        ("Weights", $isWeights),
-                                        ("Sled", $isSled),
-                                        ("Wickets", $isWickets),
-                                        ("Hurdles", $isHurdles),
-                                        ("Weighted Vest", $isWeightedVest),
-                                        ("Plyo Box", $isPlyoBox),
-                                        ("Medicine Ball", $isMedicineBall),
-                                        ("Stationary Bike", $isStationaryBike),
-                                        ("Treadmill", $isTreadmill)
-                                    ],
-                                    isDisabled: isDayComplete
-                                )
-                            }
-                            .listSectionSpacing(15)
-                            
-                            // Surface Section
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Surface Type",
-                                    toggles: [
-                                        ("Outdoor Track", $isTrack),
-                                        ("Indoor Track", $isIndoorTrack),
-                                        ("Turf", $isTurf),
-                                        ("Dirt", $isDirt),
-                                        ("Grass/Hills", $isGrassHills),
-                                        ("Asphalt", $isAsphalt)
-                                    ],
-                                    isDisabled: isDayComplete || anySurfaceToggleOn
-                                )
-                            }
-                            .listSectionSpacing(15)
-                            
-                            // Condition Section
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Condition",
-                                    toggles: [
-                                        ("Injury", $isInjury),
-                                        ("Soreness", $isSoreness),
-                                        ("Fatigued", $isFatigued),
-                                        ("Peak Form", $isPeakForm)
-                                    ],
-                                    isDisabled: isDayComplete || anyConditionToggleOn
-                                )
-                            }
-                            .listSectionSpacing(15)
-                            
-                            // Weather Section
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Weather",
-                                    toggles: [
-                                        ("Rain", $isRain),
-                                        ("Snow", $isSnow),
-                                        ("Windy", $isWindy),
-                                        ("Normal", $isNormal),
-                                        ("Hot", $isHot),
-                                        ("Cold", $isCold)
-                                    ],
-                                    isDisabled: isDayComplete
-                                )
-                            }
-                            .listSectionSpacing(15)
-                            
-                            // Field Events Section
-                            Section {
-                                WorkoutTogglesView(
-                                    sectionTitle: "Field Events",
-                                    toggles: [
-                                        ("High Jump", $isHighJump),
-                                        ("Pole Vault", $isPoleVault),
-                                        ("Hammer Throw", $isHammerThrow),
-                                        ("Discus", $isDiscus),
-                                        ("Shot Put", $isShotPut),
-                                        ("Javelin", $isJavelin),
-                                        ("Long Jump", $isLongJump),
-                                        ("Triple Jump", $isTripleJump)
-                                    ],
-                                    isDisabled: isDayComplete
-                                )
-                            }
-                            .listSectionSpacing(15)
                         } else {
                             Section("Misc.") {
                                 Text("If toggles need to be modified, make sure day is not complete.")
@@ -536,6 +531,7 @@ struct WorkoutView: View {
                             }
                         }
                     }
+                    .listSectionSpacing(15)
                     .modifier(ToolbarModifier(isFocused: $isFocused))
                     
                     // Navigation bar buttons

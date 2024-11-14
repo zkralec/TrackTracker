@@ -20,8 +20,8 @@ struct WeightsExerciseModel: View {
     
     var body: some View {
         DisclosureGroup(discTitle.capitalized) {
-            // Exercise
-            Section("Exercise") {
+            VStack(alignment: .leading) {
+                // Exercise
                 TextField("Exercise Name", text: Binding(
                     get: { exercise },
                     set: { newValue in
@@ -39,10 +39,8 @@ struct WeightsExerciseModel: View {
                 }
                 .multilineTextAlignment(.center)
                 .roundedBackground()
-            }
-            
-            // Weight
-            Section("Weight") {
+                
+                // Weight
                 HStack {
                     ForEach(0..<sets, id: \.self) { index in
                         TextField("Weight (lbs)", text: Binding(
@@ -65,10 +63,8 @@ struct WeightsExerciseModel: View {
                         .roundedBackground()
                     }
                 }
-            }
-            
-            // Reps
-            Section("Reps") {
+                
+                // Reps
                 HStack {
                     ForEach(0..<sets, id: \.self) { index in
                         TextField("Reps", text: Binding(
@@ -91,10 +87,8 @@ struct WeightsExerciseModel: View {
                         .roundedBackground()
                     }
                 }
-            }
-            
-            // Sets
-            Section("Sets") {
+                
+                // Sets
                 Stepper("Sets: \(sets)", value: $sets, in: 1...5)
             }
         }
