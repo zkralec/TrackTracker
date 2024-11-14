@@ -18,24 +18,28 @@ struct WeightsView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    ZStack {
-                        // Display title
-                        TitleBackground(title: "Weights")
-                        
-                        HStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                    VStack {
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "Weights")
                             
-                            Spacer()
-                            
-                            Button {
-                                suggestExercises = true
-                            } label: {
-                                Image(systemName: "info.circle")
-                                    .frame(width: 70, height: 30)
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                
+                                Spacer()
+                                
+                                Button {
+                                    suggestExercises = true
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .frame(width: 70, height: 30)
+                                }
                             }
                         }
+                        Divider()
                     }
+                    .padding(.bottom, -8)
                     
                     // Exercise Models
                     List {
@@ -59,39 +63,43 @@ struct WeightsView: View {
                     }
                     
                     if !isFocused {
-                        // Change button style to bottom left of the list (looks like stepper?)
-                        HStack {
-                            Button {
-                                if count > 1 {
-                                    // Remove the last exercise
-                                    exercises.removeLast()
-                                    count -= 1
+                        VStack {
+                            Divider()
+                                .padding(.top, -8)
+                            // Change button style to bottom left of the list (looks like stepper?)
+                            HStack {
+                                Button {
+                                    if count > 1 {
+                                        // Remove the last exercise
+                                        exercises.removeLast()
+                                        count -= 1
+                                    }
+                                } label: {
+                                    Image(systemName: "minus.circle")
+                                        .foregroundStyle(.blue)
+                                        .frame(width: 30, height: 30)
                                 }
-                            } label: {
-                                Image(systemName: "minus.circle")
-                                    .foregroundStyle(.blue)
-                                    .frame(width: 30, height: 30)
-                            }
-                            .padding(.trailing)
-                            .buttonStyle(BorderlessButtonStyle())
-                            
-                            Button {
-                                if count < 10 {
-                                    // Add a new exercise
-                                    let newExercise = WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise \(exercises.count + 1)", sets: 1)
-                                    exercises.append(newExercise)
-                                    count += 1
+                                .padding(.trailing)
+                                .buttonStyle(BorderlessButtonStyle())
+                                
+                                Button {
+                                    if count < 10 {
+                                        // Add a new exercise
+                                        let newExercise = WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise \(exercises.count + 1)", sets: 1)
+                                        exercises.append(newExercise)
+                                        count += 1
+                                    }
+                                } label: {
+                                    Image(systemName: "plus.circle")
+                                        .foregroundStyle(.blue)
+                                        .frame(width: 30, height: 30)
                                 }
-                            } label: {
-                                Image(systemName: "plus.circle")
-                                    .foregroundStyle(.blue)
-                                    .frame(width: 30, height: 30)
+                                .padding(.leading)
+                                .buttonStyle(BorderlessButtonStyle())
                             }
-                            .padding(.leading)
-                            .buttonStyle(BorderlessButtonStyle())
+                            .roundedBackground()
+                            .padding(.bottom, 16)
                         }
-                        .roundedBackground()
-                        .padding(.bottom, 8)
                         
                         // Navigation bar buttons
                         NavigationBar()
