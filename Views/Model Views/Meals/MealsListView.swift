@@ -42,7 +42,7 @@ struct MealsListView: View {
                     }
                     .padding()
                 }
-                .listSectionSpacing(15)
+                .listSectionSpacing(10)
             }
         }
         .padding(.top, -35)

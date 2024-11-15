@@ -28,29 +28,26 @@ struct InjuryDetailsView: View {
                     }
                     .padding(10)
                 }
-                .listSectionSpacing(15)
                 
                 // Suggested activities section
                 Section("Suggested Activities") {
                     Text(getSuggestedActivities(muscleGroup: injury.muscleGroup, injuryType: injury.injuryType))
                         .padding(10)
                 }
-                .listSectionSpacing(15)
                 
                 // Restricted activities section
                 Section("Restricted Activities") {
                     Text(getRestrictedActivities(muscleGroup: injury.muscleGroup, injuryType: injury.injuryType))
                         .padding(10)
                 }
-                .listSectionSpacing(15)
                 
                 // Recommended exercises section
                 Section("Recommended Exercises") {
                     Text(getRecommendedExercises(muscleGroup: injury.muscleGroup, injuryType: injury.injuryType))
                         .padding(10)
                 }
-                .listSectionSpacing(15)
             }
+            .listSectionSpacing(10)
         }
     }
     

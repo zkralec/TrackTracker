@@ -83,7 +83,6 @@ struct MeetView: View {
                                 Spacer()
                             }
                         }
-                        .listSectionSpacing(15)
                         
                         // Allows user to set their meet days
                         Section("Add Meet Days") {
@@ -116,8 +115,8 @@ struct MeetView: View {
                             }
                             .padding()
                         }
-                        .listSectionSpacing(15)
                     }
+                    .listSectionSpacing(10)
                 }
                 .onAppear {
                     loadMeets()

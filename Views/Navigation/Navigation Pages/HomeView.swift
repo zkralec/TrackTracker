@@ -53,7 +53,6 @@ struct HomeView: View {
                                 Spacer()
                             }
                         }
-                        .listSectionSpacing(15)
                         
                         // User can see main events and their PR
                         Section("Personal Records") {
@@ -91,7 +90,6 @@ struct HomeView: View {
                             }
                             .padding()
                         }
-                        .listSectionSpacing(15)
                         
                         // Display meet dates
                         Section("Meet Days") {
@@ -119,8 +117,8 @@ struct HomeView: View {
                                 Spacer()
                             }
                         }
-                        .listSectionSpacing(15)
                     }
+                    .listSectionSpacing(15)
                     
                     // Navigation bar buttons
                     NavigationBar()

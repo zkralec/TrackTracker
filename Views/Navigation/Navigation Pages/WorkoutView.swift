@@ -531,7 +531,7 @@ struct WorkoutView: View {
                             }
                         }
                     }
-                    .listSectionSpacing(15)
+                    .listSectionSpacing(10)
                     .modifier(ToolbarModifier(isFocused: $isFocused))
                     
                     // Navigation bar buttons

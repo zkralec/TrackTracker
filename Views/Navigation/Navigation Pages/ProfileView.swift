@@ -109,7 +109,6 @@ struct ProfileView: View {
                                 }
                                 .padding(.bottom)
                             }
-                            .listSectionSpacing(15)
                             
                             // User can see main events and their PR
                             Section("Personal Records") {
@@ -151,8 +150,21 @@ struct ProfileView: View {
                                 }
                                 .padding()
                             }
-                            .listSectionSpacing(15)
                         }
+                        .listSectionSpacing(10)
+                    } else {
+                        Spacer()
+                        
+                        List {
+                            Section("Error Msg.") {
+                                Text("Error loading user.")
+                                    .foregroundStyle(.secondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                            }
+                        }
+                        
+                        Spacer()
                     }
                     // Navigation bar buttons
                     NavigationBar()

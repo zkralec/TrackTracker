@@ -57,7 +57,7 @@ struct WeightsView: View {
                             }
                         }
                     }
-                    .listSectionSpacing(15)
+                    .listSectionSpacing(10)
                     // Presents suggested exercises for muscle group
                     .sheet(isPresented: $suggestExercises) {
                         ExerciseView()

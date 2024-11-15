@@ -118,7 +118,7 @@ struct InjuryView: View {
                                         }
                                         .padding(.bottom, 10)
                                     }
-                                    .listSectionSpacing(15)
+                                    .listSectionSpacing(10)
                                 }
                             }
                         }

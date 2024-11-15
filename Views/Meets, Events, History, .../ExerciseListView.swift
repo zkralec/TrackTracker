@@ -95,7 +95,7 @@ struct ExerciseListView: View {
                                 }
                             }
                         }
-                        .listSectionSpacing(15)
+                        .listSectionSpacing(10)
                     }
                     .onAppear {
                         muscleTarget = "abdominals"

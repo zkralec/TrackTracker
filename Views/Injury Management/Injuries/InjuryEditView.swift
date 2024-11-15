@@ -63,7 +63,6 @@ struct InjuryEditView: View {
                         DatePicker("Injury Date", selection: $injuryDate, displayedComponents: [.date])
                             .datePickerStyle(GraphicalDatePickerStyle())
                     }
-                    .listSectionSpacing(15)
                     
                     // Muscle group
                     Section {
@@ -81,7 +80,6 @@ struct InjuryEditView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
-                    .listSectionSpacing(15)
                     
                     // Injury type
                     Section {
@@ -94,7 +92,6 @@ struct InjuryEditView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
-                    .listSectionSpacing(15)
                     
                     // Injury location
                     Section {
@@ -107,7 +104,6 @@ struct InjuryEditView: View {
                         }
                         .pickerStyle(MenuPickerStyle())
                     }
-                    .listSectionSpacing(15)
                     
                     // Severity slider
                     Section {
@@ -118,7 +114,6 @@ struct InjuryEditView: View {
                         }
                         .padding()
                     }
-                    .listSectionSpacing(15)
                     
                     // Confirm button
                     Section {
@@ -140,8 +135,8 @@ struct InjuryEditView: View {
                         }
                         .buttonStyle(CustomButtonStyle())
                     }
-                    .listSectionSpacing(15)
                 }
+                .listSectionSpacing(10)
             }
         }
         .onAppear {
