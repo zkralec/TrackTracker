@@ -157,7 +157,7 @@ struct ProfileView: View {
                         
                         List {
                             Section("Error Msg.") {
-                                Text("Error loading user.")
+                                Text("It's been a while. Please sign out and sign back in to ensure security and load your data.")
                                     .foregroundStyle(.secondary)
                                     .multilineTextAlignment(.center)
                                     .padding()
