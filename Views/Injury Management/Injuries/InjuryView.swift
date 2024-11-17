@@ -27,29 +27,35 @@ struct InjuryView: View {
             NavigationStack {
                 ZStack {
                     VStack {
-                        ZStack {
-                            // Display title
-                            TitleBackground(title: "Injury Log")
-                            
-                            HStack {
-                                // Menu bar icon
-                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                                Spacer()
+                        VStack {
+                            VStack {
+                                ZStack {
+                                    // Display title
+                                    TitleBackground(title: "Injury Log")
+                                    
+                                    HStack {
+                                        // Menu bar icon
+                                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                        Spacer()
+                                    }
+                                }
+                                
+                                // Button to add a new injury
+                                Button(action: {
+                                    selectedInjury = nil
+                                    isEditing = false
+                                    isPresentingInjuryDetail = true
+                                }) {
+                                    Text("Add New Injury")
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                }
+                                .buttonStyle(CustomButtonStyle())
+                                .padding(10)
                             }
+                            Divider()
                         }
-                        
-                        // Button to add a new injury
-                        Button(action: {
-                            selectedInjury = nil
-                            isEditing = false
-                            isPresentingInjuryDetail = true
-                        }) {
-                            Text("Add New Injury")
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-                        .buttonStyle(CustomButtonStyle())
-                        .padding(10)
+                        .padding(.bottom, -8)
                         
                         // List of injuries
                         List {

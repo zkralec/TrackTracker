@@ -43,16 +43,20 @@ struct UserInputView: View {
         NavigationStack {
                 ZStack {
                     VStack {
-                        ZStack {
-                            // Display title
-                            TitleBackground(title: "User Information")
-                            
-                            HStack {
-                                // Menu bar icon
-                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                                Spacer()
+                        VStack {
+                            ZStack {
+                                // Display title
+                                TitleBackground(title: "User Information")
+                                
+                                HStack {
+                                    // Menu bar icon
+                                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                    Spacer()
+                                }
                             }
+                            Divider()
                         }
+                        .padding(.bottom, -8)
                         
                         List {
                             // Height section

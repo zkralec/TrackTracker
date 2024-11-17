@@ -13,9 +13,14 @@ struct InjuryDetailsView: View {
     
     var body: some View {
         VStack {
-            // Title
-            TitleBackground(title: "Injury Details")
-                .padding(.top, -37)
+            VStack {
+                // Title
+                TitleBackground(title: "Injury Details")
+                    .padding(.top, -37)
+                
+                Divider()
+            }
+            .padding(.bottom, -8)
             
             List {
                 // Injury details section

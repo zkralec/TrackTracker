@@ -26,16 +26,20 @@ struct MeetView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    ZStack {
-                        // Display title
-                        TitleBackground(title: "Meets")
-                        
-                        HStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                            Spacer()
+                    VStack {
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "Meets")
+                            
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                Spacer()
+                            }
                         }
+                        Divider()
                     }
+                    .padding(.bottom, -8)
                     
                     List {
                         // Remove and display meet dates

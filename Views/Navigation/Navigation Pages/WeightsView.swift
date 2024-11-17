@@ -37,7 +37,6 @@ struct WeightsView: View {
                                 }
                             }
                         }
-                        // Copy this VStack + padding and Divider setup tp other views
                         Divider()
                     }
                     .padding(.bottom, -8)

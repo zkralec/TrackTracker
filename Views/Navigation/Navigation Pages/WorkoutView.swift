@@ -129,137 +129,141 @@ struct WorkoutView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    ZStack {
-                        // Display title
-                        TitleBackground(title: "Workouts")
+                    VStack {
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "Workouts")
+                            
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                Spacer()
+                            }
+                        }
                         
                         HStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                            Spacer()
-                        }
-                    }
-                    
-                    HStack {
-                        // Button to show user's input and recovery suggestions
-                        Button(action: {
-                            if !isMeet && !isOff && !isRecovery && !isInjury && isDayComplete {
-                                withAnimation {
-                                    showRecoverySuggestions = true
-                                }
-                            }
-                        }) {
-                            Image(systemName: "info.circle")
-                                .foregroundStyle(.blue)
-                                .frame(width: 50, height: 50)
-                        }
-                        .padding(.leading, 20)
-                        
-                        Spacer()
-                        
-                        // Display current date
-                        Text(currDate, formatter: dateFormatter)
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .padding(.horizontal, 10)
-                        
-                        Spacer()
-                        
-                        // Complete Day button
-                        Button(action: {
-                            withAnimation {
-                                isDayComplete.toggle()
-                                isFocused = false
-                                
-                                if isDayComplete {
-                                    if !isMeet && !isOff && !isRecovery {
+                            // Button to show user's input and recovery suggestions
+                            Button(action: {
+                                if !isMeet && !isOff && !isRecovery && !isInjury && isDayComplete {
+                                    withAnimation {
                                         showRecoverySuggestions = true
-                                        // Schedules recovery notification
-                                        scheduleNotification(for: currDate)
                                     }
-                                    workoutData?.meters = meters.compactMap { Int($0) }
-                                    workoutData?.times = times.compactMap { Int($0) }
-                                    workoutData?.sets = Int(numSets) ?? 0
+                                }
+                            }) {
+                                Image(systemName: "info.circle")
+                                    .foregroundStyle(.blue)
+                                    .frame(width: 50, height: 50)
+                            }
+                            .padding(.leading, 20)
+                            
+                            Spacer()
+                            
+                            // Display current date
+                            Text(currDate, formatter: dateFormatter)
+                                .font(.title3)
+                                .fontWeight(.medium)
+                                .padding(.horizontal, 10)
+                            
+                            Spacer()
+                            
+                            // Complete Day button
+                            Button(action: {
+                                withAnimation {
+                                    isDayComplete.toggle()
+                                    isFocused = false
                                     
-                                    workoutData?.recovery = isRecovery
-                                    workoutData?.off = isOff
-                                    workoutData?.meet = isMeet
-                                    workoutData?.technique = isTechnique
-                                    workoutData?.workout = isWorkout
-                                    workoutData?.tempo = isTempo
-                                    
-                                    workoutData?.dayComplete = isDayComplete
-                                    
-                                    workoutData?.track = isTrack
-                                    workoutData?.indoorTrack = isIndoorTrack
-                                    workoutData?.turf = isTurf
-                                    workoutData?.dirt = isDirt
-                                    workoutData?.grasshills = isGrassHills
-                                    workoutData?.asphalt = isAsphalt
-                                    
-                                    workoutData?.rain = isRain
-                                    workoutData?.snow = isSnow
-                                    workoutData?.windy = isWindy
-                                    workoutData?.normal = isNormal
-                                    workoutData?.hot = isHot
-                                    workoutData?.cold = isCold
-                                    
-                                    workoutData?.blocks = isBlocks
-                                    workoutData?.resistanceBand = isResistanceBand
-                                    workoutData?.weights = isWeights
-                                    workoutData?.sled = isSled
-                                    workoutData?.wickets = isWickets
-                                    workoutData?.hurdles = isHurdles
-                                    workoutData?.weightedVest = isWeightedVest
-                                    workoutData?.plyoBox = isPlyoBox
-                                    workoutData?.medicineBall = isMedicineBall
-                                    workoutData?.stationaryBike = isStationaryBike
-                                    workoutData?.treadmill = isTreadmill
-                                    
-                                    workoutData?.injury = isInjury
-                                    workoutData?.soreness = isSoreness
-                                    workoutData?.fatigued = isFatigued
-                                    workoutData?.peakForm = isPeakForm
-                                    
-                                    workoutData?.low = isLow
-                                    workoutData?.moderate = isModerate
-                                    workoutData?.high = isHigh
-                                    workoutData?.maximum = isMaximum
-                                    
-                                    workoutData?.highJump = isHighJump
-                                    workoutData?.poleVault = isPoleVault
-                                    workoutData?.hammerThrow = isHammerThrow
-                                    workoutData?.discus = isDiscus
-                                    workoutData?.shotPut = isShotPut
-                                    workoutData?.javelin = isJavelin
-                                    workoutData?.longJump = isLongJump
-                                    workoutData?.tripleJump = isTripleJump
-                                    
-                                    workoutData?.saveData()
-                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    if isDayComplete {
+                                        if !isMeet && !isOff && !isRecovery {
+                                            showRecoverySuggestions = true
+                                            // Schedules recovery notification
+                                            scheduleNotification(for: currDate)
+                                        }
+                                        workoutData?.meters = meters.compactMap { Int($0) }
+                                        workoutData?.times = times.compactMap { Int($0) }
+                                        workoutData?.sets = Int(numSets) ?? 0
+                                        
+                                        workoutData?.recovery = isRecovery
+                                        workoutData?.off = isOff
+                                        workoutData?.meet = isMeet
+                                        workoutData?.technique = isTechnique
+                                        workoutData?.workout = isWorkout
+                                        workoutData?.tempo = isTempo
+                                        
+                                        workoutData?.dayComplete = isDayComplete
+                                        
+                                        workoutData?.track = isTrack
+                                        workoutData?.indoorTrack = isIndoorTrack
+                                        workoutData?.turf = isTurf
+                                        workoutData?.dirt = isDirt
+                                        workoutData?.grasshills = isGrassHills
+                                        workoutData?.asphalt = isAsphalt
+                                        
+                                        workoutData?.rain = isRain
+                                        workoutData?.snow = isSnow
+                                        workoutData?.windy = isWindy
+                                        workoutData?.normal = isNormal
+                                        workoutData?.hot = isHot
+                                        workoutData?.cold = isCold
+                                        
+                                        workoutData?.blocks = isBlocks
+                                        workoutData?.resistanceBand = isResistanceBand
+                                        workoutData?.weights = isWeights
+                                        workoutData?.sled = isSled
+                                        workoutData?.wickets = isWickets
+                                        workoutData?.hurdles = isHurdles
+                                        workoutData?.weightedVest = isWeightedVest
+                                        workoutData?.plyoBox = isPlyoBox
+                                        workoutData?.medicineBall = isMedicineBall
+                                        workoutData?.stationaryBike = isStationaryBike
+                                        workoutData?.treadmill = isTreadmill
+                                        
+                                        workoutData?.injury = isInjury
+                                        workoutData?.soreness = isSoreness
+                                        workoutData?.fatigued = isFatigued
+                                        workoutData?.peakForm = isPeakForm
+                                        
+                                        workoutData?.low = isLow
+                                        workoutData?.moderate = isModerate
+                                        workoutData?.high = isHigh
+                                        workoutData?.maximum = isMaximum
+                                        
+                                        workoutData?.highJump = isHighJump
+                                        workoutData?.poleVault = isPoleVault
+                                        workoutData?.hammerThrow = isHammerThrow
+                                        workoutData?.discus = isDiscus
+                                        workoutData?.shotPut = isShotPut
+                                        workoutData?.javelin = isJavelin
+                                        workoutData?.longJump = isLongJump
+                                        workoutData?.tripleJump = isTripleJump
+                                        
+                                        workoutData?.saveData()
+                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                    } else {
+                                        selectedExperience = nil
+                                    }
+                                    // Feature to enable or disable haptics
+                                    if settings.isHapticsEnabled {
+                                        let generator = UIImpactFeedbackGenerator(style: .light)
+                                        generator.impactOccurred()
+                                    }
+                                }
+                            }) {
+                                // Is day complete button
+                                if !isDayComplete {
+                                    Image(systemName: "checkmark.circle")
+                                        .foregroundStyle(.blue)
+                                        .frame(width: 50, height: 50)
                                 } else {
-                                    selectedExperience = nil
-                                }
-                                // Feature to enable or disable haptics
-                                if settings.isHapticsEnabled {
-                                    let generator = UIImpactFeedbackGenerator(style: .light)
-                                    generator.impactOccurred()
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundStyle(.blue)
+                                        .frame(width: 50, height: 50)
                                 }
                             }
-                        }) {
-                            // Is day complete button
-                            if !isDayComplete {
-                                Image(systemName: "checkmark.circle")
-                                    .foregroundStyle(.blue)
-                                    .frame(width: 50, height: 50)
-                            } else {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(.blue)
-                                    .frame(width: 50, height: 50)
-                            }
+                            .padding(.trailing, 20)
                         }
-                        .padding(.trailing, 20)
+                        Divider()
                     }
+                    .padding(.bottom, -8)
                     // Once day is complete, prompt user with recovery page if needed
                     .sheet(isPresented: $showRecoverySuggestions) {
                         if !isMeet && !isOff {

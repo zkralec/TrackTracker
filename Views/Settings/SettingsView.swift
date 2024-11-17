@@ -64,16 +64,20 @@ struct SettingsView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    ZStack {
-                        // Display title
-                        TitleBackground(title: "Settings")
-                        
-                        HStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $viewModel.isSideMenuOpen)
-                            Spacer()
+                    VStack {
+                        ZStack {
+                            // Display title
+                            TitleBackground(title: "Settings")
+                            
+                            HStack {
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $viewModel.isSideMenuOpen)
+                                Spacer()
+                            }
                         }
+                        Divider()
                     }
+                    .padding(.bottom, -8)
                     
                     List {
                         // Shows users their events and allows for PR input

@@ -360,7 +360,7 @@
 		14823F2D2CC14E320058C57F /* Meets, Events, History, ... */ = {
 			isa = PBXGroup;
 			children = (
-				14823F302CC14FC10058C57F /* Workouts */,
+				146154002BDDC5560068504B /* TrainingLogView.swift */,
 				14535DFC2BACE1C20080531D /* MeetView.swift */,
 				1492220E2BDC8F0B00F633BE /* EventView.swift */,
 				14BF431B2BA157E7004B3321 /* ExerciseListView.swift */,
@@ -384,14 +384,6 @@
 				14823F132CB846D70058C57F /* SettingsRowView.swift */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		14823F302CC14FC10058C57F /* Workouts */ = {
-			isa = PBXGroup;
-			children = (
-				146154002BDDC5560068504B /* TrainingLogView.swift */,
-			);
-			path = Workouts;
 			sourceTree = "<group>";
 		};
 		14823F312CC1511D0058C57F /* Model Views */ = {

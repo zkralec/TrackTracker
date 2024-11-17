@@ -27,58 +27,66 @@ struct MealsView: View {
         NavigationView {
             ZStack {
                 VStack {
-                    ZStack {
-                        // Display title
-                        TitleBackground(title: "Daily Meals")
-                        
-                        HStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                            
-                            Spacer()
-                            
-                            // Refresh button at the top-right
-                            Button(action: {
-                                fetchMeals(isRefreshed: true)
-                            }) {
-                                Image(systemName: "arrow.circlepath")
-                                    .frame(width: 70, height: 30)
-                            }
-                        }
-                        .padding(.top, 5)
-                    }
-                    
                     VStack {
-                        // Display user information
-                        Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
-                            .font(.subheadline)
-                            .padding(5)
-                            .roundedBackground()
-                    }
-                    .padding(.bottom, 50)
-                    
-                    // Check if meal plan is fetched
-                    if let mealPlan = mealPlan {
-                        MealsListView(mealPlan: mealPlan)
-                    } else if userDataManager.maintenanceCalories == 0 {
                         VStack {
-                            Spacer()
+                            ZStack {
+                                // Display title
+                                TitleBackground(title: "Daily Meals")
+                                
+                                HStack {
+                                    // Menu bar icon
+                                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                    
+                                    Spacer()
+                                    
+                                    // Refresh button at the top-right
+                                    Button(action: {
+                                        fetchMeals(isRefreshed: true)
+                                    }) {
+                                        Image(systemName: "arrow.circlepath")
+                                            .frame(width: 70, height: 30)
+                                    }
+                                }
+                                .padding(.top, 5)
+                            }
                             
-                            Text("To get recommended meals, please enter user data in Settings -> Modify User Data")
-                                .foregroundStyle(Color.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                            
-                            Spacer()
+                            VStack {
+                                // Display user information
+                                Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
+                                    .font(.subheadline)
+                                    .padding(5)
+                                    .roundedBackground()
+                            }
+                            .padding(.bottom, 10)
                         }
-                    } else {
-                        // Loading indicator
-                        VStack {
-                            Spacer()
-                            
-                            ProgressView()
-                            
-                            Spacer()
+                        Divider()
+                    }
+                    .padding(.bottom, -8)
+                    
+                    List {
+                        // Check if meal plan is fetched
+                        if let mealPlan = mealPlan {
+                            MealsListView(mealPlan: mealPlan)
+                        } else if userDataManager.maintenanceCalories == 0 {
+                            VStack {
+                                Spacer()
+                                
+                                Text("To get recommended meals, please enter user data in Settings -> Modify User Data")
+                                    .foregroundStyle(Color.secondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                                
+                                Spacer()
+                            }
+                        } else {
+                            // Loading indicator
+                            VStack {
+                                Spacer()
+                                
+                                ProgressView()
+                                
+                                Spacer()
+                            }
                         }
                     }
                     
