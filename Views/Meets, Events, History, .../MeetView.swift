@@ -61,24 +61,19 @@ struct MeetView: View {
                                             }
                                             
                                             // Remove the last meet day
-                                            Button(action: {
+                                            Button {
                                                 withAnimation {
                                                     removeMeet(at: meets.count - 1)
                                                     print("Removed last meet")
                                                 }
-                                            }) {
+                                            } label: {
                                                 HStack {
-                                                    Image(systemName: "minus")
-                                                        .foregroundStyle(.white)
-                                                        .frame(width: 30, height: 30)
+                                                    Image(systemName: "minus.circle")
                                                     Text("Remove Last")
-                                                        .font(.subheadline)
-                                                        .foregroundStyle(.white)
-                                                        .padding(4)
                                                 }
-                                                .padding(-8)
+                                                .padding(.top, 10)
+                                                .foregroundStyle(Color.blue)
                                             }
-                                            .buttonStyle(CustomButtonStyle())
                                         }
                                         .padding()
                                     }
@@ -96,26 +91,20 @@ struct MeetView: View {
                                     .datePickerStyle(GraphicalDatePickerStyle())
                                 
                                 // Add meet date button
-                                Button(action: {
+                                Button {
                                     withAnimation {
                                         meets.append(date)
                                         scheduleNotification(for: date)
                                         saveMeets()
                                         print("Added meet \(date)")
                                     }
-                                }) {
+                                } label: {
                                     HStack {
-                                        Image(systemName: "plus")
-                                            .foregroundStyle(.white)
-                                            .frame(width: 30, height: 30)
+                                        Image(systemName: "plus.circle")
                                         Text("Add Meet")
-                                            .font(.subheadline)
-                                            .foregroundStyle(.white)
-                                            .padding(4)
                                     }
-                                    .padding(-8)
+                                    .foregroundStyle(Color.blue)
                                 }
-                                .buttonStyle(CustomButtonStyle())
                             }
                             .padding()
                         }

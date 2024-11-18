@@ -70,7 +70,7 @@ struct WeightsView: View {
                             HStack {
                                 Button {
                                     if count > 1 {
-                                        // Remove the last exercise
+                                        // Remove last exercise
                                         exercises.removeLast()
                                         count -= 1
                                     }
@@ -84,7 +84,7 @@ struct WeightsView: View {
                                 
                                 Button {
                                     if count < 10 {
-                                        // Add a new exercise
+                                        // Add new exercise
                                         let newExercise = WeightExercise(exercise: "", weight: [""], reps: [""], discTitle: "Exercise \(exercises.count + 1)", sets: 1)
                                         exercises.append(newExercise)
                                         count += 1
