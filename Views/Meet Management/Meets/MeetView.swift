@@ -97,14 +97,6 @@ struct MeetView: View {
                                             .buttonStyle(BorderlessButtonStyle())
                                         }
                                         .padding(.vertical, 4)
-                                        
-                                        // Navigation to details view
-//                                        NavigationLink(destination: InjuryDetailsView(injury: injury, injuryLog: $injuryLog)) {
-//                                            Text("View Details")
-//                                                .font(.subheadline)
-//                                                .foregroundColor(.blue)
-//                                                .padding(.top, 4)
-//                                        }
                                     }
                                     .padding(.bottom, 10)
                                 }

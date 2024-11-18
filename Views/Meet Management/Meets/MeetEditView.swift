@@ -13,8 +13,14 @@ struct MeetEditView: View {
     @State private var date = Date()
     @State private var meets: [Date] = []
     @State private var isSideMenuOpen = false
+    @State private var meetDate: Date = Date()
+    @State private var meetLocation: String = "St. Mary's College of Maryland"
+    @State private var indoorOutdoor: String = "Indoor"
+    @State private var events: [String] = []
+    @ObservedObject var settings = SettingsViewModel()
+    @Environment(\.presentationMode) var presentationMode
     
-    @State private var events: [EventData] = {
+    @State private var events2: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
             return savedEvents.compactMap { EventData(rawValue: $0) }
         } else {
@@ -30,22 +36,36 @@ struct MeetEditView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    VStack {
-                        ZStack {
-                            // Display title
-                            TitleBackground(title: "Meets")
-                            
-                            HStack {
-                                // Menu bar icon
-                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                                Spacer()
-                            }
-                        }
-                        Divider()
-                    }
-                    .padding(.bottom, -8)
+                    TitleBackground(title: "Meet Scheduling")
+                        .padding(.top, 28)
                     
                     List {
+                        // Allows user to set their meet days
+                        Section("Add Meet Days") {
+                            VStack {
+                                // Calendar
+                                DatePicker("", selection: $date, displayedComponents: .date)
+                                    .datePickerStyle(GraphicalDatePickerStyle())
+                                
+                                // Add meet date button
+                                Button {
+                                    withAnimation {
+                                        meets.append(date)
+                                        scheduleNotification(for: date)
+                                        saveMeets()
+                                        print("Added meet \(date)")
+                                    }
+                                } label: {
+                                    HStack {
+                                        Image(systemName: "plus.circle")
+                                        Text("Add Meet")
+                                    }
+                                    .foregroundStyle(Color.blue)
+                                }
+                            }
+                            .padding()
+                        }
+                        
                         // Remove and display meet dates
                         Section("Meets") {
                             HStack {
@@ -87,30 +107,25 @@ struct MeetEditView: View {
                             }
                         }
                         
-                        // Allows user to set their meet days
-                        Section("Add Meet Days") {
-                            VStack {
-                                // Calendar
-                                DatePicker("", selection: $date, displayedComponents: .date)
-                                    .datePickerStyle(GraphicalDatePickerStyle())
-                                
-                                // Add meet date button
-                                Button {
-                                    withAnimation {
-                                        meets.append(date)
-                                        scheduleNotification(for: date)
-                                        saveMeets()
-                                        print("Added meet \(date)")
-                                    }
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "plus.circle")
-                                        Text("Add Meet")
-                                    }
-                                    .foregroundStyle(Color.blue)
+                        // Confirm button
+                        Section {
+                            Button(action: {
+                                addMeet()
+                                saveMeetLog()
+                                // Feature to enable or disable haptics
+                                if settings.isHapticsEnabled {
+                                    let generator = UIImpactFeedbackGenerator(style: .light)
+                                    generator.impactOccurred()
                                 }
+                                presentationMode.wrappedValue.dismiss()
+                            }) {
+                                Text("Confirm")
+                                    .font(.system(size: 20))
+                                    .fontWeight(.medium)
+                                    .frame(maxWidth: .infinity)
+                                    .foregroundColor(.white)
                             }
-                            .padding()
+                            .buttonStyle(CustomButtonStyle())
                         }
                     }
                     .listSectionSpacing(10)
@@ -121,6 +136,37 @@ struct MeetEditView: View {
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
+        }
+    }
+    
+    // Reset to default values
+    private func resetFields() {
+        meetDate = Date()
+        meetLocation = "St. Mary's College of Maryland"
+        indoorOutdoor = "Indoor"
+        events = []
+    }
+    
+    // Add or update in injury log
+    private func addMeet() {
+        let newMeet = MeetData(
+            meetDate: meetDate,
+            meetLocation: meetLocation,
+            indoorOutdoor: indoorOutdoor,
+            events: events
+        )
+        
+        if isEditing, let index = meetLog.firstIndex(where: { $0.id == meet.id }) {
+            meetLog[index] = newMeet
+        } else {
+            meetLog.append(newMeet)
+        }
+    }
+    
+    // Save the injury
+    private func saveMeetLog() {
+        if let encoded = try? JSONEncoder().encode(meetLog) {
+            UserDefaults.standard.set(encoded, forKey: "meetLog")
         }
     }
     
