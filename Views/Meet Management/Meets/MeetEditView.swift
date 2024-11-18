@@ -9,7 +9,7 @@ import SwiftUI
 import UserNotifications
 
 // Allows user to choose meet dates and display them
-struct MeetView: View {
+struct MeetEditView: View {
     @State private var date = Date()
     @State private var meets: [Date] = []
     @State private var isSideMenuOpen = false
@@ -21,6 +21,10 @@ struct MeetView: View {
             return []
         }
     }()
+    
+    @Binding var meetLog: [MeetData]
+    var meet: MeetData
+    var isEditing: Bool
     
     var body: some View {
         NavigationStack {

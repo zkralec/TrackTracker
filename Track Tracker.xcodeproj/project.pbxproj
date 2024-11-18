@@ -14,7 +14,7 @@
 		14535DF62BAC6B650080531D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DF52BAC6B650080531D /* HomeView.swift */; };
 		14535DF92BACC2F10080531D /* StreakData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DF82BACC2F00080531D /* StreakData.swift */; };
 		14535DFB2BACCB730080531D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFA2BACCB730080531D /* SettingsView.swift */; };
-		14535DFD2BACE1C20080531D /* MeetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFC2BACE1C20080531D /* MeetView.swift */; };
+		14535DFD2BACE1C20080531D /* MeetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFC2BACE1C20080531D /* MeetEditView.swift */; };
 		14535E002BAD2A1D0080531D /* EventData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535DFF2BAD2A1D0080531D /* EventData.swift */; };
 		14535E0C2BB268030080531D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E0B2BB268030080531D /* AppDelegate.swift */; };
 		14535E0E2BC45A000080531D /* CustomCircleButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14535E0D2BC45A000080531D /* CustomCircleButtonStyle.swift */; };
@@ -46,6 +46,8 @@
 		148F24482CD91933007EB8FC /* WeightsExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */; };
 		148F244A2CDE5671007EB8FC /* WeightsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24492CDE5671007EB8FC /* WeightsData.swift */; };
 		148F244C2CE0EAE8007EB8FC /* WeightsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F244B2CE0EAE8007EB8FC /* WeightsExercise.swift */; };
+		148F24512CEBE214007EB8FC /* MeetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24502CEBE214007EB8FC /* MeetView.swift */; };
+		148F24542CEBE278007EB8FC /* MeetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24532CEBE278007EB8FC /* MeetData.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
@@ -100,7 +102,7 @@
 		14535DF52BAC6B650080531D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		14535DF82BACC2F00080531D /* StreakData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakData.swift; sourceTree = "<group>"; };
 		14535DFA2BACCB730080531D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		14535DFC2BACE1C20080531D /* MeetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetView.swift; sourceTree = "<group>"; };
+		14535DFC2BACE1C20080531D /* MeetEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetEditView.swift; sourceTree = "<group>"; };
 		14535DFF2BAD2A1D0080531D /* EventData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventData.swift; sourceTree = "<group>"; };
 		14535E0B2BB268030080531D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14535E0D2BC45A000080531D /* CustomCircleButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircleButtonStyle.swift; sourceTree = "<group>"; };
@@ -129,6 +131,8 @@
 		148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsExerciseModel.swift; sourceTree = "<group>"; };
 		148F24492CDE5671007EB8FC /* WeightsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsData.swift; sourceTree = "<group>"; };
 		148F244B2CE0EAE8007EB8FC /* WeightsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsExercise.swift; sourceTree = "<group>"; };
+		148F24502CEBE214007EB8FC /* MeetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetView.swift; sourceTree = "<group>"; };
+		148F24532CEBE278007EB8FC /* MeetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetData.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
@@ -332,8 +336,9 @@
 				14823F382CC152E20058C57F /* Welcome */,
 				14823F2B2CC14E1A0058C57F /* Authentication */,
 				14823F2C2CC14E240058C57F /* Navigation */,
-				14823F2D2CC14E320058C57F /* Meets, Events, History, ... */,
+				14823F2D2CC14E320058C57F /* Events, Exercises, Log, ... */,
 				1464AFBA2C1733FD00D00FBB /* RecoveryInfo */,
+				148F24552CEBE34F007EB8FC /* Meet Management */,
 				14823F2E2CC14E410058C57F /* Injury Management */,
 				14823F312CC1511D0058C57F /* Model Views */,
 				14823F2F2CC14E4F0058C57F /* Settings */,
@@ -357,15 +362,14 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
-		14823F2D2CC14E320058C57F /* Meets, Events, History, ... */ = {
+		14823F2D2CC14E320058C57F /* Events, Exercises, Log, ... */ = {
 			isa = PBXGroup;
 			children = (
 				146154002BDDC5560068504B /* TrainingLogView.swift */,
-				14535DFC2BACE1C20080531D /* MeetView.swift */,
 				1492220E2BDC8F0B00F633BE /* EventView.swift */,
 				14BF431B2BA157E7004B3321 /* ExerciseListView.swift */,
 			);
-			path = "Meets, Events, History, ...";
+			path = "Events, Exercises, Log, ...";
 			sourceTree = "<group>";
 		};
 		14823F2E2CC14E410058C57F /* Injury Management */ = {
@@ -443,6 +447,7 @@
 		148609B82CA7217600A3E73F /* Data Binder */ = {
 			isa = PBXGroup;
 			children = (
+				148F24522CEBE26E007EB8FC /* MeetData */,
 				148609B32C9F06B200A3E73F /* InjuryData */,
 				14535DF72BACC2DD0080531D /* StreakData */,
 				14BF43162BA145F5004B3321 /* ExerciseData */,
@@ -461,6 +466,31 @@
 				148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */,
 			);
 			path = Weights;
+			sourceTree = "<group>";
+		};
+		148F244F2CEBE1FF007EB8FC /* Meets */ = {
+			isa = PBXGroup;
+			children = (
+				148F24502CEBE214007EB8FC /* MeetView.swift */,
+				14535DFC2BACE1C20080531D /* MeetEditView.swift */,
+			);
+			path = Meets;
+			sourceTree = "<group>";
+		};
+		148F24522CEBE26E007EB8FC /* MeetData */ = {
+			isa = PBXGroup;
+			children = (
+				148F24532CEBE278007EB8FC /* MeetData.swift */,
+			);
+			path = MeetData;
+			sourceTree = "<group>";
+		};
+		148F24552CEBE34F007EB8FC /* Meet Management */ = {
+			isa = PBXGroup;
+			children = (
+				148F244F2CEBE1FF007EB8FC /* Meets */,
+			);
+			path = "Meet Management";
 			sourceTree = "<group>";
 		};
 		1492220D2BDC758F00F633BE /* Navigation Pages */ = {
@@ -678,6 +708,7 @@
 				149222072BDB141300F633BE /* ProfileView.swift in Sources */,
 				148F244A2CDE5671007EB8FC /* WeightsData.swift in Sources */,
 				14823F352CC1517E0058C57F /* WorkoutTogglesView.swift in Sources */,
+				148F24542CEBE278007EB8FC /* MeetData.swift in Sources */,
 				14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */,
 				148F24462CD54440007EB8FC /* ExerciseSuggestionButton.swift in Sources */,
 				14BF431C2BA157E7004B3321 /* ExerciseListView.swift in Sources */,
@@ -697,8 +728,9 @@
 				14DAEF5C2B7FB4A200AF4667 /* WelcomeView.swift in Sources */,
 				14DAEF672B7FCDBC00AF4667 /* UserData.swift in Sources */,
 				14535E0E2BC45A000080531D /* CustomCircleButtonStyle.swift in Sources */,
-				14535DFD2BACE1C20080531D /* MeetView.swift in Sources */,
+				14535DFD2BACE1C20080531D /* MeetEditView.swift in Sources */,
 				144BEBFD2BC4CB990002AEB9 /* ToolbarModifier.swift in Sources */,
+				148F24512CEBE214007EB8FC /* MeetView.swift in Sources */,
 				14BF43152BA112F1004B3321 /* RoundedBackground.swift in Sources */,
 				141CA4BD2B7D3B4600A3D82E /* TrackTrackerApp.swift in Sources */,
 				14960F1D2CCE696300798C27 /* CustomKeyboardToolbar.swift in Sources */,
