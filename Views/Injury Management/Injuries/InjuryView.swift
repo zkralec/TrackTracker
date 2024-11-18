@@ -28,34 +28,20 @@ struct InjuryView: View {
                 ZStack {
                     VStack {
                         VStack {
-                            VStack {
-                                ZStack {
-                                    // Display title
-                                    TitleBackground(title: "Injury Log")
-                                    
-                                    HStack {
-                                        // Menu bar icon
-                                        MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                                        Spacer()
-                                    }
-                                }
+                            ZStack {
+                                // Display title
+                                TitleBackground(title: "Injury Log")
                                 
-                                // Button to add a new injury
-                                Button(action: {
-                                    selectedInjury = nil
-                                    isEditing = false
-                                    isPresentingInjuryDetail = true
-                                }) {
-                                    Text("Add New Injury")
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
+                                HStack {
+                                    // Menu bar icon
+                                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                    Spacer()
                                 }
-                                .buttonStyle(CustomButtonStyle())
-                                .padding(10)
                             }
                             Divider()
                         }
                         .padding(.bottom, -8)
+
                         
                         // List of injuries
                         List {
@@ -138,6 +124,25 @@ struct InjuryView: View {
                             } else {
                                 isEditing = false
                             }
+                        }
+                        
+                        VStack {
+                            Divider()
+                                .padding(.top, -8)
+                            
+                            // Button to add a new injury
+                            Button(action: {
+                                selectedInjury = nil
+                                isEditing = false
+                                isPresentingInjuryDetail = true
+                            }) {
+                                HStack {
+                                    Image(systemName: "plus.circle")
+                                    Text("Add New Injury")
+                                }
+                                .foregroundColor(.blue)
+                            }
+                            .padding(10)
                         }
                     }
                     // Show side menu if needed
