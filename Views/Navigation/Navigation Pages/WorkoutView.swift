@@ -111,20 +111,6 @@ struct WorkoutView: View {
     var onDisappearAction: ((Bool) -> Void)?
     private var previousDaysData: [WorkoutData] = []
     
-    // Will disable toggles in section after one is toggled
-    var anyDayToggleOn: Bool {
-        isOff || isTechnique || isWorkout || isTempo || isRecovery || isMeet
-    }
-    var anySurfaceToggleOn: Bool {
-        isTrack || isIndoorTrack || isDirt || isGrassHills || isAsphalt
-    }
-    var anyConditionToggleOn: Bool {
-        isInjury || isSoreness || isFatigued || isPeakForm
-    }
-    var anyIntensityToggleOn: Bool {
-        isLow || isModerate || isHigh || isMaximum
-    }
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -422,7 +408,8 @@ struct WorkoutView: View {
                                                 ("Recovery Day", $isRecovery),
                                                 ("Meet Day", $isMeet)
                                             ],
-                                            isDisabled: isDayComplete || anyDayToggleOn
+                                            isDisabled: isDayComplete,
+                                            isMultiple: false
                                         )
                                     }
                                     
@@ -436,7 +423,8 @@ struct WorkoutView: View {
                                                 ("High", $isHigh),
                                                 ("Maximum", $isMaximum)
                                             ],
-                                            isDisabled: isDayComplete || anyIntensityToggleOn
+                                            isDisabled: isDayComplete,
+                                            isMultiple: false
                                         )
                                     }
                                     
@@ -457,7 +445,8 @@ struct WorkoutView: View {
                                                 ("Stationary Bike", $isStationaryBike),
                                                 ("Treadmill", $isTreadmill)
                                             ],
-                                            isDisabled: isDayComplete
+                                            isDisabled: isDayComplete,
+                                            isMultiple: true
                                         )
                                     }
                                     
@@ -473,7 +462,8 @@ struct WorkoutView: View {
                                                 ("Grass/Hills", $isGrassHills),
                                                 ("Asphalt", $isAsphalt)
                                             ],
-                                            isDisabled: isDayComplete || anySurfaceToggleOn
+                                            isDisabled: isDayComplete,
+                                            isMultiple: true
                                         )
                                     }
                                     
@@ -487,7 +477,8 @@ struct WorkoutView: View {
                                                 ("Fatigued", $isFatigued),
                                                 ("Peak Form", $isPeakForm)
                                             ],
-                                            isDisabled: isDayComplete || anyConditionToggleOn
+                                            isDisabled: isDayComplete,
+                                            isMultiple: false
                                         )
                                     }
                                     
@@ -503,7 +494,8 @@ struct WorkoutView: View {
                                                 ("Hot", $isHot),
                                                 ("Cold", $isCold)
                                             ],
-                                            isDisabled: isDayComplete
+                                            isDisabled: isDayComplete,
+                                            isMultiple: false
                                         )
                                     }
                                     
@@ -521,7 +513,8 @@ struct WorkoutView: View {
                                                 ("Long Jump", $isLongJump),
                                                 ("Triple Jump", $isTripleJump)
                                             ],
-                                            isDisabled: isDayComplete
+                                            isDisabled: isDayComplete,
+                                            isMultiple: true
                                         )
                                     }
                                 }
