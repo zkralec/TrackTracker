@@ -14,9 +14,9 @@ struct MeetEditView: View {
     @State private var meets: [Date] = []
     @State private var isSideMenuOpen = false
     @State private var meetDate: Date = Date()
-    @State private var meetLocation: String = "St. Mary's College of Maryland"
-    @State private var indoorOutdoor: String = "Indoor"
-    @State private var events: [String] = []
+    @State private var meetLocation: String = "SMCM"
+    @State private var indoorOutdoor: String = "Outdoor"
+    @State private var events: [String] = ["100 meter", "Pole Vault"]
     @ObservedObject var settings = SettingsViewModel()
     @Environment(\.presentationMode) var presentationMode
     

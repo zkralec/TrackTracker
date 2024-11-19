@@ -19,9 +19,9 @@ struct MeetData: Identifiable, Codable {
     static var `default`: MeetData {
         MeetData(
             meetDate: Date(),
-            meetLocation: "St. Mary's College of Maryland",
-            indoorOutdoor: "Indoor",
-            events: ["60 meter", "Pole Vault"]
+            meetLocation: "SMCM",
+            indoorOutdoor: "Outdoor",
+            events: ["100 meter", "Pole Vault"]
         )
     }
 }

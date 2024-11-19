@@ -59,7 +59,7 @@ struct MeetView: View {
                             // Display each logged injury
                             ForEach(meetLog.indices, id: \.self) { index in
                                 let meet = meetLog[index]
-                                Section("\(meet.meetDate) Meet") {
+                                Section(meet.meetDate.formatted()) {
                                     VStack(alignment: .leading) {
                                         HStack {
                                             // Injury details
