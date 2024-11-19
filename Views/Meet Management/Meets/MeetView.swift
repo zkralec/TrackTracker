@@ -12,7 +12,6 @@ struct MeetView: View {
     @State private var meetLog: [MeetData] = []
     @State private var selectedMeet: MeetData?
     @State private var isPresentingMeetDetail = false
-    @State private var isEditing: Bool = false
     
     // Load selected events from UserDefaults
     @State private var events: [EventData] = {
@@ -76,15 +75,6 @@ struct MeetView: View {
                                             }
                                             Spacer()
                                             
-                                            // Edit button
-                                            Button("Edit") {
-                                                selectedMeet = meet
-                                                isEditing = true
-                                                isPresentingMeetDetail = true
-                                            }
-                                            .buttonStyle(BorderlessButtonStyle())
-                                            .padding(.trailing, 10)
-                                            
                                             // Delete button
                                             Button(action: {
                                                 withAnimation {
@@ -98,7 +88,6 @@ struct MeetView: View {
                                         }
                                         .padding(.vertical, 4)
                                     }
-                                    .padding(.bottom, 10)
                                 }
                                 .listSectionSpacing(10)
                             }
@@ -106,14 +95,7 @@ struct MeetView: View {
                     }
                     // Sheet for editing injury details
                     .sheet(isPresented: $isPresentingMeetDetail) {
-                        MeetEditView(meetLog: $meetLog, meet: selectedMeet ?? MeetData.default, isEditing: isEditing)
-                    }
-                    .onChange(of: isPresentingMeetDetail) {
-                        if selectedMeet != nil {
-                            isEditing = true
-                        } else {
-                            isEditing = false
-                        }
+                        MeetEditView(meetLog: $meetLog, meet: selectedMeet ?? MeetData.default)
                     }
                     
                     VStack {
@@ -123,7 +105,6 @@ struct MeetView: View {
                         // Button to add a new injury
                         Button(action: {
                             selectedMeet = nil
-                            isEditing = false
                             isPresentingMeetDetail = true
                         }) {
                             HStack {

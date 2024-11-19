@@ -30,7 +30,6 @@ struct MeetEditView: View {
     
     @Binding var meetLog: [MeetData]
     var meet: MeetData
-    var isEditing: Bool
     
     var body: some View {
         NavigationStack {
@@ -46,70 +45,16 @@ struct MeetEditView: View {
                                 // Calendar
                                 DatePicker("", selection: $date, displayedComponents: .date)
                                     .datePickerStyle(GraphicalDatePickerStyle())
-                                
-                                // Add meet date button
-                                Button {
-                                    withAnimation {
-                                        meets.append(date)
-                                        scheduleNotification(for: date)
-                                        saveMeets()
-                                        print("Added meet \(date)")
-                                    }
-                                } label: {
-                                    HStack {
-                                        Image(systemName: "plus.circle")
-                                        Text("Add Meet")
-                                    }
-                                    .foregroundStyle(Color.blue)
-                                }
                             }
                             .padding()
-                        }
-                        
-                        // Remove and display meet dates
-                        Section("Meets") {
-                            HStack {
-                                Spacer()
-                                
-                                VStack {
-                                    if meets.isEmpty {
-                                        Text("No meet days selected")
-                                            .foregroundStyle(.secondary)
-                                            .padding()
-                                    } else {
-                                        VStack {
-                                            ForEach(meets, id: \.self) { date in
-                                                Text(date.formatted())
-                                                    .padding(5)
-                                                    .roundedBackground()
-                                            }
-                                            
-                                            // Remove the last meet day
-                                            Button {
-                                                withAnimation {
-                                                    removeMeet(at: meets.count - 1)
-                                                    print("Removed last meet")
-                                                }
-                                            } label: {
-                                                HStack {
-                                                    Image(systemName: "minus.circle")
-                                                    Text("Remove Last")
-                                                }
-                                                .padding(.top, 10)
-                                                .foregroundStyle(Color.blue)
-                                            }
-                                        }
-                                        .padding()
-                                    }
-                                }
-                                
-                                Spacer()
-                            }
                         }
                         
                         // Confirm button
                         Section {
                             Button(action: {
+                                meets.append(date)
+                                scheduleNotification(for: date)
+                                saveMeets()
                                 addMeet()
                                 saveMeetLog()
                                 // Feature to enable or disable haptics
@@ -155,12 +100,8 @@ struct MeetEditView: View {
             indoorOutdoor: indoorOutdoor,
             events: events
         )
-        
-        if isEditing, let index = meetLog.firstIndex(where: { $0.id == meet.id }) {
-            meetLog[index] = newMeet
-        } else {
-            meetLog.append(newMeet)
-        }
+
+        meetLog.append(newMeet)
     }
     
     // Save the injury
