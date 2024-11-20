@@ -31,16 +31,16 @@ struct EventView: View {
                     }
                     .padding(.bottom, -8)
                     
-                    // List of events with navigation links
+                    // List of events
                     List {
                         ForEach(EventData.allCases, id: \.self) { event in
                             Section {
-                                Button(action: {
+                                Button {
                                     self.toggleSelection(for: event)
                                     // Saves the events
                                     UserDefaults.standard.set(events.map { $0.rawValue }, forKey: "selectedEvents")
                                     print("Saved Events")
-                                }) {
+                                } label: {
                                     HStack {
                                         Text(event.rawValue)
                                             .foregroundStyle(Color.primary)

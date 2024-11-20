@@ -108,7 +108,7 @@ struct InjuryEditView: View {
                     // Severity slider
                     Section {
                         VStack(alignment: .leading) {
-                            Text("Severity: \(Int(severity))")
+                            Text("Severity \(Int(severity))")
                             Slider(value: $severity, in: 1...5, step: 1)
                                 .accentColor(.blue)
                         }
