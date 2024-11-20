@@ -48,6 +48,7 @@
 		148F244C2CE0EAE8007EB8FC /* WeightsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F244B2CE0EAE8007EB8FC /* WeightsExercise.swift */; };
 		148F24512CEBE214007EB8FC /* MeetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24502CEBE214007EB8FC /* MeetView.swift */; };
 		148F24542CEBE278007EB8FC /* MeetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24532CEBE278007EB8FC /* MeetData.swift */; };
+		148F245A2CEE5D03007EB8FC /* MultiSelectPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24592CEE5D03007EB8FC /* MultiSelectPicker.swift */; };
 		149222072BDB141300F633BE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222062BDB141300F633BE /* ProfileView.swift */; };
 		149222092BDB1ADE00F633BE /* MenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149222082BDB1ADE00F633BE /* MenuButton.swift */; };
 		1492220B2BDBDB8E00F633BE /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1492220A2BDBDB8E00F633BE /* SideBar.swift */; };
@@ -133,6 +134,7 @@
 		148F244B2CE0EAE8007EB8FC /* WeightsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsExercise.swift; sourceTree = "<group>"; };
 		148F24502CEBE214007EB8FC /* MeetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetView.swift; sourceTree = "<group>"; };
 		148F24532CEBE278007EB8FC /* MeetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetData.swift; sourceTree = "<group>"; };
+		148F24592CEE5D03007EB8FC /* MultiSelectPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectPicker.swift; sourceTree = "<group>"; };
 		149222062BDB141300F633BE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		149222082BDB1ADE00F633BE /* MenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButton.swift; sourceTree = "<group>"; };
 		1492220A2BDBDB8E00F633BE /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 		14823F312CC1511D0058C57F /* Model Views */ = {
 			isa = PBXGroup;
 			children = (
+				148F24582CEE5CED007EB8FC /* Meets */,
 				148F24442CD54421007EB8FC /* Weights */,
 				14823F332CC1515F0058C57F /* Workouts */,
 				14823F322CC1513C0058C57F /* Login */,
@@ -491,6 +494,14 @@
 				148F244F2CEBE1FF007EB8FC /* Meets */,
 			);
 			path = "Meet Management";
+			sourceTree = "<group>";
+		};
+		148F24582CEE5CED007EB8FC /* Meets */ = {
+			isa = PBXGroup;
+			children = (
+				148F24592CEE5D03007EB8FC /* MultiSelectPicker.swift */,
+			);
+			path = Meets;
 			sourceTree = "<group>";
 		};
 		1492220D2BDC758F00F633BE /* Navigation Pages */ = {
@@ -703,6 +714,7 @@
 				14823F3A2CC198650058C57F /* WorkoutDataDefault.swift in Sources */,
 				14823F162CB963AC0058C57F /* UserModel.swift in Sources */,
 				1492220F2BDC8F0B00F633BE /* EventView.swift in Sources */,
+				148F245A2CEE5D03007EB8FC /* MultiSelectPicker.swift in Sources */,
 				14535E002BAD2A1D0080531D /* EventData.swift in Sources */,
 				14823F0E2CB6F0320058C57F /* ForgotPasswordView.swift in Sources */,
 				149222072BDB141300F633BE /* ProfileView.swift in Sources */,
