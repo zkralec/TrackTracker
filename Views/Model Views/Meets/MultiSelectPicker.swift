@@ -19,18 +19,54 @@ struct MultiSelectPicker: View {
                     Button {
                         withAnimation {
                             if self.selectedItems.contains(item) {
-                                
+                                self.selectedItems.removeAll(where: { $0 == item })
+                            } else {
+                                self.selectedItems.append(item)
                             }
                         }
                     } label: {
-                        
+                        HStack {
+                            Image(systemName: "checkmark")
+                                .opacity(self.selectedItems.contains(item) ? 1.0 : 0.0)
+                            Text(item)
+                        }
                     }
+                    .foregroundStyle(Color.primary)
                 }
              }
         }
     }
 }
 
-#Preview {
-    MultiSelectPicker()
+struct PickingView: View {
+    @State var selectedItems: [String]
+    @State var allItems: [String]
+    
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Choose events:", content: {
+                    NavigationLink(destination: {
+                        MultiSelectPicker(allItems: allItems, selectedItems: $selectedItems)
+                            .navigationTitle("Choose Your Events")
+                    }, label: {
+                        HStack {
+                            Text("Select events:")
+                                .foregroundStyle(Color(red: 0.4192, green: 0.2358, blue: 0.3450))
+                            Spacer()
+                            Image(systemName: "\($selectedItems.count).circle")
+                                .foregroundStyle(Color(red: 0.4192, green: 0.2358, blue: 0.3450))
+                                .font(.title2)
+                        }
+                    })
+                })
+                
+                Section("Your events are:", content: {
+                    Text(selectedItems.joined(separator: "\n"))
+                        .foregroundStyle(Color(red: 0.4192, green: 0.2358, blue: 0.3450))
+                })
+            }
+            .navigationTitle("My Events")
+        }
+    }
 }

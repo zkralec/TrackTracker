@@ -17,11 +17,44 @@ struct MeetEditView: View {
     @State private var meetLocation: String = ""
     @State private var indoorOutdoor: String = "Outdoor"
     @State private var events: [String] = []
-    @ObservedObject var settings = SettingsViewModel()
-    @Environment(\.presentationMode) var presentationMode
-    @Binding var meetLog: [MeetData]
-    var meet: MeetData
+    @State var selectedItems = [String]()
+    @State var allItems: [String] = [
+        "55 Meters",
+        "60 Meters",
+        "100 Meters",
+        "200 Meters",
+        "400 Meters",
+        "800 Meters",
+        "1500 Meters",
+        "1600 Meters",
+        "3000 Meters",
+        "3000 Meter Steeplechase",
+        "5000 Meters",
+        "10,000 Meters",
+        "100 Meter Hurdles",
+        "110 Meter Hurdles",
+        "400 Meter Hurdles",
+        "4x100 Meter Relay",
+        "4x200 Meter Relay",
+        "4x400 Meter Relay",
+        "High Jump",
+        "Long Jump",
+        "Triple Jump",
+        "Pole Vault",
+        "Shot Put",
+        "Discus Throw",
+        "Weight Throw",
+        "Hammer Throw",
+        "Javelin Throw"
+    ]
     
+    @ObservedObject var settings = SettingsViewModel()
+    
+    @Environment(\.presentationMode) var presentationMode
+    
+    @Binding var meetLog: [MeetData]
+    
+    var meet: MeetData
     let indoorOutdoorTypes = ["Outdoor", "Indoor"]
     
     var body: some View {
@@ -33,7 +66,7 @@ struct MeetEditView: View {
                     
                     List {
                         // Allows user to set their meet days
-                        Section("Add Meet Days") {
+                        Section() {
                             VStack {
                                 // Calendar
                                 DatePicker("", selection: $date, displayedComponents: .date)
@@ -70,10 +103,7 @@ struct MeetEditView: View {
                                 
                                 Spacer()
                                 
-                                Picker("", selection: $events) {
-                                    ForEach(EventData.allCases, id: \.self) { event in
-                                        Text("\(event.rawValue)")
-                                    }
+                                NavigationLink(destination: PickingView(selectedItems: selectedItems, allItems: allItems)) {
                                 }
                             }
                         }
