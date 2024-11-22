@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @State private var team = ""
     @State private var fullName = ""
     @State private var email = ""
     @State private var password = ""
@@ -28,6 +29,11 @@ struct SignUpView: View {
             
             // Form fields
             VStack(spacing: 8) {
+                // Team name (if applicable)
+                LoginInputView(text: $team,
+                               title: "Team Name",
+                               placeholder: "Enter team name (if applicable)")
+                
                 // First name
                 LoginInputView(text: $fullName,
                                title: "Full Name",
@@ -87,7 +93,7 @@ struct SignUpView: View {
             // Sign up button
             Button {
                 Task {
-                    try await viewModel.createUser(withEmail: email, password: password, fullName: fullName)
+                    try await viewModel.createUser(team: team, withEmail: email, password: password, fullName: fullName)
                 }
             } label: {
                 HStack {

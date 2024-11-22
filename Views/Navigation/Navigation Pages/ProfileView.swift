@@ -45,6 +45,69 @@ struct ProfileView: View {
                     
                     if let user = viewModel.currentUser {
                         List {
+                            // Display user team
+                            Section("Team") {
+                                    if(!(user.team.isEmpty)) {
+                                        if(userDataManager.userData?.gender.rawValue == "Male") {
+                                            HStack {
+                                                Spacer()
+                                                VStack {
+                                                    Text(user.team)
+                                                        .font(.title2)
+                                                        .padding(.bottom, 5)
+                                                        .fontWeight(.medium)
+                                                    Text("Men's Track and Field Athlete")
+                                                }
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        } else if (userDataManager.userData?.gender.rawValue == "Female") {
+                                            HStack {
+                                                Spacer()
+                                                VStack {
+                                                    Text(user.team)
+                                                        .font(.title2)
+                                                        .padding(.bottom, 5)
+                                                        .fontWeight(.medium)
+                                                    Text("Woman's Track and Field Athlete")
+                                                }
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        } else {
+                                            HStack {
+                                                Spacer()
+                                                VStack {
+                                                    Text(user.team)
+                                                        .font(.title2)
+                                                        .padding(.bottom, 5)
+                                                        .fontWeight(.medium)
+                                                    Text("Track and Field Athlete")
+                                                }
+                                                Spacer()
+                                            }
+                                            .padding()
+                                        }
+                                    } else {
+                                        if(userDataManager.userData?.gender.rawValue == "Male") {
+                                            Text("Men's Track and Field Athlete")
+                                                .multilineTextAlignment(.center)
+                                                .font(.title2)
+                                                .padding()
+                                        } else if (userDataManager.userData?.gender.rawValue == "Female") {
+                                            Text("Women's Track and Field Athlete")
+                                                .multilineTextAlignment(.center)
+                                                .font(.title2)
+                                                .padding()
+                                        } else {
+                                            Text("Track and Field Athlete")
+                                                .multilineTextAlignment(.center)
+                                                .font(.title2)
+                                                .padding()
+                                        }
+                                    }
+                            }
+                            
                             // User information display section
                             Section("General") {
                                 HStack {

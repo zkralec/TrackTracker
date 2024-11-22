@@ -189,8 +189,8 @@ struct MeetEditView: View {
     // Makes a notification that will go off at the correct date
     func scheduleNotification(for date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = "You have a meet today!"
-        content.body = "Make sure to run fast, jump high, and throw far. Push yourself!"
+        content.title = "\(indoorOutdoor) meet at \(meetLocation)"
+        content.body = "Your events: \(selectedItems). Make sure to run fast, jump high, and push yourself!"
         content.sound = UNNotificationSound.default
         
         var triggerDate = Calendar.current.dateComponents([.year, .month, .day], from: date)

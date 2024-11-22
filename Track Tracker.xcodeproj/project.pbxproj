@@ -42,7 +42,6 @@
 		148609B52C9F06E000A3E73F /* InjuryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B42C9F06E000A3E73F /* InjuryData.swift */; };
 		148609B72C9F13DD00A3E73F /* InjuryDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148609B62C9F13DD00A3E73F /* InjuryDetailsView.swift */; };
 		148F24432CD542AA007EB8FC /* WeightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24422CD542AA007EB8FC /* WeightsView.swift */; };
-		148F24462CD54440007EB8FC /* ExerciseSuggestionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24452CD54440007EB8FC /* ExerciseSuggestionButton.swift */; };
 		148F24482CD91933007EB8FC /* WeightsExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */; };
 		148F244A2CDE5671007EB8FC /* WeightsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F24492CDE5671007EB8FC /* WeightsData.swift */; };
 		148F244C2CE0EAE8007EB8FC /* WeightsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148F244B2CE0EAE8007EB8FC /* WeightsExercise.swift */; };
@@ -128,7 +127,6 @@
 		148609B42C9F06E000A3E73F /* InjuryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryData.swift; sourceTree = "<group>"; };
 		148609B62C9F13DD00A3E73F /* InjuryDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjuryDetailsView.swift; sourceTree = "<group>"; };
 		148F24422CD542AA007EB8FC /* WeightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsView.swift; sourceTree = "<group>"; };
-		148F24452CD54440007EB8FC /* ExerciseSuggestionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSuggestionButton.swift; sourceTree = "<group>"; };
 		148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsExerciseModel.swift; sourceTree = "<group>"; };
 		148F24492CDE5671007EB8FC /* WeightsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsData.swift; sourceTree = "<group>"; };
 		148F244B2CE0EAE8007EB8FC /* WeightsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightsExercise.swift; sourceTree = "<group>"; };
@@ -465,7 +463,6 @@
 		148F24442CD54421007EB8FC /* Weights */ = {
 			isa = PBXGroup;
 			children = (
-				148F24452CD54440007EB8FC /* ExerciseSuggestionButton.swift */,
 				148F24472CD91933007EB8FC /* WeightsExerciseModel.swift */,
 			);
 			path = Weights;
@@ -722,7 +719,6 @@
 				14823F352CC1517E0058C57F /* WorkoutTogglesView.swift in Sources */,
 				148F24542CEBE278007EB8FC /* MeetData.swift in Sources */,
 				14BF43132BA106FD004B3321 /* MealsListView.swift in Sources */,
-				148F24462CD54440007EB8FC /* ExerciseSuggestionButton.swift in Sources */,
 				14BF431C2BA157E7004B3321 /* ExerciseListView.swift in Sources */,
 				148609B72C9F13DD00A3E73F /* InjuryDetailsView.swift in Sources */,
 				1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */,
