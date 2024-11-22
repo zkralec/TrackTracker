@@ -13,7 +13,7 @@ struct MeetData: Identifiable, Codable {
     var meetDate: Date
     var meetLocation: String
     var indoorOutdoor: String
-    var events: [String]
+    var events: String
 
     // Default preset
     static var `default`: MeetData {
@@ -21,7 +21,7 @@ struct MeetData: Identifiable, Codable {
             meetDate: Date(),
             meetLocation: "SMCM",
             indoorOutdoor: "Outdoor",
-            events: ["100 meter", "Pole Vault"]
+            events: "100 meter, Pole Vault"
         )
     }
 }

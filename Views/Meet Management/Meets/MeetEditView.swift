@@ -16,7 +16,6 @@ struct MeetEditView: View {
     @State private var meetDate: Date = Date()
     @State private var meetLocation: String = ""
     @State private var indoorOutdoor: String = "Outdoor"
-    @State private var events: [String] = []
     @State var selectedItems = [String]()
     @State var allItems: [String] = [
         "55 Meters",
@@ -97,16 +96,25 @@ struct MeetEditView: View {
                             }
                         }
                         
-                        Section {
-                            HStack {
-                                Text("Events")
-                                
-                                Spacer()
-                                
-                                NavigationLink(destination: PickingView(selectedItems: selectedItems, allItems: allItems)) {
+                        Section(content: {
+                            NavigationLink(destination: {
+                                MultiSelectPicker(allItems: allItems, selectedItems: $selectedItems)
+                                    .navigationTitle("Choose Your Events")
+                            }, label: {
+                                HStack {
+                                    Text("Select events")
+                                    Spacer()
+                                    Image(systemName: "\($selectedItems.count).circle")
+                                        .foregroundStyle(Color.blue)
+                                        .font(.title2)
                                 }
-                            }
-                        }
+                            })
+                        })
+                        
+                        Section(content: {
+                            Text(selectedItems.joined(separator: "\n"))
+                                .foregroundStyle(Color.secondary)
+                        })
  
                         // Confirm button
                         Section {
@@ -143,12 +151,19 @@ struct MeetEditView: View {
     private func resetFields() {
         meetDate = Date()
         meetLocation = "St. Mary's College of Maryland"
-        indoorOutdoor = "Indoor"
-        events = []
+        indoorOutdoor = "Outdoor"
+        selectedItems = [""]
     }
     
     // Add or update in injury log
     private func addMeet() {
+        var events = ""
+        for i in selectedItems {
+            events.append(i +  ", ")
+        }
+        events.removeLast()
+        events.removeLast()
+        
         let newMeet = MeetData(
             meetDate: meetDate,
             meetLocation: meetLocation,

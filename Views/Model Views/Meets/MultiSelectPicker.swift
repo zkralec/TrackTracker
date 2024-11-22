@@ -37,36 +37,3 @@ struct MultiSelectPicker: View {
         }
     }
 }
-
-struct PickingView: View {
-    @State var selectedItems: [String]
-    @State var allItems: [String]
-    
-    var body: some View {
-        NavigationStack {
-            Form {
-                Section("Choose events:", content: {
-                    NavigationLink(destination: {
-                        MultiSelectPicker(allItems: allItems, selectedItems: $selectedItems)
-                            .navigationTitle("Choose Your Events")
-                    }, label: {
-                        HStack {
-                            Text("Select events:")
-                                .foregroundStyle(Color.blue)
-                            Spacer()
-                            Image(systemName: "\($selectedItems.count).circle")
-                                .foregroundStyle(Color.blue)
-                                .font(.title2)
-                        }
-                    })
-                })
-                
-                Section("Your events are:", content: {
-                    Text(selectedItems.joined(separator: "\n"))
-                        .foregroundStyle(Color.secondary)
-                })
-            }
-            .navigationTitle("My Events")
-        }
-    }
-}

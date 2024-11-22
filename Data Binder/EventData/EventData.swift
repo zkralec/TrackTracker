@@ -10,6 +10,8 @@ import Foundation
 // A list of all track and field events
 enum EventData: String, CaseIterable, Hashable, Identifiable {
     // Running events
+    case fitfyFiveMeters = "55 Meters"
+    case sixtyMeters = "60 Meters"
     case hundredMeters = "100 Meters"
     case twoHundredMeters = "200 Meters"
     case fourHundredMeters = "400 Meters"
@@ -20,6 +22,7 @@ enum EventData: String, CaseIterable, Hashable, Identifiable {
     case steeplechase = "3000 Meter Steeplechase"
     case fiveThousandMeters = "5000 Meters"
     case tenThousandMeters = "10,000 Meters"
+    case hurdles100Meters = "100 Meter Hurdles"
     case hurdles110Meters = "110 Meter Hurdles"
     case hurdles400Meters = "400 Meter Hurdles"
     case fourByOneHundredRelay = "4x100 Meter Relay"
