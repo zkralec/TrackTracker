@@ -10,7 +10,6 @@ import UserNotifications
 
 // Allows user to choose meet dates and display them
 struct MeetEditView: View {
-    @State private var date = Date()
     @State private var meets: [Date] = []
     @State private var isSideMenuOpen = false
     @State private var meetDate: Date = Date()
@@ -68,7 +67,7 @@ struct MeetEditView: View {
                         Section() {
                             VStack {
                                 // Calendar
-                                DatePicker("", selection: $date, displayedComponents: .date)
+                                DatePicker("", selection: $meetDate, displayedComponents: .date)
                                     .datePickerStyle(GraphicalDatePickerStyle())
                             }
                             .padding()
@@ -119,7 +118,7 @@ struct MeetEditView: View {
                         // Confirm button
                         Section {
                             Button(action: {
-                                scheduleNotification(for: date)
+                                scheduleNotification(for: meetDate)
                                 addMeet()
                                 saveMeetLog()
                                 // Feature to enable or disable haptics
@@ -161,8 +160,10 @@ struct MeetEditView: View {
         for i in selectedItems {
             events.append(i +  ", ")
         }
-        events.removeLast()
-        events.removeLast()
+        if(events.count >= 2) {
+            events.removeLast()
+            events.removeLast()
+        }
         
         let newMeet = MeetData(
             meetDate: meetDate,

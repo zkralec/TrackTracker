@@ -118,6 +118,13 @@ struct HomeView: View {
                                 .onAppear {
                                     loadPR()
                                     loadMeets()
+                                    
+                                    for index in stride(from: meetLog.count - 1, through: 0, by: -1) {
+                                        let meet = meetLog[index]
+                                        if meet.meetDate < Date() {
+                                            deleteMeet(at: index)
+                                        }
+                                    }
                                 }
                                 .padding()
                                 
@@ -136,7 +143,7 @@ struct HomeView: View {
         }
     }
     
-    // Load in the current meet dates
+    // Load in the current meets
     func loadMeets() {
         if let data = UserDefaults.standard.data(forKey: "meetLog"),
            let decoded = try? JSONDecoder().decode([MeetData].self, from: data) {
@@ -145,19 +152,15 @@ struct HomeView: View {
     }
     
     // Remove past meet dates
-    func removePastMeets() {
-        let today = Calendar.current.startOfDay(for: Date())
-        meets.removeAll { meet in
-            Calendar.current.startOfDay(for: meet) < today
-        }
-        saveMeets()
+    private func deleteMeet(at index: Int) {
+        meetLog.remove(at: index)
+        saveMeetLog()
     }
     
-    // Save the current meet dates
-    func saveMeets() {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(meets) {
-            UserDefaults.standard.set(encoded, forKey: "meetDates")
+    // Save the meet log to UserDefaults
+    private func saveMeetLog() {
+        if let encoded = try? JSONEncoder().encode(meetLog) {
+            UserDefaults.standard.set(encoded, forKey: "meetLog")
         }
     }
     

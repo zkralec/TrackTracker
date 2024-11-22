@@ -125,6 +125,7 @@ struct MeetView: View {
     
     // Delete an meet from the log
     private func deleteMeet(at index: Int) {
+        print("Deleting Meet")
         meetLog.remove(at: index)
         saveMeetLog()
     }
