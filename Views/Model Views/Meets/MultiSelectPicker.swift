@@ -52,10 +52,10 @@ struct PickingView: View {
                     }, label: {
                         HStack {
                             Text("Select events:")
-                                .foregroundStyle(Color(red: 0.4192, green: 0.2358, blue: 0.3450))
+                                .foregroundStyle(Color.blue)
                             Spacer()
                             Image(systemName: "\($selectedItems.count).circle")
-                                .foregroundStyle(Color(red: 0.4192, green: 0.2358, blue: 0.3450))
+                                .foregroundStyle(Color.blue)
                                 .font(.title2)
                         }
                     })
@@ -63,7 +63,7 @@ struct PickingView: View {
                 
                 Section("Your events are:", content: {
                     Text(selectedItems.joined(separator: "\n"))
-                        .foregroundStyle(Color(red: 0.4192, green: 0.2358, blue: 0.3450))
+                        .foregroundStyle(Color.secondary)
                 })
             }
             .navigationTitle("My Events")
