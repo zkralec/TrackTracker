@@ -110,10 +110,12 @@ struct MeetEditView: View {
                             })
                         })
                         
-                        Section(content: {
-                            Text(selectedItems.joined(separator: "\n"))
-                                .foregroundStyle(Color.secondary)
-                        })
+                        if !selectedItems.isEmpty {
+                            Section(content: {
+                                Text(selectedItems.joined(separator: "\n"))
+                                    .foregroundStyle(Color.secondary)
+                            })
+                        }
  
                         // Confirm button
                         Section {
@@ -135,6 +137,8 @@ struct MeetEditView: View {
                                     .foregroundColor(.white)
                             }
                             .buttonStyle(CustomButtonStyle())
+                            .disabled(meetLocation.isEmpty || selectedItems.isEmpty)
+                            .opacity(!(meetLocation.isEmpty || selectedItems.isEmpty) ? 1.0 : 0.5)
                         }
                     }
                     .listSectionSpacing(10)
