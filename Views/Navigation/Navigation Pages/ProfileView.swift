@@ -137,44 +137,45 @@ struct ProfileView: View {
                                         }
                                         .padding(.horizontal)
                                         .padding(.vertical, 10)
-                                        .roundedBackground()
                                         .padding()
-                                        
-                                        if let userData = userDataManager.userData {
-                                            HStack {
-                                                VStack(alignment: .trailing, spacing: 4) {
-                                                    Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
-                                                        .font(.subheadline)
-                                                        .padding(5)
-                                                        .roundedBackground()
-                                                    Text("Weight: \(formatWeight(userData.weight))")
-                                                        .font(.subheadline)
-                                                        .padding(5)
-                                                        .roundedBackground()
-                                                }
-                                                
-                                                VStack(alignment: .leading, spacing: 4) {
-                                                    Text("Age: \(userData.age + 18)")
-                                                        .font(.subheadline)
-                                                        .padding(5)
-                                                        .roundedBackground()
-                                                    Text("Gender: \(userData.gender.rawValue)")
-                                                        .font(.subheadline)
-                                                        .padding(5)
-                                                        .roundedBackground()
-                                                }
-                                            }
-                                        } else {
-                                            Text("To get more user info displayed, go to Settings -> Modify User Data")
-                                                .foregroundStyle(Color.secondary)
-                                                .multilineTextAlignment(.center)
-                                                .padding()
-                                        }
                                     }
                                     
                                     Spacer()
                                 }
-                                .padding(.bottom)
+                            }
+                            
+                            Section("User Data") {
+                                HStack {
+                                    Spacer()
+                                    if let userData = userDataManager.userData {
+                                        HStack {
+                                            VStack(alignment: .trailing, spacing: 4) {
+                                                Text("Height: \(userData.heightFeet)' \(userData.heightInches)\"")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                                Text("Weight: \(formatWeight(userData.weight))")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                            }
+                                            
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text("Age: \(userData.age + 18)")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                                Text("Gender: \(userData.gender.rawValue)")
+                                                    .font(.subheadline)
+                                                    .padding(5)
+                                            }
+                                        }
+                                    } else {
+                                        Text("To get more user info displayed, go to Settings -> Modify User Data")
+                                            .foregroundStyle(Color.secondary)
+                                            .multilineTextAlignment(.center)
+                                            .padding()
+                                    }
+                                    Spacer()
+                                }
+                                .padding()
                             }
                             
                             // User can see main events and their PR
