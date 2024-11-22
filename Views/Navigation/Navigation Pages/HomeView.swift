@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var isSideMenuOpen = false
     @State private var prs = [EventData: String]()
+    @State private var meetLog: [MeetData] = []
     @State private var meets: [Date] = []
     
     @State private var events: [EventData] = {
@@ -101,12 +102,14 @@ struct HomeView: View {
                                 Spacer()
                                 
                                 VStack {
-                                    if meets.isEmpty {
+                                    if meetLog.isEmpty {
                                         Text("No meet days selected")
                                             .foregroundStyle(.secondary)
                                     } else {
-                                        ForEach(meets, id: \.self) { date in
-                                            Text(date.formatted())
+                                        ForEach(meetLog.indices, id: \.self) { index in
+                                            let meet = meetLog[index]
+                                            Text("\(meet.meetDate.formatted()) | \(meet.meetLocation)")
+                                                .font(.footnote)
                                                 .padding(5)
                                                 .roundedBackground()
                                         }
@@ -135,13 +138,10 @@ struct HomeView: View {
     
     // Load in the current meet dates
     func loadMeets() {
-        if let data = UserDefaults.standard.data(forKey: "meetDates") {
-            let decoder = JSONDecoder()
-            if let decoded = try? decoder.decode([Date].self, from: data) {
-                meets = decoded
-            }
+        if let data = UserDefaults.standard.data(forKey: "meetLog"),
+           let decoded = try? JSONDecoder().decode([MeetData].self, from: data) {
+            meetLog = decoded
         }
-        removePastMeets()
     }
     
     // Remove past meet dates
