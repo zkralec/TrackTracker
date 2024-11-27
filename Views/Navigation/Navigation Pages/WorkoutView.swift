@@ -86,7 +86,7 @@ struct WorkoutView: View {
     
     // Have the meters or times field appear depending on saved values
     init() {
-        // Safely unwrap the optional data returned by WorkoutData.loadData()
+        // Safely unwrap optional data
         if let workoutData = WorkoutData.loadData() {
             let hasTimes = !workoutData.times.isEmpty
             let hasMeters = !workoutData.meters.isEmpty
