@@ -48,7 +48,7 @@ struct HomeView: View {
                                 Spacer()
                                 
                                 VStack {
-                                    Text("Workout Input Streak")
+                                    Text("Workout Streak")
                                     Text("\(StreakData.streakCount())")
                                         .font(.system(size: 60, weight: .bold))
                                         .foregroundStyle(.primary)
