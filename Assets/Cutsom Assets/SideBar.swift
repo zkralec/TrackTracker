@@ -134,6 +134,25 @@ struct SideBar: View {
                             }
                             .padding(6)
                             
+                            // Starter pistol button
+                            NavigationLink {
+                                StarterPistolView()
+                                    .navigationBarBackButtonHidden()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "autostartstop")
+                                        .foregroundStyle(.blue)
+                                    Text("Auto Starter")
+                                        .padding(.vertical)
+                                }
+                                .fontWeight(.medium)
+                                .font(.system(size: 20))
+                            }
+                            .onTapGesture {
+                                isSideMenuOpen.toggle()
+                            }
+                            .padding(6)
+                            
                             // Settings button
                             NavigationLink {
                                 SettingsView()
