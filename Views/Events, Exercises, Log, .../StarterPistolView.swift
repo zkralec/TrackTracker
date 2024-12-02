@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct StarterPistolView: View {
+    let voice = AVSpeechSynthesisVoice(language: "English")
+    let mark = AVSpeechUtterance(string: "On your mark")
+    let set = AVSpeechUtterance(string: "Set")
+    
     @State private var isSideMenuOpen = false
     
     var body: some View {
@@ -37,6 +42,19 @@ struct StarterPistolView: View {
                                 .foregroundStyle(Color.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding()
+                        }
+                        
+                        Section {
+                            Button {
+                                mark.voice = voice
+                                set.voice = voice
+                                
+                                AVSpeechSynthesizer().speak(mark)
+                                sleep(UInt32(Int.random(in: 1...5)))
+                                AVSpeechSynthesizer().speak(set)
+                            } label: {
+                                Text("Start")
+                            }
                         }
                     }
                     
