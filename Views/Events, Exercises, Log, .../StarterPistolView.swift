@@ -9,11 +9,16 @@ import SwiftUI
 import AVFoundation
 
 struct StarterPistolView: View {
-    let voice = AVSpeechSynthesisVoice(language: "English")
-    let mark = AVSpeechUtterance(string: "On your mark")
-    let set = AVSpeechUtterance(string: "Set")
-    
     @State private var isSideMenuOpen = false
+    private let synthesizer = AVSpeechSynthesizer()
+    private var starterGunSound: AVAudioPlayer?
+    
+    init() {
+        // Load starter gun sound
+        if let soundURL = Bundle.main.url(forResource: "starter_gun", withExtension: "mp3") {
+            starterGunSound = try? AVAudioPlayer(contentsOf: soundURL)
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -46,14 +51,10 @@ struct StarterPistolView: View {
                         
                         Section {
                             Button {
-                                mark.voice = voice
-                                set.voice = voice
-                                
-                                AVSpeechSynthesizer().speak(mark)
-                                sleep(UInt32(Int.random(in: 1...5)))
-                                AVSpeechSynthesizer().speak(set)
+                                playStarterSequence()
                             } label: {
                                 Text("Start")
+                                    .fontWeight(.bold)
                             }
                         }
                     }
@@ -62,6 +63,27 @@ struct StarterPistolView: View {
                 }
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
+            }
+        }
+    }
+    
+    private func playStarterSequence() {
+        // On your mark
+        let mark = AVSpeechUtterance(string: "On your mark")
+        mark.voice = AVSpeechSynthesisVoice(language: "en-US")
+        synthesizer.speak(mark)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            // Set
+            let set = AVSpeechUtterance(string: "Set")
+            set.voice = AVSpeechSynthesisVoice(language: "en-US")
+            self.synthesizer.speak(set)
+            
+            // Random delay the "Bang"
+            let randomDelay = Double.random(in: 2...3)
+            DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
+                // Play starter gun sound
+                self.starterGunSound?.play()
             }
         }
     }
