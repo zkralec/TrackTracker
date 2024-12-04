@@ -11,6 +11,8 @@ import AVFoundation
 struct StarterPistolView: View {
     @State private var isSideMenuOpen = false
     @State private var canStart = true
+    @State private var started = false
+    @State private var displayedText: String = ""
     
     private let synthesizer = AVSpeechSynthesizer()
     private var starterGunSound: AVAudioPlayer?
@@ -52,16 +54,38 @@ struct StarterPistolView: View {
                         }
                         
                         Section {
-                            Text("Want to display words on the screen with a quick fade in and out for each ('On your marks', 'set'). Also want these to go exactly with the timing of the starterSequence.")
-                                .foregroundStyle(Color.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding()
+                            if started {
+                                HStack {
+                                    Spacer()
+                                    
+                                    Text(displayedText)
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .animation(.easeInOut(duration: 0.5))
+                                        .padding(.vertical, 40)
+                                    
+                                    Spacer()
+                                }
+                            } else {
+                                HStack {
+                                    Spacer()
+                                    
+                                    Text("Waiting for start")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .animation(.easeInOut(duration: 0.5))
+                                        .padding(.vertical, 40)
+                                    
+                                    Spacer()
+                                }
+                            }
                         }
                         
                         Section {
                             Button {
                                 playStarterSequence(canStart: canStart)
                                 canStart = false
+                                started = true
                             } label: {
                                 Text("Start")
                                     .fontWeight(.bold)
@@ -80,24 +104,29 @@ struct StarterPistolView: View {
     private func playStarterSequence(canStart: Bool) {
         // On your mark
         if canStart {
-            let mark = AVSpeechUtterance(string: "On your mark")
+            let mark = AVSpeechUtterance(string: "On your marks")
             mark.voice = AVSpeechSynthesisVoice(language: "en-US")
             synthesizer.speak(mark)
+            displayedText = "On your marks"
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                 // Set
                 let set = AVSpeechUtterance(string: "Set")
                 set.voice = AVSpeechSynthesisVoice(language: "en-US")
                 self.synthesizer.speak(set)
+                displayedText = "Set"
                 
                 // Random delay the bang
-                let randomDelay = Double.random(in: 1.7...3)
+                let randomDelay = Double.random(in: 1.9...3.1)
                 DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
                     // Play starter gun sound
                     self.starterGunSound?.play()
+                    displayedText = "GO"
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                        self.canStart = true
+                        self.started = false
+                    }
                 }
-                
-                self.canStart = true
             }
         }
     }
