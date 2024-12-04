@@ -43,10 +43,14 @@ struct StarterPistolView: View {
                     
                     List {
                         Section {
-                            Text("This will be a button which will play a randomly timed, automatic starter pistol sound so the user does not have to start themselves. It will say: 'On your mark, set, BANG'. It will be timed randomly so it is different every time for the user. ")
+                            Text("Text field to have user enter how long it takes them to get set and use that as the delay in startersequence.")
                                 .foregroundStyle(Color.secondary)
                                 .multilineTextAlignment(.center)
                                 .padding()
+                        }
+                        
+                        Section {
+                            Text("Want to display words on the screen with a quick fade in and out for each ('On your marks', 'set'). Also want these to go exactly with the timing of the starterSequence.")
                         }
                         
                         Section {
@@ -79,7 +83,7 @@ struct StarterPistolView: View {
             set.voice = AVSpeechSynthesisVoice(language: "en-US")
             self.synthesizer.speak(set)
             
-            // Random delay the "Bang"
+            // Random delay the bang
             let randomDelay = Double.random(in: 2...3)
             DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
                 // Play starter gun sound
