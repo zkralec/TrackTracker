@@ -13,6 +13,7 @@ struct StarterPistolView: View {
     @State private var canStart = true
     @State private var started = false
     @State private var displayedText: String = ""
+    @State private var seconds = 10
     
     private let synthesizer = AVSpeechSynthesizer()
     private var starterGunSound: AVAudioPlayer?
@@ -46,11 +47,22 @@ struct StarterPistolView: View {
                     Spacer()
                     
                     List {
-                        Section {
-                            Text("Text field to have user enter how long it takes them to get set and use that as the delay in startersequence.")
-                                .foregroundStyle(Color.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding()
+                        Section("Mark time") {
+                            HStack {
+                                Text("Set delay (seconds): ")
+                                
+                                Spacer()
+                                
+                                TextField("Time (sec)", text: Binding(
+                                    get: { String(seconds) },
+                                    set: { newValue in
+                                        if validateTimeInput(newValue) {
+                                            seconds = Int(newValue) ?? 10
+                                        }
+                                    }
+                                ))
+                                .multilineTextAlignment(.trailing)
+                            }
                         }
                         
                         Section {
@@ -62,7 +74,7 @@ struct StarterPistolView: View {
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .animation(.easeInOut(duration: 0.5))
-                                        .padding(.vertical, 40)
+                                        .padding(.vertical, 60)
                                     
                                     Spacer()
                                 }
@@ -74,7 +86,7 @@ struct StarterPistolView: View {
                                         .font(.largeTitle)
                                         .fontWeight(.bold)
                                         .animation(.easeInOut(duration: 0.5))
-                                        .padding(.vertical, 40)
+                                        .padding(.vertical, 60)
                                     
                                     Spacer()
                                 }
@@ -83,7 +95,7 @@ struct StarterPistolView: View {
                         
                         Section {
                             Button {
-                                playStarterSequence(canStart: canStart)
+                                playStarterSequence(canStart: canStart, seconds: seconds)
                                 canStart = false
                                 started = true
                             } label: {
@@ -101,7 +113,7 @@ struct StarterPistolView: View {
         }
     }
     
-    private func playStarterSequence(canStart: Bool) {
+    private func playStarterSequence(canStart: Bool, seconds: Int) {
         // On your mark
         if canStart {
             let mark = AVSpeechUtterance(string: "On your marks")
@@ -109,7 +121,7 @@ struct StarterPistolView: View {
             synthesizer.speak(mark)
             displayedText = "On your marks"
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(seconds)) {
                 // Set
                 let set = AVSpeechUtterance(string: "Set")
                 set.voice = AVSpeechSynthesisVoice(language: "en-US")
@@ -129,6 +141,11 @@ struct StarterPistolView: View {
                 }
             }
         }
+    }
+    
+    // Function to validate the input for time
+    func validateTimeInput(_ input: String) -> Bool {
+        return (input.isEmpty || Int(input) != nil) && input.count <= 2
     }
 }
 
