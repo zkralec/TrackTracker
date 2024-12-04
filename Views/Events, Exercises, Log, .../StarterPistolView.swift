@@ -10,6 +10,8 @@ import AVFoundation
 
 struct StarterPistolView: View {
     @State private var isSideMenuOpen = false
+    @State private var canStart = true
+    
     private let synthesizer = AVSpeechSynthesizer()
     private var starterGunSound: AVAudioPlayer?
     
@@ -51,11 +53,15 @@ struct StarterPistolView: View {
                         
                         Section {
                             Text("Want to display words on the screen with a quick fade in and out for each ('On your marks', 'set'). Also want these to go exactly with the timing of the starterSequence.")
+                                .foregroundStyle(Color.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding()
                         }
                         
                         Section {
                             Button {
-                                playStarterSequence()
+                                playStarterSequence(canStart: canStart)
+                                canStart = false
                             } label: {
                                 Text("Start")
                                     .fontWeight(.bold)
@@ -71,23 +77,27 @@ struct StarterPistolView: View {
         }
     }
     
-    private func playStarterSequence() {
+    private func playStarterSequence(canStart: Bool) {
         // On your mark
-        let mark = AVSpeechUtterance(string: "On your mark")
-        mark.voice = AVSpeechSynthesisVoice(language: "en-US")
-        synthesizer.speak(mark)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
-            // Set
-            let set = AVSpeechUtterance(string: "Set")
-            set.voice = AVSpeechSynthesisVoice(language: "en-US")
-            self.synthesizer.speak(set)
+        if canStart {
+            let mark = AVSpeechUtterance(string: "On your mark")
+            mark.voice = AVSpeechSynthesisVoice(language: "en-US")
+            synthesizer.speak(mark)
             
-            // Random delay the bang
-            let randomDelay = Double.random(in: 2...3)
-            DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
-                // Play starter gun sound
-                self.starterGunSound?.play()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                // Set
+                let set = AVSpeechUtterance(string: "Set")
+                set.voice = AVSpeechSynthesisVoice(language: "en-US")
+                self.synthesizer.speak(set)
+                
+                // Random delay the bang
+                let randomDelay = Double.random(in: 1.7...3)
+                DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
+                    // Play starter gun sound
+                    self.starterGunSound?.play()
+                }
+                
+                self.canStart = true
             }
         }
     }
