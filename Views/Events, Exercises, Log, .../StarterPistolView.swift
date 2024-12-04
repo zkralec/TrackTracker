@@ -76,7 +76,7 @@ struct StarterPistolView: View {
                                             .font(.largeTitle)
                                             .fontWeight(.bold)
                                             .animation(.easeInOut(duration: 0.5))
-                                            .padding(.vertical, 60)
+                                            .frame(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height)/2)
                                         
                                         Spacer()
                                     }
@@ -99,7 +99,7 @@ struct StarterPistolView: View {
                             started = true
                         }) {
                             HStack {
-                                Image(systemName: "plus.circle")
+                                Image(systemName: "play.circle")
                                 Text("Start")
                             }
                             .foregroundColor(.blue)
