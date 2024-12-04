@@ -65,47 +65,47 @@ struct StarterPistolView: View {
                             }
                         }
                         
-                        Section {
-                            if started {
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text(displayedText)
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                        .animation(.easeInOut(duration: 0.5))
-                                        .padding(.vertical, 60)
-                                    
-                                    Spacer()
+                        // Possibly have sheet be presented to show "On your mark", "Set", "Go"
+                        if started {
+                            withAnimation {
+                                Section {
+                                    HStack {
+                                        Spacer()
+                                        
+                                        Text(displayedText)
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                            .animation(.easeInOut(duration: 0.5))
+                                            .padding(.vertical, 60)
+                                        
+                                        Spacer()
+                                    }
                                 }
-                            } else {
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text("Waiting for start")
-                                        .font(.largeTitle)
-                                        .fontWeight(.bold)
-                                        .animation(.easeInOut(duration: 0.5))
-                                        .padding(.vertical, 60)
-                                    
-                                    Spacer()
-                                }
-                            }
-                        }
-                        
-                        Section {
-                            Button {
-                                playStarterSequence(canStart: canStart, seconds: seconds)
-                                canStart = false
-                                started = true
-                            } label: {
-                                Text("Start")
-                                    .fontWeight(.bold)
                             }
                         }
                     }
+                    .listSectionSpacing(15)
                     
                     Spacer()
+                    
+                    VStack {
+                        Divider()
+                            .padding(.top, -8)
+                        
+                        // Button to add a new meet
+                        Button(action: {
+                            playStarterSequence(canStart: canStart, seconds: seconds)
+                            canStart = false
+                            started = true
+                        }) {
+                            HStack {
+                                Image(systemName: "plus.circle")
+                                Text("Start")
+                            }
+                            .foregroundColor(.blue)
+                        }
+                        .padding(10)
+                    }
                 }
                 // Show side menu if needed
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
