@@ -14,6 +14,7 @@ struct StarterPistolView: View {
     @State private var started = false
     @State private var displayedText: String = ""
     @State private var seconds = 10
+    @State private var userDelay: StarterData?
     
     private let synthesizer = AVSpeechSynthesizer()
     private var starterGunSound: AVAudioPlayer?
@@ -111,6 +112,12 @@ struct StarterPistolView: View {
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
             }
         }
+        .onAppear {
+            loadDelay()
+        }
+        .onDisappear {
+            saveDelay()
+        }
     }
     
     private func playStarterSequence(canStart: Bool, seconds: Int) {
@@ -146,6 +153,21 @@ struct StarterPistolView: View {
     // Function to validate the input for time
     func validateTimeInput(_ input: String) -> Bool {
         return (input.isEmpty || Int(input) != nil) && input.count <= 2
+    }
+    
+    // Load the user delay from UserDefaults
+    private func loadDelay() {
+        if let data = UserDefaults.standard.data(forKey: "delay"),
+           let decoded = try? JSONDecoder().decode(StarterData.self, from: data) {
+            userDelay = decoded
+        }
+    }
+    
+    // Save the user delay to UserDefaults
+    private func saveDelay() {
+        if let encoded = try? JSONEncoder().encode(userDelay) {
+            UserDefaults.standard.set(encoded, forKey: "delay")
+        }
     }
 }
 

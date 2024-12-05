@@ -63,6 +63,7 @@
 		14BF431F2BA7CEC9004B3321 /* TitleBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BF431E2BA7CEC9004B3321 /* TitleBackground.swift */; };
 		14DA43762CFB4A0F006939D3 /* StarterPistolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DA43752CFB4A0F006939D3 /* StarterPistolView.swift */; };
 		14DA43782CFF4EDC006939D3 /* starter_gun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 14DA43772CFF4EDC006939D3 /* starter_gun.mp3 */; };
+		14DA437B2D02463D006939D3 /* StarterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DA437A2D02463D006939D3 /* StarterData.swift */; };
 		14DAEF5A2B7FB02300AF4667 /* UserInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEF592B7FB02300AF4667 /* UserInputView.swift */; };
 		14DAEF5C2B7FB4A200AF4667 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEF5B2B7FB4A200AF4667 /* WelcomeView.swift */; };
 		14DAEF672B7FCDBC00AF4667 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DAEF662B7FCDBC00AF4667 /* UserData.swift */; };
@@ -150,6 +151,7 @@
 		14BF431E2BA7CEC9004B3321 /* TitleBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBackground.swift; sourceTree = "<group>"; };
 		14DA43752CFB4A0F006939D3 /* StarterPistolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterPistolView.swift; sourceTree = "<group>"; };
 		14DA43772CFF4EDC006939D3 /* starter_gun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = starter_gun.mp3; sourceTree = "<group>"; };
+		14DA437A2D02463D006939D3 /* StarterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterData.swift; sourceTree = "<group>"; };
 		14DAEF592B7FB02300AF4667 /* UserInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInputView.swift; sourceTree = "<group>"; };
 		14DAEF5B2B7FB4A200AF4667 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		14DAEF662B7FCDBC00AF4667 /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 		148609B82CA7217600A3E73F /* Data Binder */ = {
 			isa = PBXGroup;
 			children = (
+				14DA43792D02462E006939D3 /* StarterData */,
 				148F24522CEBE26E007EB8FC /* MeetData */,
 				148609B32C9F06B200A3E73F /* InjuryData */,
 				14535DF72BACC2DD0080531D /* StreakData */,
@@ -547,6 +550,14 @@
 				14823F392CC198650058C57F /* WorkoutDataDefault.swift */,
 			);
 			path = WorkoutData;
+			sourceTree = "<group>";
+		};
+		14DA43792D02462E006939D3 /* StarterData */ = {
+			isa = PBXGroup;
+			children = (
+				14DA437A2D02463D006939D3 /* StarterData.swift */,
+			);
+			path = StarterData;
 			sourceTree = "<group>";
 		};
 		14DAEF652B7FCD5800AF4667 /* UserData */ = {
@@ -761,6 +772,7 @@
 				14DAEF702B7FDC0200AF4667 /* MealsView.swift in Sources */,
 				148609AF2C9CB43700A3E73F /* InjuryView.swift in Sources */,
 				14BF431A2BA14F4F004B3321 /* ExerciseData.swift in Sources */,
+				14DA437B2D02463D006939D3 /* StarterData.swift in Sources */,
 				14823F0A2CB6BD030058C57F /* LoginView.swift in Sources */,
 				14535DF62BAC6B650080531D /* HomeView.swift in Sources */,
 			);
