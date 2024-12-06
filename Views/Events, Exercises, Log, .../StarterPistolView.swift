@@ -48,6 +48,7 @@ struct StarterPistolView: View {
                     Spacer()
                     
                     List {
+                        // Section for user delay changes
                         Section("Mark time") {
                             HStack {
                                 Text("Set delay (seconds): ")
@@ -59,6 +60,7 @@ struct StarterPistolView: View {
                                     set: { newValue in
                                         if validateTimeInput(newValue) {
                                             seconds = Int(newValue) ?? 10
+                                            userDelay = StarterData(delay: seconds)
                                         }
                                     }
                                 ))
@@ -66,7 +68,7 @@ struct StarterPistolView: View {
                             }
                         }
                         
-                        // Possibly have sheet be presented to show "On your mark", "Set", "Go"
+                        // Will display text when started
                         if started {
                             withAnimation {
                                 Section {
@@ -93,7 +95,7 @@ struct StarterPistolView: View {
                         Divider()
                             .padding(.top, -8)
                         
-                        // Button to add a new meet
+                        // Button to start
                         Button(action: {
                             playStarterSequence(canStart: canStart, seconds: seconds)
                             canStart = false
@@ -120,6 +122,7 @@ struct StarterPistolView: View {
         }
     }
     
+    // This plays all the sounds and text that is needed based on user input
     private func playStarterSequence(canStart: Bool, seconds: Int) {
         // On your mark
         if canStart {
@@ -160,11 +163,13 @@ struct StarterPistolView: View {
         if let data = UserDefaults.standard.data(forKey: "delay"),
            let decoded = try? JSONDecoder().decode(StarterData.self, from: data) {
             userDelay = decoded
+            seconds = userDelay?.delay ?? 10
         }
     }
     
     // Save the user delay to UserDefaults
     private func saveDelay() {
+        userDelay = StarterData(delay: seconds)
         if let encoded = try? JSONEncoder().encode(userDelay) {
             UserDefaults.standard.set(encoded, forKey: "delay")
         }
