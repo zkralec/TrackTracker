@@ -290,9 +290,11 @@ struct WorkoutView: View {
                                             .contentShape(Rectangle())
                                             .highPriorityGesture(
                                                 TapGesture().onEnded {
-                                                    withAnimation {
-                                                        isFocused = true
-                                                        focusedField = index
+                                                    if !isDayComplete {
+                                                        withAnimation {
+                                                            isFocused = true
+                                                            focusedField = index
+                                                        }
                                                     }
                                                 }
                                             )
@@ -316,9 +318,11 @@ struct WorkoutView: View {
                                             .contentShape(Rectangle())
                                             .highPriorityGesture(
                                                 TapGesture().onEnded {
-                                                    withAnimation {
-                                                        isFocused = true
-                                                        focusedField = index
+                                                    if !isDayComplete {
+                                                        withAnimation {
+                                                            isFocused = true
+                                                            focusedField = index
+                                                        }
                                                     }
                                                 }
                                             )

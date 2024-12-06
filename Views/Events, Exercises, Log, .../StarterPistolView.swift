@@ -79,7 +79,7 @@ struct StarterPistolView: View {
                                             .font(.largeTitle)
                                             .fontWeight(.bold)
                                             .animation(.easeInOut(duration: 0.5))
-                                            .frame(width: UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height)/2)
+                                            .padding()
                                         
                                         Spacer()
                                     }
