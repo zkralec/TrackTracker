@@ -13,7 +13,7 @@ struct StarterPistolView: View {
     @State private var canStart = true
     @State private var started = false
     @State private var displayedText: String = ""
-    @State private var seconds = 10
+    @State private var seconds = 20
     @State private var userDelay: StarterData?
     
     private let synthesizer = AVSpeechSynthesizer()
@@ -59,7 +59,7 @@ struct StarterPistolView: View {
                                     get: { String(seconds) },
                                     set: { newValue in
                                         if validateTimeInput(newValue) {
-                                            seconds = Int(newValue) ?? 10
+                                            seconds = Int(newValue) ?? 20
                                             userDelay = StarterData(delay: seconds)
                                         }
                                     }
@@ -163,7 +163,7 @@ struct StarterPistolView: View {
         if let data = UserDefaults.standard.data(forKey: "delay"),
            let decoded = try? JSONDecoder().decode(StarterData.self, from: data) {
             userDelay = decoded
-            seconds = userDelay?.delay ?? 10
+            seconds = userDelay?.delay ?? 20
         }
     }
     
