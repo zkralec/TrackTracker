@@ -15,6 +15,8 @@ struct StarterPistolView: View {
     @State private var displayedText: String = ""
     @State private var seconds = 20
     @State private var userDelay: StarterData?
+    @State private var onYourMarksRemainingTime: Double = 20
+    @State private var timer: Timer?
     
     private let synthesizer = AVSpeechSynthesizer()
     private var starterGunSound: AVAudioPlayer?
@@ -65,6 +67,9 @@ struct StarterPistolView: View {
                                     }
                                 ))
                                 .multilineTextAlignment(.trailing)
+                                .onChange(of: seconds) {
+                                    saveDelay()
+                                }
                             }
                         }
                         
@@ -72,16 +77,27 @@ struct StarterPistolView: View {
                         if started {
                             withAnimation {
                                 Section {
-                                    HStack {
-                                        Spacer()
+                                    VStack {
+                                        HStack {
+                                            Spacer()
+                                            
+                                            if displayedText == "On your marks" {
+                                                CountdownRing(
+                                                    totalTime: Double(seconds),
+                                                    remainingTime: onYourMarksRemainingTime,
+                                                    lineWidth: 10,
+                                                    ringColor: .blue
+                                                )
+                                                .padding()
+                                            }
+                                            
+                                            Spacer()
+                                        }
                                         
                                         Text(displayedText)
                                             .font(.largeTitle)
                                             .fontWeight(.bold)
-                                            .animation(.easeInOut(duration: 0.5))
                                             .padding()
-                                        
-                                        Spacer()
                                     }
                                 }
                             }
@@ -124,29 +140,36 @@ struct StarterPistolView: View {
     
     // This plays all the sounds and text that is needed based on user input
     private func playStarterSequence(canStart: Bool, seconds: Int) {
-        // On your mark
         if canStart {
+            onYourMarksRemainingTime = Double(seconds)
+            startCountdownTimer()
+            
+            // On your mark
             let mark = AVSpeechUtterance(string: "On your marks")
             mark.voice = AVSpeechSynthesisVoice(language: "en-US")
             synthesizer.speak(mark)
             displayedText = "On your marks"
             
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(seconds)) {
-                // Set
-                let set = AVSpeechUtterance(string: "Set")
-                set.voice = AVSpeechSynthesisVoice(language: "en-US")
-                self.synthesizer.speak(set)
-                displayedText = "Set"
+                stopCountdownTimer()
                 
-                // Random delay the bang
-                let randomDelay = Double.random(in: 1.5...2.5)
+                // Set
+                let randomDelay = Double.random(in: 1...2.5)
                 DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
-                    // Play starter gun sound
-                    self.starterGunSound?.play()
-                    displayedText = "GO"
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                        self.canStart = true
-                        self.started = false
+                    let set = AVSpeechUtterance(string: "Set")
+                    set.voice = AVSpeechSynthesisVoice(language: "en-US")
+                    synthesizer.speak(set)
+                    displayedText = "Set"
+                    
+                    // Bang
+                    let randomDelay = Double.random(in: 1.5...2.5)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
+                        self.starterGunSound?.play()
+                        displayedText = "GO"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            self.canStart = true
+                            self.started = false
+                        }
                     }
                 }
             }
@@ -172,6 +195,47 @@ struct StarterPistolView: View {
         userDelay = StarterData(delay: seconds)
         if let encoded = try? JSONEncoder().encode(userDelay) {
             UserDefaults.standard.set(encoded, forKey: "delay")
+        }
+    }
+    
+    private func startCountdownTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if onYourMarksRemainingTime > 0 {
+                onYourMarksRemainingTime -= 1
+            } else {
+                timer?.invalidate()
+            }
+        }
+    }
+    
+    private func stopCountdownTimer() {
+        timer?.invalidate()
+    }
+    
+    struct CountdownRing: View {
+        let totalTime: Double
+        let remainingTime: Double
+        let lineWidth: CGFloat
+        let ringColor: Color
+
+        var body: some View {
+            ZStack {
+                Circle()
+                    .stroke(lineWidth: lineWidth)
+                    .opacity(0.3)
+                    .foregroundColor(ringColor)
+
+                Circle()
+                    .trim(from: 0.0, to: CGFloat(remainingTime / totalTime))
+                    .stroke(ringColor, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeInOut(duration: 0.1), value: remainingTime)
+
+                Text("\(Int(remainingTime))")
+                    .font(.system(size: lineWidth * 2, weight: .bold))
+                    .foregroundColor(ringColor)
+            }
+            .padding(lineWidth / 2)
         }
     }
 }
