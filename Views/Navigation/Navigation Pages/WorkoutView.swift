@@ -524,15 +524,7 @@ struct WorkoutView: View {
                                 }
                             }
                         }
-//                        } else {
-//                            // Let user know how to get toggles back
-//                            Section("Misc.") {
-//                                Text("If toggles need to be modified, make sure day is not complete.")
-//                                    .foregroundColor(.gray)
-//                                    .multilineTextAlignment(.center)
-//                                    .padding()
-//                            }
-//                        }
+                        // Show nothing when day is complete for toggles?
                     }
                     .listSectionSpacing(10)
                     .modifier(ToolbarModifier(isFocused: $isFocused))
