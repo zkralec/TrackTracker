@@ -53,6 +53,7 @@ struct LoginView: View {
                 // Sign in button
                 Button {
                     Task {
+                        // Possibly add a popup or text if password or email is incorrect
                         try await viewModel.signIn(withEmail: email, password: password)
                     }
                 } label: {

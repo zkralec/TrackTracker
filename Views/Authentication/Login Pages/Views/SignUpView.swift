@@ -28,10 +28,10 @@ struct SignUpView: View {
                 .padding(.vertical, 32)
             
             // Form fields
-            VStack(spacing: 8) {
+            VStack(spacing: 12) {
                 // Team name (if applicable)
                 LoginInputView(text: $team,
-                               title: "Team Name",
+                               title: "Track Team",
                                placeholder: "Enter team name (if applicable)")
                 
                 // First name
@@ -53,7 +53,7 @@ struct SignUpView: View {
                                    isSecureField: true)
                     .autocapitalization(.none)
                     
-                    Text("Password must be 8+ characters, contain an uppercase, one digit, and special character")
+                    Text("8+ characters, one number, uppercase, and special character")
                         .foregroundStyle(Color.secondary)
                         .multilineTextAlignment(.center)
                         .font(.footnote)
