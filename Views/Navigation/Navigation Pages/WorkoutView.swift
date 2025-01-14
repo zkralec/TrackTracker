@@ -23,59 +23,6 @@ struct WorkoutView: View {
     @State private var workoutData: WorkoutData?
     @ObservedObject var settings = SettingsViewModel()
     
-    @State private var isRecovery = false
-    @State private var isOff = false
-    @State private var isMeet = false
-    @State private var isHills = false
-    @State private var isTechnique = false
-    @State private var isWorkout = false
-    @State private var isTempo = false
-    
-    @State private var isTrack = false
-    @State private var isIndoorTrack = false
-    @State private var isTurf = false
-    @State private var isDirt = false
-    @State private var isGrassHills = false
-    @State private var isAsphalt = false
-    
-    @State private var isRain = false
-    @State private var isSnow = false
-    @State private var isWindy = false
-    @State private var isNormal = false
-    @State private var isHot = false
-    @State private var isCold = false
-    
-    @State private var isBlocks = false
-    @State private var isResistanceBand = false
-    @State private var isWeights = false
-    @State private var isSled = false
-    @State private var isWickets = false
-    @State private var isHurdles = false
-    @State private var isWeightedVest = false
-    @State private var isPlyoBox = false
-    @State private var isMedicineBall = false
-    @State private var isStationaryBike = false
-    @State private var isTreadmill = false
-    
-    @State private var isInjury = false
-    @State private var isSoreness = false
-    @State private var isFatigued = false
-    @State private var isPeakForm = false
-    
-    @State private var isLow = false
-    @State private var isModerate = false
-    @State private var isHigh = false
-    @State private var isMaximum = false
-    
-    @State private var isHighJump = false
-    @State private var isPoleVault = false
-    @State private var isHammerThrow = false
-    @State private var isDiscus = false
-    @State private var isShotPut = false
-    @State private var isJavelin = false
-    @State private var isLongJump = false
-    @State private var isTripleJump = false
-    
     @State private var events: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
             return savedEvents.compactMap { EventData(rawValue: $0) }
@@ -130,11 +77,9 @@ struct WorkoutView: View {
                         HStack {
                             // Button to show user's input and recovery suggestions
                             Button(action: {
-                                if !isMeet && !isOff && !isRecovery && !isInjury && isDayComplete {
                                     withAnimation {
                                         showRecoverySuggestions = true
                                     }
-                                }
                             }) {
                                 Image(systemName: "info.circle")
                                     .foregroundStyle(.blue)
@@ -159,70 +104,15 @@ struct WorkoutView: View {
                                     isFocused = false
                                     
                                     if isDayComplete {
-                                        if !isMeet && !isOff && !isRecovery {
                                             showRecoverySuggestions = true
                                             // Schedules recovery notification
                                             scheduleNotification(for: currDate)
-                                        }
+                                        
                                         workoutData?.meters = meters.compactMap { Int($0) }
                                         workoutData?.times = times.compactMap { Int($0) }
                                         workoutData?.sets = Int(numSets) ?? 0
-                                        
-                                        workoutData?.recovery = isRecovery
-                                        workoutData?.off = isOff
-                                        workoutData?.meet = isMeet
-                                        workoutData?.technique = isTechnique
-                                        workoutData?.workout = isWorkout
-                                        workoutData?.tempo = isTempo
-                                        
-                                        workoutData?.dayComplete = isDayComplete
-                                        
-                                        workoutData?.track = isTrack
-                                        workoutData?.indoorTrack = isIndoorTrack
-                                        workoutData?.turf = isTurf
-                                        workoutData?.dirt = isDirt
-                                        workoutData?.grasshills = isGrassHills
-                                        workoutData?.asphalt = isAsphalt
-                                        
-                                        workoutData?.rain = isRain
-                                        workoutData?.snow = isSnow
-                                        workoutData?.windy = isWindy
-                                        workoutData?.normal = isNormal
-                                        workoutData?.hot = isHot
-                                        workoutData?.cold = isCold
-                                        
-                                        workoutData?.blocks = isBlocks
-                                        workoutData?.resistanceBand = isResistanceBand
-                                        workoutData?.weights = isWeights
-                                        workoutData?.sled = isSled
-                                        workoutData?.wickets = isWickets
-                                        workoutData?.hurdles = isHurdles
-                                        workoutData?.weightedVest = isWeightedVest
-                                        workoutData?.plyoBox = isPlyoBox
-                                        workoutData?.medicineBall = isMedicineBall
-                                        workoutData?.stationaryBike = isStationaryBike
-                                        workoutData?.treadmill = isTreadmill
-                                        
-                                        workoutData?.injury = isInjury
-                                        workoutData?.soreness = isSoreness
-                                        workoutData?.fatigued = isFatigued
-                                        workoutData?.peakForm = isPeakForm
-                                        
-                                        workoutData?.low = isLow
-                                        workoutData?.moderate = isModerate
-                                        workoutData?.high = isHigh
-                                        workoutData?.maximum = isMaximum
-                                        
-                                        workoutData?.highJump = isHighJump
-                                        workoutData?.poleVault = isPoleVault
-                                        workoutData?.hammerThrow = isHammerThrow
-                                        workoutData?.discus = isDiscus
-                                        workoutData?.shotPut = isShotPut
-                                        workoutData?.javelin = isJavelin
-                                        workoutData?.longJump = isLongJump
-                                        workoutData?.tripleJump = isTripleJump
-                                        
                                         workoutData?.saveData()
+                                        
                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                     } else {
                                         selectedExperience = nil
@@ -252,9 +142,7 @@ struct WorkoutView: View {
                     .padding(.bottom, -8)
                     // Once day is complete, prompt user with recovery page if needed
                     .sheet(isPresented: $showRecoverySuggestions) {
-                        if !isMeet && !isOff {
-                            RecoveryPrompt(isPresented: $showRecoverySuggestions, selectedExperience: $selectedExperience)
-                        }
+                        RecoveryPrompt(isPresented: $showRecoverySuggestions, selectedExperience: $selectedExperience)
                     }
                     
                     // List for all the user input fields and toggles
@@ -396,135 +284,6 @@ struct WorkoutView: View {
                             .roundedBackground()
                             .padding()
                         }
-                        
-                        if !isDayComplete {
-                            Section("Extra") {
-                                DisclosureGroup("Extra Selections") {
-                                    // Section for the training or day type
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Workout Type",
-                                            toggles: [
-                                                ("Off Day", $isOff),
-                                                ("Technique Day", $isTechnique),
-                                                ("Workout Day", $isWorkout),
-                                                ("Tempo Day", $isTempo),
-                                                ("Recovery Day", $isRecovery),
-                                                ("Meet Day", $isMeet)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: false
-                                        )
-                                    }
-                                    
-                                    // Intensity Section
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Intensity",
-                                            toggles: [
-                                                ("Low", $isLow),
-                                                ("Moderate", $isModerate),
-                                                ("High", $isHigh),
-                                                ("Maximum", $isMaximum)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: false
-                                        )
-                                    }
-                                    
-                                    // Equipment Section
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Equipment",
-                                            toggles: [
-                                                ("Blocks", $isBlocks),
-                                                ("Resistance Band", $isResistanceBand),
-                                                ("Weights", $isWeights),
-                                                ("Sled", $isSled),
-                                                ("Wickets", $isWickets),
-                                                ("Hurdles", $isHurdles),
-                                                ("Weighted Vest", $isWeightedVest),
-                                                ("Plyo Box", $isPlyoBox),
-                                                ("Medicine Ball", $isMedicineBall),
-                                                ("Stationary Bike", $isStationaryBike),
-                                                ("Treadmill", $isTreadmill)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: true
-                                        )
-                                    }
-                                    
-                                    // Surface Section
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Surface Type",
-                                            toggles: [
-                                                ("Outdoor Track", $isTrack),
-                                                ("Indoor Track", $isIndoorTrack),
-                                                ("Turf", $isTurf),
-                                                ("Dirt", $isDirt),
-                                                ("Grass/Hills", $isGrassHills),
-                                                ("Asphalt", $isAsphalt)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: true
-                                        )
-                                    }
-                                    
-                                    // Condition Section
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Condition",
-                                            toggles: [
-                                                ("Injury", $isInjury),
-                                                ("Soreness", $isSoreness),
-                                                ("Fatigued", $isFatigued),
-                                                ("Peak Form", $isPeakForm)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: false
-                                        )
-                                    }
-                                    
-                                    // Weather Section
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Weather",
-                                            toggles: [
-                                                ("Rain", $isRain),
-                                                ("Snow", $isSnow),
-                                                ("Windy", $isWindy),
-                                                ("Normal", $isNormal),
-                                                ("Hot", $isHot),
-                                                ("Cold", $isCold)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: false
-                                        )
-                                    }
-                                    
-                                    // Field Events Section
-                                    Section {
-                                        WorkoutTogglesView(
-                                            sectionTitle: "Field Events",
-                                            toggles: [
-                                                ("High Jump", $isHighJump),
-                                                ("Pole Vault", $isPoleVault),
-                                                ("Hammer Throw", $isHammerThrow),
-                                                ("Discus", $isDiscus),
-                                                ("Shot Put", $isShotPut),
-                                                ("Javelin", $isJavelin),
-                                                ("Long Jump", $isLongJump),
-                                                ("Triple Jump", $isTripleJump)
-                                            ],
-                                            isDisabled: isDayComplete,
-                                            isMultiple: true
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        // Show nothing when day is complete for toggles?
                     }
                     .listSectionSpacing(10)
                     .modifier(ToolbarModifier(isFocused: $isFocused))
@@ -553,60 +312,6 @@ struct WorkoutView: View {
                             meters = workoutData.meters.isEmpty ? [""] : workoutData.meters.map { String($0) }
                             times = workoutData.times.isEmpty ? [""] : workoutData.times.map { String($0) }
                             numSets = workoutData.sets > 0 ? String(workoutData.sets) : ""
-                            
-                            isRecovery = workoutData.recovery
-                            isOff = workoutData.off
-                            isMeet = workoutData.meet
-                            isTechnique = workoutData.technique
-                            isWorkout = workoutData.workout
-                            isTempo = workoutData.tempo
-                            
-                            isDayComplete = workoutData.dayComplete
-                            
-                            isTrack = workoutData.track
-                            isIndoorTrack = workoutData.indoorTrack
-                            isTurf = workoutData.turf
-                            isDirt = workoutData.dirt
-                            isGrassHills = workoutData.grasshills
-                            isAsphalt = workoutData.asphalt
-                            
-                            isRain = workoutData.rain
-                            isSnow = workoutData.snow
-                            isWindy = workoutData.windy
-                            isNormal = workoutData.normal
-                            isHot = workoutData.hot
-                            isCold = workoutData.cold
-                            
-                            isBlocks = workoutData.blocks
-                            isResistanceBand = workoutData.resistanceBand
-                            isWeights = workoutData.weights
-                            isSled = workoutData.sled
-                            isWickets = workoutData.wickets
-                            isHurdles = workoutData.hurdles
-                            isWeightedVest = workoutData.weightedVest
-                            isPlyoBox = workoutData.plyoBox
-                            isMedicineBall = workoutData.medicineBall
-                            isStationaryBike = workoutData.stationaryBike
-                            isTreadmill = workoutData.treadmill
-                            
-                            isInjury = workoutData.injury
-                            isSoreness = workoutData.soreness
-                            isFatigued = workoutData.fatigued
-                            isPeakForm = workoutData.peakForm
-                            
-                            isLow = workoutData.low
-                            isModerate = workoutData.moderate
-                            isHigh = workoutData.high
-                            isMaximum = workoutData.maximum
-                            
-                            isHighJump = workoutData.highJump
-                            isPoleVault = workoutData.poleVault
-                            isHammerThrow = workoutData.hammerThrow
-                            isDiscus = workoutData.discus
-                            isShotPut = workoutData.shotPut
-                            isJavelin = workoutData.javelin
-                            isLongJump = workoutData.longJump
-                            isTripleJump = workoutData.tripleJump
                         }
                     } else {
                         // If no data is found use default values
@@ -614,60 +319,7 @@ struct WorkoutView: View {
                                                   meters: [],
                                                   times: [],
                                                   sets: 0,
-                                                  
-                                                  recovery: false,
-                                                  off: false,
-                                                  meet: false,
-                                                  technique: false,
-                                                  workout: false,
-                                                  tempo: false,
-                                                  
-                                                  dayComplete: false,
-                                                  
-                                                  track: false,
-                                                  indoorTrack: false,
-                                                  turf: false,
-                                                  dirt: false,
-                                                  grasshills: false,
-                                                  asphalt: false,
-                                                  
-                                                  rain: false,
-                                                  snow: false,
-                                                  windy: false,
-                                                  normal: false,
-                                                  hot: false,
-                                                  cold: false,
-                                                  
-                                                  blocks: false,
-                                                  resistanceBand: false,
-                                                  weights: false,
-                                                  sled: false,
-                                                  wickets: false,
-                                                  hurdles: false,
-                                                  weightedVest: false,
-                                                  plyoBox: false,
-                                                  medicineBall: false,
-                                                  stationaryBike: false,
-                                                  treadmill: false,
-                                                  
-                                                  injury: false,
-                                                  soreness: false,
-                                                  fatigued: false,
-                                                  peakForm: false,
-                                                  
-                                                  low: false,
-                                                  moderate: false,
-                                                  high: false,
-                                                  maximum: false,
-                                                  
-                                                  highJump: false,
-                                                  poleVault: false,
-                                                  hammerThrow: false,
-                                                  discus: false,
-                                                  shotPut: false,
-                                                  javelin: false,
-                                                  longJump: false,
-                                                  tripleJump: false)
+                                                  dayComplete: false)
                     }
                     
                     // Retrieve the state of complete day mode from UserDefaults
@@ -690,60 +342,7 @@ struct WorkoutView: View {
                                                   meters: [],
                                                   times: [],
                                                   sets: 0,
-                                                  
-                                                  recovery: false,
-                                                  off: false,
-                                                  meet: false,
-                                                  technique: false,
-                                                  workout: false,
-                                                  tempo: false,
-                                                  
-                                                  dayComplete: false,
-                                                  
-                                                  track: false,
-                                                  indoorTrack: false,
-                                                  turf: false,
-                                                  dirt: false,
-                                                  grasshills: false,
-                                                  asphalt: false,
-                                                  
-                                                  rain: false,
-                                                  snow: false,
-                                                  windy: false,
-                                                  normal: false,
-                                                  hot: false,
-                                                  cold: false,
-                                                  
-                                                  blocks: false,
-                                                  resistanceBand: false,
-                                                  weights: false,
-                                                  sled: false,
-                                                  wickets: false,
-                                                  hurdles: false,
-                                                  weightedVest: false,
-                                                  plyoBox: false,
-                                                  medicineBall: false,
-                                                  stationaryBike: false,
-                                                  treadmill: false,
-                                                  
-                                                  injury: false,
-                                                  soreness: false,
-                                                  fatigued: false,
-                                                  peakForm: false,
-                                                  
-                                                  low: false,
-                                                  moderate: false,
-                                                  high: false,
-                                                  maximum: false,
-                                                  
-                                                  highJump: false,
-                                                  poleVault: false,
-                                                  hammerThrow: false,
-                                                  discus: false,
-                                                  shotPut: false,
-                                                  javelin: false,
-                                                  longJump: false,
-                                                  tripleJump: false)
+                                                  dayComplete: false)
                     } else {
                         isFieldModified = true
                         StreakData.updateStreakIfNeeded(fieldModified: isFieldModified)
@@ -751,60 +350,7 @@ struct WorkoutView: View {
                     workoutData?.meters = meters.compactMap { Int($0) }
                     workoutData?.times = times.compactMap { Int($0) }
                     workoutData?.sets = Int(numSets) ?? 0
-                    
-                    workoutData?.recovery = isRecovery
-                    workoutData?.off = isOff
-                    workoutData?.meet = isMeet
-                    workoutData?.technique = isTechnique
-                    workoutData?.workout = isWorkout
-                    workoutData?.tempo = isTempo
-                    
                     workoutData?.dayComplete = isDayComplete
-                    
-                    workoutData?.track = isTrack
-                    workoutData?.indoorTrack = isIndoorTrack
-                    workoutData?.turf = isTurf
-                    workoutData?.dirt = isDirt
-                    workoutData?.grasshills = isGrassHills
-                    workoutData?.asphalt = isAsphalt
-                    
-                    workoutData?.rain = isRain
-                    workoutData?.snow = isSnow
-                    workoutData?.windy = isWindy
-                    workoutData?.normal = isNormal
-                    workoutData?.hot = isHot
-                    workoutData?.cold = isCold
-                    
-                    workoutData?.blocks = isBlocks
-                    workoutData?.resistanceBand = isResistanceBand
-                    workoutData?.weights = isWeights
-                    workoutData?.sled = isSled
-                    workoutData?.wickets = isWickets
-                    workoutData?.hurdles = isHurdles
-                    workoutData?.weightedVest = isWeightedVest
-                    workoutData?.plyoBox = isPlyoBox
-                    workoutData?.medicineBall = isMedicineBall
-                    workoutData?.stationaryBike = isStationaryBike
-                    workoutData?.treadmill = isTreadmill
-                    
-                    workoutData?.injury = isInjury
-                    workoutData?.soreness = isSoreness
-                    workoutData?.fatigued = isFatigued
-                    workoutData?.peakForm = isPeakForm
-                    
-                    workoutData?.low = isLow
-                    workoutData?.moderate = isModerate
-                    workoutData?.high = isHigh
-                    workoutData?.maximum = isMaximum
-                    
-                    workoutData?.highJump = isHighJump
-                    workoutData?.poleVault = isPoleVault
-                    workoutData?.hammerThrow = isHammerThrow
-                    workoutData?.discus = isDiscus
-                    workoutData?.shotPut = isShotPut
-                    workoutData?.javelin = isJavelin
-                    workoutData?.longJump = isLongJump
-                    workoutData?.tripleJump = isTripleJump
                     
                     workoutData?.saveData()
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)

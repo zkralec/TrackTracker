@@ -80,7 +80,7 @@ struct MealsView: View {
                             }
                         } else {
                             // Loading indicator
-                            VStack {
+                            HStack {
                                 Spacer()
                                 
                                 ProgressView()
