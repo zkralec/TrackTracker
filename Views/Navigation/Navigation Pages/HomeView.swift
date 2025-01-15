@@ -13,6 +13,7 @@ struct HomeView: View {
     @State private var prs = [EventData: String]()
     @State private var meetLog: [MeetData] = []
     @State private var meets: [Date] = []
+    @State private var daysUntilMeet: Int = -1
     
     @State private var events: [EventData] = {
         if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
@@ -42,58 +43,27 @@ struct HomeView: View {
                     .padding(.bottom, -8)
                     
                     List {
-                        // Current streak of tracking workouts
-                        Section("Streak") {
-                            HStack {
-                                Spacer()
-                                
-                                VStack {
-                                    Text("Workout Streak")
-                                    Text("\(StreakData.streakCount())")
-                                        .font(.system(size: 60, weight: .bold))
-                                        .foregroundStyle(.primary)
+                        // Section for days until next meet
+                        if !meetLog.isEmpty {
+                            let calendar = Calendar.current
+                            
+                            let currDate = calendar.startOfDay(for: Date())
+                            let meetDate = calendar.startOfDay(for: meetLog[0].meetDate)
+                            
+                            let daysLeft = calendar.dateComponents([.day], from: currDate, to: meetDate)
+                            
+                            Section("Upcoming meet") {
+                                HStack {
+                                    Spacer()
+                                    
+                                    Text("\(daysLeft.day ?? 0) days until next meet")
+                                        .font(.title3)
+                                        .fontWeight(.semibold)
+                                    
+                                    Spacer()
                                 }
                                 .padding()
-                                
-                                Spacer()
                             }
-                        }
-                        
-                        // User can see main events and their PR
-                        Section("Personal Records") {
-                            VStack {
-                                if events.isEmpty {
-                                    HStack {
-                                        Spacer()
-                                        
-                                        Text("No selected events")
-                                            .foregroundStyle(.secondary)
-                                            .padding()
-                                        
-                                        Spacer()
-                                    }
-                                } else {
-                                    ForEach(events, id: \.self) { event in
-                                        if let record = prs[event], !record.isEmpty {
-                                            HStack {
-                                                Text(event.rawValue)
-                                                Spacer()
-                                                Text(record)
-                                            }
-                                            .padding(.vertical, 4)
-                                        } else {
-                                            HStack {
-                                                Text(event.rawValue)
-                                                Spacer()
-                                                Text("Enter in Settings")
-                                                    .foregroundStyle(.secondary)
-                                            }
-                                            .padding(.vertical, 4)
-                                        }
-                                    }
-                                }
-                            }
-                            .padding()
                         }
                         
                         // Display meet dates
@@ -103,7 +73,7 @@ struct HomeView: View {
                                 
                                 VStack {
                                     if meetLog.isEmpty {
-                                        Text("No meet days selected")
+                                        Text("No upcoming meets")
                                             .foregroundStyle(.secondary)
                                     } else {
                                         ForEach(meetLog.indices, id: \.self) { index in

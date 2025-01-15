@@ -13,7 +13,7 @@ struct WeightsView: View {
     @State private var isFocused = false
     @State private var exercises: [WeightExercise] = []
     @State var count: Int = 1
-
+    
     var body: some View {
         NavigationStack {
             ZStack {

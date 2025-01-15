@@ -77,9 +77,9 @@ struct WorkoutView: View {
                         HStack {
                             // Button to show user's input and recovery suggestions
                             Button(action: {
-                                    withAnimation {
-                                        showRecoverySuggestions = true
-                                    }
+                                withAnimation {
+                                    showRecoverySuggestions = true
+                                }
                             }) {
                                 Image(systemName: "info.circle")
                                     .foregroundStyle(.blue)
@@ -104,9 +104,9 @@ struct WorkoutView: View {
                                     isFocused = false
                                     
                                     if isDayComplete {
-                                            showRecoverySuggestions = true
-                                            // Schedules recovery notification
-                                            scheduleNotification(for: currDate)
+                                        showRecoverySuggestions = true
+                                        // Schedules recovery notification
+                                        scheduleNotification(for: currDate)
                                         
                                         workoutData?.meters = meters.compactMap { Int($0) }
                                         workoutData?.times = times.compactMap { Int($0) }

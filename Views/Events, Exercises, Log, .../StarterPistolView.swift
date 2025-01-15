@@ -217,20 +217,20 @@ struct StarterPistolView: View {
         let remainingTime: Double
         let lineWidth: CGFloat
         let ringColor: Color
-
+        
         var body: some View {
             ZStack {
                 Circle()
                     .stroke(lineWidth: lineWidth)
                     .opacity(0.3)
                     .foregroundColor(ringColor)
-
+                
                 Circle()
                     .trim(from: 0.0, to: CGFloat(remainingTime / totalTime))
                     .stroke(ringColor, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                     .rotationEffect(.degrees(-90))
                     .animation(.easeInOut(duration: 0.1), value: remainingTime)
-
+                
                 Text("\(Int(remainingTime))")
                     .font(.system(size: lineWidth * 2, weight: .bold))
                     .foregroundColor(ringColor)
