@@ -5,14 +5,6 @@ struct SideBar: View {
     @Binding var isSideMenuOpen: Bool
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var events: [EventData] = {
-        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
-            return savedEvents.compactMap { EventData(rawValue: $0) }
-        } else {
-            return []
-        }
-    }()
-    
     var body: some View {
         ZStack {
             // Gray out the rest of the screen
@@ -48,25 +40,6 @@ struct SideBar: View {
                                     Image(systemName: "house")
                                         .foregroundStyle(.blue)
                                     Text("Home")
-                                        .padding(.vertical)
-                                }
-                                .fontWeight(.medium)
-                                .font(.system(size: 20))
-                            }
-                            .onTapGesture {
-                                isSideMenuOpen.toggle()
-                            }
-                            .padding(6)
-                            
-                            // Events button
-                            NavigationLink {
-                                EventView(events: $events)
-                                    .navigationBarBackButtonHidden()
-                            } label: {
-                                HStack {
-                                    Image(systemName: "figure.track.and.field")
-                                        .foregroundStyle(.blue)
-                                    Text("Your Events")
                                         .padding(.vertical)
                                 }
                                 .fontWeight(.medium)

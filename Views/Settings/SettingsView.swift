@@ -60,6 +60,14 @@ struct SettingsView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @State private var deleteConfirmation = false
     
+    @State private var events: [EventData] = {
+        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
+            return savedEvents.compactMap { EventData(rawValue: $0) }
+        } else {
+            return []
+        }
+    }()
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -126,8 +134,6 @@ struct SettingsView: View {
                             }
                             .padding()
                         }
-                        .listSectionSpacing(15)
-                        
                         
                         Section("Toggles") {
                             // Toggle for dark mode or light mode
@@ -141,7 +147,6 @@ struct SettingsView: View {
                             // Toggle haptic feedback
                             Toggle("Enable Haptics", isOn: $viewModel.isHapticsEnabled)
                         }
-                        .listSectionSpacing(15)
                         
                         // Allows user to go to UserInputView to change their user info
                         Section("User Data") {
@@ -151,8 +156,14 @@ struct SettingsView: View {
                             } label: {
                                 SettingsRowView(imageName: "person.circle", title: "Modify User Data", tintColor: .blue)
                             }
+                            
+                            NavigationLink {
+                                EventView(events: $events)
+                                    .navigationBarBackButtonHidden()
+                            } label: {
+                                SettingsRowView(imageName: "figure.track.and.field", title: "Modify Your Events", tintColor: .blue)
+                            }
                         }
-                        .listSectionSpacing(15)
                         
                         // Allows user to do various things with their account
                         Section("Account") {
@@ -181,6 +192,7 @@ struct SettingsView: View {
                             }
                         }
                     }
+                    .listSectionSpacing(15)
                     .modifier(ToolbarModifier(isFocused: $viewModel.isFocused))
                     .onAppear {
                         viewModel.loadEvents()

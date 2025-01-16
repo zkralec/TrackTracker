@@ -24,6 +24,7 @@
 		146154012BDDC5570068504B /* TrainingLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154002BDDC5560068504B /* TrainingLogView.swift */; };
 		146154032BE3D8510068504B /* PastWorkoutData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146154022BE3D8510068504B /* PastWorkoutData.swift */; };
 		1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */; };
+		14795E322D387EDE001A5336 /* TitleModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14795E312D387EDE001A5336 /* TitleModelView.swift */; };
 		14823F0A2CB6BD030058C57F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F092CB6BD030058C57F /* LoginView.swift */; };
 		14823F0C2CB6C0120058C57F /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0B2CB6C0120058C57F /* LoginInputView.swift */; };
 		14823F0E2CB6F0320058C57F /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0D2CB6F0320058C57F /* ForgotPasswordView.swift */; };
@@ -115,6 +116,7 @@
 		146154002BDDC5560068504B /* TrainingLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLogView.swift; sourceTree = "<group>"; };
 		146154022BE3D8510068504B /* PastWorkoutData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastWorkoutData.swift; sourceTree = "<group>"; };
 		1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPrompt.swift; sourceTree = "<group>"; };
+		14795E312D387EDE001A5336 /* TitleModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleModelView.swift; sourceTree = "<group>"; };
 		14823F092CB6BD030058C57F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		14823F0B2CB6C0120058C57F /* LoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputView.swift; sourceTree = "<group>"; };
 		14823F0D2CB6F0320058C57F /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -285,6 +287,14 @@
 			path = RecoveryInfo;
 			sourceTree = "<group>";
 		};
+		14795E302D387EBB001A5336 /* All */ = {
+			isa = PBXGroup;
+			children = (
+				14795E312D387EDE001A5336 /* TitleModelView.swift */,
+			);
+			path = All;
+			sourceTree = "<group>";
+		};
 		14823F082CB6BCEC0058C57F /* Login Pages */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +411,7 @@
 		14823F312CC1511D0058C57F /* Model Views */ = {
 			isa = PBXGroup;
 			children = (
+				14795E302D387EBB001A5336 /* All */,
 				148F24582CEE5CED007EB8FC /* Meets */,
 				148F24442CD54421007EB8FC /* Weights */,
 				14823F332CC1515F0058C57F /* Workouts */,
@@ -741,6 +752,7 @@
 				14BF431C2BA157E7004B3321 /* ExerciseListView.swift in Sources */,
 				148609B72C9F13DD00A3E73F /* InjuryDetailsView.swift in Sources */,
 				1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */,
+				14795E322D387EDE001A5336 /* TitleModelView.swift in Sources */,
 				14823F102CB80F410058C57F /* SignUpView.swift in Sources */,
 				14823F142CB846D70058C57F /* SettingsRowView.swift in Sources */,
 				14BF431F2BA7CEC9004B3321 /* TitleBackground.swift in Sources */,

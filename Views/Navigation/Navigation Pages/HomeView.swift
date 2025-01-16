@@ -15,32 +15,12 @@ struct HomeView: View {
     @State private var meets: [Date] = []
     @State private var daysUntilMeet: Int = -1
     
-    @State private var events: [EventData] = {
-        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
-            return savedEvents.compactMap { EventData(rawValue: $0) }
-        } else {
-            return []
-        }
-    }()
-    
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
-                    VStack {
-                        ZStack {
-                            // Display title
-                            TitleBackground(title: "Home")
-                            
-                            HStack {
-                                // Menu bar icon
-                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                                Spacer()
-                            }
-                        }
-                        Divider()
-                    }
-                    .padding(.bottom, -8)
+                    
+                    TitleModelView(title: "Home", menu: true, isSideMenuOpen: isSideMenuOpen) // Need to fix menu not popping out when this button is pressed
                     
                     List {
                         // Section for days until next meet
@@ -86,7 +66,6 @@ struct HomeView: View {
                                     }
                                 }
                                 .onAppear {
-                                    loadPR()
                                     loadMeets()
                                     
                                     for index in stride(from: meetLog.count - 1, through: 0, by: -1) {
@@ -131,15 +110,6 @@ struct HomeView: View {
     private func saveMeetLog() {
         if let encoded = try? JSONEncoder().encode(meetLog) {
             UserDefaults.standard.set(encoded, forKey: "meetLog")
-        }
-    }
-    
-    // Load the user's event PRs
-    func loadPR() {
-        for event in events {
-            if let prValue = UserDefaults.standard.string(forKey: event.rawValue) {
-                prs[event] = prValue
-            }
         }
     }
     
