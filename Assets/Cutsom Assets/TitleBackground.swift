@@ -13,7 +13,7 @@ struct TitleBackground: View {
     
     var body: some View {
         Text(title)
-            .foregroundStyle(.black)
+            .foregroundStyle(.primary)
             .font(.title)
             .fontWeight(.bold)
     }

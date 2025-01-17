@@ -12,14 +12,6 @@ struct TrainingLogView: View {
     @State private var isSideMenuOpen = false
     @State private var pastWorkoutData = PastWorkoutData.loadPast()
     
-    @State private var events: [EventData] = {
-        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
-            return savedEvents.compactMap { EventData(rawValue: $0) }
-        } else {
-            return []
-        }
-    }()
-    
     var sortedPastWorkouts: [WorkoutData] {
         pastWorkoutData.pastWorkouts.sorted(by: { $0.date > $1.date })
     }
@@ -89,21 +81,3 @@ struct TrainingLogView: View {
         }
     }
 }
-
-extension WorkoutData {
-    var metersString: String {
-        return meters.map { "\($0)" }.joined(separator: ", ")
-    }
-    
-    var timesString: String {
-        return times.map { "\($0)" }.joined(separator: ", ")
-    }
-    
-    var formattedDate: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .full
-        dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: date)
-    }
-}
-

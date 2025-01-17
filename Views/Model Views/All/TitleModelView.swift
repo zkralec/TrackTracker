@@ -10,7 +10,7 @@ import SwiftUI
 struct TitleModelView: View {
     @State var title: String
     @State var menu: Bool
-    @State var isSideMenuOpen: Bool
+    @Binding var isSideMenuOpen: Bool
     
     var body: some View {
         VStack {
@@ -30,8 +30,4 @@ struct TitleModelView: View {
         }
         .padding(.bottom, -8)
     }
-}
-
-#Preview {
-    TitleModelView(title: "Test Title", menu: true, isSideMenuOpen: false)
 }

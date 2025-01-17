@@ -7,78 +7,46 @@
 
 import SwiftUI
 
-// Main page for the user, shows a variety of info
 struct HomeView: View {
     @State private var isSideMenuOpen = false
     @State private var prs = [EventData: String]()
     @State private var meetLog: [MeetData] = []
-    @State private var meets: [Date] = []
     @State private var daysUntilMeet: Int = -1
     
     var body: some View {
         NavigationStack {
             ZStack {
                 VStack {
+                    // Title with Side Menu Button (not working)
+                    TitleModelView(title: "Home", menu: true, isSideMenuOpen: $isSideMenuOpen)
                     
-                    TitleModelView(title: "Home", menu: true, isSideMenuOpen: isSideMenuOpen) // Need to fix menu not popping out when this button is pressed
-                    
+                    // Scrollable content
                     List {
-                        // Section for days until next meet
-                        if !meetLog.isEmpty {
-                            let calendar = Calendar.current
-                            
-                            let currDate = calendar.startOfDay(for: Date())
-                            let meetDate = calendar.startOfDay(for: meetLog[0].meetDate)
-                            
-                            let daysLeft = calendar.dateComponents([.day], from: currDate, to: meetDate)
-                            
-                            Section("Upcoming meet") {
-                                HStack {
-                                    Spacer()
-                                    
-                                    Text("\(daysLeft.day ?? 0) days until next meet")
-                                        .font(.title3)
-                                        .fontWeight(.semibold)
-                                    
-                                    Spacer()
-                                }
-                                .padding()
+                        // Next Meet Countdown Card
+                        if let nextMeet = meetLog.first {
+                            Section {
+                                NextMeetCard(meet: nextMeet)
                             }
                         }
                         
-                        // Display meet dates
-                        Section("Meet Days") {
-                            HStack {
-                                Spacer()
-                                
-                                VStack {
-                                    if meetLog.isEmpty {
-                                        Text("No upcoming meets")
-                                            .foregroundStyle(.secondary)
-                                    } else {
-                                        ForEach(meetLog.indices, id: \.self) { index in
-                                            let meet = meetLog[index]
-                                            Text("\(meet.meetDate.formatted()) | \(meet.meetLocation)")
-                                                .font(.footnote)
-                                                .padding(5)
-                                                .roundedBackground()
-                                        }
-                                    }
-                                }
-                                .onAppear {
-                                    loadMeets()
-                                    
-                                    for index in stride(from: meetLog.count - 1, through: 0, by: -1) {
-                                        let meet = meetLog[index]
-                                        if meet.meetDate < Date() {
-                                            deleteMeet(at: index)
-                                        }
-                                    }
-                                }
-                                .padding()
-                                
-                                Spacer()
-                            }
+                        // PR Progress Chart Card
+                        Section {
+                            PRChartCard(prs: prs)
+                        }
+                        
+                        // Workout Summary Card
+                        Section {
+                            WorkoutSummaryCard()
+                        }
+                        
+                        // Weights Summary Card
+                        Section {
+                            WeightsSummaryCard()
+                        }
+                        
+                        // Suggested Workouts or Insights
+                        Section {
+                            SuggestedWorkoutsCard()
                         }
                     }
                     .listSectionSpacing(15)
@@ -86,36 +54,166 @@ struct HomeView: View {
                     // Navigation bar buttons
                     NavigationBar()
                 }
-                // Show side menu if needed
+                
+                // Side Menu
                 SideBar(isSideMenuOpen: $isSideMenuOpen)
+            }
+            .onAppear {
+                loadMeets()
+                removePastMeets()
             }
         }
     }
     
-    // Load in the current meets
-    func loadMeets() {
+    // Load meets from UserDefaults
+    private func loadMeets() {
         if let data = UserDefaults.standard.data(forKey: "meetLog"),
            let decoded = try? JSONDecoder().decode([MeetData].self, from: data) {
             meetLog = decoded
         }
     }
     
-    // Remove past meet dates
-    private func deleteMeet(at index: Int) {
-        meetLog.remove(at: index)
+    // Remove past meets
+    private func removePastMeets() {
+        meetLog.removeAll { $0.meetDate < Date() }
         saveMeetLog()
     }
     
-    // Save the meet log to UserDefaults
+    // Save updated meet log
     private func saveMeetLog() {
         if let encoded = try? JSONEncoder().encode(meetLog) {
             UserDefaults.standard.set(encoded, forKey: "meetLog")
         }
     }
+}
+
+// MARK: - Next Meet Card
+struct NextMeetCard: View {
+    let meet: MeetData
     
-    // Removes the notification generated by the meet date
-    func removeNotification(for date: Date) {
-        let identifier = date.formatted()
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
+    var body: some View {
+        VStack {
+            Text("Upcoming Meet")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
+            Text("\(daysUntil(meetDate: meet.meetDate)) days until \(meet.meetLocation)")
+                .font(.title3)
+                .bold()
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+    }
+    
+    private func daysUntil(meetDate: Date) -> Int {
+        let calendar = Calendar.current
+        let startDate = calendar.startOfDay(for: Date())
+        let endDate = calendar.startOfDay(for: meetDate)
+        return calendar.dateComponents([.day], from: startDate, to: endDate).day ?? 0
+    }
+}
+
+// MARK: - PR Chart Card
+struct PRChartCard: View {
+    let prs: [EventData: String]
+    
+    var body: some View {
+        VStack {
+            Text("PR Progress")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
+            Text("Interactive chart coming soon!")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .padding(.vertical, 10)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Workout Summary Card
+struct WorkoutSummaryCard: View {
+    @State private var pastWorkoutData = PastWorkoutData.loadPast()
+    
+    var sortedPastWorkouts: [WorkoutData] {
+        pastWorkoutData.pastWorkouts.sorted(by: { $0.date > $1.date })
+    }
+    
+    var body: some View {
+        VStack {
+            Text("Today's Workout")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
+            if let latestWorkout = sortedPastWorkouts.first,
+               Calendar.current.startOfDay(for: Date()) == Calendar.current.startOfDay(for: latestWorkout.date) {
+                // Display workout details
+                VStack {
+                    if latestWorkout.metersString != "" {
+                        Text("Distance/Reps: (\(latestWorkout.metersString)) meters")
+                    } else if latestWorkout.timesString != "" {
+                        Text("Time/Reps: (\(latestWorkout.timesString)) seconds")
+                    } else {
+                        Text("Distance/Time/Reps: None")
+                    }
+                    if latestWorkout.sets > 0 {
+                        Text("Sets: \(latestWorkout.sets)")
+                            .padding(.top, 3)
+                    } else {
+                        Text("Sets: None")
+                            .padding(.top, 3)
+                    }
+                }
+            } else {
+                // No workout logged for today
+                NavigationLink {
+                    WorkoutView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    Text("No workout logged yet. Tap to log!")
+                        .foregroundStyle(.secondary)
+                        .padding(.vertical, 10)
+                }
+            }
+            
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Weights Summary Card
+struct WeightsSummaryCard: View {
+    var body: some View {
+        VStack {
+            Text("Weights Summary")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
+            Text("Recent PRs: Squat 350 lbs, Bench 225 lbs")
+                .font(.subheadline)
+                .padding(.vertical, 10)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+    }
+}
+
+// MARK: - Suggested Workouts Card
+struct SuggestedWorkoutsCard: View {
+    var body: some View {
+        VStack {
+            Text("Suggestions")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
+            Text("Recovery: Do some stationary stretches and roll out.")
+                .font(.subheadline)
+                .padding(.vertical, 10)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
     }
 }
