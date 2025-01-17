@@ -17,7 +17,7 @@ struct HomeView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    // Title with Side Menu Button (not working)
+                    // Title with Side Menu Button
                     TitleModelView(title: "Home", menu: true, isSideMenuOpen: $isSideMenuOpen)
                     
                     // Scrollable content
@@ -44,7 +44,7 @@ struct HomeView: View {
                             WeightsSummaryCard()
                         }
                         
-                        // Suggested Workouts or Insights
+                        // Suggested Workouts or Insights or More
                         Section {
                             SuggestedWorkoutsCard()
                         }
@@ -167,7 +167,7 @@ struct WorkoutSummaryCard: View {
                     }
                 }
             } else {
-                // No workout logged for today
+                // No workout logged yet
                 NavigationLink {
                     WorkoutView()
                         .navigationBarBackButtonHidden()
