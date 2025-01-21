@@ -173,9 +173,15 @@ struct WorkoutSummaryCard: View {
                     WorkoutView()
                         .navigationBarBackButtonHidden()
                 } label: {
-                    Text("No workout logged yet. Tap to log!")
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, 10)
+                    HStack {
+                        Spacer()
+                        
+                        Text("No workout logged yet. Tap to log!")
+                            .foregroundStyle(.secondary)
+                            .padding(.vertical, 10)
+                        
+                        Spacer()
+                    }
                 }
             }
             
@@ -211,8 +217,9 @@ struct SuggestedWorkoutsCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
-            // Create a file filled with data for suggestions
-            Text("Recovery: Do some stationary stretches and roll out.")
+            // Takes random suggestion from func
+            Text(getSuggestedData(randomInt: Int.random(in: 0..<4)))
+                .multilineTextAlignment(.center)
                 .font(.subheadline)
                 .padding(.vertical, 10)
         }
