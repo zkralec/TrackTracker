@@ -121,6 +121,9 @@ struct PRChartCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
+            // Save and track user PR over lifetime of using the app
+            // User can select specific events they have done
+            // User can select timeline (past 10 meets, last year, etc.)
             Text("Interactive chart coming soon!")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
@@ -190,6 +193,7 @@ struct WeightsSummaryCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
+            // Save weight data and display as we do WorkoutData
             Text("Recent PRs: Squat 350 lbs, Bench 225 lbs")
                 .font(.subheadline)
                 .padding(.vertical, 10)
@@ -207,6 +211,7 @@ struct SuggestedWorkoutsCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
+            // Create a file filled with data for suggestions
             Text("Recovery: Do some stationary stretches and roll out.")
                 .font(.subheadline)
                 .padding(.vertical, 10)
