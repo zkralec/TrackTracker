@@ -11,7 +11,6 @@ struct HomeView: View {
     @State private var isSideMenuOpen = false
     @State private var prs = [EventData: String]()
     @State private var meetLog: [MeetData] = []
-    @State private var daysUntilMeet: Int = -1
     
     var body: some View {
         NavigationStack {
@@ -20,7 +19,6 @@ struct HomeView: View {
                     // Title with Side Menu Button
                     TitleModelView(title: "Home", menu: true, isSideMenuOpen: $isSideMenuOpen)
                     
-                    // Scrollable content
                     List {
                         // Next Meet Countdown Card
                         if let nextMeet = meetLog.first {
