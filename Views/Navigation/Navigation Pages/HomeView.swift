@@ -157,13 +157,23 @@ struct WorkoutSummaryCard: View {
                     } else if latestWorkout.timesString != "" {
                         Text("Time/Reps: (\(latestWorkout.timesString)) seconds")
                     } else {
-                        Text("Distance/Time/Reps: None")
+                        NavigationLink {
+                            WorkoutView()
+                                .navigationBarBackButtonHidden()
+                        } label: {
+                            HStack {
+                                Spacer()
+                                
+                                Text("No workout logged yet. Tap to log!")
+                                    .foregroundStyle(.blue)
+                                    .padding(.vertical, 10)
+                                
+                                Spacer()
+                            }
+                        }
                     }
                     if latestWorkout.sets > 0 {
                         Text("Sets: \(latestWorkout.sets)")
-                            .padding(.top, 3)
-                    } else {
-                        Text("Sets: None")
                             .padding(.top, 3)
                     }
                 }
@@ -177,7 +187,7 @@ struct WorkoutSummaryCard: View {
                         Spacer()
                         
                         Text("No workout logged yet. Tap to log!")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(.blue)
                             .padding(.vertical, 10)
                         
                         Spacer()
@@ -217,7 +227,7 @@ struct SuggestedWorkoutsCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
-            // Takes random suggestion from func
+            // Takes random suggestion from getSuggestedData
             Text(getSuggestedData(randomInt: Int.random(in: 0..<4)))
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
