@@ -162,7 +162,7 @@ struct StarterPistolView: View {
                     displayedText = "Set"
                     
                     // Bang
-                    let randomDelay = Double.random(in: 1.5...2.5)
+                    let randomDelay = Double.random(in: 1.5...2.25)
                     DispatchQueue.main.asyncAfter(deadline: .now() + randomDelay) {
                         self.starterGunSound?.play()
                         displayedText = "GO"

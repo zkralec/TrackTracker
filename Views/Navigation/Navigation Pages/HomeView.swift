@@ -150,7 +150,7 @@ struct WorkoutSummaryCard: View {
             
             if let latestWorkout = sortedPastWorkouts.first,
                Calendar.current.startOfDay(for: Date()) == Calendar.current.startOfDay(for: latestWorkout.date) {
-                // Display workout details
+                // Workout has been entered
                 VStack {
                     if latestWorkout.metersString != "" {
                         Text("**Distance/Reps:** \(latestWorkout.metersString) meters")
@@ -165,10 +165,9 @@ struct WorkoutSummaryCard: View {
                         } label: {
                             HStack {
                                 Spacer()
-                                
                                 Text("No workout logged yet. Tap to log!")
                                     .foregroundStyle(.secondary)
-                                
+                                    .padding(.vertical, 10)
                                 Spacer()
                             }
                         }
@@ -187,11 +186,9 @@ struct WorkoutSummaryCard: View {
                 } label: {
                     HStack {
                         Spacer()
-                        
                         Text("No workout logged yet. Tap to log!")
                             .foregroundStyle(.secondary)
                             .padding(.vertical, 10)
-                        
                         Spacer()
                     }
                 }
@@ -205,7 +202,7 @@ struct WorkoutSummaryCard: View {
 
 // MARK: - Weights Summary Card
 struct WeightsSummaryCard: View {
-    @State private var weightsData = WeightsData.loadData()
+    @State private var weightsData: [WeightExercise] = []
     
     var body: some View {
         VStack {
@@ -213,24 +210,55 @@ struct WeightsSummaryCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
-            // No weights data entered yet
-            NavigationLink {
-                WeightsView()
-                    .navigationBarBackButtonHidden()
-            } label: {
-                HStack {
-                    Spacer()
-                    
-                    Text("No weights logged yet. Tap to log!")
-                        .foregroundStyle(.secondary)
-                        .padding(.vertical, 10)
-                    
-                    Spacer()
+            // Filter out default data
+            let filteredWeights = weightsData.filter {
+                !($0.sets == 1 && $0.weight.allSatisfy { $0.isEmpty } && $0.reps.allSatisfy { $0.isEmpty })
+            }
+            
+            if filteredWeights.isEmpty {
+                // No weights data entered yet
+                NavigationLink {
+                    WeightsView()
+                        .navigationBarBackButtonHidden()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("No weights logged yet. Tap to log!")
+                            .foregroundStyle(.secondary)
+                            .padding(.vertical, 10)
+                        Spacer()
+                    }
+                }
+            } else {
+                // Display the weights data
+                ForEach(filteredWeights) { exercise in
+                    HStack {
+                        Spacer()
+                        VStack {
+                            Text(exercise.exercise)
+                                .padding(.bottom, 3)
+                                .bold()
+                            Text("Sets: \(exercise.sets)")
+                                .font(.subheadline)
+                            Text("Weight: \(exercise.weight.joined(separator: ", ")) lbs")
+                                .font(.subheadline)
+                            Text("Reps: \(exercise.reps.joined(separator: ", "))")
+                                .font(.subheadline)
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    .background(Color.gray.opacity(0.08))
+                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15, height: 15)))
+                    .padding(.vertical, 10)
                 }
             }
         }
         .padding()
         .frame(maxWidth: .infinity)
+        .onAppear {
+            weightsData = WeightsData.loadData()
+        }
     }
 }
 
