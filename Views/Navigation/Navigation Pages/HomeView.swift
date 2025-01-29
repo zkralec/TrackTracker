@@ -153,9 +153,11 @@ struct WorkoutSummaryCard: View {
                 // Display workout details
                 VStack {
                     if latestWorkout.metersString != "" {
-                        Text("Distance/Reps: (\(latestWorkout.metersString)) meters")
+                        Text("**Distance/Reps:** \(latestWorkout.metersString) meters")
+                            .multilineTextAlignment(.center)
                     } else if latestWorkout.timesString != "" {
-                        Text("Time/Reps: (\(latestWorkout.timesString)) seconds")
+                        Text("**Time/Reps:** \(latestWorkout.timesString) seconds")
+                            .multilineTextAlignment(.center)
                     } else {
                         NavigationLink {
                             WorkoutView()
@@ -165,18 +167,18 @@ struct WorkoutSummaryCard: View {
                                 Spacer()
                                 
                                 Text("No workout logged yet. Tap to log!")
-                                    .foregroundStyle(.blue)
-                                    .padding(.vertical, 10)
+                                    .foregroundStyle(.secondary)
                                 
                                 Spacer()
                             }
                         }
                     }
                     if latestWorkout.sets > 0 {
-                        Text("Sets: \(latestWorkout.sets)")
+                        Text("**Sets:** \(latestWorkout.sets)")
                             .padding(.top, 3)
                     }
                 }
+                .padding(.vertical, 10)
             } else {
                 // No workout logged yet
                 NavigationLink {
@@ -187,7 +189,7 @@ struct WorkoutSummaryCard: View {
                         Spacer()
                         
                         Text("No workout logged yet. Tap to log!")
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(.secondary)
                             .padding(.vertical, 10)
                         
                         Spacer()
@@ -203,16 +205,29 @@ struct WorkoutSummaryCard: View {
 
 // MARK: - Weights Summary Card
 struct WeightsSummaryCard: View {
+    @State private var weightsData = WeightsData.loadData()
+    
     var body: some View {
         VStack {
             Text("Weights Summary")
                 .font(.headline)
                 .padding(.bottom, 5)
             
-            // Save weight data and display as we do WorkoutData
-            Text("Recent PRs: Squat 350 lbs, Bench 225 lbs")
-                .font(.subheadline)
-                .padding(.vertical, 10)
+            // No weights data entered yet
+            NavigationLink {
+                WeightsView()
+                    .navigationBarBackButtonHidden()
+            } label: {
+                HStack {
+                    Spacer()
+                    
+                    Text("No weights logged yet. Tap to log!")
+                        .foregroundStyle(.secondary)
+                        .padding(.vertical, 10)
+                    
+                    Spacer()
+                }
+            }
         }
         .padding()
         .frame(maxWidth: .infinity)

@@ -55,9 +55,9 @@ struct TrainingLogView: View {
                                 Section(workout.formattedDate) {
                                     VStack(alignment: .leading) {
                                         if workout.metersString != "" {
-                                            Text("Distance/Reps: (\(workout.metersString)) meters")
+                                            Text("Distance/Reps: \(workout.metersString) meters")
                                         } else if workout.timesString != "" {
-                                            Text("Time/Reps: (\(workout.timesString)) seconds")
+                                            Text("Time/Reps: \(workout.timesString) seconds")
                                         } else {
                                             Text("Distance/Time/Reps: None")
                                         }
