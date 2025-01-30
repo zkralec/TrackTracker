@@ -189,7 +189,8 @@ struct PersonalRecordCard: View {
                                 Spacer()
                                 Text(record)
                             }
-                            .padding(.vertical, 4)
+                            .font(.subheadline)
+                            .padding(4)
                         } else {
                             HStack {
                                 Text(event.rawValue)
