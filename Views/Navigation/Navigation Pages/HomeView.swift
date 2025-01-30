@@ -199,7 +199,6 @@ struct WorkoutSummaryCard: View {
                         }
                     }
                 }
-                .padding(.vertical, 10)
             // No workout logged yet
             } else {
                 NavigationLink {
@@ -292,6 +291,7 @@ struct SuggestedWorkoutsCard: View {
             // Takes random suggestion from getSuggestedData
             Text(getSuggestedData(randomInt: Int.random(in: 0..<4)))
                 .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
                 .font(.subheadline)
                 .roundedBackground()
         }
