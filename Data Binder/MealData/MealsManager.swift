@@ -79,7 +79,7 @@ struct MealsManager {
     
     // Create HTTP request for the API
     private static func createRequest(with calories: Double, headers: [String: String]) -> NSMutableURLRequest {
-        let urlString = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate?timeFrame=day&targetCalories=3900"
+        let urlString = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate?timeFrame=day&targetCalories=\(calories)"
         let url = URL(string: urlString)!
         let request = NSMutableURLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10.0)
         request.httpMethod = "GET"
