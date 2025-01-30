@@ -9,7 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var isSideMenuOpen = false
-    @State private var prs = [EventData: String]()
     @State private var meetLog: [MeetData] = []
     
     var body: some View {
@@ -29,7 +28,7 @@ struct HomeView: View {
                         
                         // PR Progress Chart Card
                         Section {
-                            PRChartCard(prs: prs)
+                            PRChartCard()
                         }
                         
                         // Workout Summary Card
@@ -113,7 +112,7 @@ struct NextMeetCard: View {
 
 // MARK: - PR Chart Card
 struct PRChartCard: View {
-    let prs: [EventData: String]
+    @State private var prs = [EventData: String]()
     
     var body: some View {
         VStack {
@@ -148,16 +147,43 @@ struct WorkoutSummaryCard: View {
                 .font(.headline)
                 .padding(.bottom, 5)
             
+            // If WorkoutView has been entered
             if let latestWorkout = sortedPastWorkouts.first,
                Calendar.current.startOfDay(for: Date()) == Calendar.current.startOfDay(for: latestWorkout.date) {
-                // Workout has been entered
                 VStack {
+                    // If user enters Distance/Reps
                     if latestWorkout.metersString != "" {
-                        Text("**Distance/Reps:** \(latestWorkout.metersString) meters")
-                            .multilineTextAlignment(.center)
+                        VStack {
+                            Text("Distance/Reps:")
+                                .padding(.bottom, 1)
+                            Text("\(latestWorkout.metersString) meters")
+                                .font(.subheadline)
+                            Text("Sets:")
+                                .padding(.top, 2)
+                                .padding(.bottom, 1)
+                            Text("\(latestWorkout.sets)")
+                                .font(.subheadline)
+                        }
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .roundedBackground()
+                    // If user enters Time/Reps
                     } else if latestWorkout.timesString != "" {
-                        Text("**Time/Reps:** \(latestWorkout.timesString) seconds")
-                            .multilineTextAlignment(.center)
+                        VStack {
+                            Text("Time/Reps:")
+                                .padding(.bottom, 1)
+                            Text("\(latestWorkout.timesString) seconds")
+                                .font(.subheadline)
+                            Text("Sets:")
+                                .padding(.top, 2)
+                                .padding(.bottom, 1)
+                            Text("\(latestWorkout.sets)")
+                                .font(.subheadline)
+                        }
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .roundedBackground()
+                    // If user does nothing
                     } else {
                         NavigationLink {
                             WorkoutView()
@@ -172,14 +198,10 @@ struct WorkoutSummaryCard: View {
                             }
                         }
                     }
-                    if latestWorkout.sets > 0 {
-                        Text("**Sets:** \(latestWorkout.sets)")
-                            .padding(.top, 3)
-                    }
                 }
                 .padding(.vertical, 10)
+            // No workout logged yet
             } else {
-                // No workout logged yet
                 NavigationLink {
                     WorkoutView()
                         .navigationBarBackButtonHidden()
@@ -247,10 +269,7 @@ struct WeightsSummaryCard: View {
                         }
                         Spacer()
                     }
-                    .padding()
-                    .background(Color.gray.opacity(0.08))
-                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15, height: 15)))
-                    .padding(.vertical, 10)
+                    .roundedBackground()
                 }
             }
         }
@@ -274,7 +293,7 @@ struct SuggestedWorkoutsCard: View {
             Text(getSuggestedData(randomInt: Int.random(in: 0..<4)))
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
-                .padding(.vertical, 10)
+                .roundedBackground()
         }
         .padding()
         .frame(maxWidth: .infinity)

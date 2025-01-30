@@ -11,9 +11,10 @@ import SwiftUI
 struct RoundedBackground: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding(5)
-            .background(Color.gray.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .padding()
+            .background(Color.gray.opacity(0.08))
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 15, height: 15)))
+            .padding(.vertical, 10)
     }
 }
 

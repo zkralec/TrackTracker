@@ -42,7 +42,7 @@ class UserDataManager: ObservableObject {
         }
         
         // BMR * 1.725 because we assume track athletes are very active
-        let maintenanceCalories = bmr * 1.725 * genderMultiplier
+        let maintenanceCalories = bmr * 1.6 * genderMultiplier
         
         self.maintenanceCalories = maintenanceCalories
     }
