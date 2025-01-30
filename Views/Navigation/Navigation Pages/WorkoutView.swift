@@ -23,14 +23,6 @@ struct WorkoutView: View {
     @State private var workoutData: WorkoutData?
     @ObservedObject var settings = SettingsViewModel()
     
-    @State private var events: [EventData] = {
-        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
-            return savedEvents.compactMap { EventData(rawValue: $0) }
-        } else {
-            return []
-        }
-    }()
-    
     // Have the meters or times field appear depending on saved values
     init() {
         // Safely unwrap optional data

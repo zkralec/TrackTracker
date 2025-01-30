@@ -13,54 +13,44 @@ struct MealsView: View {
     @State private var shouldFetchMealPlan = false
     @State private var isSideMenuOpen = false
     
-    @State private var events: [EventData] = {
-        if let savedEvents = UserDefaults.standard.array(forKey: "selectedEvents") as? [String] {
-            return savedEvents.compactMap { EventData(rawValue: $0) }
-        } else {
-            return []
-        }
-    }()
-    
     @StateObject var userDataManager = UserDataManager()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack {
                     VStack {
                         VStack {
-                            ZStack {
-                                // Display title
+                            HStack {
+                                // Manu button
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
+                                
+                                Spacer()
+                                
+                                // Title with Side Menu Button
                                 TitleBackground(title: "Daily Meals")
                                 
-                                HStack {
-                                    // Menu bar icon
-                                    MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                                    
-                                    Spacer()
-                                    
-                                    // Refresh button at the top-right
-                                    Button(action: {
-                                        fetchMeals(isRefreshed: true)
-                                    }) {
-                                        Image(systemName: "arrow.circlepath")
-                                            .frame(width: 70, height: 30)
-                                    }
+                                Spacer()
+                                
+                                // Refresh button at the top-right
+                                Button(action: {
+                                    fetchMeals(isRefreshed: true)
+                                }) {
+                                    Image(systemName: "arrow.circlepath")
+                                        .frame(width: 70, height: 30)
                                 }
-                                .padding(.top, 5)
                             }
                             
-                            VStack {
-                                // Display user information
-                                Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
-                                    .font(.subheadline)
-                                    .padding(10)
-                                    .background(Color.gray.opacity(0.2))
-                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
-                                    
-                            }
-                            .padding(.bottom, 10)
+                            // Display user information
+                            Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
+                                .font(.subheadline)
+                                .padding(10)
+                                .background(Color.gray.opacity(0.2))
+                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                         }
+                        .padding(.bottom, 10)
+                        
+                        // Have to use a weird double VStack to be able to eliminate extra space on the bottom
                         Divider()
                     }
                     .padding(.bottom, -8)
