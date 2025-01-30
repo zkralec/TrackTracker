@@ -54,8 +54,10 @@ struct MealsView: View {
                                 // Display user information
                                 Text("Maintenance Calories: \(formatCalories(userDataManager.maintenanceCalories)) kcal / day")
                                     .font(.subheadline)
-                                    .padding(5)
-                                    .roundedBackground()
+                                    .padding(10)
+                                    .background(Color.gray.opacity(0.2))
+                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                                    
                             }
                             .padding(.bottom, 10)
                         }
