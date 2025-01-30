@@ -60,7 +60,7 @@ struct MealsView: View {
                         if let mealPlan = mealPlan {
                             MealsListView(mealPlan: mealPlan)
                         } else if userDataManager.maintenanceCalories == 0 {
-                            VStack {
+                            HStack {
                                 Spacer()
                                 
                                 Text("To get recommended meals, please enter user data in Settings -> Modify User Data")

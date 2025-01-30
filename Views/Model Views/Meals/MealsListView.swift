@@ -15,8 +15,14 @@ struct MealsListView: View {
     var body: some View {
         // Use the indices to map meals and titles
         ForEach(mealPlan.meals.indices, id: \.self) { index in
-            Section(header: Text(mealTitles[index])) {  // Use the title based on index
+            Section {
                 VStack(alignment: .leading) {
+                    // Meal time title
+                    Text(mealTitles[index])
+                        .padding(.bottom, 4)
+                        .underline()
+                        .bold()
+                    
                     // Meal title
                     Text(mealPlan.meals[index].title)
                         .font(.headline)
@@ -41,7 +47,7 @@ struct MealsListView: View {
                 }
                 .padding()
             }
-            .listSectionSpacing(10)
+            .listSectionSpacing(15)
         }
     }
 }
