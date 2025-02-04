@@ -50,10 +50,12 @@ struct WorkoutView: View {
                     .padding(.bottom, -8)
                     
                     List {
+                        // Distance/Time Reps Card
                         Section {
                             DistanceTimeRepsCard(meters: $meters, times: $times, numSets: $numSets, isFocused: $isFocused, isDayComplete: $isDayComplete)
                         }
                         
+                        // Sets Card
                         Section {
                             SetsCard(numSets: $numSets, isFocused: $isFocused, isDayComplete: $isDayComplete)
                         }

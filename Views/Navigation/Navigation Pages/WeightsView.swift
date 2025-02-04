@@ -97,7 +97,9 @@ struct WeightsView: View {
                                 .padding(.leading)
                                 .buttonStyle(BorderlessButtonStyle())
                             }
-                            .roundedBackground()
+                            .padding(8)
+                            .background(Color.gray.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                             .padding(.bottom, 16)
                         }
                         
