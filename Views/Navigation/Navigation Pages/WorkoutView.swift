@@ -39,6 +39,7 @@ struct WorkoutView: View {
                             Spacer()
                         }
                         
+                        // Layout for info button, date, and day complete button
                         TopButtonLayoutCard(currDate: $currDate,
                                             isFocused: $isFocused,
                                             meters: $meters,
@@ -182,11 +183,11 @@ struct TopButtonLayoutCard: View {
     var body: some View {
         HStack {
             // Button to show user's input and recovery suggestions
-            Button(action: {
+            Button {
                 withAnimation {
                     showRecoverySuggestions = true
                 }
-            }) {
+            } label: {
                 Image(systemName: "info.circle")
                     .foregroundStyle(.blue)
                     .frame(width: 50, height: 50)
@@ -204,7 +205,7 @@ struct TopButtonLayoutCard: View {
             Spacer()
             
             // Complete Day button
-            Button(action: {
+            Button {
                 withAnimation {
                     isDayComplete.toggle()
                     isFocused = false
@@ -229,7 +230,7 @@ struct TopButtonLayoutCard: View {
                         generator.impactOccurred()
                     }
                 }
-            }) {
+            } label: {
                 // Is day complete button
                 if !isDayComplete {
                     Image(systemName: "checkmark.circle")
@@ -241,8 +242,9 @@ struct TopButtonLayoutCard: View {
                         .frame(width: 50, height: 50)
                 }
             }
-            .padding(.trailing, 20)
+            .padding(.trailing)
         }
+        .frame(maxWidth: .infinity)
         // Once day is complete, prompt user with recovery page if needed
         .sheet(isPresented: $showRecoverySuggestions) {
             RecoveryPrompt(isPresented: $showRecoverySuggestions, selectedExperience: $selectedExperience)
@@ -257,7 +259,7 @@ struct TopButtonLayoutCard: View {
         content.sound = UNNotificationSound.default
         
         var triggerDate = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        triggerDate.hour = 13
+        triggerDate.hour = 17
         triggerDate.minute = 0
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
@@ -295,7 +297,7 @@ struct DistanceTimeRepsCard: View {
     @Binding var isDayComplete: Bool
     
     @FocusState private var focusedField: Int?
-
+    
     var body: some View {
         VStack {
             Text(isDistanceMode ? "Distance and Reps" : "Time and Reps")
@@ -453,31 +455,38 @@ struct SetsCard: View {
     @FocusState private var focusedField: Int?
     
     var body: some View {
-        // Input field for sets
-        TextField("Number of Sets", text: Binding(
-            get: { numSets },
-            set: { newValue in
-                if validateNumberOfRepsInput(newValue) {
-                    numSets = newValue
+        VStack {
+            Text("Sets")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
+            // Input field for sets
+            TextField("Number of Sets", text: Binding(
+                get: { numSets },
+                set: { newValue in
+                    if validateNumberOfRepsInput(newValue) {
+                        numSets = newValue
+                    }
                 }
-            }
-        ))
-        .keyboardType(.numberPad)
-        .padding(10)
-        .disabled(isDayComplete)
-        .focused($focusedField, equals: 200)
-        // This fixes iOS 18 bug that was introduced
-        .highPriorityGesture(
-            TapGesture().onEnded {
-                withAnimation {
-                    isFocused = true
-                    focusedField = 200
-                }
-            })
-        .padding(8)
-        .background(Color.gray.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+            ))
+            .keyboardType(.numberPad)
+            .padding(10)
+            .disabled(isDayComplete)
+            .focused($focusedField, equals: 200)
+            // This fixes iOS 18 bug that was introduced
+            .highPriorityGesture(
+                TapGesture().onEnded {
+                    withAnimation {
+                        isFocused = true
+                        focusedField = 200
+                    }
+                })
+            .padding(8)
+            .background(Color.gray.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+        }
         .padding()
+        .frame(maxWidth: .infinity)
     }
     
     // Function to validate the input for the number of reps

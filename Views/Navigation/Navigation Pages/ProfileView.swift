@@ -48,7 +48,7 @@ struct ProfileView: View {
                         }
                     }
                     .listSectionSpacing(15)
-                
+                    
                     // Navigation bar buttons
                     NavigationBar()
                 }

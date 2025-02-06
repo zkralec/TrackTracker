@@ -151,7 +151,3 @@ struct MeetView: View {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
     }
 }
-
-#Preview {
-    MeetView()
-}

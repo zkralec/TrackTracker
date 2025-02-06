@@ -170,7 +170,7 @@ struct WorkoutSummaryCard: View {
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .roundedBackground()
-                    // If user enters Time/Reps
+                        // If user enters Time/Reps
                     } else if latestWorkout.timesString != "" {
                         VStack {
                             Text("Time/Reps:")
@@ -188,7 +188,7 @@ struct WorkoutSummaryCard: View {
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .roundedBackground()
-                    // If user does nothing
+                        // If user does nothing
                     } else {
                         NavigationLink {
                             WorkoutView()
@@ -204,7 +204,7 @@ struct WorkoutSummaryCard: View {
                         }
                     }
                 }
-            // No workout logged yet
+                // No workout logged yet
             } else {
                 NavigationLink {
                     WorkoutView()
