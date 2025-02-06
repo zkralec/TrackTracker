@@ -29,14 +29,16 @@ struct WorkoutView: View {
             ZStack {
                 VStack {
                     VStack {
-                        HStack {
+                        ZStack {
                             // Menu bar icon
                             MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                            Spacer()
                             
                             // Display title
-                            TitleBackground(title: "Workouts")
-                            Spacer()
+                            HStack {
+                                Spacer()
+                                TitleBackground(title: "Workouts")
+                                Spacer()
+                            }
                         }
                         
                         // Layout for info button, date, and day complete button
