@@ -9,7 +9,6 @@ import Foundation
 
 struct User: Identifiable, Codable {
     let id: String
-    let team: String
     let fullName: String
     let email: String
     
@@ -25,5 +24,5 @@ struct User: Identifiable, Codable {
 }
 
 extension User {
-    static var mockUser = User(id: NSUUID().uuidString, team: "St. Mary's College of Maryland", fullName: "Zack Kralec", email: "test@gmail.com")
+    static var mockUser = User(id: NSUUID().uuidString, fullName: "Zack Kralec", email: "test@gmail.com")
 }
