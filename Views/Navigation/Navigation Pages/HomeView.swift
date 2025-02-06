@@ -155,12 +155,16 @@ struct WorkoutSummaryCard: View {
                     if latestWorkout.metersString != "" {
                         VStack {
                             Text("Distance/Reps:")
+                                .font(.headline)
                                 .padding(.bottom, 1)
                             Text("\(latestWorkout.metersString) meters")
+                                .font(.subheadline)
                             Text("Sets:")
+                                .font(.headline)
                                 .padding(.top, 2)
                                 .padding(.bottom, 1)
                             Text("\(latestWorkout.sets)")
+                                .font(.subheadline)
                         }
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
@@ -170,10 +174,12 @@ struct WorkoutSummaryCard: View {
                     } else if latestWorkout.timesString != "" {
                         VStack {
                             Text("Time/Reps:")
+                                .font(.headline)
                                 .padding(.bottom, 1)
                             Text("\(latestWorkout.timesString) seconds")
                                 .font(.subheadline)
                             Text("Sets:")
+                                .font(.headline)
                                 .padding(.top, 2)
                                 .padding(.bottom, 1)
                             Text("\(latestWorkout.sets)")
@@ -255,9 +261,9 @@ struct WeightsSummaryCard: View {
                     HStack {
                         Spacer()
                         VStack {
-                            Text(exercise.exercise)
+                            Text(exercise.exercise.capitalized)
                                 .padding(.bottom, 3)
-                                .bold()
+                                .font(.headline)
                             Text("Sets: \(exercise.sets)")
                                 .font(.subheadline)
                             Text("Weight: \(exercise.weight.joined(separator: ", ")) lbs")
