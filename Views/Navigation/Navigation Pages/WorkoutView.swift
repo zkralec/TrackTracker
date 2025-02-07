@@ -17,6 +17,7 @@ struct WorkoutView: View {
     @State private var isSideMenuOpen = false
     @State private var isFieldModified = false
     @State private var isFocused = false
+    @State private var isWorkoutDay = true
     @State private var workoutData: WorkoutData?
     @State private var selectedExperience: String? = UserDefaults.standard.string(forKey: "SelectedExperience")
     
@@ -30,13 +31,12 @@ struct WorkoutView: View {
                 VStack {
                     VStack {
                         ZStack {
-                            // Menu bar icon
-                            MenuButton(isSideMenuOpen: $isSideMenuOpen)
-                            
                             // Display title
+                            TitleBackground(title: "Workouts")
+                            
                             HStack {
-                                Spacer()
-                                TitleBackground(title: "Workouts")
+                                // Menu bar icon
+                                MenuButton(isSideMenuOpen: $isSideMenuOpen)
                                 Spacer()
                             }
                         }
@@ -53,14 +53,19 @@ struct WorkoutView: View {
                     .padding(.bottom, -8)
                     
                     List {
+                        // Day Type Card
+                        Section {
+                            DayTypeCard(isWorkoutDay: $isWorkoutDay, isDayComplete: $isDayComplete)
+                        }
+                        
                         // Distance/Time Reps Card
                         Section {
-                            DistanceTimeRepsCard(meters: $meters, times: $times, numSets: $numSets, isFocused: $isFocused, isDayComplete: $isDayComplete)
+                            DistanceTimeRepsCard(meters: $meters, times: $times, numSets: $numSets, isFocused: $isFocused, isDayComplete: $isDayComplete, isWorkoutDay: $isWorkoutDay)
                         }
                         
                         // Sets Card
                         Section {
-                            SetsCard(numSets: $numSets, isFocused: $isFocused, isDayComplete: $isDayComplete)
+                            SetsCard(numSets: $numSets, isFocused: $isFocused, isDayComplete: $isDayComplete, isWorkoutDay: $isWorkoutDay)
                         }
                     }
                     .listSectionSpacing(15)
@@ -288,6 +293,29 @@ extension TopButtonLayoutCard {
     }
 }
 
+// MARK: - Day Type Card
+struct DayTypeCard: View {
+    @Binding var isWorkoutDay: Bool
+    @Binding var isDayComplete: Bool
+    
+    var body: some View {
+        VStack {
+            Picker("**Day Type**", selection: $isWorkoutDay) {
+                Text("Workout Day").tag(true)
+                Text("Field Event Day").tag(false)
+                Text("Meet Day").tag(false)
+                Text("Recovery Day").tag(false)
+                Text("Off Day").tag(false)
+            }
+            .disabled(isDayComplete)
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+    }
+    
+    // Set meters and sets fields to 0. Reset all data and return this view to its default when anything but Workout Day is selected.
+}
+
 // MARK: - Distance/Time Reps Card
 struct DistanceTimeRepsCard: View {
     @State private var isDistanceMode: Bool = true
@@ -297,6 +325,7 @@ struct DistanceTimeRepsCard: View {
     @Binding var numSets: String
     @Binding var isFocused: Bool
     @Binding var isDayComplete: Bool
+    @Binding var isWorkoutDay: Bool
     
     @FocusState private var focusedField: Int?
     
@@ -312,6 +341,7 @@ struct DistanceTimeRepsCard: View {
                 Text("Time").tag(false)
             }
             .disabled(isDayComplete)
+            .disabled(!isWorkoutDay)
             .pickerStyle(SegmentedPickerStyle())
             .padding(.bottom, 10)
             
@@ -331,6 +361,7 @@ struct DistanceTimeRepsCard: View {
                         .keyboardType(.numberPad)
                         .padding(10)
                         .disabled(isDayComplete)
+                        .disabled(!isWorkoutDay)
                         .focused($focusedField, equals: index)
                         .contentShape(Rectangle())
                         .highPriorityGesture(
@@ -361,6 +392,7 @@ struct DistanceTimeRepsCard: View {
                         .keyboardType(.numberPad)
                         .padding(10)
                         .disabled(isDayComplete)
+                        .disabled(!isWorkoutDay)
                         .focused($focusedField, equals: index)
                         .contentShape(Rectangle())
                         .highPriorityGesture(
@@ -381,7 +413,7 @@ struct DistanceTimeRepsCard: View {
             }
             
             // Add/Remove buttons for reps
-            if !isDayComplete {
+            if !isDayComplete || isWorkoutDay {
                 HStack {
                     Button(action: {
                         if isDistanceMode && meters.count > 1 {
@@ -453,6 +485,7 @@ struct SetsCard: View {
     @Binding var numSets: String
     @Binding var isFocused: Bool
     @Binding var isDayComplete: Bool
+    @Binding var isWorkoutDay: Bool
     
     @FocusState private var focusedField: Int?
     
@@ -474,6 +507,7 @@ struct SetsCard: View {
             .keyboardType(.numberPad)
             .padding(10)
             .disabled(isDayComplete)
+            .disabled(!isWorkoutDay)
             .focused($focusedField, equals: 200)
             // This fixes iOS 18 bug that was introduced
             .highPriorityGesture(
@@ -496,4 +530,3 @@ struct SetsCard: View {
         return (input.isEmpty || Int(input) != nil) && input.count <= 5
     }
 }
-
