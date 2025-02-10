@@ -12,6 +12,7 @@ struct WeightsView: View {
     @State private var suggestExercises = false
     @State private var isFocused = false
     @State private var exercises: [WeightExercise] = []
+    @State private var hasWeights: Bool = true
     @State var count: Int = 1
     
     var body: some View {
@@ -41,18 +42,27 @@ struct WeightsView: View {
                     }
                     .padding(.bottom, -8)
                     
-                    // Exercise Models
+                    // Section/s for weights data
                     List {
-                        ForEach($exercises) { $exercise in
+                        Section {
+                            Picker("**Day Type**", selection: $hasWeights) {
+                                Text("Weights").tag(true)
+                                Text("No Weights").tag(false)
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                        
+                        ForEach($exercises) { exercise in
                             Section {
                                 WeightsExerciseModel(
-                                    exercise: $exercise.exercise,
-                                    weight: $exercise.weight,
-                                    reps: $exercise.reps,
-                                    discTitle: $exercise.discTitle,
-                                    sets: $exercise.sets,
+                                    exercise: exercise.exercise,
+                                    weight: exercise.weight,
+                                    reps: exercise.reps,
+                                    discTitle: exercise.discTitle,
+                                    sets: exercise.sets,
                                     isFocused: $isFocused
                                 )
+                                .disabled(!hasWeights)
                             }
                         }
                     }
