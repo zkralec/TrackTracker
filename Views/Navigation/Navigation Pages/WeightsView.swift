@@ -12,8 +12,9 @@ struct WeightsView: View {
     @State private var suggestExercises = false
     @State private var isFocused = false
     @State private var exercises: [WeightExercise] = []
-    @State private var hasWeights: Bool = true
     @State var count: Int = 1
+    
+    @AppStorage("hasWeights") private var hasWeights: Bool = true
     
     var body: some View {
         NavigationStack {

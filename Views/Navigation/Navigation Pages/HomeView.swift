@@ -11,6 +11,8 @@ struct HomeView: View {
     @State private var isSideMenuOpen = false
     @State private var meetLog: [MeetData] = []
     
+    @AppStorage("hasWeights") private var hasWeights: Bool = true
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -37,8 +39,10 @@ struct HomeView: View {
                         }
                         
                         // Weights Summary Card
-                        Section {
-                            WeightsSummaryCard()
+                        if hasWeights {
+                            Section {
+                                WeightsSummaryCard()
+                            }
                         }
                         
                         // Suggested Workouts or Insights or More
