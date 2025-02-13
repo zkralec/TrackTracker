@@ -413,7 +413,7 @@ struct DistanceTimeRepsCard: View {
             }
             
             // Add/Remove buttons for reps
-            if !isDayComplete || isWorkoutDay {
+            if !isDayComplete && isWorkoutDay {
                 HStack {
                     Button(action: {
                         if isDistanceMode && meters.count > 1 {
