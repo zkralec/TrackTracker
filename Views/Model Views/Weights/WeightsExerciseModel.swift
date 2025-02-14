@@ -38,9 +38,7 @@ struct WeightsExerciseModel: View {
                     isFocused = fieldIsFocused
                 }
                 .multilineTextAlignment(.center)
-                .padding(8)
-                .background(Color.gray.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                .slimRoundedBackground()
                 
                 // Weight
                 HStack {
@@ -62,9 +60,7 @@ struct WeightsExerciseModel: View {
                             isFocused = fieldIsFocused
                         }
                         .multilineTextAlignment(.center)
-                        .padding(8)
-                        .background(Color.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                        .slimRoundedBackground()
                     }
                 }
                 
@@ -88,9 +84,7 @@ struct WeightsExerciseModel: View {
                             isFocused = fieldIsFocused
                         }
                         .multilineTextAlignment(.center)
-                        .padding(8)
-                        .background(Color.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                        .slimRoundedBackground()
                     }
                 }
                 

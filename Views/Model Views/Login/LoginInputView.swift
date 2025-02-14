@@ -31,7 +31,7 @@ struct LoginInputView: View {
                 }
             }
             .frame(height: 32)
-            .roundedBackground()
+            .slimRoundedBackground()
         }
     }
 }

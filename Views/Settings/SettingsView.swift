@@ -107,9 +107,7 @@ struct SettingsView: View {
                                     ForEach(viewModel.events, id: \.self) { event in
                                         HStack {
                                             Text(event.rawValue)
-                                                .padding(8)
-                                                .background(Color.gray.opacity(0.1))
-                                                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                                                .slimRoundedBackground()
                                             
                                             Spacer()
                                             
