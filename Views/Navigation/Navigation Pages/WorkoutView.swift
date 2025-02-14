@@ -360,23 +360,18 @@ struct DistanceTimeRepsCard: View {
                         ))
                         .keyboardType(.numberPad)
                         .padding(10)
-                        .disabled(isDayComplete)
-                        .disabled(!isWorkoutDay)
+                        .disabled(isDayComplete || !isWorkoutDay)
                         .focused($focusedField, equals: index)
-                        .contentShape(Rectangle())
                         .highPriorityGesture(
                             TapGesture().onEnded {
-                                if !isDayComplete {
+                                if isWorkoutDay && !isDayComplete {
                                     withAnimation {
                                         isFocused = true
                                         focusedField = index
                                     }
                                 }
-                            }
-                        )
-                        .padding(8)
-                        .background(Color.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                            })
+                        .slimRoundedBackground()
                     }
                 } else {
                     // Times fields
@@ -391,23 +386,18 @@ struct DistanceTimeRepsCard: View {
                         ))
                         .keyboardType(.numberPad)
                         .padding(10)
-                        .disabled(isDayComplete)
-                        .disabled(!isWorkoutDay)
+                        .disabled(isDayComplete || !isWorkoutDay)
                         .focused($focusedField, equals: index)
-                        .contentShape(Rectangle())
                         .highPriorityGesture(
                             TapGesture().onEnded {
-                                if !isDayComplete {
+                                if isWorkoutDay && !isDayComplete {
                                     withAnimation {
                                         isFocused = true
                                         focusedField = index
                                     }
                                 }
-                            }
-                        )
-                        .padding(8)
-                        .background(Color.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                            })
+                        .slimRoundedBackground()
                     }
                 }
             }
@@ -443,9 +433,7 @@ struct DistanceTimeRepsCard: View {
                     .padding(.leading)
                     .buttonStyle(BorderlessButtonStyle())
                 }
-                .padding(8)
-                .background(Color.gray.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                .slimRoundedBackground()
                 .padding(.top)
             }
         }
@@ -506,20 +494,18 @@ struct SetsCard: View {
             ))
             .keyboardType(.numberPad)
             .padding(10)
-            .disabled(isDayComplete)
-            .disabled(!isWorkoutDay)
+            .disabled(isDayComplete || !isWorkoutDay)
             .focused($focusedField, equals: 200)
-            // This fixes iOS 18 bug that was introduced
             .highPriorityGesture(
                 TapGesture().onEnded {
-                    withAnimation {
-                        isFocused = true
-                        focusedField = 200
+                    if isWorkoutDay && !isDayComplete {
+                        withAnimation {
+                            isFocused = true
+                            focusedField = 200
+                        }
                     }
                 })
-            .padding(8)
-            .background(Color.gray.opacity(0.1))
-            .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+            .slimRoundedBackground()
         }
         .padding()
         .frame(maxWidth: .infinity)

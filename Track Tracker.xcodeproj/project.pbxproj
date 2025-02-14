@@ -26,6 +26,7 @@
 		1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */; };
 		14795E322D387EDE001A5336 /* TitleModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14795E312D387EDE001A5336 /* TitleModelView.swift */; };
 		14795E352D3FE1E0001A5336 /* SuggestionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14795E342D3FE1E0001A5336 /* SuggestionData.swift */; };
+		14795E3B2D5F9DFC001A5336 /* SlimRoundedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14795E3A2D5F9DFC001A5336 /* SlimRoundedBackground.swift */; };
 		14823F0A2CB6BD030058C57F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F092CB6BD030058C57F /* LoginView.swift */; };
 		14823F0C2CB6C0120058C57F /* LoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0B2CB6C0120058C57F /* LoginInputView.swift */; };
 		14823F0E2CB6F0320058C57F /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14823F0D2CB6F0320058C57F /* ForgotPasswordView.swift */; };
@@ -119,6 +120,7 @@
 		1464AFBD2C17343E00D00FBB /* RecoveryPrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryPrompt.swift; sourceTree = "<group>"; };
 		14795E312D387EDE001A5336 /* TitleModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleModelView.swift; sourceTree = "<group>"; };
 		14795E342D3FE1E0001A5336 /* SuggestionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionData.swift; sourceTree = "<group>"; };
+		14795E3A2D5F9DFC001A5336 /* SlimRoundedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlimRoundedBackground.swift; sourceTree = "<group>"; };
 		14823F092CB6BD030058C57F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		14823F0B2CB6C0120058C57F /* LoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputView.swift; sourceTree = "<group>"; };
 		14823F0D2CB6F0320058C57F /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				1492220A2BDBDB8E00F633BE /* SideBar.swift */,
 				149222082BDB1ADE00F633BE /* MenuButton.swift */,
 				14960F1C2CCE696300798C27 /* CustomKeyboardToolbar.swift */,
+				14795E3A2D5F9DFC001A5336 /* SlimRoundedBackground.swift */,
 			);
 			path = "Cutsom Assets";
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 				148609B72C9F13DD00A3E73F /* InjuryDetailsView.swift in Sources */,
 				1464AFBE2C17343E00D00FBB /* RecoveryPrompt.swift in Sources */,
 				14795E322D387EDE001A5336 /* TitleModelView.swift in Sources */,
+				14795E3B2D5F9DFC001A5336 /* SlimRoundedBackground.swift in Sources */,
 				14823F102CB80F410058C57F /* SignUpView.swift in Sources */,
 				14823F142CB846D70058C57F /* SettingsRowView.swift in Sources */,
 				14BF431F2BA7CEC9004B3321 /* TitleBackground.swift in Sources */,
