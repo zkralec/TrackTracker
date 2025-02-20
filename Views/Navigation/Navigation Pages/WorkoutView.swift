@@ -102,10 +102,12 @@ struct WorkoutView: View {
                                                   meters: [],
                                                   times: [],
                                                   sets: 0,
+                                                  workoutDay: true,
                                                   dayComplete: false)
                     }
                     
-                    // Retrieve the state of complete day mode from UserDefaults
+                    // Retrieve the state of complete day and workout day modes from UserDefaults
+                    isWorkoutDay = UserDefaults.standard.bool(forKey: "isWorkoutDay")
                     isDayComplete = UserDefaults.standard.bool(forKey: "isDayComplete")
                     
                     // Reset selectedExperience if it's a new day
@@ -125,6 +127,7 @@ struct WorkoutView: View {
                                                   meters: [],
                                                   times: [],
                                                   sets: 0,
+                                                  workoutDay: true,
                                                   dayComplete: false)
                     } else {
                         isFieldModified = true
@@ -133,12 +136,14 @@ struct WorkoutView: View {
                     workoutData?.meters = meters.compactMap { Int($0) }
                     workoutData?.times = times.compactMap { Int($0) }
                     workoutData?.sets = Int(numSets) ?? 0
+                    workoutData?.workoutDay = isWorkoutDay
                     workoutData?.dayComplete = isDayComplete
                     
                     workoutData?.saveData()
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     
-                    // Save the state of complete day mode to UserDefaults
+                    // Save the state of complete day and workout day modes to UserDefaults
+                    UserDefaults.standard.set(isWorkoutDay, forKey: "isWorkoutDay")
                     UserDefaults.standard.set(isDayComplete, forKey: "isDayComplete")
                     
                     onDisappearAction?(isFieldModified)
@@ -302,10 +307,7 @@ struct DayTypeCard: View {
         VStack {
             Picker("**Day Type**", selection: $isWorkoutDay) {
                 Text("Workout Day").tag(true)
-                Text("Field Event Day").tag(false)
-                Text("Meet Day").tag(false)
-                Text("Recovery Day").tag(false)
-                Text("Off Day").tag(false)
+                Text("No Workout").tag(false)
             }
             .disabled(isDayComplete)
         }

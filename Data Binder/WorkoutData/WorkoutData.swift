@@ -13,6 +13,7 @@ struct WorkoutData: Codable, Hashable {
     var meters: [Int]
     var times: [Int]
     var sets: Int
+    var workoutDay: Bool
     var dayComplete: Bool
 }
 
@@ -91,6 +92,7 @@ extension WorkoutData {
                                                  meters: [],
                                                  times: [],
                                                  sets: 0,
+                                                 workoutDay: true,
                                                  dayComplete: false)
             defaultWorkoutData.saveData()
             print("New day. Resetting workout data.")
